@@ -82,7 +82,7 @@ $(document).ready(function(){
                             var privacy = '';
                             var filler = '';
                         }
-                        $('#liveSearch').append('<p class="options chooser '+filler+'" id="'+teamArray['id']+'">'+teamArray['team_name']+''+privacy+'</p>'); //insert a p element for each team returned by the search and set the id equal to the DB row id
+                        $('#liveSearch').append('<p class="options chooser '+filler+'" id="'+teamArray['id']+'">'+teamArray['team_name']+' '+privacy+'</p>'); //insert a p element for each team returned by the search and set the id equal to the DB row id
                     });
                 } else {
                     $('#liveSearch').html('NO RESULTS FOUND'); //Tell user that no results matched search request

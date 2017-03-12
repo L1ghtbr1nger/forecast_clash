@@ -7,7 +7,7 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs pull-right" role="tablist">
                 <li role="presentation" id="all" class="active whom current"><a href="#all_players" aria-controls="all_players" role="tab" data-toggle="tab">All Players</a></li>
-                <li role="presentation" id="team" class="whom"><a href="#team_players" aria-controls="top_players" role="tab" data-toggle="tab"><?= (($teamResult) ? $teamUser['team']['team_name'] : '<a href="teams/dugout">Join Team</a>' ) ?></a></li>
+                <li role="presentation" id="team" class="whom"><a href="#team_players" aria-controls="top_players" role="tab" data-toggle="tab"><?= (($teamResult) ? h($teamUser['team']['team_name']) : '<a href="teams/dugout">Join Team</a>' ) ?></a></li>
             </ul>
         </div>
         <div class="card-block">
@@ -66,7 +66,7 @@
                                 $count++;
                                 echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').'">';
                                 echo '<td>'.$leader['rank'].'</td>';
-                                echo '<td>'.$leader['first_name'].' '.$leader['last_name'].'</td>';
+                                echo '<td>'.h($leader['first_name']).' '.h($leader['last_name']).'</td>';
                                 echo '<td>'.$leader['score'].'</td>';
                                 if(isset($leader['Tornado'])) {
                                     echo '<td>'.number_format((float)$leader['Tornado'],2,'.', '').'%</td>';

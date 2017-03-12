@@ -10,10 +10,10 @@
         //add/edit team_logo, name?
         //manage roster
     } ?>
-    <h1><?= $data->team->team_name; ?></h1>
+    <h1><?= h($data['team']['team_name']); ?></h1>
     <!-- total Team Score -->
     <?php
-    $logo = $data->team->team_logo;
+    $logo = $data['team']['team_logo'];
     if (!is_null($logo)) { ?>
         <div><?= $this->Html->image('teams/users/'.$logo); ?></div>
     <?php } else { ?>
