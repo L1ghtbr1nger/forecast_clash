@@ -4,3 +4,4 @@
 <?= $this->element('WeatherStatistics/stats_heatmap'); ?>
 <?= $this->element('WeatherStatistics/stats_leaderboard'); ?>
 <?= $this->Html->script('leaderboard'); ?>
+<?= $this->Html->script('heatmaps'); ?>
