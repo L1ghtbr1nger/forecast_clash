@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Cake\Collection\Collection;
 
 /**
  * Teams Controller
@@ -120,9 +121,39 @@ class TeamsController extends AppController
     public function dugout() { //view creator for the team index page dugout
         $session = $this->request->session();
         $user = $session->read('Auth.User.id');
-        $teams = TableRegistry::get('TeamsUsers');
-        $team = $teams->find()->where(['TeamsUsers.user_id' => $user])->contain(['Teams', 'Users']);
-        if($teamUser = $team->toArray()) {
+        $teamsUsers = TableRegistry::get('TeamsUsers');
+        $teamUser = $teamsUsers->find('all')->where(['TeamsUsers.user_id' => $user])->contain(['Teams', 'Users']);
+        $teamRankings = TableRegistry::get('Scores')->find('all')->contain(['TeamsUsers' => ['Teams']])->order('Teams.id');
+        if($teamRanking = $teamRankings->toArray()) {
+            $teamScore = [];
+            $tempID = 0;
+            foreach ($teamRanking as $teamRank) {
+                $team_id = $teamRank['teams_user']['team_id'];
+                $team_name = $teamRank['teams_user']['team']['team_name'];
+                $score = $teamRank['total_score'];
+                if ($team_id === $tempID) {
+                    $teamScore[$team_id]['team_score'] += $score;
+                } else {
+                    $tempID = $team_id;
+                    $teamScore[$team_id] = ['team_id' => $team_id, 'team_name' => $team_name, 'team_score' => $score];
+                }
+            }
+            $collection = new Collection($teamScore);
+            $rankedScores = $collection->sortBy('team_score');
+            $this->set('rankResult', true);
+            $this->set('rankings', $rankedScores);
+        } else {
+            $this->set('rankResult', false);
+        }
+        if ($teamUser = $teamUser->toArray()) {
+            $teamID = $teamUser[0]['team_id'];
+            $teammates = $teamsUsers->find('all')->where(['team_id' => $teamID])->contain(['Users', 'Scores'])->order('Users.first_name')->toArray();
+            $this->set('teammates', $teammates);
+            $total = 0;
+            foreach ($teammates as $teammate) {
+                $total += $teammate['score']['total_score'];
+            }
+            $this->set('total', $total);
             if ($user === $teamUser[0]['team']['user_id']) {
                 $this->set('captain', true);
             } else {
@@ -140,6 +171,9 @@ class TeamsController extends AppController
             $data = $this->request->data;
             $teams = $this->Teams->find()->where(['team_name LIKE' => $data['letters'].'%'])->limit(10)->order('team_name');
             if ($team = $teams->toArray()) {
+                foreach ($team as $t) {
+                   $t['team_name'] = h($t['team_name']); 
+                }
                 echo json_encode(['result' => 1, 'team_data' => $team]);
                 die;
             } else {

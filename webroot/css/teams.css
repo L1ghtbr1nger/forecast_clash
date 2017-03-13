@@ -2,6 +2,23 @@
     position: relative;
 }
 
+.headings {
+    float: left;
+}
+
+#teamLogo {
+    width: 350px;
+    float: right;
+    margin-right: 150px;
+}
+#teamLogo img {
+    width: inherit;
+}
+
+.userTeam {
+    background-color: #84c7ff !important;
+}
+
 #liveSearch {
     width:100%;
     height:221px;

@@ -50,7 +50,7 @@ class ScoresTable extends Table
             ]
         ]);
         
-        $this->hasMany('TeamsUsers', [
+        $this->hasOne('TeamsUsers', [
             'foreignKey' => [
                 'user_id'
             ],
