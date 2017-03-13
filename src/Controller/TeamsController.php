@@ -120,9 +120,17 @@ class TeamsController extends AppController
     public function dugout() { //view creator for the team index page dugout
         $session = $this->request->session();
         $user = $session->read('Auth.User.id');
-        $teams = TableRegistry::get('TeamsUsers');
-        $team = $teams->find()->where(['TeamsUsers.user_id' => $user])->contain(['Teams', 'Users']);
-        if($teamUser = $team->toArray()) {
+        $teamsUsers = TableRegistry::get('TeamsUsers');
+        $teamUser = $teamsUsers->find('all')->where(['TeamsUsers.user_id' => $user])->contain(['Teams', 'Users']);
+        if ($teamUser = $teamUser->toArray()) {
+            $teamID = $teamUser[0]['team_id'];
+            $teammates = $teamsUsers->find('all')->where(['team_id' => $teamID])->contain(['Users', 'Scores'])->order('Users.first_name')->toArray();
+            $this->set('teammates', $teammates[0]);
+            $total = 0;
+            foreach ($teammates[0] as $teammate) {
+                $total += $teammate['total_score'];
+            }
+            $this->set('total', $total);
             if ($user === $teamUser[0]['team']['user_id']) {
                 $this->set('captain', true);
             } else {
@@ -140,6 +148,9 @@ class TeamsController extends AppController
             $data = $this->request->data;
             $teams = $this->Teams->find()->where(['team_name LIKE' => $data['letters'].'%'])->limit(10)->order('team_name');
             if ($team = $teams->toArray()) {
+                foreach ($team as $t) {
+                   $t['team_name'] = h($t['team_name']); 
+                }
                 echo json_encode(['result' => 1, 'team_data' => $team]);
                 die;
             } else {
