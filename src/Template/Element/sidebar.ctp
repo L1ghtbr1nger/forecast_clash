@@ -1,5 +1,6 @@
 <aside class="sidebar-navigation">
     <div class="sidebar-container">
+        <span class="menu-toggle"><i class="fa fa-close" aria-hidden="true"></i></span>
         <div class="sidebar-navigation-header">
             <div class="brand">
                 <a href="#" class="logo"><?= $this->Html->image('logo-light-blue.png', ['alt' => 'Forecast Clash Logo']) ?></a>
@@ -26,23 +27,5 @@
 
 <style>
 
-.app-overwrite{
-    padding-left:0 !important;
-}
-.header-overwrite{
-    left:0 !important;
-}
-
-.menu-collapse{
-    left:-230px;
-    transition: left .3s ease;
-}
-
-.menu-toggle{
-    border:none;
-    padding: 4px 8px;
-    text-transform: uppercase;
-    cursor: pointer;
-}
 
 </style>

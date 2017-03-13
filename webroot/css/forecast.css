@@ -3389,8 +3389,9 @@ pre {
 .sidebar-navigation {
     background-color: #333;
     width: 230px;
-/*    padding-bottom: 60px;
-*/    position: absolute;
+    /*    padding-bottom: 60px;
+*/
+    position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
@@ -4194,7 +4195,7 @@ pre {
 }
 
 #map {
-    height: 93vh;
+    /*    height: 93vh;*/
     z-index: 0;
 }
 
@@ -7917,4 +7918,43 @@ ul {
 img[src="webroot/img/marker.png"] {
     margin-left: 0 !important;
     margin-top: 0 !important;
+}
+
+
+/* Menu Toggle */
+
+.app-overwrite {
+    padding-left: 0 !important;
+}
+
+.header-overwrite {
+    left: 0 !important;
+}
+
+.menu-collapse {
+    left: -230px;
+    transition: left .3s ease;
+}
+
+.menu-toggle {
+    border: none;
+    padding: 4px 8px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #fff;
+    float: right;
+}
+
+.menu-open {
+    display: none;
+    cursor: pointer;
+    border: 1px solid #333;
+    padding: 8px;
+}
+
+i span {
+    font-family: 'Open Sans', 'sans-serif';
+    position: relative;
+    left: 4px;
+    text-transform: uppercase;
 }

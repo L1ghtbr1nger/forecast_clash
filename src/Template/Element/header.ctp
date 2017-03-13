@@ -3,7 +3,9 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
 ?>
 <div class="header-block header-block-collapse hidden-lg-up">
     <div class="header-block header-block-collapse hidden-lg-up">
-        <button class="menu-toggle"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
+        <span class="menu-open">
+            <i class="fa fa-bars" aria-hidden="true"><span>Menu</span></i>
+        </span>
     </div>
 </div>
 <div class="header-block header-block-search hidden-sm-down">
@@ -88,9 +90,16 @@ $(document).ready(function() {
     $(".menu-toggle").click(function(e) {
         e.preventDefault();
         $(".sidebar-navigation").toggleClass("menu-collapse",3000);
-        $('#app').toggleClass("app-overwrite");
-        $('.header').toggleClass("header-overwrite");
+        $("#app").toggleClass("app-overwrite");
+        $(".header").toggleClass("header-overwrite");
+        $(".menu-open").css('display', 'inline-block');
     });
+    $('.menu-open').click(function(){
+        $(".sidebar-navigation").toggleClass("menu-collapse",3000);
+        $("#app").toggleClass("app-overwrite");
+        $(".header").toggleClass("header-overwrite");
+        $(this).css('display', 'none');
+    })
 
 });
 
