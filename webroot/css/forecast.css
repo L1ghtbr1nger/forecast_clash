@@ -41,6 +41,35 @@ body {
     font-size: 15px;
 }
 
+.app .content {
+    padding: 95px 20px 75px 20px;
+    min-height: 100vh;
+}
+
+@media (min-width: 1200px) {
+    .app .content {
+        padding: 105px 40px 85px 40px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .app .content {
+        padding: 100px 35px 80px 35px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .app .content {
+        padding: 95px 20px 75px 20px;
+    }
+}
+
+@media (max-width: 767px) {
+    .app .content {
+        padding: 70px 20px 70px 20px;
+    }
+}
+
 .main-wrapper {
     width: 100%;
     position: absolute;
@@ -74,11 +103,6 @@ body {
     -webkit-transition: left 0.3s ease, padding-left 0.3s ease;
     transition: left 0.3s ease, padding-left 0.3s ease;
     overflow: hidden;
-}
-
-.app .content {
-    padding: 8vh 20px 75px 20px;
-    min-height: 100vh;
 }
 
 @media (max-width: 991px) {
@@ -3365,8 +3389,8 @@ pre {
 .sidebar-navigation {
     background-color: #333;
     width: 230px;
-    padding-bottom: 60px;
-    position: absolute;
+/*    padding-bottom: 60px;
+*/    position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
@@ -7890,13 +7914,7 @@ ul {
     display: none;
 }
 
-img[src='webroot/img/tornado.svg'],
-img[src='webroot/img/Cloud-Hail.svg'],
-img[src='webroot/img/Wind.svg'] {
-    border: 2px solid #fff;
-    border-radius: 100%;
-    position: relative;
-    top: 18px;
-    left: -28px;
-    background-color: rgba(255, 255, 255, .25);
+img[src="webroot/img/marker.png"] {
+    margin-left: 0 !important;
+    margin-top: 0 !important;
 }

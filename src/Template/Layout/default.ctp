@@ -41,10 +41,6 @@
             <div class="container-fluid clearfix">
                 <?= $this->fetch('content') ?>
             </div>
-
-
-
-
             <!-- login script -->
             <?= $this->Html->script('users'); ?>
 

@@ -17,18 +17,7 @@
                     <h4 class="leaderboard-filter-toggle">Filter&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i></h4>
                     <form action="" class="search-filter-leaderboard collapse-me">
                         <div class="row">
-                            <div class="col-md-6">
-                                <strong>Date</strong>
-                                <label for="input_from_leaderboard">From</label>
-                                <fieldset>
-                                    <input type="text" id="input_from_leaderboard">
-                                </fieldset>
-                                <label for="input_to_leaderboard">To</label>
-                                <fieldset>
-                                    <input type="text" id="input_to_leaderboard">
-                                </fieldset>
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <strong>Experience</strong>
                                 <div class="can-toggle can-toggle--size-small">
                                     <input id="amateur_leaderboard" class="experienceFilter" type="checkbox" checked>
@@ -129,42 +118,6 @@ $(document).ready(function() {
         $('.search-filter-leaderboard').toggle('collapse-me');
         $('.leaderboard .fa-chevron-down').toggleClass('flip-me');
     });
-
-    // Pickadate - http://amsul.ca/pickadate.js/date/
-
-    // $('.datepicker').pickadate({
-    //     max: 0
-    // });
-
-    var from_input_leaderboard = $('#input_from_leaderboard').pickadate(),
-        from_picker_leaderboard = from_input_leaderboard.pickadate('picker')
-
-    var to_input_leaderboard = $('#input_to_leaderboard').pickadate(),
-        to_picker_leaderboard = to_input_leaderboard.pickadate('picker')
-
-    // Check if there’s a “from” or “to” date to start with.
-    if (from_picker_leaderboard.get('value')) {
-        to_picker_leaderboard.set('min', from_picker_leaderboard.get('select'))
-    }
-    if (to_picker_leaderboard.get('value')) {
-        from_picker_leaderboard.set('max', to_picker_leaderboard.get('select'))
-    }
-
-    // When something is selected, update the “from” and “to” limits.
-    from_picker_leaderboard.on('set', function(event) {
-        if (event.select) {
-            to_picker_leaderboard.set('min', from_picker_leaderboard.get('select'))
-        } else if ('clear' in event) {
-            to_picker_leaderboard.set('min', false)
-        }
-    })
-
-    to_picker_leaderboard.on('set', function(event) {
-            if (event.select) {
-                from_picker_leaderboard.set('max', to_picker_leaderboard.get('select'))
-            } else if ('clear' in event) {
-                from_picker_leaderboard.set('max', false)
-            }
-        })
+    
 })
 </script>

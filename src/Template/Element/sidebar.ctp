@@ -23,33 +23,8 @@
         </nav>
     </div>
 </aside>                        
-<script>
-
-$(document).ready(function() {
-
-    $("#sidebar-collapse-btn").click(function(){
-        $(".mobile-nav-close").fadeIn(3000);
-    });
-    
-    /*Menu-toggle*/
-    $(".menu-toggle").click(function(e) {
-        e.preventDefault();
-        $(".sidebar-navigation").toggleClass("menu-collapse",3000);
-        $('#app').toggleClass("app-overwrite");
-        $('.header').toggleClass("header-overwrite");
-    });
-        // toggle button text
-    $(".menu-toggle").click(function () {
-        $(this).text(function(i, v){
-           return v === "Close Sidebar" ? "Open Sidebar" : "Close Sidebar"
-        })
-    });
-});
-
-</script>
 
 <style>
-
 
 .app-overwrite{
     padding-left:0 !important;
@@ -67,6 +42,7 @@ $(document).ready(function() {
     border:none;
     padding: 4px 8px;
     text-transform: uppercase;
-
+    cursor: pointer;
 }
+
 </style>

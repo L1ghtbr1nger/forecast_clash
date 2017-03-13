@@ -1,6 +1,6 @@
 <div class="auth">
     <div class="auth-container">
-        <a href="#" class="logo"><img src="../webroot/img/logo-white.png" alt=""> </a>
+        <a href="#" class="logo"><img src="../webroot/img/logo-light-blue" alt="Forecast Clash Logo"> </a>
         <div class="card">
             <div class="auth-content">
                 <p class="text-xs-center">SIGNUP TO PLAY</p>

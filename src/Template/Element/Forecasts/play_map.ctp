@@ -3,8 +3,12 @@
     padding-left: 0;
     padding-right: 0;
 }
+.leaflet-right .leaflet-control{
+    background-color: #333;
+}
 
 </style>
+
 <article class="play-container">
     <div id="play-sidebar">
         <div class="container-fluid sidebar-header">
@@ -36,27 +40,30 @@
                         <div role="tabpanel" class="tab-pane active" id="tornado-control">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <form action="#" class="search-filter forecast-tornado" id="forecastForm">
-                                        <h4><span class="forecast-type">Tornado</span> Forecast</h4>
+                                    <form action="#" class="search-filter forecast-tornado">
                                         <fieldset>
-                                            <label for="latlng">Lat/Lng</label>
-                                            <input id="latlng" name="location" type="text" value="">
-                                        </fieldset>
-                                        <fieldset>
-                                            <label for="event_date">Date</label>
-                                            <input type="text" name="forecast_date" class="datepicker" id="event_date">
+                                            <label for="event_date"><strong>Date</strong></label>
+                                            <input type="text" class="datepicker" id="event_date">
                                         </fieldset>
                                         <fieldset class="time">
-                                            <h5><strong>Time</strong></h5>
+                                            <strong>Time</strong><br>
+                                            <input type="radio" name="time" id="am" value="0">
                                             <label for="am">AM</label>
-                                            <input type="radio" name="am_pm" id="am" value="0">
                                             <br>
+                                            <input type="radio" name="time" id="pm" value="1">
                                             <label for="pm">PM</label>
-                                            <input type="radio" name="am_pm" id="pm" value="1">
                                         </fieldset>
-                                        <input type="radio" class="" name="weather_event_id" id="tornado-event" value="1">
-                                        <input type="radio" class="" name="weather_event_id" id="hail-event" value="2">
-                                        <input type="radio" class="" name="weather_event_id" id="wind-event" value="3">
+                                        <fieldset>
+                                            <label for="radius"><strong>Radius</strong></label>
+                                            <input type="range" name="radius" id="radius" min="1" max="100" value="1">
+                                        </fieldset>
+
+                                        <!-- hidden form fields -->
+                                        <input id="latlng" name="latlng" type="text" class="hidden" value="">
+                                        <input type="radio" class="hidden" name="event-type" id="tornado-event" value="1">
+                                        <input type="radio" class="hidden" name="event-type" id="hail-event" value="2">
+                                        <input type="radio" class="hidden" name="event-type" id="wind-event" value="3">
+
                                     </form>
                                 </div>
                             </div>
@@ -73,16 +80,20 @@
     <div id="map"></div>
 </article>
 <link rel="stylesheet" href="webroot/css/leaflet.awesome-markers.css">
-<?= $this->Html->script('L.Control.Sidebar'); ?>
 <?= $this->Html->script('play_map'); ?>
 <?= $this->Html->script('leaflet.awesome-markers.min'); ?>
+<?= $this->Html->script('leaflet.social'); ?>
+<?= $this->Html->script('picker'); ?>
+<?= $this->Html->script('picker.date'); ?>
+<?= $this->Html->script('L.Control.Range-min'); ?>
 <link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
 <script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
 <link rel="stylesheet" href="webroot/css/default.css">
 <link rel="stylesheet" href="webroot/css/default.date.css">
-<script src="webroot/js/picker.js"></script>
-<script src="webroot/js/picker.date.js"></script>
+<link rel="stylesheet" href="webroot/css/L.Control.Range.css">
+
 <script>
+
 // Get tomorrows date for min date
 var tomorrow = new Date();
 var dd_tomorrow = tomorrow.getDate() + 1;
@@ -126,7 +137,8 @@ $('.datepicker').pickadate({
 });
 
 
-// Bootstrap Tab Events
+// Set active tab
+$('.play-link').addClass('active');
 
 
 </script>
