@@ -43,9 +43,9 @@
                         $count = 0;
                         foreach ($teammates as $teammate) {
                             $count++;
-                            echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').'">';
+                            echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').' '.(($data['user_id'] === $teammate['user_id']) ? 'userTeam' : '').'">';
                             echo '<td>'.h($teammate['user']['first_name']).' '.h($teammate['user']['last_name']).'</td>';
-                            echo '<td>'.intval($teammate['scores']['total_score']).'</td>';
+                            echo '<td>'.intval($teammate['score']['total_score']).'</td>';
                             echo '<td>'.(($teammate['user']['meteorologist']) ? 'Professional' : 'Enthusiast' ).'</td></tr>';
                         }
                         ?>
@@ -67,19 +67,23 @@
                     <thead class="flip-header">
                         <tr>
                             <th>Rank</th>
-                            <th>Name</th>
+                            <th>Team Name</th>
                             <th>Score</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $count = 0;
-                        foreach ($teammates as $teammate) {
-                            $count++;
-                            echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').'">';
-                            echo '<td>'..'</td>';
-                            echo '<td>'..'</td>';
-                            echo '<td>'..'</td></tr>';
+                        if ($rankResult) {
+                            $count = 0;
+                            foreach ($rankings as $rank) {
+                                $count++;
+                                echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').' '.(($data['team_id'] === $rank['team_id']) ? 'userTeam' : '').'">';
+                                echo '<td>'.$count.'</td>';
+                                echo '<td>'.h($rank['team_name']).'</td>';
+                                echo '<td>'.intval($rank['team_score']).'</td></tr>';
+                            }
+                        } else {
+                            echo 'NO TEAMS ON THE BOARD YET!';
                         }
                         ?>
                     </tbody>
