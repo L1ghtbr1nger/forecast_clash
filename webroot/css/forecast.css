@@ -7950,6 +7950,7 @@ img[src="webroot/img/marker.png"] {
     cursor: pointer;
     border: 1px solid #333;
     padding: 8px;
+    height:0;
 }
 
 i span {
