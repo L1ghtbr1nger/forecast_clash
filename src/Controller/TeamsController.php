@@ -125,7 +125,7 @@ class TeamsController extends AppController
         if ($teamUser = $teamUser->toArray()) {
             $teamID = $teamUser[0]['team_id'];
             $teammates = $teamsUsers->find('all')->where(['team_id' => $teamID])->contain(['Users', 'Scores'])->order('Users.first_name')->toArray();
-            $this->set('teammates', $teammates[0]);
+            $this->set('teammates', $teammates);
             $total = 0;
             foreach ($teammates[0] as $teammate) {
                 $total += $teammate['total_score'];

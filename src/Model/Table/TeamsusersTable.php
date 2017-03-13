@@ -46,7 +46,7 @@ class TeamsusersTable extends Table
             'joinType' => 'INNER'
         ]);
         
-        $this->hasMany('Scores', [
+        $this->hasOne('Scores', [
             'foreignKey' => [
                 'user_id'
             ],
