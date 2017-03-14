@@ -24,8 +24,3 @@
         </nav>
     </div>
 </aside>                        
-
-<style>
-
-
-</style>

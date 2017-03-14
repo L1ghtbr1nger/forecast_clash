@@ -3970,6 +3970,7 @@ pre {
     padding: 12px;
     position: relative;
     top: 12px;
+    margin-top: -30px;
 }
 
 .header .header-block-nav .notifications {
@@ -7943,6 +7944,8 @@ img[src="webroot/img/marker.png"] {
     cursor: pointer;
     color: #fff;
     float: right;
+    height: 30px;
+    height: 30px;
 }
 
 .menu-open {
@@ -7950,7 +7953,6 @@ img[src="webroot/img/marker.png"] {
     cursor: pointer;
     border: 1px solid #333;
     padding: 8px;
-    height:0;
 }
 
 i span {
