@@ -19,7 +19,7 @@
                     <h4 class="heatmap-filter-toggle">Filter&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i></h4>
                     <form action="" class="search-filter-heatmap collapse-me">
                         <div class="row">
-                            <div class="col-md-4 col-sm-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <div class="exp-filters">
                                     <strong>Experience</strong>
                                     <div class="can-toggle can-toggle--size-small">
@@ -38,7 +38,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-sm-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <div class="exp-filters">
                                     <strong>Response</strong>
                                     <div class="can-toggle can-toggle--size-small">
@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-sm-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <strong>Event</strong>
                                 <div class="can-toggle can-toggle--size-small">
                                     <input id="tornado" type="checkbox">
