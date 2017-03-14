@@ -168,6 +168,18 @@ class UsersController extends AppController
         }
     }
     
+    public function meteorology() {
+        if ($this->request->is('ajax')) {
+            $data = $this->request->data;
+            $session = $this->request->session();
+            $userID = $session->read('Auth.User.id');
+            $met = $this->Users->find()->where(['id' => $userID])->first();
+            $met['meteorologist'] = $data['experience'];
+            $this->Users->save($met);
+        }
+    }
+    
+    
     //Function to send email to provided address with link to reset password.
     public function forgotPassword() {
         if ($this->request->is('ajax')) {

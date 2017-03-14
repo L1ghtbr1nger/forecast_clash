@@ -270,6 +270,10 @@ body {
     }
 }
 
+.activeUser {
+    background-color: #84c7ff !important;
+}
+
 .alert {
     background-image: none;
 }

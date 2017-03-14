@@ -78,7 +78,7 @@
                             foreach ($rankings as $rank) {
                                 $count++;
                                 echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').' '.(($data['team_id'] === $rank['team_id']) ? 'userTeam' : '').'">';
-                                echo '<td>'.$count.'</td>';
+                                echo '<td>'.$rank['rank'].'</td>';
                                 echo '<td>'.h($rank['team_name']).'</td>';
                                 echo '<td>'.intval($rank['team_score']).'</td></tr>';
                             }

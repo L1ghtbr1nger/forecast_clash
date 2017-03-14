@@ -46,9 +46,21 @@ $(document).ready(function(){
             error : function() {   
             }
         });
-  
     });
-    
-    
+    $('.experience').click(function(e){
+        e.preventDefault();
+        var experience = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "/forecast_clash/users/meteorology.json",
+            dataType: 'json',
+            data: {'experience': experience},
+            success : function(response) {
+                window.location.href = "/forecast_clash";     
+            },
+            error : function() {   
+            }
+        });
+    });
 });
 
