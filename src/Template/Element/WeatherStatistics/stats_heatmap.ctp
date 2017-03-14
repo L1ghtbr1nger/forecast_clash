@@ -6,10 +6,9 @@
             </div>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs pull-right" role="tablist">
-                <li role="presentation" class="active"><a href="#all_players" aria-controls="all_players" role="tab" data-toggle="tab">All Players</a></li>
-                <li role="presentation"><a href="#top_players" aria-controls="top_players" role="tab" data-toggle="tab">Top Players</a></li>
-                <li role="presentation"><a href="#all_teams" aria-controls="all_teams" role="tab" data-toggle="tab">All Teams</a></li>
-                <li role="presentation"><a href="#top_teams" aria-controls="top_teams" role="tab" data-toggle="tab">Top Teams</a></li>
+                <li role="presentation" id="all_hm" class="active whom_hm current_hm"><a href="#all_players" aria-controls="all_players" role="tab" data-toggle="tab">All Players</a></li>
+                <li role="presentation" id="team_hm" class="whom_hm"><a href="#team_players" aria-controls="team_players" role="tab" data-toggle="tab"><?= (($teamResult) ? h($teamUser['team']['team_name']) : '<a href="/forecast_clash/teams/dugout">Join Team</a>' ) ?></a></li>
+                <li role="presentation" id="self_hm" class="whom_hm"><a href="#self" aria-controls="self" role="tab" data-toggle="tab"><?= ((isset($user)) ? h($user['first_name']) : '<a href="/forecast_clash/users/login">Login</a>' ) ?></a></li>
             </ul>
         </div>
         <div class="card-block">
@@ -60,35 +59,45 @@
                             <div class="col-md-4 col-sm-4">
                                 <strong>Event</strong>
                                 <div class="can-toggle can-toggle--size-small">
-                                    <input id="tornado" type="checkbox">
+                                    <input id="tornado" type="checkbox" checked>
                                     <label for="tornado">
                                         <div class="can-toggle__label-text">Tornado</div>
                                         <div class="can-toggle__switch tornado-switch" data-checked="On" data-unchecked="Off"></div>
                                     </label>
                                 </div>
                                 <div class="can-toggle can-toggle--size-small">
-                                    <input id="hail" type="checkbox">
+                                    <input id="hail" type="checkbox" checked>
                                     <label for="hail">
                                         <div class="can-toggle__label-text">Hail</div>
                                         <div class="can-toggle__switch hail-switch" data-checked="On" data-unchecked="Off"></div>
                                     </label>
                                 </div>
                                 <div class="can-toggle can-toggle--size-small">
-                                    <input id="wind" type="checkbox">
+                                    <input id="wind" type="checkbox" checked>
                                     <label for="wind">
                                         <div class="can-toggle__label-text">Wind</div>
                                         <div class="can-toggle__switch wind-switch" data-checked="On" data-unchecked="Off"></div>
                                     </label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                                <strong>Date</strong>
-                                <label for="from_input_heatmap">From</label>
-                                <input type="text" id="input_from_heatmap">
-                                <label for="to_input_heatmap">To</label>
-                                <input type="text" id="input_to_heatmap">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="exp-filters">
+                                    <p><strong>Experience</strong></p>
+                                    <div class="can-toggle can-toggle--size-small">
+                                        <input id="amateur-heatmap" type="checkbox" checked>
+                                        <label for="amateur-heatmap">
+                                            <div class="can-toggle__label-text">Enthusiasts</div>
+                                            <div class="can-toggle__switch enthusiasts-switch" data-checked="On" data-unchecked="Off"></div>
+                                        </label>
+                                    </div>
+                                    <div class="can-toggle can-toggle--size-small">
+                                        <input id="mets-heatmap" type="checkbox" checked>
+                                        <label for="mets-heatmap">
+                                            <div class="can-toggle__label-text">Meteorologists</div>
+                                            <div class="can-toggle__switch mets-switch" data-checked="On" data-unchecked="Off"></div>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>

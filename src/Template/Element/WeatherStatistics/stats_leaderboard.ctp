@@ -6,8 +6,8 @@
             </div>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs pull-right" role="tablist">
-                <li role="presentation" id="all" class="active whom current"><a href="#all_players" aria-controls="all_players" role="tab" data-toggle="tab">All Players</a></li>
-                <li role="presentation" id="team" class="whom"><a href="#team_players" aria-controls="top_players" role="tab" data-toggle="tab"><?= (($teamResult) ? h($teamUser['team']['team_name']) : '<a href="teams/dugout">Join Team</a>' ) ?></a></li>
+                <li role="presentation" id="all_lb" class="active whom_lb current_lb"><a href="#all_players" aria-controls="all_players" role="tab" data-toggle="tab">All Players</a></li>
+                <li role="presentation" id="team_lb" class="whom_lb"><a href="#team_players" aria-controls="top_players" role="tab" data-toggle="tab"><?= (($teamResult) ? h($teamUser['team']['team_name']) : '<a href="/forecast_clash/teams/dugout">Join Team</a>' ) ?></a></li>
             </ul>
         </div>
         <div class="card-block">
@@ -20,15 +20,15 @@
                             <div class="col-md-12">
                                 <strong>Experience</strong>
                                 <div class="can-toggle can-toggle--size-small">
-                                    <input id="amateur_leaderboard" class="experienceFilter" type="checkbox" checked>
-                                    <label for="amateur_leaderboard">
+                                    <input id="amateur_lb" class="exp_lb" type="checkbox" checked>
+                                    <label for="amateur_lb">
                                         <div class="can-toggle__label-text">Enthusiasts</div>
                                         <div class="can-toggle__switch enthusiasts-switch" data-checked="On" data-unchecked="Off"></div>
                                     </label>
                                 </div>
                                 <div class="can-toggle can-toggle--size-small">
-                                    <input id="mets_leaderboard" class="experienceFilter" type="checkbox" checked>
-                                    <label for="mets_leaderboard">
+                                    <input id="mets_lb" class="exp_lb" type="checkbox" checked>
+                                    <label for="mets_lb">
                                         <div class="can-toggle__label-text">Meteorologists</div>
                                         <div class="can-toggle__switch mets-switch" data-checked="On" data-unchecked="Off"></div>
                                     </label>
@@ -53,7 +53,7 @@
                             $count = 0;
                             foreach($leaderboard as $leader) {
                                 $count++;
-                                echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').'">';
+                                echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').' '.(($user['id'] === $leader['user_id']) ? 'activeUser' : '').'">';
                                 echo '<td>'.$leader['rank'].'</td>';
                                 echo '<td>'.h($leader['first_name']).' '.h($leader['last_name']).'</td>';
                                 echo '<td>'.$leader['score'].'</td>';
@@ -72,7 +72,7 @@
                                 } else {
                                     echo '<td>N/A</td>';
                                 }
-                                echo '<td>'.number_format((float)$leader['total'],2,'.', '').'%</td>';
+                                echo '<td>'.number_format((float)$leader['total'],2,'.', '').'%</td></tr>';
                             } ?>
                         </tbody>
                     </table>
