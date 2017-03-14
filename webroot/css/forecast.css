@@ -140,7 +140,7 @@ body {
 .auth-container {
     width: 450px;
     min-height: 330px;
-    margin: 48px auto;
+    margin: 24px auto;
     display: block;
 }
 
@@ -187,7 +187,6 @@ body {
         top: 0;
         -webkit-transform: inherit;
         transform: inherit;
-        margin: 0;
         margin-bottom: 10px;
     }
     .auth-container .auth-content {
@@ -429,6 +428,10 @@ body {
     background-color: rgb(61, 182, 239);
     border-color: rgb(61, 182, 239);
     transition: all .4s;
+}
+
+.btn-secondary {
+    border-radius: 0 !important;
 }
 
 .btn.btn-secondary {
@@ -7846,10 +7849,9 @@ ul {
     margin-right: 4px;
 }
 
-
-/* Collapse Menu */
-
-.menu-collapse {}
+label[for="remember"] span {
+    float: left;
+}
 
 
 /* Chartist Charts */
@@ -8011,5 +8013,115 @@ i span {
 }
 
 .mobile-nav li a {
+    text-decoration: none;
+}
+
+
+/* Social Media Login */
+
+
+/* Facebook */
+
+a[href='/forecast_clash/users/login?provider=Facebook'] {
+    display: block;
+    transition: all .4s;
+    background-color: #3b5999;
+    padding: 6px 12px;
+    color: #fff;
+    margin-bottom: 5px;
+    border: 1px solid #3b5999;
+    text-align: center;
+    transition: all .4s;
+}
+
+a[href='/forecast_clash/users/login?provider=Facebook'] i {
+    font-size: 20px;
+    margin-right: 6px;
+    position: relative;
+    top: 2px
+}
+
+a[href='/forecast_clash/users/login?provider=google'] {
+    display: block;
+    transition: all .4s;
+    background-color: #dd4b39;
+    padding: 6px 12px;
+    color: #fff;
+    margin-bottom: 5px;
+    border: 1px solid #dd4b39;
+    text-align: center;
+    transition: all .4s;
+}
+
+a[href='/forecast_clash/users/login?provider=google'] i {
+    font-size: 20px;
+    margin-right: 6px;
+    position: relative;
+    top: 2px
+}
+
+
+/* Twitter */
+
+a[href='/forecast_clash/users/login?provider=Twitter'] {
+    display: block;
+    transition: all .4s;
+    background-color: #55acee;
+    padding: 6px 12px;
+    color: #fff;
+    margin-bottom: 5px;
+    border: 1px solid #55acee;
+    text-align: center;
+    transition: all .4s;
+}
+
+a[href='/forecast_clash/users/login?provider=Twitter'] i {
+    font-size: 20px;
+    margin-right: 6px;
+    position: relative;
+    top: 2px
+}
+
+a[href='/forecast_clash/users/login?provider=Facebook']:hover,
+a[href='/forecast_clash/users/login?provider=Facebook']:active,
+a[href='/forecast_clash/users/login?provider=Facebook']:focus {
+    text-decoration: none;
+    background-color: rgb(35, 66, 134);
+    transition: all .4s;
+}
+
+a[href='/forecast_clash/users/login?provider=google']:hover,
+a[href='/forecast_clash/users/login?provider=google']:active,
+a[href='/forecast_clash/users/login?provider=google']:focus {
+    text-decoration: none;
+    background-color: rgb(198, 45, 26);
+    transition: all .4s;
+}
+
+a[href='/forecast_clash/users/login?provider=Twitter']:hover,
+a[href='/forecast_clash/users/login?provider=Twitter']:active,
+a[href='/forecast_clash/users/login?provider=Twitter']:focus {
+    text-decoration: none;
+    background-color: rgb(28, 132, 212);
+    transition: all .4s;
+}
+
+.register {
+    display: block;
+    transition: all .4s;
+    background-color: rgb(251, 109, 63);
+    padding: 6px 12px;
+    color: #fff !important;
+    margin-bottom: 5px;
+    border: 1px solid rgb(251, 109, 63);
+    text-align: center;
+    transition: all .4s !important;
+}
+
+.register:hover,
+.register:active,
+.register:focus {
+    background-color: rgb(255, 89, 35);
+    transition: all .4s !important;
     text-decoration: none;
 }

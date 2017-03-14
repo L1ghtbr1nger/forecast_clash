@@ -29,6 +29,7 @@
                         'class' => 'btn btn-block btn-primary login',
                         'type' => 'submit'
                     ]); ?>
+                        <hr>
                         <?= $this->Html->link('Login with Facebook', [
                             'controller' => 'Users',
                             'action' => 'login',
@@ -46,8 +47,10 @@
                         ); ?>
                             <?= $this->Form->end(); ?>
                     </div>
+                    <hr>
                     <div class="form-group">
-                        <p class="text-muted text-xs-center">Do not have an account? <a href="register">Sign Up!</a></p>
+                        <p class="text-muted text-center">Do not have an account?</p>
+                        <a class="register" href="register">Sign Up!</a>
                     </div>
             </div>
         </div>
@@ -56,3 +59,9 @@
         </div>
     </div>
 </div>
+<script>
+    $("<i class='fa fa-facebook-official' aria-hidden='true'></i>").prependTo("a[href='/forecast_clash/users/login?provider=Facebook'");
+    $("<i class='fa fa-google-plus-square' aria-hidden='true'></i>").prependTo("a[href='/forecast_clash/users/login?provider=google'");
+    $("<i class='fa fa-twitter-square' aria-hidden='true'></i>").prependTo("a[href='/forecast_clash/users/login?provider=Twitter'");
+</script>
+
