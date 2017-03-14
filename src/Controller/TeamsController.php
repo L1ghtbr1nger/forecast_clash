@@ -139,9 +139,25 @@ class TeamsController extends AppController
                 }
             }
             $collection = new Collection($teamScore);
-            $rankedScores = $collection->sortBy('team_score');
+            $rankedScores = $collection->sortBy('team_score')->toArray();
+            $rank = 0;
+            $count = 0;
+            $tempScore = -1;
+            foreach ($rankedScores as $rs) {
+                $rank++;
+                if ($rs['team_score'] === $tempScore) {
+                    $rank--;
+                    $count++;
+                } else {
+                    $rank += $count;
+                    $count = 0;
+                    $tempScore = $rs['team_score'];
+                }
+                $rs['rank'] = $rank;
+                $rankScore[] = $rs;
+            }
             $this->set('rankResult', true);
-            $this->set('rankings', $rankedScores);
+            $this->set('rankings', $rankScore);
         } else {
             $this->set('rankResult', false);
         }

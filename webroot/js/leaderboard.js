@@ -15,7 +15,7 @@ $(document).ready(function(){
                     var leaders = response['leaderboard']; //separate DB data and save to leaders
                     $.each(leaders, function(key, index) { //take DB data and manipulate each row as var index
                         count++; //count for odd/even class names
-                        inserted += '<tr class="'+((count & 1) ? 'odd gradeX' : 'even gradeC')+'">'+
+                        inserted += '<tr class="'+((count & 1) ? 'odd gradeX' : 'even gradeC')+' '+((index['user_id'] === response['user_id']) ? 'activeUser' : '')+'">'+
                             '<td>'+index['rank']+'</td>'+
                             '<td>'+index['first_name']+' '+index['last_name']+'</td>'+
                             '<td>'+index['score']+'</td>'; //set the rank, name and score rows and alternate class names for rows
@@ -39,27 +39,30 @@ $(document).ready(function(){
                         }
                         var total = index['total'];
                         inserted += '<td>'+((total < 100) ? total.toFixed(2) : total.toFixed(0))+'%</td></tr>';
-                    })
+                    });
                 } else {
                     var inserted = 'NO RESULTS FOUND FOR GIVEN FILTERS';
                 }
-                console.log(inserted);
                 $('#leaders').html(inserted); 
             },
             error : function(){   
             }
         });
     };
+        
+    experience(); //run experience with default filters
+    tabs(); //run tabs with default tab
+    callAjax(params);
     
     function experience(){ //which experience toggles are checked
-        if($('#amateur_leaderboard').prop('checked')){
-            if($('#mets_leaderboard').prop('checked')){
+        if($('#amateur_lb').prop('checked')){
+            if($('#mets_lb').prop('checked')){
                 params.experience = 2; //experience to be sent for if else in controller to determine meteorologist filter
             } else {
                 params.experience = 0;
             } 
         } else {
-            if($('#mets_leaderboard').prop('checked')){
+            if($('#mets_lb').prop('checked')){
                 params.experience = 1;
             } else {
                 params.experience = 3;
@@ -67,24 +70,20 @@ $(document).ready(function(){
         }
     };
     function tabs(){ //which tab is active
-        var tab = $('.current').attr('id');
-        if(tab === 'all'){
+        var tab = $('.current_lb').attr('id');
+        if(tab === 'all_lb'){
             params.players = 1; //all players
-        } else if(tab === 'team') {
+        } else if(tab === 'team_lb') {
             params.players = 0; //players on user's team
         } 
     };
     
-    experience(); //run experience with default filters
-    tabs(); //run tabs with default tab
-    callAjax(params);
-    
-    $('.experienceFilter').change(function(){ //run experience when filters are adjusted
+    $('.exp_lb').change(function(){ //run experience when filters are adjusted
         experience();
         callAjax(params);
     });
-    $('.whom').click(function(){ //run tabs when tab is selected
-        $('.whom').toggleClass('current');
+    $('.whom_lb').click(function(){ //run tabs when tab is selected
+        $('.whom_lb').toggleClass('current_lb');
         tabs();
         callAjax(params);
     });
