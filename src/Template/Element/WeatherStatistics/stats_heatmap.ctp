@@ -1,4 +1,4 @@
-<div class="col col-xs-12 col-sm-12 col-md-6 col-xl-5 stats-col">
+<div class="col col-xs-12 col-sm-12 col-md-12 col-lg-6 stats-col">
     <div class="card sameheight-item" data-exclude="xs">
         <div class="card-header card-header-sm bordered">
             <div class="header-block">
@@ -20,15 +20,42 @@
                     <form action="" class="search-filter-heatmap collapse-me">
                         <div class="row">
                             <div class="col-md-4 col-sm-4">
-                                <strong>Date</strong>
-                                <label for="from_input_heatmap">From</label>
-                                <fieldset>
-                                    <input type="text" id="input_from_heatmap">
-                                </fieldset>
-                                <label for="to_input_heatmap">To</label>
-                                <fieldset>
-                                    <input type="text" id="input_to_heatmap">
-                                </fieldset>
+                                <div class="exp-filters">
+                                    <strong>Experience</strong>
+                                    <div class="can-toggle can-toggle--size-small">
+                                        <input id="amateur-heatmap" type="checkbox">
+                                        <label for="amateur-heatmap">
+                                            <div class="can-toggle__label-text">Enthusiasts</div>
+                                            <div class="can-toggle__switch enthusiasts-switch" data-checked="On" data-unchecked="Off"></div>
+                                        </label>
+                                    </div>
+                                    <div class="can-toggle can-toggle--size-small">
+                                        <input id="mets-heatmap" type="checkbox">
+                                        <label for="mets-heatmap">
+                                            <div class="can-toggle__label-text">Meteorologists</div>
+                                            <div class="can-toggle__switch mets-switch" data-checked="On" data-unchecked="Off"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="exp-filters">
+                                    <strong>Response</strong>
+                                    <div class="can-toggle can-toggle--size-small">
+                                        <input id="correct-heatmap" type="checkbox">
+                                        <label for="correct-heatmap">
+                                            <div class="can-toggle__label-text">Correct</div>
+                                            <div class="can-toggle__switch correct-switch" data-checked="On" data-unchecked="Off"></div>
+                                        </label>
+                                    </div>
+                                    <div class="can-toggle can-toggle--size-small">
+                                        <input id="incorrect-heatmap" type="checkbox">
+                                        <label for="incorrect-heatmap">
+                                            <div class="can-toggle__label-text">Incorrect</div>
+                                            <div class="can-toggle__switch incorrect-switch" data-checked="On" data-unchecked="Off"></div>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-4 col-sm-4">
                                 <strong>Event</strong>
@@ -54,24 +81,14 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-sm-4">
-                                <div class="exp-filters">
-                                    <p><strong>Experience</strong></p>
-                                    <div class="can-toggle can-toggle--size-small">
-                                        <input id="amateur-heatmap" type="checkbox">
-                                        <label for="amateur-heatmap">
-                                            <div class="can-toggle__label-text">Enthusiasts</div>
-                                            <div class="can-toggle__switch enthusiasts-switch" data-checked="On" data-unchecked="Off"></div>
-                                        </label>
-                                    </div>
-                                    <div class="can-toggle can-toggle--size-small">
-                                        <input id="mets-heatmap" type="checkbox">
-                                        <label for="mets-heatmap">
-                                            <div class="can-toggle__label-text">Meteorologists</div>
-                                            <div class="can-toggle__switch mets-switch" data-checked="On" data-unchecked="Off"></div>
-                                        </label>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <strong>Date</strong>
+                                <label for="from_input_heatmap">From</label>
+                                <input type="text" id="input_from_heatmap">
+                                <label for="to_input_heatmap">To</label>
+                                <input type="text" id="input_to_heatmap">
                             </div>
                         </div>
                     </form>
