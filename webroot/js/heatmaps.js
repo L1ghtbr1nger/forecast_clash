@@ -1,6 +1,6 @@
 // initialize leaflet map 
 var map = L.map('map', {
-    doubleClickZoom: false,
+    doubleClickZoom: false
 });
 
 map.setView([35.2226, -97.4395], 7);
@@ -9,13 +9,6 @@ L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
     maxZoom: 18,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
 }).addTo(map);
-
-map.on('click', function(e) {
-    var lat = e.latlng.lat;
-    var lng = e.latlng.lng;
-    console.log("Lat, Lon : " + lat + ", " + lng);
-
-});
 
 // Heatmap Layers
 var hm_met = L.heatLayer([
@@ -57,17 +50,17 @@ var both = document.getElementById('both');
 
 
 $(amateur).click(
-function() {
-    if ($(amateur).is(':checked')) {
-        hm_amateur.addTo(map);
-    } else {
+    function() {
+        if ($(amateur).is(':checked')) {
+            hm_amateur.addTo(map);
+        } else {
 
-    }
-});
+        }
+    });
 
 $(meteorologist).click(
-function() {
-    if ($(this).is(':checked')) {
-        hm_met.addTo(map);
-    }
-});
+    function() {
+        if ($(this).is(':checked')) {
+            hm_met.addTo(map);
+        }
+    });

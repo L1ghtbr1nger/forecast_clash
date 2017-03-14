@@ -1,4 +1,4 @@
-<div class="col col-xs-12 col-sm-12 col-md-6 col-xl-7 history-col">
+<div class="col col-xs-12 col-sm-12 col-md-12 col-lg-6 history-col">
     <div class="card sameheight-item" data-exclude="xs">
         <div class="card-header card-header-sm bordered">
             <div class="header-block">
@@ -107,10 +107,6 @@
 }
 </style>
 
-<link rel="stylesheet" href="../webroot/css/default.css">
-<link rel="stylesheet" href="../webroot/css/default.date.css">
-<?= $this->Html->script('picker'); ?>
-<?= $this->Html->script('picker.date'); ?>
 <script>
 $(document).ready(function() {
 
@@ -118,6 +114,7 @@ $(document).ready(function() {
         $('.search-filter-leaderboard').toggle('collapse-me');
         $('.leaderboard .fa-chevron-down').toggleClass('flip-me');
     });
-    
+
+
 })
 </script>
