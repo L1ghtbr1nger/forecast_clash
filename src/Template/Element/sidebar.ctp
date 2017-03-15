@@ -24,3 +24,19 @@
         </nav>
     </div>
 </aside>                        
+<div class="mobile-nav visible-sm visible-xs">
+    <ul>
+        <li class="play-link">
+            <a href="/forecast_clash"> <i class="fa fa-gamepad"></i> Play </a>
+        </li>
+        <li class="stats-link">
+            <i class="fa fa-bar-chart"></i><a href="/forecast_clash/weatherstatistics/stats">Statistics </a>
+        </li>
+        <li>
+            <a href="/forecast_clash/teams/dugout"> <i class="fa fa-users" aria-hidden="true"></i> Team </a>
+        </li>
+        <li class="contact-link">
+            <a href="/forecast_clash/pages/contact"> <i class="fa fa-comments-o" aria-hidden="true"></i> Contact </a>
+        </li>
+    </ul>
+</div>

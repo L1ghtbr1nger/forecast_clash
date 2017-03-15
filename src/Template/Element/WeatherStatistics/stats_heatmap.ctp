@@ -1,4 +1,9 @@
-<div class="col col-xs-12 col-sm-12 col-md-12 col-lg-6 stats-col">
+<style>
+    .col-md-4{
+        max-width: 200px;
+    }
+</style>
+<div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12 stats-col heatmap-element">
     <div class="card sameheight-item" data-exclude="xs">
         <div class="card-header card-header-sm bordered">
             <div class="header-block">
@@ -7,8 +12,10 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs pull-right" role="tablist">
                 <li role="presentation" id="all_hm" class="active whom_hm current_hm"><a href="#all_players" aria-controls="all_players" role="tab" data-toggle="tab">All Players</a></li>
-                <li role="presentation" id="team_hm" class="whom_hm"><a href="#team_players" aria-controls="team_players" role="tab" data-toggle="tab"><?= (($teamResult) ? h($teamUser['team']['team_name']) : '<a href="/forecast_clash/teams/dugout">Join Team</a>' ) ?></a></li>
-                <li role="presentation" id="self_hm" class="whom_hm"><a href="#self" aria-controls="self" role="tab" data-toggle="tab"><?= ((isset($user)) ? h($user['first_name']) : '<a href="/forecast_clash/users/login">Login</a>' ) ?></a></li>
+                <li role="presentation" id="team_hm" class="whom_hm"><a href="#team_players" aria-controls="team_players" role="tab" data-toggle="tab"><?= (($teamResult) ? h($teamUser['team']['team_name']) : '<a href="/forecast_clash/teams/dugout">Join Team</a>' ) ?></a>
+                </li>
+                <li role="presentation" id="self_hm" class="whom_hm"><a href="#self" aria-controls="self" role="tab" data-toggle="tab"><?= ((isset($user)) ? h($user['first_name']) : '<a href="/forecast_clash/users/login">Login</a>' ) ?></a>
+                </li>
             </ul>
         </div>
         <div class="card-block">
@@ -18,16 +25,7 @@
                     <h4 class="heatmap-filter-toggle">Filter&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i></h4>
                     <form action="" class="search-filter-heatmap collapse-me">      
                         <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                                <strong>Date</strong>
-                                <label for="from_input_heatmap">From</label>
-                                <input type="text" id="input_from_heatmap">
-                                <label for="to_input_heatmap">To</label>
-                                <input type="text" id="input_to_heatmap">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 col-sm-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <div class="exp-filters">
                                     <strong>Experience</strong>
                                     <div class="can-toggle can-toggle--size-small">
@@ -46,7 +44,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-sm-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <div class="exp-filters">
                                     <strong>Forecast</strong>
                                     <div class="can-toggle can-toggle--size-small">
@@ -65,7 +63,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-sm-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <strong>Event</strong>
                                 <div class="can-toggle can-toggle--size-small">
                                     <input id="tornado_hm" class="event_hm" type="checkbox" checked>
@@ -89,61 +87,67 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="col-md-12 col-sm-12">
+                                <strong>Date</strong>
+                                <label for="from_input_heatmap">From</label>
+                                <input type="text" id="input_from_heatmap">
+                                <label for="to_input_heatmap">To</label>
+                                <input type="text" id="input_to_heatmap">
+                            </div>
                         </div>
                     </form>
                     <article class="heatmap">
                         <div id="map"></div>
                     </article>
-                </div>
-                <!-- <div role="tabpanel" class="tab-pane" id="heatmap_team">
+                    </div>
+                    <!-- <div role="tabpanel" class="tab-pane" id="heatmap_team">
                         <div id="map_team"></div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="heatmap_user">
                          <div id="map_user"></div>
                     </div> -->
+                </div>
             </div>
         </div>
     </div>
-</div>
-<link rel="stylesheet" href="../webroot/css/default.css">
-<link rel="stylesheet" href="../webroot/css/default.date.css">
-<?= $this->Html->script('picker'); ?>
-<?= $this->Html->script('picker.date'); ?>
-<script>
+    <link rel="stylesheet" href="../webroot/css/default.css">
+    <link rel="stylesheet" href="../webroot/css/default.date.css">
+    <?= $this->Html->script('picker'); ?>
+        <?= $this->Html->script('picker.date'); ?>
+            <script>
+            // toggles filters
+            $('.heatmap-filter-toggle').click(function() {
+                $('.search-filter-heatmap').toggle('collapse-me');
+                $('.heatmap .fa-chevron-down').toggleClass('flip-me');
+            })
+            var from_input_heatmap = $('#input_from_heatmap').pickadate(),
+                from_picker_heatmap = from_input_heatmap.pickadate('picker')
 
-// toggles filters
-$('.heatmap-filter-toggle').click(function(){
-    $('.search-filter-heatmap').toggle('collapse-me');
-    $('.heatmap .fa-chevron-down').toggleClass('flip-me');
-})
-   var from_input_heatmap = $('#input_from_heatmap').pickadate(),
-        from_picker_heatmap = from_input_heatmap.pickadate('picker')
-
-    var to_input_heatmap = $('#input_to_heatmap').pickadate(),
-        to_picker_heatmap = to_input_heatmap.pickadate('picker')
-        console.log(to_input_heatmap);
-    // Check if there’s a “from” or “to” date to start with.
-    if (from_picker_heatmap.get('value')) {
-        to_picker_heatmap.set('min', from_picker_heatmap.get('select'))
-    }
-    if (to_picker_heatmap.get('value')) {
-        from_picker_heatmap.set('max', to_picker_heatmap.get('select'))
-    }
-
-    // When something is selected, update the “from” and “to” limits.
-    from_picker_heatmap.on('set', function(event) {
-        if (event.select) {
-            to_picker_heatmap.set('min', from_picker_heatmap.get('select'))
-        } else if ('clear' in event) {
-            to_picker_heatmap.set('min', false)
-        }
-    })
-
-    to_picker_heatmap.on('set', function(event) {
-            if (event.select) {
-                from_picker_heatmap.set('max', to_picker_heatmap.get('select'))
-            } else if ('clear' in event) {
-                from_picker_heatmap.set('max', false)
+            var to_input_heatmap = $('#input_to_heatmap').pickadate(),
+                to_picker_heatmap = to_input_heatmap.pickadate('picker')
+            console.log(to_input_heatmap);
+            // Check if there’s a “from” or “to” date to start with.
+            if (from_picker_heatmap.get('value')) {
+                to_picker_heatmap.set('min', from_picker_heatmap.get('select'))
             }
-        })
-</script>
+            if (to_picker_heatmap.get('value')) {
+                from_picker_heatmap.set('max', to_picker_heatmap.get('select'))
+            }
+
+            // When something is selected, update the “from” and “to” limits.
+            from_picker_heatmap.on('set', function(event) {
+                if (event.select) {
+                    to_picker_heatmap.set('min', from_picker_heatmap.get('select'))
+                } else if ('clear' in event) {
+                    to_picker_heatmap.set('min', false)
+                }
+            })
+
+            to_picker_heatmap.on('set', function(event) {
+                if (event.select) {
+                    from_picker_heatmap.set('max', to_picker_heatmap.get('select'))
+                } else if ('clear' in event) {
+                    from_picker_heatmap.set('max', false)
+                }
+            })
+            </script>

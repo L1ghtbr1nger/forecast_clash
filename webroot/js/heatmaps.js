@@ -1,6 +1,6 @@
 // initialize leaflet map 
 var map = L.map('map', {
-    doubleClickZoom: false,
+    doubleClickZoom: false
 });
 
 map.setView([35.2226, -97.4395], 7);

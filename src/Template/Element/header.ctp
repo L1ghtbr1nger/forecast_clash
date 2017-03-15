@@ -1,7 +1,7 @@
 <?php $session = $this->request->session();
 echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
 ?>
-<div class="header-block header-block-collapse hidden-lg-up">
+<div class="header-block header-block-collapse hidden-lg-up hidden-sm hidden-xs">
     <div class="header-block header-block-collapse hidden-lg-up">
         <span class="menu-open">
             <i class="fa fa-bars" aria-hidden="true"><span>Menu</span></i>
