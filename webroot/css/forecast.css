@@ -4351,16 +4351,20 @@ label {
     margin-bottom: 0;
 }
 
-.event-filters,
+/*.event-filters,
 .exp-filters {
     margin-top: 12px;
-}
+}*/
 
-.event-filters strong,
+/*.event-filters strong,
 .exp-filters strong {
     margin-bottom: 6px;
-}
+}*/
 
+
+.collapse-me .col-md-6, .collapse-me .col-md-4{
+    max-width: 150px;
+}
 .heatmap #heatmap-sidebar {
     max-width: 279px;
     width: 100%;
@@ -4651,20 +4655,13 @@ label {
 
 /* SVG GLOBAL */
 
-g,
-path,
-circle,
-rect {
-    -webkit-animation-iteration-count: infinite;
-    animation-iteration-count: infinite;
-    -webkit-animation-timing-function: linear;
-    animation-timing-function: linear;
-    -webkit-transform-origin: 50% 50%;
-    transform-origin: 50% 50%;
-    -webkit-animation-duration: 18s;
-    animation-duration: 18s;
-    -webkit-animation-direction: normal;
-    animation-direction: normal;
+svg:not(:root) {
+    overflow: visible;
+}
+
+.ct-chart-bar > g:nth-child(2) {
+    position: relative;
+    left: -62px;
 }
 
 
@@ -7921,7 +7918,11 @@ label[for="remember"] span {
 .leaflet-popup-tip-container {
     display: none;
 }
-
+.fa-chevron-down {
+    transform: rotateX(0deg);
+    transition: transform .5s ease;
+    cursor: pointer;
+}
 img[src="webroot/img/marker.png"] {
     margin-left: 0 !important;
     margin-top: 0 !important;
@@ -8125,3 +8126,6 @@ a[href='/forecast_clash/users/login?provider=Twitter']:focus {
     transition: all .4s !important;
     text-decoration: none;
 }
+
+
+/* Stats Page Thumbnail Layout */
