@@ -1,6 +1,10 @@
+var locations = [];
 $(document).ready(function(){
-    var params = {};
-    function callAjax(datum){
+    var paramsLB = {};
+    var paramsHM = {};
+    //
+    //Leaderboard
+    function callAjaxLB(datum){
         $.ajax({ //ajax call to get DB data for the leaderboard
             type: "POST",
             url: "/forecast_clash/weatherstatistics/stats.json",
@@ -49,43 +53,140 @@ $(document).ready(function(){
             }
         });
     };
-        
-    experience(); //run experience with default filters
-    tabs(); //run tabs with default tab
-    callAjax(params);
     
-    function experience(){ //which experience toggles are checked
+    function experienceLB(){ //which experience toggles are checked
         if($('#amateur_lb').prop('checked')){
             if($('#mets_lb').prop('checked')){
-                params.experience = 2; //experience to be sent for if else in controller to determine meteorologist filter
+                paramsLB.experience = 2; //amateur: checked, meteorologist: checked
             } else {
-                params.experience = 0;
+                paramsLB.experience = 0; //amateur: checked, meteorologist: unchecked
             } 
         } else {
             if($('#mets_lb').prop('checked')){
-                params.experience = 1;
+                paramsLB.experience = 1; //amateur: unchecked, meteorologist: checked
             } else {
-                params.experience = 3;
+                paramsLB.experience = 3; //amateur: unchecked, meteorologist: unchecked
             }
         }
     };
-    function tabs(){ //which tab is active
+    function tabsLB(){ //which tab is active
         var tab = $('.current_lb').attr('id');
         if(tab === 'all_lb'){
-            params.players = 1; //all players
+            paramsLB.players = 1; //all players
         } else if(tab === 'team_lb') {
-            params.players = 0; //players on user's team
+            paramsLB.players = 0; //players on user's team
         } 
     };
     
     $('.exp_lb').change(function(){ //run experience when filters are adjusted
-        experience();
-        callAjax(params);
+        experienceLB();
+        callAjaxLB(paramsLB);
     });
     $('.whom_lb').click(function(){ //run tabs when tab is selected
-        $('.whom_lb').toggleClass('current_lb');
-        tabs();
-        callAjax(params);
+        if(!$(this).hasClass('current_lb')) {
+            $('.whom_lb').toggleClass('current_lb');
+            tabsLB();
+            callAjaxLB(paramsLB);
+        }
     });
+    
+    tabsLB(); //run tabs with default tab
+    experienceLB(); //run experience with default filters
+    callAjaxLB(paramsLB);
+    
+    //
+    //Heatmap
+    var heatmap;
+    function callAjaxHM(filters){
+        $.ajax({ //ajax call to get DB data for the leaderboard
+            type: "POST",
+            url: "/forecast_clash/historicalforecasts/heatmap.json",
+            dataType: 'json',
+            data: filters,
+            success : function(response){
+                locations = response['heatmap'];
+                // Heatmap Layers
+                if(typeof heatmap !== 'undefined'){
+                    map.removeLayer(heatmap); 
+                }
+                heatmap = L.heatLayer(locations, { radius: 25 }).addTo(map);
+            },
+            error : function(){   
+            
+            }
+        });
+    };
+    
+    function tabsHM(){ //which tab is active
+        var tab = $('.current_hm').attr('id');
+        if(tab === 'all_hm'){
+            paramsHM.players = 2; //all players
+        } else if(tab === 'team_hm') {
+            paramsHM.players = 1; //players on user's team
+        } else if(tab === 'self_hm') {
+            paramsHM.players = 0; //only user
+        } 
+    };
+    function experienceHM(){ //which experience toggles are checked
+        if($('#amateur_hm').prop('checked') && $('#mets_hm').prop('checked')){
+            paramsHM.experience = 2; //amateur: checked, meteorologist: checked
+        } else if($('#mets_hm').prop('checked')){
+            paramsHM.experience = 1; //amateur: unchecked, meteorologist: checked
+        } else if($('#amateur_hm').prop('checked')) {
+            paramsHM.experience = 0; //amateur: checked, meteorologist: unchecked
+        } else {
+            paramsHM.experience = 3; //amateur: unchecked, meteorologist: unchecked
+        }
+    };
+    function forecastHM(){ //which experience toggles are checked
+        if($('#correct_hm').prop('checked') && $('#incorrect_hm').prop('checked')){
+            paramsHM.correct = 2; //amateur: checked, meteorologist: checked
+        } else if($('#correct_hm').prop('checked')){
+            paramsHM.correct = 1; //amateur: unchecked, meteorologist: checked
+        } else if($('#incorrect_hm').prop('checked')) {
+            paramsHM.correct = 0; //amateur: checked, meteorologist: unchecked
+        } else {
+            paramsHM.correct = 3; //amateur: unchecked, meteorologist: unchecked
+        }
+    };
+    function weatherHM(){ //which experience toggles are checked
+        paramsHM['events'] = [-1];
+        if($('#tornado_hm').prop('checked')){
+            paramsHM['events'].push(1); //tornado: checked
+        }
+        if($('#hail_hm').prop('checked')){
+            paramsHM['events'].push(2); //hail: checked
+        }
+        if($('#wind_hm').prop('checked')){
+            paramsHM['events'].push(3); //wind: checked
+        }
+    };
+    
+    $('.whom_hm').click(function(){ //run tabs when tab is selected
+        if(!$(this).hasClass('current_hm')) {
+            $('.current_hm').toggleClass('current_hm');
+            $(this).addClass('current_hm');
+            tabsHM;
+            callAjaxHM(paramsHM);
+        }
+    });
+    $('.exp_hm').change(function(){ //run experience when filters are adjusted
+        experienceHM();
+        callAjaxHM(paramsHM);
+    });
+    $('.forecast_hm').change(function(){ //run experience when filters are adjusted
+        forecastHM();
+        callAjaxHM(paramsHM);
+    });
+    $('.event_hm').change(function(){ //run experience when filters are adjusted
+        weatherHM();
+        callAjaxHM(paramsHM);
+    });
+    
+    tabsHM(); //run tabs with default tab
+    experienceHM(); //run experience with default filters
+    forecastHM(); //run filter for correct or incorrect
+    weatherHM(); //run weather events filter
+    callAjaxHM(paramsHM);
 });
 

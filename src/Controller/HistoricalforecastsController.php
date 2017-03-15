@@ -137,7 +137,6 @@ class HistoricalforecastsController extends AppController
                 $lat = $row['latitude'];
                 $lon = $row['longitude'];
                 $am_pm = $row['am_pm'];
-                debug($am_pm);
                 $radius = $row['radius'];
                 if (!$am_pm) {
                     $begin = $datePrev->format('Y-m-d').'T00:00:00Z';
@@ -148,25 +147,18 @@ class HistoricalforecastsController extends AppController
                 }
                 $begin = strtotime($begin);
                 $end = strtotime($end);
-                debug(date('Y-m-d H:i:s', $begin));
-                debug(date('Y-m-d H:i:s', $end));
                 $http = new Client();
                 $correct = $this->Historicalforecasts->get($row['id']);
-                debug($correct);
                 $params = 'client_id='.$appID.'&client_secret='.$appKey.'&p='.$lat.','.$lon.'&radius='.$radius.'mi&limit=1&from='.$begin.'$to='.$end;
-                debug($params);
                 if ($weather === 1) {
                     $responseTornado = $http->get('https://api.aerisapi.com/stormreports/within?filter=tornado&fields=place.state,report.timestamp,loc.lat,loc.long&'.$params);
                     $jsonResponse = $responseTornado->json;
-                    debug($jsonResponse);
                 } else if ($weather === 2) {
                     $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&fields=place.state,report.timestamp,loc.lat,loc.long&'.$params);
                     $jsonResponse = $responseHail->json;
-                    debug($jsonResponse);
                 } else {
                     $responseWind = $http->get('https://api.aerisapi.com/observations/within?query=wind:21.7&fields=place.state,ob.dateTimeISO,loc.lat,loc.long&filter=allstations&'.$params);
                     $jsonResponse = $responseWind->json;
-                    debug($jsonResponse);
                 }
                 $weatherStats = TableRegistry::get('WeatherStatistics');
                 $weatherStat = $weatherStats->find()->where(['user_id' => $user, 'weather_event_id' => $weather]);
@@ -223,6 +215,57 @@ class HistoricalforecastsController extends AppController
             }
         }
         die;
+    }
+    
+    public function heatmap() {
+        if ($this->request->is('ajax')) {
+            $session = $this->request->session();
+            $userID = $session->read('Auth.User.id');
+            $teamsUsers = TableRegistry::get('TeamsUsers');
+            $teamUser = $teamsUsers->find()->where(['TeamsUsers.user_id' => $userID])->first(); //look for user's team
+            $data = $this->request->data;
+            $exp = $data['experience']; //meteorologist and/or weather enthusiast or neither
+            $players = intval($data['players']); //which player tab
+            $weather = $data['events']; //which weather events or none
+            $correct = $data['correct'];
+            $heatmapStats = $this->Historicalforecasts->find('all')->where(['weather_event_id IN' => $weather]);
+            if($players === 0) { //just the user's stats
+                $heatmapStats = $heatmapStats->where(['$user_id' => $userID]);
+            } else if ($players === 1) { //just the user's team's stats
+                $heatmapStats = $heatmapStats->contain([
+                    'TeamsUsers' => function($q) use($teamUser) {
+                        return $q->where(['TeamsUsers.team_id' => $teamUser['team_id']]);
+                    }
+                ]);
+            } //no WHERE clause needed for all users state
+            if ($exp == 3) {
+                $exp = null;
+            }
+            if ($exp != 2) {  
+                $heatmapStats = $heatmapStats->contain([
+                    'Users' => function($q) use($exp) {
+                        return $q->where(['Users.meteorologist' => $exp]);
+                    }
+                ]);
+            }
+            if ($correct == 3) {
+                $correct = null;
+            }
+            if ($correct != 2) {  
+                $heatmapStats = $heatmapStats->where(['correct' => $correct]);
+            }  
+            if ($heatmapStats = $heatmapStats->toArray()) {
+                $result = 1;
+                foreach($heatmapStats as $heatmapStat) {
+                    $heatmap[] = [$heatmapStat['latitude'], $heatmapStat['longitude'], 300];
+                }
+            } else {
+                $result = 0;
+                $heatmap = [];
+            }
+            echo json_encode(['result' => $result, 'heatmap' => $heatmap, 'user_id' => $userID]);
+            die;
+        }
     }
     
     public function beforeFilter(Event $event){

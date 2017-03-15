@@ -50,6 +50,15 @@ class HistoricalforecastsTable extends Table
             'foreignKey' => 'admin_event_id',
             'joinType' => 'INNER'
         ]);
+        
+        $this->hasMany('TeamsUsers', [
+            'foreignKey' => [
+                'user_id'
+            ],
+            'bindingKey' => [
+                'user_id'
+            ]
+        ]);
     }
 
     /**

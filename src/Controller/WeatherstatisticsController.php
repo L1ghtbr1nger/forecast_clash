@@ -186,16 +186,15 @@ class WeatherstatisticsController extends AppController
         $session = $this->request->session();
         $userID = $session->read('Auth.User.id');
         $teamsUsers = TableRegistry::get('TeamsUsers');
-        $teamUser = $teamsUsers->find()->where(['TeamsUsers.user_id' => $userID])->contain('Teams'); //look for user's team
-        $teamUserArray = $teamUser->toArray();
+        $teamUser = $teamsUsers->find()->where(['TeamsUsers.user_id' => $userID])->contain('Teams')->toArray(); //look for user's team
         $scoreboard = TableRegistry::get('Scores');
         $scores = $scoreboard->find('all')->order(['Scores.total_score' => 'DESC'])->limit(20)->contain(['WeatherStatistics' => ['WeatherEvents']]);
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
-            $exp = intval($data['experience']);
-            $players = intval($data['players']);
-            if (!$players) {
-                $scores = $teamsUsers->find()->where(['team_id' => $teamUserArray[0]['team_id']])->contain([
+            $exp = intval($data['experience']); //leaderboard experience filter
+            $players = intval($data['players']); //leaderboard tabs
+            if (!$players) { //if team tab clicked
+                $scores = $teamsUsers->find()->where(['team_id' => $teamUser[0]['team_id']])->contain([
                     'Scores' => function($u) {
                         return $u->order(['Scores.total_score' => 'DESC']);
                     }
@@ -208,9 +207,9 @@ class WeatherstatisticsController extends AppController
             echo json_encode(['result' => $result, 'leaderboard' => $board, 'user_id' => $userID]);
             die;
         } else {
-            if ($teamUserArray) { //check if team was found
+            if ($teamUser) { //check if team was found
                 $this->set('teamResult', 1); //user has team
-                $this->set('teamUser', $teamUserArray[0]); //save user's team info for view
+                $this->set('teamUser', $teamUser[0]); //save user's team info for view
             } else {
                 $this->set('teamResult', 0); //user does not have team
             }
@@ -229,7 +228,7 @@ class WeatherstatisticsController extends AppController
                 $this->set('leaderboard', $board); //share with view
             }
         }   
-    }      
+    }
     
     public function beforeFilter(Event $event){
         parent::beforeFilter($event);

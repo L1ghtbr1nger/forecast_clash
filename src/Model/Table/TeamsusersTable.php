@@ -63,6 +63,15 @@ class TeamsusersTable extends Table
                 'user_id'
             ]
         ]);
+        
+        $this->hasMany('HistoricalForecasts', [
+            'foreignKey' => [
+                'user_id'
+            ],
+            'bindingKey' => [
+                'user_id'
+            ]
+        ]);
     }
 
     /**
