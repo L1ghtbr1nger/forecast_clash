@@ -1,6 +1,6 @@
 <div class="auth">
     <div class="auth-container">
-        <a href="#" class="logo"><img src="../webroot/img/logo-light-blue" alt="Forecast Clash Logo"> </a>
+        <a href="#" class="logo"><img src="../webroot/img/logo-light-blue.png" alt="Forecast Clash Logo"> </a>
         <div class="card">
             <div class="auth-content">
                 <p class="text-xs-center">SIGNUP TO PLAY</p>
@@ -18,17 +18,6 @@
                                         'label' => 'Last Name',
                                         'class' => 'form-control underlined'
                                     ]); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <?= $this->Form->label('meteorologist', 'What is your experience?'); ?>
-                                <?= $this->Form->radio('meteorologist', [
-                                ['value' => 1, 'text' => 'Meteorologist', 'name' => 'Experience', 'id' => 'meteorologist'],
-                                ['value' => 0, 'text' => 'Weather Enthusiast', 'name' => 'Experience', 'id' => 'weather_enthusiast']
-                            ]); ?>
                             </div>
                         </div>
                     </div>
@@ -54,6 +43,17 @@
                                         'type' => 'password',
                                        'class' => 'form-control underlined'
                                     ]); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <?= $this->Form->label('meteorologist', 'What is your experience?'); ?>
+                                <?= $this->Form->radio('meteorologist', [
+                                ['value' => 1, 'text' => 'Meteorologist', 'name' => 'Experience', 'id' => 'meteorologist'],
+                                ['value' => 0, 'text' => 'Weather Enthusiast', 'name' => 'Experience', 'id' => 'weather_enthusiast']
+                            ]); ?>
                             </div>
                         </div>
                     </div>
