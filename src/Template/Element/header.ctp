@@ -67,9 +67,7 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
             <img src="" alt=""></span>
             </a>
             <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
-                <a class="dropdown-item" href="#"> <i class="fa fa-user icon"></i> Profile </a>
-                <a class="dropdown-item" href="#"> <i class="fa fa-bell icon"></i> Notifications </a>
-                <a class="dropdown-item" href="#"> <i class="fa fa-gear icon"></i> Settings </a>
+                <a class="dropdown-item" href="/forecast_clash/Profiles/profile"> <i class="fa fa-user icon"></i> Profile </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="/forecast_clash/users/logout"> <i class="fa fa-power-off icon"></i> Logout </a>
             </div>

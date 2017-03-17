@@ -41,32 +41,35 @@ body {
     font-size: 15px;
 }
 
+.app {
+    min-height: 100vh;
+}
+
 .app .content {
     padding: 95px 20px 75px 20px;
-    min-height: 100vh;
 }
 
 @media (min-width: 1200px) {
     .app .content {
-        padding: 105px 0 85px 0;
+        padding: 60px 0 85px 0;
     }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
     .app .content {
-        padding: 100px 35px 80px 35px;
+        padding: 60px 35px 80px 35px;
     }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
     .app .content {
-        padding: 95px 20px 75px 20px;
+        padding: 60px 20px 75px 20px;
     }
 }
 
 @media (max-width: 767px) {
     .app .content {
-        padding: 70px 20px 70px 20px;
+        padding: 60px 20px 70px 20px;
     }
 }
 
@@ -2256,6 +2259,11 @@ span a {
     background: rgb(61, 182, 239);
 }
 
+.no-results {
+    padding: 8px;
+    margin-bottom: 0;
+}
+
 .table label {
     margin-bottom: 0;
 }
@@ -3335,7 +3343,7 @@ pre {
 
 .header {
     background-color: #d7dde4;
-    height: 70px;
+    height: 46px;
     position: absolute;
     left: 230px;
     right: 0;
@@ -4351,20 +4359,23 @@ label {
     margin-bottom: 0;
 }
 
+
 /*.event-filters,
 .exp-filters {
     margin-top: 12px;
 }*/
+
 
 /*.event-filters strong,
 .exp-filters strong {
     margin-bottom: 6px;
 }*/
 
-
-.collapse-me .col-md-6, .collapse-me .col-md-4{
+.collapse-me .col-md-6,
+.collapse-me .col-md-4 {
     max-width: 150px;
 }
+
 .heatmap #heatmap-sidebar {
     max-width: 279px;
     width: 100%;
@@ -7697,7 +7708,7 @@ svg:not(:root) {
 /* Play Map */
 
 .play-container {
-    padding: 7vh 0 0 0;
+    padding: 45px 0 0 0;
 }
 
 #play-sidebar .climacon {
@@ -7918,11 +7929,13 @@ label[for="remember"] span {
 .leaflet-popup-tip-container {
     display: none;
 }
+
 .fa-chevron-down {
     transform: rotateX(0deg);
     transition: transform .5s ease;
     cursor: pointer;
 }
+
 img[src="webroot/img/marker.png"] {
     margin-left: 0 !important;
     margin-top: 0 !important;
