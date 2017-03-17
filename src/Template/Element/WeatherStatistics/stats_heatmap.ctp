@@ -12,9 +12,9 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs pull-right" role="tablist">
                 <li role="presentation" id="all_hm" class="active whom_hm current_hm"><a href="#all_players" aria-controls="all_players" role="tab" data-toggle="tab">All Players</a></li>
-                <li role="presentation" id="team_hm" class="whom_hm"><a href="#team_players" aria-controls="team_players" role="tab" data-toggle="tab"><?= (($teamResult) ? h($teamUser['team']['team_name']) : '<a href="/forecast_clash/teams/dugout">Join Team</a>' ) ?></a>
+                <li role="presentation" id="team_hm" class="<?= (($teamResult) ? 'whom_hm' : '' ) ?>"><a href="#team_players" aria-controls="team_players" role="tab" data-toggle="tab"><?= (($teamResult) ? h($teamUser['team']['team_name']) : '<a href="/forecast_clash/teams/dugout">Join Team</a>' ) ?></a>
                 </li>
-                <li role="presentation" id="self_hm" class="whom_hm"><a href="#self" aria-controls="self" role="tab" data-toggle="tab"><?= ((isset($user)) ? h($user['first_name']) : '<a href="/forecast_clash/users/login">Login</a>' ) ?></a>
+                <li role="presentation" id="self_hm" class="<?= ((isset($user)) ? 'whom_hm' : '' ) ?>"><a href="#self" aria-controls="self" role="tab" data-toggle="tab"><?= ((isset($user)) ? h($user['first_name']) : '<a href="/forecast_clash/users/login">Login</a>' ) ?></a>
                 </li>
             </ul>
         </div>
@@ -99,55 +99,49 @@
                     <article class="heatmap">
                         <div id="map"></div>
                     </article>
-                    </div>
-                    <!-- <div role="tabpanel" class="tab-pane" id="heatmap_team">
-                        <div id="map_team"></div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="heatmap_user">
-                         <div id="map_user"></div>
-                    </div> -->
                 </div>
             </div>
         </div>
     </div>
-    <link rel="stylesheet" href="../webroot/css/default.css">
-    <link rel="stylesheet" href="../webroot/css/default.date.css">
-    <?= $this->Html->script('picker'); ?>
-        <?= $this->Html->script('picker.date'); ?>
-            <script>
-            // toggles filters
-            $('.heatmap-filter-toggle').click(function() {
-                $('.search-filter-heatmap').toggle('collapse-me');
-                $('.heatmap .fa-chevron-down').toggleClass('flip-me');
-            })
-            var from_input_heatmap = $('#input_from_heatmap').pickadate(),
-                from_picker_heatmap = from_input_heatmap.pickadate('picker')
+</div>
+<link rel="stylesheet" href="../webroot/css/default.css">
+<link rel="stylesheet" href="../webroot/css/default.date.css">
+<?= $this->Html->script('picker'); ?>
+<?= $this->Html->script('picker.date'); ?>
+<script>
+    // toggles filters
+    $('.heatmap-filter-toggle').click(function() {
+        $('.search-filter-heatmap').toggle('collapse-me');
+        $('.heatmap .fa-chevron-down').toggleClass('flip-me');
+    })
+    var from_input_heatmap = $('#input_from_heatmap').pickadate(),
+        from_picker_heatmap = from_input_heatmap.pickadate('picker')
 
-            var to_input_heatmap = $('#input_to_heatmap').pickadate(),
-                to_picker_heatmap = to_input_heatmap.pickadate('picker')
-            console.log(to_input_heatmap);
-            // Check if there’s a “from” or “to” date to start with.
-            if (from_picker_heatmap.get('value')) {
-                to_picker_heatmap.set('min', from_picker_heatmap.get('select'))
-            }
-            if (to_picker_heatmap.get('value')) {
-                from_picker_heatmap.set('max', to_picker_heatmap.get('select'))
-            }
+    var to_input_heatmap = $('#input_to_heatmap').pickadate(),
+        to_picker_heatmap = to_input_heatmap.pickadate('picker')
+    console.log(to_input_heatmap);
+    // Check if there’s a “from” or “to” date to start with.
+    if (from_picker_heatmap.get('value')) {
+        to_picker_heatmap.set('min', from_picker_heatmap.get('select'))
+    }
+    if (to_picker_heatmap.get('value')) {
+        from_picker_heatmap.set('max', to_picker_heatmap.get('select'))
+    }
 
-            // When something is selected, update the “from” and “to” limits.
-            from_picker_heatmap.on('set', function(event) {
-                if (event.select) {
-                    to_picker_heatmap.set('min', from_picker_heatmap.get('select'))
-                } else if ('clear' in event) {
-                    to_picker_heatmap.set('min', false)
-                }
-            })
+    // When something is selected, update the “from” and “to” limits.
+    from_picker_heatmap.on('set', function(event) {
+        if (event.select) {
+            to_picker_heatmap.set('min', from_picker_heatmap.get('select'))
+        } else if ('clear' in event) {
+            to_picker_heatmap.set('min', false)
+        }
+    })
 
-            to_picker_heatmap.on('set', function(event) {
-                if (event.select) {
-                    from_picker_heatmap.set('max', to_picker_heatmap.get('select'))
-                } else if ('clear' in event) {
-                    from_picker_heatmap.set('max', false)
-                }
-            })
-            </script>
+    to_picker_heatmap.on('set', function(event) {
+        if (event.select) {
+            from_picker_heatmap.set('max', to_picker_heatmap.get('select'))
+        } else if ('clear' in event) {
+            from_picker_heatmap.set('max', false)
+        }
+    })
+</script>

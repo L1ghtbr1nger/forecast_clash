@@ -54,7 +54,6 @@
             </div>
         </div>
     </div>
-
     <div class="col col-xs-12 col-sm-12 col-md-6 col-xl-7 history-col">
         <div class="card sameheight-item" data-exclude="xs">
             <div class="card-header card-header-sm bordered">
@@ -88,6 +87,32 @@
                         ?>
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+    <div class="col col-xs-12 col-sm-12 col-md-6 col-xl-7 history-col">
+        <div class="card sameheight-item" data-exclude="xs">
+            <div class="card-header card-header-sm bordered">
+                <div class="header-block">
+                    <h4>Locker Room</h4>
+                </div>
+            </div>
+            <div class="card-block">
+                <div id="chatWindow"></div>
+                <?= $this->Form->create(); ?>
+                <div class="form-group">
+                    <?= $this->Form->input('message', [
+                        'label' => 'Huddle up with the team:',
+                        'class' => 'form-control underlined',
+                        'autocomplete' => 'off'
+                    ]); ?>
+                    <?= $this->Form->button('Post Message', [
+                        'id' => 'chatButton',
+                        'class' => 'btn btn-block btn-primary chatter',
+                        'type' => 'submit'
+                    ]); ?>
+                </div>
+                <?= $this->Form->end(); ?>
             </div>
         </div>
     </div>
