@@ -230,13 +230,12 @@ class HistoricalforecastsController extends AppController
             $correct = $data['correct'];
             $heatmapStats = $this->Historicalforecasts->find('all')->where(['weather_event_id IN' => $weather]);
             if($players === 0) { //just the user's stats
-                $heatmapStats = $heatmapStats->where(['$user_id' => $userID]);
+                $heatmapStats = $heatmapStats->where(['user_id' => $userID]);
             } else if ($players === 1) { //just the user's team's stats
-                $heatmapStats = $heatmapStats->contain([
-                    'TeamsUsers' => function($q) use($teamUser) {
+                $heatmapStats = $heatmapStats->matching('TeamsUsers', function($q) use($teamUser) {
                         return $q->where(['TeamsUsers.team_id' => $teamUser['team_id']]);
                     }
-                ]);
+                );
             } //no WHERE clause needed for all users state
             if ($exp == 3) {
                 $exp = null;

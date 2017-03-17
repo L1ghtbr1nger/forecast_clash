@@ -166,7 +166,7 @@ $(document).ready(function(){
         if(!$(this).hasClass('current_hm')) {
             $('.current_hm').toggleClass('current_hm');
             $(this).addClass('current_hm');
-            tabsHM;
+            tabsHM();
             callAjaxHM(paramsHM);
         }
     });
