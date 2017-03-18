@@ -4639,12 +4639,6 @@ label {
 
 /* Weather Icons */
 
-
-/* VARIABLES */
-
-
-/* Applies a stroke to the icons. Can use percentage for responsive */
-
 .climacon_component-stroke {
     fill: white;
     stroke-width: 0%;
@@ -4673,6 +4667,67 @@ svg:not(:root) {
 .ct-chart-bar > g:nth-child(2) {
     position: relative;
     left: -62px;
+}
+
+.climacon_component-stroke {
+    fill: white;
+    stroke-width: 0%;
+    stroke: black;
+}
+
+.climacon_component-fill {
+    fill: #aedef4;
+    stroke-width: 0%;
+    stroke: black;
+}
+
+.easy-click span svg g g path {
+    fill: rgb(61, 182, 239);
+}
+
+.leaflet-div-icon.extend-icon {
+    width: 16px !important;
+    height: 16px !important;
+    margin-left: -8px !important;
+    margin-top: -8px !important;
+}
+
+.leaflet-div-icon.extend-icon-medium {
+    width: 12px !important;
+    height: 12px !important;
+    margin-left: -6px !important;
+    margin-top: -6px !important;
+}
+
+.leaflet-div-icon.extend-icon-xl {
+    width: 20px !important;
+    height: 20px !important;
+    margin-left: -10px !important;
+    margin-top: -10px !important;
+}
+
+
+/* GLOBAL */
+
+*,
+*:after,
+*:before {
+    box-sizing: border-box;
+}
+
+g,
+path,
+rect {
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-animation-duration: 18s;
+    animation-duration: 18s;
+    -webkit-animation-direction: normal;
+    animation-direction: normal;
 }
 
 
