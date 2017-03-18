@@ -1,8 +1,9 @@
+
 <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6 guesses-bar-element stats-col">
     <div class="card sameheight-item" data-exclude="xs">
         <div class="card-header card-header-sm bordered">
             <div class="header-block">
-                <h4>Correct Guesses</h4>
+                <h4>Correct Forecasts</h4>
             </div>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs pull-right" role="tablist">
@@ -45,8 +46,8 @@
                         <section class="example">
                             <div class="chart">
                                 <div class="legend pull-right">
-                                    <div><span class="legend-square-a"></span>Guesses</div>
-                                    <div><span class="legend-square-b"></span>Corrrect</div>
+                                    <div><span class="legend-square-a"></span>Forecasts</div>
+                                    <div><span class="legend-square-b"></span>Correct Forecasts</div>
                                 </div>
                                 <div class="bar-chart ct-chart">
                                 </div>

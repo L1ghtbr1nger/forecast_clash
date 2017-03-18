@@ -45,7 +45,7 @@ $(document).ready(function(){
                         inserted += '<td>'+((total < 100) ? total.toFixed(2) : total.toFixed(0))+'%</td></tr>';
                     });
                 } else {
-                    var inserted = 'NO RESULTS FOUND FOR GIVEN FILTERS';
+                    var inserted = '<p class="no-results">No results found for the given filters.</p>';
                 }
                 $('#leaders').html(inserted); 
             },
