@@ -113,25 +113,130 @@ class HistoricalForecastsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $historicalForecast = $this->HistoricalForecasts->get($id);
-        if ($this->HistoricalForecasts->delete($historicalForecast)) {
-            $this->Flash->success(__('The historical forecast has been deleted.'));
+        $historicalforecast = $this->Historicalforecasts->get($id);
+        if ($this->Historicalforecasts->delete($historicalforecast)) {
+            $this->Flash->success(__('The historicalforecast has been deleted.'));
         } else {
-            $this->Flash->error(__('The historical forecast could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The historicalforecast could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
-    }-yers = intval($data['players']); //which player tab
+    }
+    
+    public function compares() {
+        $datePrev = new Date();
+        $datePrev->modify('-3 days');
+        $query = $this->Historicalforecasts->find()->where(['forecast_date' => $datePrev]);
+        if ($query->toArray()) {
+            debug($query);
+            foreach ($query as $row) {
+                $appID = 'zihaMoPWm6nYiFjubD6Ox';
+                $appKey = 'Xj8hcr1gb9C1NVvEPALlZmvX38wXsjb9ArN8e7Pw';
+                $user = $row['user_id'];
+                $weather = $row['weather_event_id'];
+                $lat = $row['latitude'];
+                $lon = $row['longitude'];
+                $am_pm = $row['am_pm'];
+                $radius = $row['radius'];
+                if (!$am_pm) {
+                    $begin = $datePrev->format('Y-m-d').'T00:00:00Z';
+                    $end = $datePrev->format('Y-m-d').'T11:59:59Z';
+                } else {
+                    $begin = $datePrev->format('Y-m-d').'T12:00:00Z';
+                    $end = $datePrev->format('Y-m-d').'T23:59:59Z';
+                }
+                $begin = strtotime($begin);
+                $end = strtotime($end);
+                $http = new Client();
+                $correct = $this->Historicalforecasts->get($row['id']);
+                $params = 'client_id='.$appID.'&client_secret='.$appKey.'&p='.$lat.','.$lon.'&radius='.$radius.'mi&limit=1&from='.$begin.'$to='.$end;
+                if ($weather === 1) {
+                    $responseTornado = $http->get('https://api.aerisapi.com/stormreports/within?filter=tornado&fields=place.state,report.timestamp,loc.lat,loc.long&'.$params);
+                    $jsonResponse = $responseTornado->json;
+                } else if ($weather === 2) {
+                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&fields=place.state,report.timestamp,loc.lat,loc.long&'.$params);
+                    $jsonResponse = $responseHail->json;
+                } else {
+                    $responseWind = $http->get('https://api.aerisapi.com/observations/within?query=wind:21.7&fields=place.state,ob.dateTimeISO,loc.lat,loc.long&filter=allstations&'.$params);
+                    $jsonResponse = $responseWind->json;
+                }
+                $weatherStats = TableRegistry::get('WeatherStatistics');
+                $weatherStat = $weatherStats->find()->where(['user_id' => $user, 'weather_event_id' => $weather]);
+                if ($jsonResponse['error']['code'] == 'warn_no_data') { //if no events were found, mark forecast as incorrect.
+                    $correct->correct = 0;
+                    if ($statResult = $weatherStat->first()) {
+                        $statResult->attempts = $statResult['attempts'] + 1;
+                        $statResult->radius = $statResult['radius'] + $radius;
+                        $statResult->forecast_length = $statResult['forecast_length'] + $row['forecast_length'];
+                    } else {
+                        $statResult = $weatherStats->newEntity();
+                        $statResult->user_id = $user;
+                        $statResult->weather_event_id = $weather;
+                        $statResult->attempts = 1;
+                        $statResult->valid_attempts = 0;
+                        $statResult->radius = $radius;
+                        $statResult->forecast_length = $row['forecast_length'];
+                    }
+                } else { //if any events were found, mark forecast as correct and add to user's score and weatherstats.
+                    $correct->correct = 1;
+                    if ($statResult = $weatherStat->first()) {
+                        $statResult->attempts = $statResult['attempts'] + 1;
+                        $statResult->valid_attempts = $statResult['valid_attempts'] + 1;
+                        $statResult->radius = $statResult['radius'] + $radius;
+                        $statResult->forecast_length = $statResult['forecast_length'] + $row['forecast_length'];
+                    } else {
+                        $statResult = $weatherStats->newEntity();
+                        $statResult->user_id = $user;
+                        $statResult->weather_event_id = $weather;
+                        $statResult->attempts = 1;
+                        $statResult->valid_attempts = 1;
+                        $statResult->radius = $radius;
+                        $statResult->forecast_length = $row['forecast_length'];
+                    }
+                    $radiusMult = 2.1 - ($radius * 2 / 100);
+                    $adminMult = 1;//AdminEvent multiplier needed
+                    $length = $row['forecast_length'];
+                    $days = round($length / 24);
+                    $timeMult = 1 + ($days / 10);
+                    $scoreboard = TableRegistry::get('Scores');
+                    $score = $scoreboard->find()->where(['user_id' => $user]);
+                    if ($result = $score->first()) {
+                        $newScore = $result['total_score'] + (10 * $radiusMult * $timeMult * $adminMult);                        
+                    } else {
+                        $result = $scoreboard->newEntity();
+                        $result->user_id = $user;
+                        $newScore = 10 * $radiusMult * $timeMult * $adminMult;
+                    }
+                    $result->total_score = $newScore;
+                    $scoreboard->save($result);
+                }
+                $weatherStats->save($statResult);
+                $this->Historicalforecasts->save($correct);
+            }
+        }
+        die;
+    }
+    
+    public function heatmap() {
+        if ($this->request->is('ajax')) {
+            $session = $this->request->session();
+            $userID = $session->read('Auth.User.id');
+            $teamsUsers = TableRegistry::get('TeamsUsers');
+            $teamUser = $teamsUsers->find()->where(['TeamsUsers.user_id' => $userID])->first(); //look for user's team
+            $data = $this->request->data;
+            $exp = $data['experience']; //meteorologist and/or weather enthusiast or neither
+            $players = intval($data['players']); //which player tab
             $weather = $data['events']; //which weather events or none
             $correct = $data['correct'];
             $heatmapStats = $this->Historicalforecasts->find('all')->where(['weather_event_id IN' => $weather]);
             if($players === 0) { //just the user's stats
-                $heatmapStats = $heatmapStats->where(['user_id' => $userID]);
+                $heatmapStats = $heatmapStats->where(['$user_id' => $userID]);
             } else if ($players === 1) { //just the user's team's stats
-                $heatmapStats = $heatmapStats->matching('TeamsUsers', function($q) use($teamUser) {
+                $heatmapStats = $heatmapStats->contain([
+                    'TeamsUsers' => function($q) use($teamUser) {
                         return $q->where(['TeamsUsers.team_id' => $teamUser['team_id']]);
                     }
-                );
+                ]);
             } //no WHERE clause needed for all users state
             if ($exp == 3) {
                 $exp = null;
