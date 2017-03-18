@@ -116,9 +116,10 @@ class TeamsController extends AppController
     
     public function dugout() { //view creator for the team index page dugout
         $session = $this->request->session();
-        $user = $session->read('Auth.User.id');
+        $userID = $session->read('Auth.User.id');
         $teamsUsers = TableRegistry::get('TeamsUsers');
-        $teamUser = $teamsUsers->find('all')->where(['TeamsUsers.user_id' => $user])->contain(['Teams', 'Users']);
+        $users = TableRegistry::get('Users');
+        $userTeam = $users->find()->where(['id' => $userID])->contain('Teams')->first(); //look for user's team
         $teamRankings = TableRegistry::get('Scores')->find('all')->contain(['TeamsUsers' => ['Teams']])->order('Teams.id');
         if($teamRanking = $teamRankings->toArray()) {
             $teamScore = [];
@@ -157,22 +158,26 @@ class TeamsController extends AppController
         } else {
             $this->set('rankResult', false);
         }
-        if ($teamUser = $teamUser->toArray()) {
-            $teamID = $teamUser[0]['team_id'];
-            $teammates = $teamsUsers->find('all')->where(['team_id' => $teamID])->contain(['Users', 'Scores'])->order('Users.first_name')->toArray();
+        if ($userTeam) { //if user has team
+            $teamID = $userTeam['teams'][0]['id'];
+            $teammates = $this->Teams->find('all')->where(['id' => $teamID])->contain([
+                'Users'=> function($q) {
+                    return $q->order('Users.first_name')->contain('Scores');
+                }
+            ])->toArray();
             $this->set('teammates', $teammates);
             $total = 0;
             foreach ($teammates as $teammate) {
                 $total += $teammate['score']['total_score'];
             }
             $this->set('total', $total);
-            if ($user === $teamUser[0]['team']['user_id']) {
+            if ($userID === $userTeam['teams'][0]['user_id']) {
                 $this->set('captain', true);
             } else {
                 $this->set('captain', false);
             }
             $this->set('hasTeam', true);
-            $this->set('data', $teamUser[0]);
+            $this->set('data', $userTeam);
         } else {
             $this->set('hasTeam', false);
         }
@@ -199,11 +204,11 @@ class TeamsController extends AppController
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
             $session = $this->request->session();
-            $user = $session->read('Auth.User.id');
+            $userID = $session->read('Auth.User.id');
             $team = $this->Teams->newEntity();
             $team->team_name = $data['team_name'];
             $team->privacy = $data['privacy'];
-            $team->user_id = $user;
+            $team->user_id = $userID;
             //check for valid file, move file to server, save file name with extension to DB
             if (!empty($data['team_logo'])) {
                 $file = $data['team_logo']; //put the data into a var for easy use
@@ -220,7 +225,7 @@ class TeamsController extends AppController
             if ($teamID = $this->Teams->save($team)) { //if new team saved successfully, assign creating user to the team in TeamsUsers
                 $teamUsers = TableRegistry::get('TeamsUsers');
                 $teamUser = $teamUsers->newEntity();
-                $teamUser->user_id = $user;
+                $teamUser->user_id = $userID;
                 $teamUser->team_id = $teamID->id;
                 if ($teamUsers->save($teamUser)) {
                     echo json_encode(['result' => 1, 'msg' => 'Team created!']);

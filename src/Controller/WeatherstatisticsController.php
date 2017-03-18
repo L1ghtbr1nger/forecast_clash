@@ -195,7 +195,7 @@ class WeatherStatisticsController extends AppController
             $exp = intval($data['experience']); //leaderboard experience filter
             $players = intval($data['players']); //leaderboard tabs
             if (!$players) { //if team tab clicked
-                $scores = $teamsUsers->find()->where(['team_id' => $teamUser['teams']['id']])->contain([
+                $scores = $teamsUsers->find()->where(['team_id' => $teamUser['teams'][0]['id']])->contain([
                     'Scores' => function($u) {
                         return $u->order(['Scores.total_score' => 'DESC']);
                     }

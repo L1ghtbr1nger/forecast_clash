@@ -135,7 +135,7 @@ class TeamsUsersController extends AppController
             $first = $team->user->first_name;
             $last = $team->user->last_name;
             if ($team->privacy) { //if the selected team is private, send email to team captain with link to accept or reject request
-                $link = Router::url(['controller' => 'Teamsusers', 'action' => 'freeAgent'], TRUE).'/'.$teamID.'_'.$teamName.'_'.$user.'_'.$first.'_'.$last;
+                $link = Router::url(['controller' => 'TeamsUsers', 'action' => 'freeAgent'], TRUE).'/'.$teamID.'_'.$teamName.'_'.$user.'_'.$first.'_'.$last;
                 $email = new Email();
                 $email->from('donotreply@forecastclash.com', 'Forecast Clash')
                     ->to($address, $first)

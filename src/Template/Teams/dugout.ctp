@@ -11,11 +11,11 @@
         //manage roster
     } ?>
     <div class="headings">
-        <h1><?= h($data['team']['team_name']); ?></h1>
+        <h1><?= h($data['teams'][0]['team_name']); ?></h1>
         <h3>Total Team Score: <?= $total ?></h3>
     </div>
     <?php
-    $logo = $data['team']['team_logo'];
+    $logo = $data['teams'][0]['team_logo'];
     if (!is_null($logo)) { ?>
         <div id="teamLogo"><?= $this->Html->image('teams/users/'.$logo); ?></div>
     <?php } else { ?>
@@ -42,11 +42,13 @@
                         <?php
                         $count = 0;
                         foreach ($teammates as $teammate) {
-                            $count++;
-                            echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').' '.(($data['user_id'] === $teammate['user_id']) ? 'userTeam' : '').'">';
-                            echo '<td>'.h($teammate['user']['first_name']).' '.h($teammate['user']['last_name']).'</td>';
-                            echo '<td>'.intval($teammate['score']['total_score']).'</td>';
-                            echo '<td>'.(($teammate['user']['meteorologist']) ? 'Professional' : 'Enthusiast' ).'</td></tr>';
+                            foreach ($teammate['users'] as $user) {
+                                $count++;
+                                echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').' '.(($data['id'] === $user['id']) ? 'userTeam' : '').'">';
+                                echo '<td>'.h($user['first_name']).' '.h($user['last_name']).'</td>';
+                                echo '<td>'.intval($user['total_score']).'</td>';
+                                echo '<td>'.(($user['meteorologist']) ? 'Professional' : 'Enthusiast' ).'</td></tr>';
+                            }
                         }
                         ?>
                     </tbody>
@@ -76,7 +78,7 @@
                             $count = 0;
                             foreach ($rankings as $rank) {
                                 $count++;
-                                echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').' '.(($data['team_id'] === $rank['team_id']) ? 'userTeam' : '').'">';
+                                echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').' '.(($data['teams'][0]['id'] === $rank['team_id']) ? 'userTeam' : '').'">';
                                 echo '<td>'.$rank['rank'].'</td>';
                                 echo '<td>'.h($rank['team_name']).'</td>';
                                 echo '<td>'.intval($rank['team_score']).'</td></tr>';
