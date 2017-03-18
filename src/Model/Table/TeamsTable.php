@@ -46,6 +46,10 @@ class TeamsTable extends Table
             'targetForeignKey' => 'user_id',
             'joinTable' => 'teams_users'
         ]);
+        
+        $this->hasMany('TeamsUsers', [
+            'foreignKey' => 'team_id'
+        ]);
     }
 
     /**
