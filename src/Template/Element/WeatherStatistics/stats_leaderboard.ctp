@@ -7,7 +7,7 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs pull-right" role="tablist">
                 <li role="presentation" id="all_lb" class="active whom_lb current_lb"><a href="#all_players" aria-controls="all_players" role="tab" data-toggle="tab">All Players</a></li>
-                <li role="presentation" id="team_lb" class="<?= (($teamResult) ? 'whom_lb' : '' ) ?>"><a href="#team_players" aria-controls="top_players" role="tab" data-toggle="tab"><?= (($teamResult) ? h($teamUser['team']['team_name']) : '<a href="/forecast_clash/teams/dugout">Join Team</a>' ) ?></a></li>
+                <li role="presentation" id="team_lb" class="<?= (($teamResult) ? 'whom_lb' : '' ) ?>"><a href="#team_players" aria-controls="top_players" role="tab" data-toggle="tab"><?= (($teamResult) ? h($teamUser['teams']['team_name']) : '<a href="/forecast_clash/teams/dugout">Join Team</a>' ) ?></a></li>
             </ul>
         </div>
         <div class="card-block">

@@ -12,7 +12,7 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs pull-right" role="tablist">
                 <li role="presentation" id="all_hm" class="active whom_hm current_hm"><a href="#all_players" aria-controls="all_players" role="tab" data-toggle="tab">All Players</a></li>
-                <li role="presentation" id="team_hm" class="<?= (($teamResult) ? 'whom_hm' : '' ) ?>"><a href="#team_players" aria-controls="team_players" role="tab" data-toggle="tab"><?= (($teamResult) ? h($teamUser['team']['team_name']) : '<a href="/forecast_clash/teams/dugout">Join Team</a>' ) ?></a>
+                <li role="presentation" id="team_hm" class="<?= (($teamResult) ? 'whom_hm' : '' ) ?>"><a href="#team_players" aria-controls="team_players" role="tab" data-toggle="tab"><?= (($teamResult) ? h($teamUser['teams'][0]['team_name']) : '<a href="/forecast_clash/teams/dugout">Join Team</a>' ) ?></a>
                 </li>
                 <li role="presentation" id="self_hm" class="<?= ((isset($user)) ? 'whom_hm' : '' ) ?>"><a href="#self" aria-controls="self" role="tab" data-toggle="tab"><?= ((isset($user)) ? h($user['first_name']) : '<a href="/forecast_clash/users/login">Login</a>' ) ?></a>
                 </li>

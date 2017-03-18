@@ -186,7 +186,8 @@ class WeatherStatisticsController extends AppController
         $session = $this->request->session();
         $userID = $session->read('Auth.User.id');
         $teamsUsers = TableRegistry::get('TeamsUsers');
-        $teamUser = $teamsUsers->find()->where(['TeamsUsers.user_id' => $userID])->contain('Teams')->toArray(); //look for user's team
+        $users = TableRegistry::get('Users');
+        $teamUser = $users->find()->where(['id' => $userID])->contain('Teams')->first(); //look for user's team
         $scoreboard = TableRegistry::get('Scores');
         $scores = $scoreboard->find('all')->order(['Scores.total_score' => 'DESC'])->limit(20)->contain(['WeatherStatistics' => ['WeatherEvents']]);
         if ($this->request->is('ajax')) {
@@ -194,7 +195,7 @@ class WeatherStatisticsController extends AppController
             $exp = intval($data['experience']); //leaderboard experience filter
             $players = intval($data['players']); //leaderboard tabs
             if (!$players) { //if team tab clicked
-                $scores = $teamsUsers->find()->where(['team_id' => $teamUser[0]['team_id']])->contain([
+                $scores = $teamsUsers->find()->where(['team_id' => $teamUser['teams']['id']])->contain([
                     'Scores' => function($u) {
                         return $u->order(['Scores.total_score' => 'DESC']);
                     }
@@ -209,7 +210,7 @@ class WeatherStatisticsController extends AppController
         } else {
             if ($teamUser) { //check if team was found
                 $this->set('teamResult', 1); //user has team
-                $this->set('teamUser', $teamUser[0]); //save user's team info for view
+                $this->set('teamUser', $teamUser); //save user's team info for view
             } else {
                 $this->set('teamResult', 0); //user does not have team
             }
