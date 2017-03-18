@@ -1,12 +1,7 @@
 <?= $this->element('header'); ?>
 <?= $this->element('sidebar'); ?>
 
-<div class="content dashboard-page">
-<div class="row">
-       <div class="col-md-12">
-           <h1>Statistics</h1>
-       </div>
-   </div>   
+<div class="content">
     <div class="row thumbnail-row">
         <div class="col-md-3">
             <div class="stats-thumbnail heatmap-thumbnail">
@@ -29,21 +24,21 @@
             </div>
         </div>
     </div>
-    <div class="row sameheight-container">
-        <span id="heatmap">
+    <div class="row">
+        <span>
             <?= $this->element('WeatherStatistics/stats_heatmap'); ?>
         </span>
     </div>
-    <div class="row sameheight-container">
-        <span id="leaderboard">
+    <div class="row">
+        <span>
             <?= $this->element('WeatherStatistics/stats_leaderboard'); ?>
         </span>
     </div>
-    <div class="row sameheight-container">
-        <span id="attempts">
+    <div class="row">
+        <span>
             <?= $this->element('WeatherStatistics/stats_attempts_pie'); ?>
         </span>
-        <span id="guesses">
+        <span>
             <?= $this->element('WeatherStatistics/stats_guesses_bar'); ?>
         </span>
     </div>
@@ -53,7 +48,7 @@
 <?= $this->Html->script('heatmaps'); ?>
 <?= $this->Html->script('chartist'); ?>
 <style>
-    .hide-me, .thumbnail-row{
+    .hide-me{
         display:none;
     }
     .thumbnail-row{
@@ -71,7 +66,6 @@
         height:100%;
         margin:0;
         padding-top: 18px;
-        text-decoration: underline;
 
     }
     .heatmap-thumbnail{

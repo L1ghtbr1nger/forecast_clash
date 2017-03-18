@@ -17,19 +17,11 @@ class StatesControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.states',
-        'app.states_users',
+        'app.profiles',
         'app.users',
-        'app.social_profiles',
-        'app.badges_users',
-        'app.final_scores',
-        'app.hail_forecasts',
-        'app.historical_forecasts',
-        'app.stats',
-        'app.teams_users',
-        'app.tornado_forecasts',
-        'app.weekly_contest_forecasts',
-        'app.weekly_scores',
-        'app.wind_forecasts'
+        'app.states_users',
+        'app.education_levels',
+        'app.ages'
     ];
 
     /**

@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\BelongsTo $EducationLevels
  * @property \Cake\ORM\Association\BelongsTo $States
+ * @property \Cake\ORM\Association\BelongsTo $Ages
  *
  * @method \App\Model\Entity\Profile get($primaryKey, $options = [])
  * @method \App\Model\Entity\Profile newEntity($data = null, array $options = [])
@@ -113,6 +114,7 @@ class ProfilesTable extends Table
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['education_level_id'], 'EducationLevels'));
         $rules->add($rules->existsIn(['state_id'], 'States'));
+        $rules->add($rules->existsIn(['age_id'], 'Ages'));
 
         return $rules;
     }

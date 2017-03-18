@@ -4,10 +4,10 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * AdmineventsFixture
+ * AdminEventsFixture
  *
  */
-class AdmineventsFixture extends TestFixture
+class AdminEventsFixture extends TestFixture
 {
 
     /**
@@ -39,8 +39,8 @@ class AdmineventsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'start_date' => 1486950090,
-            'end_date' => 1486950090,
+            'start_date' => 1489858748,
+            'end_date' => 1489858748,
             'multiplier' => 1
         ],
     ];

@@ -17,7 +17,7 @@ use Cake\ORM\Entity;
  * @property float $longitude
  *
  * @property \App\Model\Entity\User $user
- * @property \App\Model\Entity\Weatherevent $weather_event
+ * @property \App\Model\Entity\WeatherEvent $weather_event
  */
 class Forecast extends Entity
 {

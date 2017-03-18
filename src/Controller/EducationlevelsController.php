@@ -4,11 +4,11 @@ namespace App\Controller;
 use App\Controller\AppController;
 
 /**
- * Educationlevels Controller
+ * EducationLevels Controller
  *
- * @property \App\Model\Table\EducationlevelsTable $Educationlevels
+ * @property \App\Model\Table\EducationLevelsTable $EducationLevels
  */
-class EducationlevelsController extends AppController
+class EducationLevelsController extends AppController
 {
 
     /**
@@ -18,27 +18,27 @@ class EducationlevelsController extends AppController
      */
     public function index()
     {
-        $educationlevels = $this->paginate($this->Educationlevels);
+        $educationLevels = $this->paginate($this->EducationLevels);
 
-        $this->set(compact('educationlevels'));
-        $this->set('_serialize', ['educationlevels']);
+        $this->set(compact('educationLevels'));
+        $this->set('_serialize', ['educationLevels']);
     }
 
     /**
      * View method
      *
-     * @param string|null $id Educationlevel id.
+     * @param string|null $id Education Level id.
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $educationlevel = $this->Educationlevels->get($id, [
-            'contain' => []
+        $educationLevel = $this->EducationLevels->get($id, [
+            'contain' => ['Profiles']
         ]);
 
-        $this->set('educationlevel', $educationlevel);
-        $this->set('_serialize', ['educationlevel']);
+        $this->set('educationLevel', $educationLevel);
+        $this->set('_serialize', ['educationLevel']);
     }
 
     /**
@@ -48,62 +48,62 @@ class EducationlevelsController extends AppController
      */
     public function add()
     {
-        $educationlevel = $this->Educationlevels->newEntity();
+        $educationLevel = $this->EducationLevels->newEntity();
         if ($this->request->is('post')) {
-            $educationlevel = $this->Educationlevels->patchEntity($educationlevel, $this->request->data);
-            if ($this->Educationlevels->save($educationlevel)) {
-                $this->Flash->success(__('The educationlevel has been saved.'));
+            $educationLevel = $this->EducationLevels->patchEntity($educationLevel, $this->request->data);
+            if ($this->EducationLevels->save($educationLevel)) {
+                $this->Flash->success(__('The education level has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The educationlevel could not be saved. Please, try again.'));
+                $this->Flash->error(__('The education level could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('educationlevel'));
-        $this->set('_serialize', ['educationlevel']);
+        $this->set(compact('educationLevel'));
+        $this->set('_serialize', ['educationLevel']);
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Educationlevel id.
+     * @param string|null $id Education Level id.
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $educationlevel = $this->Educationlevels->get($id, [
+        $educationLevel = $this->EducationLevels->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $educationlevel = $this->Educationlevels->patchEntity($educationlevel, $this->request->data);
-            if ($this->Educationlevels->save($educationlevel)) {
-                $this->Flash->success(__('The educationlevel has been saved.'));
+            $educationLevel = $this->EducationLevels->patchEntity($educationLevel, $this->request->data);
+            if ($this->EducationLevels->save($educationLevel)) {
+                $this->Flash->success(__('The education level has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The educationlevel could not be saved. Please, try again.'));
+                $this->Flash->error(__('The education level could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('educationlevel'));
-        $this->set('_serialize', ['educationlevel']);
+        $this->set(compact('educationLevel'));
+        $this->set('_serialize', ['educationLevel']);
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Educationlevel id.
+     * @param string|null $id Education Level id.
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $educationlevel = $this->Educationlevels->get($id);
-        if ($this->Educationlevels->delete($educationlevel)) {
-            $this->Flash->success(__('The educationlevel has been deleted.'));
+        $educationLevel = $this->EducationLevels->get($id);
+        if ($this->EducationLevels->delete($educationLevel)) {
+            $this->Flash->success(__('The education level has been deleted.'));
         } else {
-            $this->Flash->error(__('The educationlevel could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The education level could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

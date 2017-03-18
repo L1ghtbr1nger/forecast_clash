@@ -7,20 +7,20 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Weatherstatistics Model
+ * WeatherStatistics Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\BelongsTo $WeatherEvents
  *
- * @method \App\Model\Entity\Weatherstatistic get($primaryKey, $options = [])
- * @method \App\Model\Entity\Weatherstatistic newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Weatherstatistic[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Weatherstatistic|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Weatherstatistic patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Weatherstatistic[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Weatherstatistic findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\WeatherStatistic get($primaryKey, $options = [])
+ * @method \App\Model\Entity\WeatherStatistic newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\WeatherStatistic[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\WeatherStatistic|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\WeatherStatistic patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\WeatherStatistic[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\WeatherStatistic findOrCreate($search, callable $callback = null)
  */
-class WeatherstatisticsTable extends Table
+class WeatherStatisticsTable extends Table
 {
 
     /**
@@ -33,7 +33,7 @@ class WeatherstatisticsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('weatherstatistics');
+        $this->table('weather_statistics');
         $this->displayField('id');
         $this->primaryKey('id');
 
@@ -78,14 +78,14 @@ class WeatherstatisticsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->integer('attempts')
-            ->requirePresence('attempts', 'create')
-            ->notEmpty('attempts');
-
-        $validator
             ->integer('valid_attempts')
             ->requirePresence('valid_attempts', 'create')
             ->notEmpty('valid_attempts');
+
+        $validator
+            ->integer('attempts')
+            ->requirePresence('attempts', 'create')
+            ->notEmpty('attempts');
 
         $validator
             ->integer('radius')

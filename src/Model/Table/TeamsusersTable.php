@@ -45,6 +45,33 @@ class TeamsUsersTable extends Table
             'foreignKey' => 'team_id',
             'joinType' => 'INNER'
         ]);
+        
+        $this->hasOne('Scores', [
+            'foreignKey' => [
+                'user_id'
+            ],
+            'bindingKey' => [
+                'user_id'
+            ]
+        ]);
+        
+        $this->hasMany('WeatherStatistics', [
+            'foreignKey' => [
+                'user_id'
+            ],
+            'bindingKey' => [
+                'user_id'
+            ]
+        ]);
+        
+        $this->hasMany('HistoricalForecasts', [
+            'foreignKey' => [
+                'user_id'
+            ],
+            'bindingKey' => [
+                'user_id'
+            ]
+        ]);
     }
 
     /**

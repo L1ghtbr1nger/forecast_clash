@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Badges Model
  *
- * @property \Cake\ORM\Association\HasMany $BadgesUsers
+ * @property \Cake\ORM\Association\BelongsToMany $Users
  *
  * @method \App\Model\Entity\Badge get($primaryKey, $options = [])
  * @method \App\Model\Entity\Badge newEntity($data = null, array $options = [])
@@ -36,8 +36,10 @@ class BadgesTable extends Table
         $this->displayField('id');
         $this->primaryKey('id');
 
-        $this->hasMany('BadgesUsers', [
-            'foreignKey' => 'badge_id'
+        $this->belongsToMany('Users', [
+            'foreignKey' => 'badge_id',
+            'targetForeignKey' => 'user_id',
+            'joinTable' => 'badges_users'
         ]);
     }
 

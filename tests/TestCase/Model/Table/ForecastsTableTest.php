@@ -26,23 +26,7 @@ class ForecastsTableTest extends TestCase
     public $fixtures = [
         'app.forecasts',
         'app.users',
-        'app.social_profiles',
-        'app.badges_users',
-        'app.badges',
-        'app.scores',
-        'app.historical_forecasts',
-        'app.weather_events',
-        'app.admin_events',
-        'app.profiles',
-        'app.education_levels',
-        'app.states',
-        'app.states_users',
-        'app.ages',
-        'app.stats',
-        'app.teams_users',
-        'app.weather_statistics',
-        'app.weekly_contest_forecasts',
-        'app.weekly_scores'
+        'app.weather_events'
     ];
 
     /**

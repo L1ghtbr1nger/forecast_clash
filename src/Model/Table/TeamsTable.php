@@ -10,7 +10,7 @@ use Cake\Validation\Validator;
  * Teams Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Users
- * @property \Cake\ORM\Association\HasMany $TeamsUsers
+ * @property \Cake\ORM\Association\BelongsToMany $Users
  *
  * @method \App\Model\Entity\Team get($primaryKey, $options = [])
  * @method \App\Model\Entity\Team newEntity($data = null, array $options = [])
@@ -41,8 +41,10 @@ class TeamsTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
-        $this->hasMany('TeamsUsers', [
-            'foreignKey' => 'team_id'
+        $this->belongsToMany('Users', [
+            'foreignKey' => 'team_id',
+            'targetForeignKey' => 'user_id',
+            'joinTable' => 'teams_users'
         ]);
     }
 
@@ -69,9 +71,13 @@ class TeamsTable extends Table
                 ]
             ]);
 
-
         $validator
             ->allowEmpty('team_logo');
+
+        $validator
+            ->boolean('privacy')
+            ->requirePresence('privacy', 'create')
+            ->notEmpty('privacy');
 
         return $validator;
     }

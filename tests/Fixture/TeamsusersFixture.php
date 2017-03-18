@@ -11,13 +11,6 @@ class TeamsUsersFixture extends TestFixture
 {
 
     /**
-     * Table name
-     *
-     * @var string
-     */
-    public $table = 'teamsusers';
-
-    /**
      * Fields
      *
      * @var array

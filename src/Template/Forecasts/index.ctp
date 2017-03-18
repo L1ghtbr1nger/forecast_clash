@@ -4,8 +4,8 @@
         <li><?= $this->Html->link(__('New Forecast'), ['action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Weather Events'), ['controller' => 'Weatherevents', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Weather Event'), ['controller' => 'Weatherevents', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Weather Events'), ['controller' => 'WeatherEvents', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Weather Event'), ['controller' => 'WeatherEvents', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="forecasts index large-9 medium-8 columns content">
@@ -30,7 +30,7 @@
             <tr>
                 <td><?= $this->Number->format($forecast->id) ?></td>
                 <td><?= $forecast->has('user') ? $this->Html->link($forecast->user->id, ['controller' => 'Users', 'action' => 'view', $forecast->user->id]) : '' ?></td>
-                <td><?= $forecast->has('weather_event') ? $this->Html->link($forecast->weather_event->id, ['controller' => 'Weatherevents', 'action' => 'view', $forecast->weather_event->id]) : '' ?></td>
+                <td><?= $forecast->has('weather_event') ? $this->Html->link($forecast->weather_event->id, ['controller' => 'WeatherEvents', 'action' => 'view', $forecast->weather_event->id]) : '' ?></td>
                 <td><?= h($forecast->submit_date) ?></td>
                 <td><?= h($forecast->forecast_date) ?></td>
                 <td><?= h($forecast->am_pm) ?></td>

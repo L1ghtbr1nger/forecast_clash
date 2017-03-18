@@ -43,7 +43,7 @@ class TeamsUsersController extends AppController
     public function view($id = null)
     {
         $teamsUser = $this->TeamsUsers->get($id, [
-            'contain' => ['Users', 'Teams', 'Scores', 'WeatherStatistics', 'HistoricalForecasts']
+            'contain' => ['Users', 'Teams']
         ]);
 
         $this->set('teamsUser', $teamsUser);

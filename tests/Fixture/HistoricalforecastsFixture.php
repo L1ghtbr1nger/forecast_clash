@@ -4,10 +4,10 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * HistoricalforecastsFixture
+ * HistoricalForecastsFixture
  *
  */
-class HistoricalforecastsFixture extends TestFixture
+class HistoricalForecastsFixture extends TestFixture
 {
 
     /**
@@ -26,7 +26,7 @@ class HistoricalforecastsFixture extends TestFixture
         'forecast_date' => ['type' => 'date', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'am_pm' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'forecast_length' => ['type' => 'integer', 'length' => 6, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'admin_event_id' => ['type' => 'integer', 'length' => 6, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'admin_event_id' => ['type' => 'integer', 'length' => 6, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'correct' => ['type' => 'boolean', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
@@ -51,7 +51,7 @@ class HistoricalforecastsFixture extends TestFixture
             'longitude' => 1,
             'radius' => 1,
             'weather_event_id' => 1,
-            'forecast_date' => '2017-03-04',
+            'forecast_date' => '2017-03-18',
             'am_pm' => 1,
             'forecast_length' => 1,
             'admin_event_id' => 1,

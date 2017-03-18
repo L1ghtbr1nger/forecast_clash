@@ -12,9 +12,6 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\Team $team
- * @property \App\Model\Entity\Score $score
- * @property \App\Model\Entity\Weatherstatistic[] $weather_statistics
- * @property \App\Model\Entity\Historicalforecast[] $historical_forecasts
  */
 class TeamsUser extends Entity
 {

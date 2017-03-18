@@ -17,24 +17,7 @@ class ScoresControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.scores',
-        'app.users',
-        'app.social_profiles',
-        'app.badges_users',
-        'app.badges',
-        'app.forecasts',
-        'app.weather_events',
-        'app.historical_forecasts',
-        'app.admin_events',
-        'app.profiles',
-        'app.education_levels',
-        'app.states',
-        'app.states_users',
-        'app.ages',
-        'app.stats',
-        'app.teams_users',
-        'app.weather_statistics',
-        'app.weekly_contest_forecasts',
-        'app.weekly_scores'
+        'app.users'
     ];
 
     /**

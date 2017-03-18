@@ -7,17 +7,21 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Weatherevents Model
+ * WeatherEvents Model
  *
- * @method \App\Model\Entity\Weatherevent get($primaryKey, $options = [])
- * @method \App\Model\Entity\Weatherevent newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Weatherevent[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Weatherevent|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Weatherevent patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Weatherevent[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Weatherevent findOrCreate($search, callable $callback = null)
+ * @property \Cake\ORM\Association\HasMany $Forecasts
+ * @property \Cake\ORM\Association\HasMany $HistoricalForecasts
+ * @property \Cake\ORM\Association\HasMany $WeatherStatistics
+ *
+ * @method \App\Model\Entity\WeatherEvent get($primaryKey, $options = [])
+ * @method \App\Model\Entity\WeatherEvent newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\WeatherEvent[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\WeatherEvent|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\WeatherEvent patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\WeatherEvent[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\WeatherEvent findOrCreate($search, callable $callback = null)
  */
-class WeathereventsTable extends Table
+class WeatherEventsTable extends Table
 {
 
     /**
@@ -30,9 +34,19 @@ class WeathereventsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('weatherevents');
+        $this->table('weather_events');
         $this->displayField('id');
         $this->primaryKey('id');
+
+        $this->hasMany('Forecasts', [
+            'foreignKey' => 'weather_event_id'
+        ]);
+        $this->hasMany('HistoricalForecasts', [
+            'foreignKey' => 'weather_event_id'
+        ]);
+        $this->hasMany('WeatherStatistics', [
+            'foreignKey' => 'weather_event_id'
+        ]);
     }
 
     /**

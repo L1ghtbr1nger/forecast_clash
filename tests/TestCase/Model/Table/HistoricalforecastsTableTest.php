@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\HistoricalforecastsTable;
+use App\Model\Table\HistoricalForecastsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\HistoricalforecastsTable Test Case
+ * App\Model\Table\HistoricalForecastsTable Test Case
  */
-class HistoricalforecastsTableTest extends TestCase
+class HistoricalForecastsTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\HistoricalforecastsTable
+     * @var \App\Model\Table\HistoricalForecastsTable
      */
-    public $Historicalforecasts;
+    public $HistoricalForecasts;
 
     /**
      * Fixtures
@@ -24,26 +24,10 @@ class HistoricalforecastsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.historicalforecasts',
-        'app.users',
-        'app.social_profiles',
-        'app.badges_users',
-        'app.badges',
-        'app.scores',
-        'app.forecasts',
-        'app.weather_events',
         'app.historical_forecasts',
-        'app.admin_events',
-        'app.profiles',
-        'app.education_levels',
-        'app.states',
-        'app.states_users',
-        'app.ages',
-        'app.stats',
-        'app.teams_users',
-        'app.weather_statistics',
-        'app.weekly_contest_forecasts',
-        'app.weekly_scores'
+        'app.users',
+        'app.weather_events',
+        'app.admin_events'
     ];
 
     /**
@@ -54,8 +38,8 @@ class HistoricalforecastsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Historicalforecasts') ? [] : ['className' => 'App\Model\Table\HistoricalforecastsTable'];
-        $this->Historicalforecasts = TableRegistry::get('Historicalforecasts', $config);
+        $config = TableRegistry::exists('HistoricalForecasts') ? [] : ['className' => 'App\Model\Table\HistoricalForecastsTable'];
+        $this->HistoricalForecasts = TableRegistry::get('HistoricalForecasts', $config);
     }
 
     /**
@@ -65,7 +49,7 @@ class HistoricalforecastsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Historicalforecasts);
+        unset($this->HistoricalForecasts);
 
         parent::tearDown();
     }

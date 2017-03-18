@@ -25,6 +25,7 @@ class BadgesTableTest extends TestCase
      */
     public $fixtures = [
         'app.badges',
+        'app.users',
         'app.badges_users'
     ];
 

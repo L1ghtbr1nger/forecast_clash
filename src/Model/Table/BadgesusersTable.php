@@ -7,20 +7,20 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Badgesusers Model
+ * BadgesUsers Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\BelongsTo $Badges
  *
- * @method \App\Model\Entity\Badgesuser get($primaryKey, $options = [])
- * @method \App\Model\Entity\Badgesuser newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Badgesuser[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Badgesuser|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Badgesuser patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Badgesuser[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Badgesuser findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\BadgesUser get($primaryKey, $options = [])
+ * @method \App\Model\Entity\BadgesUser newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\BadgesUser[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\BadgesUser|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\BadgesUser patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\BadgesUser[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\BadgesUser findOrCreate($search, callable $callback = null)
  */
-class BadgesusersTable extends Table
+class BadgesUsersTable extends Table
 {
 
     /**
@@ -33,7 +33,7 @@ class BadgesusersTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('badgesusers');
+        $this->table('badges_users');
         $this->displayField('id');
         $this->primaryKey('id');
 

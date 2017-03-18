@@ -10,8 +10,9 @@ use Cake\ORM\Entity;
  * @property string $team_name
  * @property string $team_logo
  * @property int $user_id
+ * @property bool $privacy
  *
- * @property \App\Model\Entity\Teamsuser[] $teams_users
+ * @property \App\Model\Entity\User[] $users
  */
 class Team extends Entity
 {

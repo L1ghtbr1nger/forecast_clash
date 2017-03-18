@@ -7,17 +7,19 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Educationlevels Model
+ * EducationLevels Model
  *
- * @method \App\Model\Entity\Educationlevel get($primaryKey, $options = [])
- * @method \App\Model\Entity\Educationlevel newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Educationlevel[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Educationlevel|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Educationlevel patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Educationlevel[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Educationlevel findOrCreate($search, callable $callback = null)
+ * @property \Cake\ORM\Association\HasMany $Profiles
+ *
+ * @method \App\Model\Entity\EducationLevel get($primaryKey, $options = [])
+ * @method \App\Model\Entity\EducationLevel newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\EducationLevel[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\EducationLevel|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EducationLevel patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\EducationLevel[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\EducationLevel findOrCreate($search, callable $callback = null)
  */
-class EducationlevelsTable extends Table
+class EducationLevelsTable extends Table
 {
 
     /**
@@ -30,9 +32,13 @@ class EducationlevelsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('educationlevels');
+        $this->table('education_levels');
         $this->displayField('id');
         $this->primaryKey('id');
+
+        $this->hasMany('Profiles', [
+            'foreignKey' => 'education_level_id'
+        ]);
     }
 
     /**

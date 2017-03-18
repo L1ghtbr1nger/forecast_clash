@@ -4,14 +4,16 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Adminevent Entity
+ * AdminEvent Entity
  *
  * @property int $id
  * @property \Cake\I18n\Time $start_date
  * @property \Cake\I18n\Time $end_date
  * @property int $multiplier
+ *
+ * @property \App\Model\Entity\HistoricalForecast[] $historical_forecasts
  */
-class Adminevent extends Entity
+class AdminEvent extends Entity
 {
 
     /**

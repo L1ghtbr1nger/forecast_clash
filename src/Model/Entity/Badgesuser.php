@@ -4,7 +4,7 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Badgesuser Entity
+ * BadgesUser Entity
  *
  * @property int $id
  * @property int $user_id
@@ -16,7 +16,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\Badge $badge
  */
-class Badgesuser extends Entity
+class BadgesUser extends Entity
 {
 
     /**

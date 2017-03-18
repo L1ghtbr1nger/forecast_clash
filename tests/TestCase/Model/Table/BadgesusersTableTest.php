@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\BadgesusersTable;
+use App\Model\Table\BadgesUsersTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\BadgesusersTable Test Case
+ * App\Model\Table\BadgesUsersTable Test Case
  */
-class BadgesusersTableTest extends TestCase
+class BadgesUsersTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\BadgesusersTable
+     * @var \App\Model\Table\BadgesUsersTable
      */
-    public $Badgesusers;
+    public $BadgesUsers;
 
     /**
      * Fixtures
@@ -24,25 +24,9 @@ class BadgesusersTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.badgesusers',
-        'app.users',
-        'app.social_profiles',
         'app.badges_users',
-        'app.badges',
-        'app.final_scores',
-        'app.hail_forecasts',
-        'app.historical_forecasts',
-        'app.profiles',
-        'app.education_levels',
-        'app.states',
-        'app.states_users',
-        'app.ages',
-        'app.stats',
-        'app.teams_users',
-        'app.tornado_forecasts',
-        'app.weekly_contest_forecasts',
-        'app.weekly_scores',
-        'app.wind_forecasts'
+        'app.users',
+        'app.badges'
     ];
 
     /**
@@ -53,8 +37,8 @@ class BadgesusersTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Badgesusers') ? [] : ['className' => 'App\Model\Table\BadgesusersTable'];
-        $this->Badgesusers = TableRegistry::get('Badgesusers', $config);
+        $config = TableRegistry::exists('BadgesUsers') ? [] : ['className' => 'App\Model\Table\BadgesUsersTable'];
+        $this->BadgesUsers = TableRegistry::get('BadgesUsers', $config);
     }
 
     /**
@@ -64,7 +48,7 @@ class BadgesusersTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Badgesusers);
+        unset($this->BadgesUsers);
 
         parent::tearDown();
     }

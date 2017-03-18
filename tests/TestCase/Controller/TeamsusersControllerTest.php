@@ -18,25 +18,7 @@ class TeamsUsersControllerTest extends IntegrationTestCase
     public $fixtures = [
         'app.teams_users',
         'app.users',
-        'app.social_profiles',
-        'app.avatars',
-        'app.badges_users',
-        'app.badges',
-        'app.forecasts',
-        'app.weather_events',
-        'app.historical_forecasts',
-        'app.admin_events',
-        'app.notifications',
-        'app.profiles',
-        'app.education_levels',
-        'app.states',
-        'app.states_users',
-        'app.ages',
-        'app.scores',
-        'app.weather_statistics',
-        'app.statistics',
-        'app.teams',
-        'app.weekly_contest_forecasts'
+        'app.teams'
     ];
 
     /**

@@ -15,7 +15,7 @@ use Cake\Routing\Router;
  * @property \App\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController
-{   
+{
     public function initialize() {
         parent::initialize();
         $this->loadComponent('RequestHandler');
@@ -27,6 +27,9 @@ class UsersController extends AppController
      */
     public function index()
     {
+        $this->paginate = [
+            'contain' => ['Avatars']
+        ];
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));
@@ -43,7 +46,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['BadgesUsers', 'FinalScores', 'Forecasts', 'HistoricalForecasts', 'Profiles', 'StatesUsers', 'Stats', 'TeamsUsers', 'WeeklyContestForecasts', 'WeeklyScores']
+            'contain' => ['Avatars', 'Teams', 'Badges', 'States', 'Forecasts', 'HistoricalForecasts', 'Notifications', 'Profiles', 'Scores', 'SocialProfiles', 'Statistics', 'WeatherStatistics', 'WeeklyContestForecasts']
         ]);
 
         $this->set('user', $user);
@@ -68,7 +71,11 @@ class UsersController extends AppController
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('user'));
+        $avatars = $this->Users->Avatars->find('list', ['limit' => 200]);
+        $teams = $this->Users->Teams->find('list', ['limit' => 200]);
+        $badges = $this->Users->Badges->find('list', ['limit' => 200]);
+        $states = $this->Users->States->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'avatars', 'teams', 'badges', 'states'));
         $this->set('_serialize', ['user']);
     }
 
@@ -82,7 +89,7 @@ class UsersController extends AppController
     public function edit($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => []
+            'contain' => ['Teams', 'Badges', 'States']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
@@ -94,7 +101,11 @@ class UsersController extends AppController
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('user'));
+        $avatars = $this->Users->Avatars->find('list', ['limit' => 200]);
+        $teams = $this->Users->Teams->find('list', ['limit' => 200]);
+        $badges = $this->Users->Badges->find('list', ['limit' => 200]);
+        $states = $this->Users->States->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'avatars', 'teams', 'badges', 'states'));
         $this->set('_serialize', ['user']);
     }
 
@@ -264,5 +275,5 @@ class UsersController extends AppController
     public function beforeFilter(Event $event){
         $this->Auth->allow();
     }
-
+    
 }

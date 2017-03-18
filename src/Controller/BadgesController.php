@@ -34,7 +34,7 @@ class BadgesController extends AppController
     public function view($id = null)
     {
         $badge = $this->Badges->get($id, [
-            'contain' => ['BadgesUsers']
+            'contain' => ['Users']
         ]);
 
         $this->set('badge', $badge);
@@ -59,7 +59,8 @@ class BadgesController extends AppController
                 $this->Flash->error(__('The badge could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('badge'));
+        $users = $this->Badges->Users->find('list', ['limit' => 200]);
+        $this->set(compact('badge', 'users'));
         $this->set('_serialize', ['badge']);
     }
 
@@ -73,7 +74,7 @@ class BadgesController extends AppController
     public function edit($id = null)
     {
         $badge = $this->Badges->get($id, [
-            'contain' => []
+            'contain' => ['Users']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $badge = $this->Badges->patchEntity($badge, $this->request->data);
@@ -85,7 +86,8 @@ class BadgesController extends AppController
                 $this->Flash->error(__('The badge could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('badge'));
+        $users = $this->Badges->Users->find('list', ['limit' => 200]);
+        $this->set(compact('badge', 'users'));
         $this->set('_serialize', ['badge']);
     }
 

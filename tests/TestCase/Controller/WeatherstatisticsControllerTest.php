@@ -1,13 +1,13 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\WeatherstatisticsController;
+use App\Controller\WeatherStatisticsController;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
- * App\Controller\WeatherstatisticsController Test Case
+ * App\Controller\WeatherStatisticsController Test Case
  */
-class WeatherstatisticsControllerTest extends IntegrationTestCase
+class WeatherStatisticsControllerTest extends IntegrationTestCase
 {
 
     /**
@@ -16,26 +16,27 @@ class WeatherstatisticsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.weatherstatistics',
+        'app.weather_statistics',
         'app.users',
-        'app.social_profiles',
-        'app.badges_users',
-        'app.badges',
-        'app.scores',
+        'app.avatars',
         'app.forecasts',
         'app.weather_events',
         'app.historical_forecasts',
         'app.admin_events',
+        'app.notifications',
         'app.profiles',
         'app.education_levels',
         'app.states',
         'app.states_users',
         'app.ages',
-        'app.stats',
+        'app.scores',
+        'app.social_profiles',
+        'app.statistics',
+        'app.teams',
         'app.teams_users',
-        'app.weather_statistics',
         'app.weekly_contest_forecasts',
-        'app.weekly_scores'
+        'app.badges',
+        'app.badges_users'
     ];
 
     /**

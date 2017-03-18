@@ -36,6 +36,10 @@ class StatisticsController extends AppController
      */
     public function view($id = null)
     {
+        $statistic = $this->Statistics->get($id, [
+            'contain' => ['Users']
+        ]);
+
         $this->set('statistic', $statistic);
         $this->set('_serialize', ['statistic']);
     }

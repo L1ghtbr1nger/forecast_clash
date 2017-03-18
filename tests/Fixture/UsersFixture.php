@@ -51,7 +51,7 @@ class UsersFixture extends TestFixture
             'last_name' => 'Lorem ipsum dolor sit amet',
             'avatar_id' => 1,
             'meteorologist' => 1,
-            'date_created' => 1489295542,
+            'date_created' => 1489859091,
             'password_reset_token' => 'Lorem ipsum dolor sit amet',
             'hashval' => 'Lorem ipsum dolor sit amet'
         ],
