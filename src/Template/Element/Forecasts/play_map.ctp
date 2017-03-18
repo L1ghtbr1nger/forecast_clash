@@ -82,7 +82,6 @@
 <link rel="stylesheet" href="webroot/css/leaflet.awesome-markers.css">
 <?= $this->Html->script('play_map'); ?>
 <?= $this->Html->script('leaflet.awesome-markers.min'); ?>
-<?= $this->Html->script('leaflet.social'); ?>
 <?= $this->Html->script('picker'); ?>
 <?= $this->Html->script('picker.date'); ?>
 <?= $this->Html->script('L.Control.Range-min'); ?>

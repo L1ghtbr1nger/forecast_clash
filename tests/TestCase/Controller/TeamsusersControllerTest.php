@@ -1,13 +1,13 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\TeamsusersController;
+use App\Controller\TeamsUsersController;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
- * App\Controller\TeamsusersController Test Case
+ * App\Controller\TeamsUsersController Test Case
  */
-class TeamsusersControllerTest extends IntegrationTestCase
+class TeamsUsersControllerTest extends IntegrationTestCase
 {
 
     /**
@@ -16,27 +16,27 @@ class TeamsusersControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.teamsusers',
+        'app.teams_users',
         'app.users',
         'app.social_profiles',
+        'app.avatars',
         'app.badges_users',
         'app.badges',
-        'app.scores',
-        'app.weather_statistics',
-        'app.weather_events',
         'app.forecasts',
+        'app.weather_events',
         'app.historical_forecasts',
         'app.admin_events',
+        'app.notifications',
         'app.profiles',
         'app.education_levels',
         'app.states',
         'app.states_users',
         'app.ages',
-        'app.stats',
-        'app.teams_users',
+        'app.scores',
+        'app.weather_statistics',
+        'app.statistics',
         'app.teams',
-        'app.weekly_contest_forecasts',
-        'app.weekly_scores'
+        'app.weekly_contest_forecasts'
     ];
 
     /**
@@ -85,26 +85,6 @@ class TeamsusersControllerTest extends IntegrationTestCase
      * @return void
      */
     public function testDelete()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test joiner method
-     *
-     * @return void
-     */
-    public function testJoiner()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test beforeFilter method
-     *
-     * @return void
-     */
-    public function testBeforeFilter()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

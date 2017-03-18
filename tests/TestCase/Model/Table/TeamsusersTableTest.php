@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\TeamsusersTable;
+use App\Model\Table\TeamsUsersTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\TeamsusersTable Test Case
+ * App\Model\Table\TeamsUsersTable Test Case
  */
-class TeamsusersTableTest extends TestCase
+class TeamsUsersTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\TeamsusersTable
+     * @var \App\Model\Table\TeamsUsersTable
      */
-    public $Teamsusers;
+    public $TeamsUsers;
 
     /**
      * Fixtures
@@ -24,27 +24,27 @@ class TeamsusersTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.teamsusers',
+        'app.teams_users',
         'app.users',
         'app.social_profiles',
+        'app.avatars',
         'app.badges_users',
         'app.badges',
-        'app.scores',
-        'app.weather_statistics',
-        'app.weather_events',
         'app.forecasts',
+        'app.weather_events',
         'app.historical_forecasts',
         'app.admin_events',
+        'app.notifications',
         'app.profiles',
         'app.education_levels',
         'app.states',
         'app.states_users',
         'app.ages',
-        'app.stats',
-        'app.teams_users',
+        'app.scores',
+        'app.weather_statistics',
+        'app.statistics',
         'app.teams',
-        'app.weekly_contest_forecasts',
-        'app.weekly_scores'
+        'app.weekly_contest_forecasts'
     ];
 
     /**
@@ -55,8 +55,8 @@ class TeamsusersTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Teamsusers') ? [] : ['className' => 'App\Model\Table\TeamsusersTable'];
-        $this->Teamsusers = TableRegistry::get('Teamsusers', $config);
+        $config = TableRegistry::exists('TeamsUsers') ? [] : ['className' => 'App\Model\Table\TeamsUsersTable'];
+        $this->TeamsUsers = TableRegistry::get('TeamsUsers', $config);
     }
 
     /**
@@ -66,37 +66,17 @@ class TeamsusersTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Teamsusers);
+        unset($this->TeamsUsers);
 
         parent::tearDown();
     }
 
     /**
-     * Test initialize method
+     * Test initial setup
      *
      * @return void
      */
-    public function testInitialize()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test validationDefault method
-     *
-     * @return void
-     */
-    public function testValidationDefault()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules()
+    public function testInitialization()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
