@@ -89,8 +89,8 @@ class SocialProfilesFixture extends TestFixture
             'region' => 'Lorem ipsum dolor sit amet',
             'city' => 'Lorem ipsum dolor sit amet',
             'zip' => 'Lorem ipsum dolor sit amet',
-            'created' => '2017-03-18 17:41:39',
-            'modified' => '2017-03-18 17:41:39'
+            'created' => '2017-03-18 20:46:41',
+            'modified' => '2017-03-18 20:46:41'
         ],
     ];
 }

@@ -25,7 +25,26 @@ class ScoresTableTest extends TestCase
      */
     public $fixtures = [
         'app.scores',
-        'app.users'
+        'app.users',
+        'app.avatars',
+        'app.forecasts',
+        'app.weather_events',
+        'app.historical_forecasts',
+        'app.admin_events',
+        'app.weather_statistics',
+        'app.notifications',
+        'app.profiles',
+        'app.education_levels',
+        'app.states',
+        'app.states_users',
+        'app.ages',
+        'app.social_profiles',
+        'app.statistics',
+        'app.teams',
+        'app.teams_users',
+        'app.weekly_contest_forecasts',
+        'app.badges',
+        'app.badges_users'
     ];
 
     /**

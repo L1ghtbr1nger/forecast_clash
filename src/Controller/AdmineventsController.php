@@ -108,8 +108,4 @@ class AdminEventsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-    
-    public function beforeFilter(Event $event){
-        $this->Auth->allow();
-    }
 }

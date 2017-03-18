@@ -39,8 +39,8 @@ class AdminEventsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'start_date' => 1489858748,
-            'end_date' => 1489858748,
+            'start_date' => 1489869870,
+            'end_date' => 1489869870,
             'multiplier' => 1
         ],
     ];

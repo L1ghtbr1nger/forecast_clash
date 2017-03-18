@@ -17,7 +17,7 @@ class HistoricalForecastsFixture extends TestFixture
      */
     // @codingStandardsIgnoreStart
     public $fields = [
-        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'id' => ['type' => 'biginteger', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'user_id' => ['type' => 'integer', 'length' => 9, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'latitude' => ['type' => 'float', 'length' => 6, 'precision' => 4, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => ''],
         'longitude' => ['type' => 'float', 'length' => 6, 'precision' => 4, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => ''],

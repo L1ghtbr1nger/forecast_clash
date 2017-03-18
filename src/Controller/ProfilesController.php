@@ -3,8 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-use Cake\ORM\TableRegistry; 
-use Cake\Error\Debugger;
+use Cake\ORM\TableRegistry;
 
 /**
  * Profiles Controller

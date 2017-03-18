@@ -46,7 +46,7 @@ class ForecastsFixture extends TestFixture
             'id' => 1,
             'user_id' => 1,
             'weather_event_id' => 1,
-            'submit_date' => 1489858840,
+            'submit_date' => 1489869953,
             'forecast_date' => '2017-03-18',
             'am_pm' => 1,
             'radius' => 1,

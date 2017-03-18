@@ -163,7 +163,7 @@
                 <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('User Id') ?></th>
                 <th scope="col"><?= __('Notification') ?></th>
-                <th scope="col"><?= __('Unread') ?></th>
+                <th scope="col"><?= __('Seen') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($user->notifications as $notifications): ?>
@@ -171,7 +171,7 @@
                 <td><?= h($notifications->id) ?></td>
                 <td><?= h($notifications->user_id) ?></td>
                 <td><?= h($notifications->notification) ?></td>
-                <td><?= h($notifications->unread) ?></td>
+                <td><?= h($notifications->seen) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'Notifications', 'action' => 'view', $notifications->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Notifications', 'action' => 'edit', $notifications->id]) ?>

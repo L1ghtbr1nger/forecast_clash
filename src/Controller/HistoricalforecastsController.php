@@ -113,11 +113,11 @@ class HistoricalForecastsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $historicalforecast = $this->Historicalforecasts->get($id);
-        if ($this->Historicalforecasts->delete($historicalforecast)) {
-            $this->Flash->success(__('The historicalforecast has been deleted.'));
+        $historicalForecast = $this->HistoricalForecasts->get($id);
+        if ($this->HistoricalForecasts->delete($historicalForecast)) {
+            $this->Flash->success(__('The historical forecast has been deleted.'));
         } else {
-            $this->Flash->error(__('The historicalforecast could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The historical forecast could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
