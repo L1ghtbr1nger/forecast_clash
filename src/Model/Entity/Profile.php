@@ -6,16 +6,18 @@ use Cake\ORM\Entity;
 /**
  * Profile Entity
  *
- * @property int $age_id
  * @property int $id
  * @property int $user_id
  * @property int $education_level_id
  * @property bool $gender
  * @property string $city
  * @property int $state_id
+ * @property int $age_id
  *
  * @property \App\Model\Entity\User $user
+ * @property \App\Model\Entity\EducationLevel $education_level
  * @property \App\Model\Entity\State $state
+ * @property \App\Model\Entity\Age $age
  */
 class Profile extends Entity
 {

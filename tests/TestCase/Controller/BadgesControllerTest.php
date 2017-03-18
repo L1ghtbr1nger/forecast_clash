@@ -17,6 +17,7 @@ class BadgesControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.badges',
+        'app.users',
         'app.badges_users'
     ];
 

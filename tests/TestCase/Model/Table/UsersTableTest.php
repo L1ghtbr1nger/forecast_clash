@@ -25,25 +25,26 @@ class UsersTableTest extends TestCase
      */
     public $fixtures = [
         'app.users',
-        'app.social_profiles',
-        'app.badges_users',
-        'app.badges',
-        'app.scores',
-        'app.weather_statistics',
-        'app.weather_events',
+        'app.avatars',
         'app.forecasts',
+        'app.weather_events',
         'app.historical_forecasts',
         'app.admin_events',
+        'app.notifications',
         'app.profiles',
         'app.education_levels',
         'app.states',
         'app.states_users',
         'app.ages',
-        'app.stats',
-        'app.teams_users',
+        'app.scores',
+        'app.social_profiles',
+        'app.statistics',
         'app.teams',
+        'app.teams_users',
+        'app.weather_statistics',
         'app.weekly_contest_forecasts',
-        'app.weekly_scores'
+        'app.badges',
+        'app.badges_users'
     ];
 
     /**
@@ -76,16 +77,6 @@ class UsersTableTest extends TestCase
      * @return void
      */
     public function testInitialize()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test createUser method
-     *
-     * @return void
-     */
-    public function testCreateUser()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

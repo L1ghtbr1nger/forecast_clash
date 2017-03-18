@@ -18,18 +18,19 @@ use Cake\Auth\DefaultPasswordHasher;
  * @property string $password_reset_token
  * @property string $hashval
  *
- * @property \ADmad\HybridAuth\Model\Entity\SocialProfile[] $social_profiles
- * @property \App\Model\Entity\Badgesuser[] $badges_users
- * @property \App\Model\Entity\Score[] $scores
+ * @property \App\Model\Entity\Avatar $avatar
  * @property \App\Model\Entity\Forecast[] $forecasts
- * @property \App\Model\Entity\Historicalforecast[] $historical_forecasts
+ * @property \App\Model\Entity\HistoricalForecast[] $historical_forecasts
+ * @property \App\Model\Entity\Notification[] $notifications
  * @property \App\Model\Entity\Profile[] $profiles
- * @property \App\Model\Entity\StatesUser[] $states_users
- * @property \App\Model\Entity\Stat[] $stats
- * @property \App\Model\Entity\Teamsuser[] $teams_users
- * @property \App\Model\Entity\Weatherstatistic[] $weather_statistics
+ * @property \App\Model\Entity\Score[] $scores
+ * @property \App\Model\Entity\SocialProfile[] $social_profiles
+ * @property \App\Model\Entity\Statistic[] $statistics
+ * @property \App\Model\Entity\Team[] $teams
+ * @property \App\Model\Entity\WeatherStatistic[] $weather_statistics
  * @property \App\Model\Entity\WeeklyContestForecast[] $weekly_contest_forecasts
- * @property \App\Model\Entity\WeeklyScore[] $weekly_scores
+ * @property \App\Model\Entity\Badge[] $badges
+ * @property \App\Model\Entity\State[] $states
  */
 class User extends Entity
 {

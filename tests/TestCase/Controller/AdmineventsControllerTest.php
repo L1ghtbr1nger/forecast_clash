@@ -1,13 +1,13 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\AdmineventsController;
+use App\Controller\AdminEventsController;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
- * App\Controller\AdmineventsController Test Case
+ * App\Controller\AdminEventsController Test Case
  */
-class AdmineventsControllerTest extends IntegrationTestCase
+class AdminEventsControllerTest extends IntegrationTestCase
 {
 
     /**
@@ -16,7 +16,8 @@ class AdmineventsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.adminevents'
+        'app.admin_events',
+        'app.historical_forecasts'
     ];
 
     /**

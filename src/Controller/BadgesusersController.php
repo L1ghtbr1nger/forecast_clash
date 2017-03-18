@@ -4,11 +4,11 @@ namespace App\Controller;
 use App\Controller\AppController;
 
 /**
- * Badgesusers Controller
+ * BadgesUsers Controller
  *
- * @property \App\Model\Table\BadgesusersTable $Badgesusers
+ * @property \App\Model\Table\BadgesUsersTable $BadgesUsers
  */
-class BadgesusersController extends AppController
+class BadgesUsersController extends AppController
 {
 
     /**
@@ -21,27 +21,27 @@ class BadgesusersController extends AppController
         $this->paginate = [
             'contain' => ['Users', 'Badges']
         ];
-        $badgesusers = $this->paginate($this->Badgesusers);
+        $badgesUsers = $this->paginate($this->BadgesUsers);
 
-        $this->set(compact('badgesusers'));
-        $this->set('_serialize', ['badgesusers']);
+        $this->set(compact('badgesUsers'));
+        $this->set('_serialize', ['badgesUsers']);
     }
 
     /**
      * View method
      *
-     * @param string|null $id Badgesuser id.
+     * @param string|null $id Badges User id.
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $badgesuser = $this->Badgesusers->get($id, [
+        $badgesUser = $this->BadgesUsers->get($id, [
             'contain' => ['Users', 'Badges']
         ]);
 
-        $this->set('badgesuser', $badgesuser);
-        $this->set('_serialize', ['badgesuser']);
+        $this->set('badgesUser', $badgesUser);
+        $this->set('_serialize', ['badgesUser']);
     }
 
     /**
@@ -51,66 +51,66 @@ class BadgesusersController extends AppController
      */
     public function add()
     {
-        $badgesuser = $this->Badgesusers->newEntity();
+        $badgesUser = $this->BadgesUsers->newEntity();
         if ($this->request->is('post')) {
-            $badgesuser = $this->Badgesusers->patchEntity($badgesuser, $this->request->data);
-            if ($this->Badgesusers->save($badgesuser)) {
-                $this->Flash->success(__('The badgesuser has been saved.'));
+            $badgesUser = $this->BadgesUsers->patchEntity($badgesUser, $this->request->data);
+            if ($this->BadgesUsers->save($badgesUser)) {
+                $this->Flash->success(__('The badges user has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The badgesuser could not be saved. Please, try again.'));
+                $this->Flash->error(__('The badges user could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Badgesusers->Users->find('list', ['limit' => 200]);
-        $badges = $this->Badgesusers->Badges->find('list', ['limit' => 200]);
-        $this->set(compact('badgesuser', 'users', 'badges'));
-        $this->set('_serialize', ['badgesuser']);
+        $users = $this->BadgesUsers->Users->find('list', ['limit' => 200]);
+        $badges = $this->BadgesUsers->Badges->find('list', ['limit' => 200]);
+        $this->set(compact('badgesUser', 'users', 'badges'));
+        $this->set('_serialize', ['badgesUser']);
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Badgesuser id.
+     * @param string|null $id Badges User id.
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $badgesuser = $this->Badgesusers->get($id, [
+        $badgesUser = $this->BadgesUsers->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $badgesuser = $this->Badgesusers->patchEntity($badgesuser, $this->request->data);
-            if ($this->Badgesusers->save($badgesuser)) {
-                $this->Flash->success(__('The badgesuser has been saved.'));
+            $badgesUser = $this->BadgesUsers->patchEntity($badgesUser, $this->request->data);
+            if ($this->BadgesUsers->save($badgesUser)) {
+                $this->Flash->success(__('The badges user has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The badgesuser could not be saved. Please, try again.'));
+                $this->Flash->error(__('The badges user could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Badgesusers->Users->find('list', ['limit' => 200]);
-        $badges = $this->Badgesusers->Badges->find('list', ['limit' => 200]);
-        $this->set(compact('badgesuser', 'users', 'badges'));
-        $this->set('_serialize', ['badgesuser']);
+        $users = $this->BadgesUsers->Users->find('list', ['limit' => 200]);
+        $badges = $this->BadgesUsers->Badges->find('list', ['limit' => 200]);
+        $this->set(compact('badgesUser', 'users', 'badges'));
+        $this->set('_serialize', ['badgesUser']);
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Badgesuser id.
+     * @param string|null $id Badges User id.
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $badgesuser = $this->Badgesusers->get($id);
-        if ($this->Badgesusers->delete($badgesuser)) {
-            $this->Flash->success(__('The badgesuser has been deleted.'));
+        $badgesUser = $this->BadgesUsers->get($id);
+        if ($this->BadgesUsers->delete($badgesUser)) {
+            $this->Flash->success(__('The badges user has been deleted.'));
         } else {
-            $this->Flash->error(__('The badgesuser could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The badges user could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

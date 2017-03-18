@@ -4,7 +4,7 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Historicalforecast Entity
+ * HistoricalForecast Entity
  *
  * @property int $id
  * @property int $user_id
@@ -19,10 +19,10 @@ use Cake\ORM\Entity;
  * @property bool $correct
  *
  * @property \App\Model\Entity\User $user
- * @property \App\Model\Entity\Weatherevent $weather_event
- * @property \App\Model\Entity\Adminevent $admin_event
+ * @property \App\Model\Entity\WeatherEvent $weather_event
+ * @property \App\Model\Entity\AdminEvent $admin_event
  */
-class Historicalforecast extends Entity
+class HistoricalForecast extends Entity
 {
 
     /**

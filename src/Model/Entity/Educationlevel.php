@@ -4,12 +4,14 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Educationlevel Entity
+ * EducationLevel Entity
  *
  * @property int $id
  * @property string $education
+ *
+ * @property \App\Model\Entity\Profile[] $profiles
  */
-class Educationlevel extends Entity
+class EducationLevel extends Entity
 {
 
     /**

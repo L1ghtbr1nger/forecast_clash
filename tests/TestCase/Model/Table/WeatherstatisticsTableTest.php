@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\WeatherstatisticsTable;
+use App\Model\Table\WeatherStatisticsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\WeatherstatisticsTable Test Case
+ * App\Model\Table\WeatherStatisticsTable Test Case
  */
-class WeatherstatisticsTableTest extends TestCase
+class WeatherStatisticsTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\WeatherstatisticsTable
+     * @var \App\Model\Table\WeatherStatisticsTable
      */
-    public $Weatherstatistics;
+    public $WeatherStatistics;
 
     /**
      * Fixtures
@@ -24,26 +24,27 @@ class WeatherstatisticsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.weatherstatistics',
+        'app.weather_statistics',
         'app.users',
-        'app.social_profiles',
-        'app.badges_users',
-        'app.badges',
-        'app.scores',
+        'app.avatars',
         'app.forecasts',
         'app.weather_events',
         'app.historical_forecasts',
         'app.admin_events',
+        'app.notifications',
         'app.profiles',
         'app.education_levels',
         'app.states',
         'app.states_users',
         'app.ages',
-        'app.stats',
+        'app.scores',
+        'app.social_profiles',
+        'app.statistics',
+        'app.teams',
         'app.teams_users',
-        'app.weather_statistics',
         'app.weekly_contest_forecasts',
-        'app.weekly_scores'
+        'app.badges',
+        'app.badges_users'
     ];
 
     /**
@@ -54,8 +55,8 @@ class WeatherstatisticsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Weatherstatistics') ? [] : ['className' => 'App\Model\Table\WeatherstatisticsTable'];
-        $this->Weatherstatistics = TableRegistry::get('Weatherstatistics', $config);
+        $config = TableRegistry::exists('WeatherStatistics') ? [] : ['className' => 'App\Model\Table\WeatherStatisticsTable'];
+        $this->WeatherStatistics = TableRegistry::get('WeatherStatistics', $config);
     }
 
     /**
@@ -65,7 +66,7 @@ class WeatherstatisticsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Weatherstatistics);
+        unset($this->WeatherStatistics);
 
         parent::tearDown();
     }

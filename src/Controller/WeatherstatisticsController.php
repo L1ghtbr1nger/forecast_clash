@@ -6,11 +6,11 @@ use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 
 /**
- * Weatherstatistics Controller
+ * WeatherStatistics Controller
  *
- * @property \App\Model\Table\WeatherstatisticsTable $Weatherstatistics
+ * @property \App\Model\Table\WeatherStatisticsTable $WeatherStatistics
  */
-class WeatherstatisticsController extends AppController
+class WeatherStatisticsController extends AppController
 {
 
     /**
@@ -23,27 +23,27 @@ class WeatherstatisticsController extends AppController
         $this->paginate = [
             'contain' => ['Users', 'WeatherEvents']
         ];
-        $weatherstatistics = $this->paginate($this->Weatherstatistics);
+        $weatherStatistics = $this->paginate($this->WeatherStatistics);
 
-        $this->set(compact('weatherstatistics'));
-        $this->set('_serialize', ['weatherstatistics']);
+        $this->set(compact('weatherStatistics'));
+        $this->set('_serialize', ['weatherStatistics']);
     }
 
     /**
      * View method
      *
-     * @param string|null $id Weatherstatistic id.
+     * @param string|null $id Weather Statistic id.
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $weatherstatistic = $this->Weatherstatistics->get($id, [
+        $weatherStatistic = $this->WeatherStatistics->get($id, [
             'contain' => ['Users', 'WeatherEvents']
         ]);
 
-        $this->set('weatherstatistic', $weatherstatistic);
-        $this->set('_serialize', ['weatherstatistic']);
+        $this->set('weatherStatistic', $weatherStatistic);
+        $this->set('_serialize', ['weatherStatistic']);
     }
 
     /**
@@ -53,66 +53,66 @@ class WeatherstatisticsController extends AppController
      */
     public function add()
     {
-        $weatherstatistic = $this->Weatherstatistics->newEntity();
+        $weatherStatistic = $this->WeatherStatistics->newEntity();
         if ($this->request->is('post')) {
-            $weatherstatistic = $this->Weatherstatistics->patchEntity($weatherstatistic, $this->request->data);
-            if ($this->Weatherstatistics->save($weatherstatistic)) {
-                $this->Flash->success(__('The weatherstatistic has been saved.'));
+            $weatherStatistic = $this->WeatherStatistics->patchEntity($weatherStatistic, $this->request->data);
+            if ($this->WeatherStatistics->save($weatherStatistic)) {
+                $this->Flash->success(__('The weather statistic has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The weatherstatistic could not be saved. Please, try again.'));
+                $this->Flash->error(__('The weather statistic could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Weatherstatistics->Users->find('list', ['limit' => 200]);
-        $weatherEvents = $this->Weatherstatistics->WeatherEvents->find('list', ['limit' => 200]);
-        $this->set(compact('weatherstatistic', 'users', 'weatherEvents'));
-        $this->set('_serialize', ['weatherstatistic']);
+        $users = $this->WeatherStatistics->Users->find('list', ['limit' => 200]);
+        $weatherEvents = $this->WeatherStatistics->WeatherEvents->find('list', ['limit' => 200]);
+        $this->set(compact('weatherStatistic', 'users', 'weatherEvents'));
+        $this->set('_serialize', ['weatherStatistic']);
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Weatherstatistic id.
+     * @param string|null $id Weather Statistic id.
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $weatherstatistic = $this->Weatherstatistics->get($id, [
+        $weatherStatistic = $this->WeatherStatistics->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $weatherstatistic = $this->Weatherstatistics->patchEntity($weatherstatistic, $this->request->data);
-            if ($this->Weatherstatistics->save($weatherstatistic)) {
-                $this->Flash->success(__('The weatherstatistic has been saved.'));
+            $weatherStatistic = $this->WeatherStatistics->patchEntity($weatherStatistic, $this->request->data);
+            if ($this->WeatherStatistics->save($weatherStatistic)) {
+                $this->Flash->success(__('The weather statistic has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The weatherstatistic could not be saved. Please, try again.'));
+                $this->Flash->error(__('The weather statistic could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Weatherstatistics->Users->find('list', ['limit' => 200]);
-        $weatherEvents = $this->Weatherstatistics->WeatherEvents->find('list', ['limit' => 200]);
-        $this->set(compact('weatherstatistic', 'users', 'weatherEvents'));
-        $this->set('_serialize', ['weatherstatistic']);
+        $users = $this->WeatherStatistics->Users->find('list', ['limit' => 200]);
+        $weatherEvents = $this->WeatherStatistics->WeatherEvents->find('list', ['limit' => 200]);
+        $this->set(compact('weatherStatistic', 'users', 'weatherEvents'));
+        $this->set('_serialize', ['weatherStatistic']);
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Weatherstatistic id.
+     * @param string|null $id Weather Statistic id.
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $weatherstatistic = $this->Weatherstatistics->get($id);
-        if ($this->Weatherstatistics->delete($weatherstatistic)) {
-            $this->Flash->success(__('The weatherstatistic has been deleted.'));
+        $weatherStatistic = $this->WeatherStatistics->get($id);
+        if ($this->WeatherStatistics->delete($weatherStatistic)) {
+            $this->Flash->success(__('The weather statistic has been deleted.'));
         } else {
-            $this->Flash->error(__('The weatherstatistic could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The weather statistic could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

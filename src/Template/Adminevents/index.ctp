@@ -1,11 +1,13 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Adminevent'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('New Admin Event'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Historical Forecasts'), ['controller' => 'HistoricalForecasts', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Historical Forecast'), ['controller' => 'HistoricalForecasts', 'action' => 'add']) ?></li>
     </ul>
 </nav>
-<div class="adminevents index large-9 medium-8 columns content">
-    <h3><?= __('Adminevents') ?></h3>
+<div class="adminEvents index large-9 medium-8 columns content">
+    <h3><?= __('Admin Events') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
@@ -17,16 +19,16 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($adminevents as $adminevent): ?>
+            <?php foreach ($adminEvents as $adminEvent): ?>
             <tr>
-                <td><?= $this->Number->format($adminevent->id) ?></td>
-                <td><?= h($adminevent->start_date) ?></td>
-                <td><?= h($adminevent->end_date) ?></td>
-                <td><?= $this->Number->format($adminevent->multiplier) ?></td>
+                <td><?= $this->Number->format($adminEvent->id) ?></td>
+                <td><?= h($adminEvent->start_date) ?></td>
+                <td><?= h($adminEvent->end_date) ?></td>
+                <td><?= $this->Number->format($adminEvent->multiplier) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $adminevent->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $adminevent->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $adminevent->id], ['confirm' => __('Are you sure you want to delete # {0}?', $adminevent->id)]) ?>
+                    <?= $this->Html->link(__('View'), ['action' => 'view', $adminEvent->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $adminEvent->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $adminEvent->id], ['confirm' => __('Are you sure you want to delete # {0}?', $adminEvent->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

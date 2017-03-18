@@ -17,23 +17,7 @@ class AvatarsControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.avatars',
-        'app.users',
-        'app.social_profiles',
-        'app.badges_users',
-        'app.final_scores',
-        'app.hail_forecasts',
-        'app.historical_forecasts',
-        'app.profiles',
-        'app.education_levels',
-        'app.states',
-        'app.states_users',
-        'app.ages',
-        'app.stats',
-        'app.teams_users',
-        'app.tornado_forecasts',
-        'app.weekly_contest_forecasts',
-        'app.weekly_scores',
-        'app.wind_forecasts'
+        'app.users'
     ];
 
     /**

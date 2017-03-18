@@ -22,7 +22,7 @@ class ProfilesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users', 'States', 'EducationLevels', 'Ages']
+            'contain' => ['Users', 'EducationLevels', 'States', 'Ages']
         ];
         $profiles = $this->paginate($this->Profiles);
 
@@ -40,7 +40,7 @@ class ProfilesController extends AppController
     public function view($id = null)
     {
         $profile = $this->Profiles->get($id, [
-            'contain' => ['Users', 'States', 'EducationLevels', 'Ages']
+            'contain' => ['Users', 'EducationLevels', 'States', 'Ages']
         ]);
 
         $this->set('profile', $profile);
@@ -66,8 +66,10 @@ class ProfilesController extends AppController
             }
         }
         $users = $this->Profiles->Users->find('list', ['limit' => 200]);
+        $educationLevels = $this->Profiles->EducationLevels->find('list', ['limit' => 200]);
         $states = $this->Profiles->States->find('list', ['limit' => 200]);
-        $this->set(compact('profile', 'users', 'states'));
+        $ages = $this->Profiles->Ages->find('list', ['limit' => 200]);
+        $this->set(compact('profile', 'users', 'educationLevels', 'states', 'ages'));
         $this->set('_serialize', ['profile']);
     }
 
@@ -94,8 +96,10 @@ class ProfilesController extends AppController
             }
         }
         $users = $this->Profiles->Users->find('list', ['limit' => 200]);
+        $educationLevels = $this->Profiles->EducationLevels->find('list', ['limit' => 200]);
         $states = $this->Profiles->States->find('list', ['limit' => 200]);
-        $this->set(compact('profile', 'users', 'states'));
+        $ages = $this->Profiles->Ages->find('list', ['limit' => 200]);
+        $this->set(compact('profile', 'users', 'educationLevels', 'states', 'ages'));
         $this->set('_serialize', ['profile']);
     }
 
@@ -124,9 +128,14 @@ class ProfilesController extends AppController
             $data = $this->request->data;
             $session = $this->request->session();
             $data['user_id'] = $session->read('User.id');
-            $query = $this->Profiles->find()->where(['user_id' => $data['user_id']]);
-            if ($query->toArray()) {
-                $profile = $query->first();
+            if ($query = $this->Profiles->find()
+                ->where([
+                    'user_id' => $data['user_id']
+                ])
+            ) {
+                $result = $query->first();
+                $profileId = $result['id'];
+                $profile = $this->Profiles->get($profileId);
             } else {
                 $profile = $this->Profiles->newEntity();
             }
@@ -152,17 +161,29 @@ class ProfilesController extends AppController
             $this->set('_serialize', ['profile']);
             die;
         }
-        $tables = ['States' => 'state_name', 'EducationLevels' => 'education', 'Ages' => 'age_range'];
-        foreach ($tables as $table => $field) {
-            $tableDB = TableRegistry::get($table);
-            $query = $tableDB->find();
-            $result = [];
-            foreach ($query as $row) {
-                $result[$row['id']] = $row[$field];
-            }
-            $this->set(lcfirst($table), $result);
+        $states = TableRegistry::get('States');
+        $query = $states->find();
+        foreach ($query as $state) {
+            $result[$state['id']] = $state['state_name'];
         }
+        $this->set('state', $result);
+        $edus = TableRegistry::get('EducationLevels');
+        $query2 = $edus->find();
+        foreach ($query2 as $edu) {
+            $result2[$edu['id']] = $edu['education'];
+        }
+        $this->set('edu', $result2);
+        $ages = TableRegistry::get('Ages');
+        $query3 = $ages->find();
+        foreach ($query3 as $age) {
+            $result3[$age['id']] = $age['age_range'];
+        }
+        $this->set('age', $result3);
         $session = $this->request->session();
         $this->set('user_id', $session->read('User.id'));
+    }
+    
+    public function beforeFilter(Event $event){
+        $this->Auth->allow();
     }
 }

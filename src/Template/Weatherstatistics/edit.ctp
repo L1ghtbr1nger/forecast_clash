@@ -3,26 +3,26 @@
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Form->postLink(
                 __('Delete'),
-                ['action' => 'delete', $weatherstatistic->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $weatherstatistic->id)]
+                ['action' => 'delete', $weatherStatistic->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $weatherStatistic->id)]
             )
         ?></li>
-        <li><?= $this->Html->link(__('List Weatherstatistics'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('List Weather Statistics'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Weather Events'), ['controller' => 'Weatherevents', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Weather Event'), ['controller' => 'Weatherevents', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Weather Events'), ['controller' => 'WeatherEvents', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Weather Event'), ['controller' => 'WeatherEvents', 'action' => 'add']) ?></li>
     </ul>
 </nav>
-<div class="weatherstatistics form large-9 medium-8 columns content">
-    <?= $this->Form->create($weatherstatistic) ?>
+<div class="weatherStatistics form large-9 medium-8 columns content">
+    <?= $this->Form->create($weatherStatistic) ?>
     <fieldset>
-        <legend><?= __('Edit Weatherstatistic') ?></legend>
+        <legend><?= __('Edit Weather Statistic') ?></legend>
         <?php
             echo $this->Form->input('user_id', ['options' => $users]);
             echo $this->Form->input('weather_event_id', ['options' => $weatherEvents]);
-            echo $this->Form->input('attempts');
             echo $this->Form->input('valid_attempts');
+            echo $this->Form->input('attempts');
             echo $this->Form->input('radius');
             echo $this->Form->input('forecast_length');
         ?>

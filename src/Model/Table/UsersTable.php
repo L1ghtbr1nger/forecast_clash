@@ -10,19 +10,19 @@ use Cake\Validation\Validator;
  * Users Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Avatars
- * @property \Cake\ORM\Association\HasMany $BadgesUsers
  * @property \Cake\ORM\Association\HasMany $Forecasts
  * @property \Cake\ORM\Association\HasMany $HistoricalForecasts
  * @property \Cake\ORM\Association\HasMany $Notifications
  * @property \Cake\ORM\Association\HasMany $Profiles
  * @property \Cake\ORM\Association\HasMany $Scores
- * @property \Cake\ORM\Association\HasMany $StatesUsers
+ * @property \Cake\ORM\Association\HasMany $SocialProfiles
  * @property \Cake\ORM\Association\HasMany $Statistics
  * @property \Cake\ORM\Association\HasMany $Teams
- * @property \Cake\ORM\Association\HasMany $TeamsUsers
  * @property \Cake\ORM\Association\HasMany $WeatherStatistics
  * @property \Cake\ORM\Association\HasMany $WeeklyContestForecasts
- * @property \Cake\ORM\Association\HasMany $SocialProfiles
+ * @property \Cake\ORM\Association\BelongsToMany $Badges
+ * @property \Cake\ORM\Association\BelongsToMany $States
+ * @property \Cake\ORM\Association\BelongsToMany $Teams
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -56,9 +56,6 @@ class UsersTable extends Table
         $this->belongsTo('Avatars', [
             'foreignKey' => 'avatar_id'
         ]);
-        $this->hasMany('BadgesUsers', [
-            'foreignKey' => 'user_id'
-        ]);
         $this->hasMany('Forecasts', [
             'foreignKey' => 'user_id'
         ]);
@@ -74,7 +71,7 @@ class UsersTable extends Table
         $this->hasMany('Scores', [
             'foreignKey' => 'user_id'
         ]);
-        $this->hasMany('StatesUsers', [
+        $this->hasMany('SocialProfiles', [
             'foreignKey' => 'user_id'
         ]);
         $this->hasMany('Statistics', [
@@ -83,17 +80,26 @@ class UsersTable extends Table
         $this->hasMany('Teams', [
             'foreignKey' => 'user_id'
         ]);
-        $this->hasMany('TeamsUsers', [
-            'foreignKey' => 'user_id'
-        ]);
         $this->hasMany('WeatherStatistics', [
             'foreignKey' => 'user_id'
         ]);
         $this->hasMany('WeeklyContestForecasts', [
             'foreignKey' => 'user_id'
         ]);
-        $this->hasMany('SocialProfiles', [
-            'foreignKey' => 'user_id'
+        $this->belongsToMany('Badges', [
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'badge_id',
+            'joinTable' => 'badges_users'
+        ]);
+        $this->belongsToMany('States', [
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'state_id',
+            'joinTable' => 'states_users'
+        ]);
+        $this->belongsToMany('Teams', [
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'team_id',
+            'joinTable' => 'teams_users'
         ]);
     }
 
@@ -111,7 +117,7 @@ class UsersTable extends Table
 
         return $user;
     }
-    
+
     /**
      * Default validation rules.
      *
@@ -140,7 +146,8 @@ class UsersTable extends Table
             ->requirePresence('email', 'create')
             ->notEmpty('email', 'Please provide your email');
 
-       $validator
+
+        $validator
             ->requirePresence('password', 'create')
             ->notEmpty('password', 'Password must be between 8 and 50 characters')
             ->add('password', [

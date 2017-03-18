@@ -7,20 +7,20 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Teamsusers Model
+ * TeamsUsers Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\BelongsTo $Teams
  *
- * @method \App\Model\Entity\Teamsuser get($primaryKey, $options = [])
- * @method \App\Model\Entity\Teamsuser newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Teamsuser[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Teamsuser|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Teamsuser patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Teamsuser[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Teamsuser findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\TeamsUser get($primaryKey, $options = [])
+ * @method \App\Model\Entity\TeamsUser newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\TeamsUser[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\TeamsUser|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TeamsUser patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\TeamsUser[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\TeamsUser findOrCreate($search, callable $callback = null)
  */
-class TeamsusersTable extends Table
+class TeamsUsersTable extends Table
 {
 
     /**
@@ -33,7 +33,7 @@ class TeamsusersTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('teamsusers');
+        $this->table('teams_users');
         $this->displayField('id');
         $this->primaryKey('id');
 

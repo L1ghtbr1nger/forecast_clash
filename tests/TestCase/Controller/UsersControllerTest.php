@@ -17,36 +17,27 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.users',
-        'app.social_profiles',
-        'app.badges_users',
-        'app.badges',
-        'app.scores',
-        'app.weather_statistics',
-        'app.weather_events',
+        'app.avatars',
         'app.forecasts',
+        'app.weather_events',
         'app.historical_forecasts',
         'app.admin_events',
+        'app.notifications',
         'app.profiles',
         'app.education_levels',
         'app.states',
         'app.states_users',
         'app.ages',
-        'app.stats',
-        'app.teams_users',
+        'app.scores',
+        'app.social_profiles',
+        'app.statistics',
         'app.teams',
+        'app.teams_users',
+        'app.weather_statistics',
         'app.weekly_contest_forecasts',
-        'app.weekly_scores'
+        'app.badges',
+        'app.badges_users'
     ];
-
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
 
     /**
      * Test index method
@@ -94,66 +85,6 @@ class UsersControllerTest extends IntegrationTestCase
      * @return void
      */
     public function testDelete()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test login method
-     *
-     * @return void
-     */
-    public function testLogin()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test logout method
-     *
-     * @return void
-     */
-    public function testLogout()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test register method
-     *
-     * @return void
-     */
-    public function testRegister()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test forgotPassword method
-     *
-     * @return void
-     */
-    public function testForgotPassword()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test resetPassword method
-     *
-     * @return void
-     */
-    public function testResetPassword()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test beforeFilter method
-     *
-     * @return void
-     */
-    public function testBeforeFilter()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

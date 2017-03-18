@@ -7,21 +7,21 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Historicalforecasts Model
+ * HistoricalForecasts Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \Cake\ORM\Association\BelongsTo $WeatherEvents
  * @property \Cake\ORM\Association\BelongsTo $AdminEvents
  *
- * @method \App\Model\Entity\Historicalforecast get($primaryKey, $options = [])
- * @method \App\Model\Entity\Historicalforecast newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Historicalforecast[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Historicalforecast|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Historicalforecast patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Historicalforecast[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Historicalforecast findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\HistoricalForecast get($primaryKey, $options = [])
+ * @method \App\Model\Entity\HistoricalForecast newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\HistoricalForecast[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\HistoricalForecast|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\HistoricalForecast patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\HistoricalForecast[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\HistoricalForecast findOrCreate($search, callable $callback = null)
  */
-class HistoricalforecastsTable extends Table
+class HistoricalForecastsTable extends Table
 {
 
     /**
@@ -34,7 +34,7 @@ class HistoricalforecastsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('historicalforecasts');
+        $this->table('historical_forecasts');
         $this->displayField('id');
         $this->primaryKey('id');
 
@@ -47,8 +47,7 @@ class HistoricalforecastsTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('AdminEvents', [
-            'foreignKey' => 'admin_event_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'admin_event_id'
         ]);
         
         $this->hasMany('TeamsUsers', [

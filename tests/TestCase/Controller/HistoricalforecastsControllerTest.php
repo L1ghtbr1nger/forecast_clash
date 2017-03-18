@@ -1,13 +1,13 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\HistoricalforecastsController;
+use App\Controller\HistoricalForecastsController;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
- * App\Controller\HistoricalforecastsController Test Case
+ * App\Controller\HistoricalForecastsController Test Case
  */
-class HistoricalforecastsControllerTest extends IntegrationTestCase
+class HistoricalForecastsControllerTest extends IntegrationTestCase
 {
 
     /**
@@ -16,26 +16,10 @@ class HistoricalforecastsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.historicalforecasts',
-        'app.users',
-        'app.social_profiles',
-        'app.badges_users',
-        'app.badges',
-        'app.scores',
-        'app.forecasts',
-        'app.weather_events',
         'app.historical_forecasts',
-        'app.admin_events',
-        'app.profiles',
-        'app.education_levels',
-        'app.states',
-        'app.states_users',
-        'app.ages',
-        'app.stats',
-        'app.teams_users',
-        'app.weather_statistics',
-        'app.weekly_contest_forecasts',
-        'app.weekly_scores'
+        'app.users',
+        'app.weather_events',
+        'app.admin_events'
     ];
 
     /**
@@ -84,26 +68,6 @@ class HistoricalforecastsControllerTest extends IntegrationTestCase
      * @return void
      */
     public function testDelete()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test compares method
-     *
-     * @return void
-     */
-    public function testCompares()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test beforeFilter method
-     *
-     * @return void
-     */
-    public function testBeforeFilter()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

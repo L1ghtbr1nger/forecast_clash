@@ -4,11 +4,11 @@ namespace App\Controller;
 use App\Controller\AppController;
 
 /**
- * Adminevents Controller
+ * AdminEvents Controller
  *
- * @property \App\Model\Table\AdmineventsTable $Adminevents
+ * @property \App\Model\Table\AdminEventsTable $AdminEvents
  */
-class AdmineventsController extends AppController
+class AdminEventsController extends AppController
 {
 
     /**
@@ -18,27 +18,27 @@ class AdmineventsController extends AppController
      */
     public function index()
     {
-        $adminevents = $this->paginate($this->Adminevents);
+        $adminEvents = $this->paginate($this->AdminEvents);
 
-        $this->set(compact('adminevents'));
-        $this->set('_serialize', ['adminevents']);
+        $this->set(compact('adminEvents'));
+        $this->set('_serialize', ['adminEvents']);
     }
 
     /**
      * View method
      *
-     * @param string|null $id Adminevent id.
+     * @param string|null $id Admin Event id.
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $adminevent = $this->Adminevents->get($id, [
-            'contain' => []
+        $adminEvent = $this->AdminEvents->get($id, [
+            'contain' => ['HistoricalForecasts']
         ]);
 
-        $this->set('adminevent', $adminevent);
-        $this->set('_serialize', ['adminevent']);
+        $this->set('adminEvent', $adminEvent);
+        $this->set('_serialize', ['adminEvent']);
     }
 
     /**
@@ -48,62 +48,62 @@ class AdmineventsController extends AppController
      */
     public function add()
     {
-        $adminevent = $this->Adminevents->newEntity();
+        $adminEvent = $this->AdminEvents->newEntity();
         if ($this->request->is('post')) {
-            $adminevent = $this->Adminevents->patchEntity($adminevent, $this->request->data);
-            if ($this->Adminevents->save($adminevent)) {
-                $this->Flash->success(__('The adminevent has been saved.'));
+            $adminEvent = $this->AdminEvents->patchEntity($adminEvent, $this->request->data);
+            if ($this->AdminEvents->save($adminEvent)) {
+                $this->Flash->success(__('The admin event has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The adminevent could not be saved. Please, try again.'));
+                $this->Flash->error(__('The admin event could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('adminevent'));
-        $this->set('_serialize', ['adminevent']);
+        $this->set(compact('adminEvent'));
+        $this->set('_serialize', ['adminEvent']);
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Adminevent id.
+     * @param string|null $id Admin Event id.
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $adminevent = $this->Adminevents->get($id, [
+        $adminEvent = $this->AdminEvents->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $adminevent = $this->Adminevents->patchEntity($adminevent, $this->request->data);
-            if ($this->Adminevents->save($adminevent)) {
-                $this->Flash->success(__('The adminevent has been saved.'));
+            $adminEvent = $this->AdminEvents->patchEntity($adminEvent, $this->request->data);
+            if ($this->AdminEvents->save($adminEvent)) {
+                $this->Flash->success(__('The admin event has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The adminevent could not be saved. Please, try again.'));
+                $this->Flash->error(__('The admin event could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('adminevent'));
-        $this->set('_serialize', ['adminevent']);
+        $this->set(compact('adminEvent'));
+        $this->set('_serialize', ['adminEvent']);
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Adminevent id.
+     * @param string|null $id Admin Event id.
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $adminevent = $this->Adminevents->get($id);
-        if ($this->Adminevents->delete($adminevent)) {
-            $this->Flash->success(__('The adminevent has been deleted.'));
+        $adminEvent = $this->AdminEvents->get($id);
+        if ($this->AdminEvents->delete($adminEvent)) {
+            $this->Flash->success(__('The admin event has been deleted.'));
         } else {
-            $this->Flash->error(__('The adminevent could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The admin event could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

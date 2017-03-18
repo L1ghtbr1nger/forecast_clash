@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\AdmineventsTable;
+use App\Model\Table\AdminEventsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\AdmineventsTable Test Case
+ * App\Model\Table\AdminEventsTable Test Case
  */
-class AdmineventsTableTest extends TestCase
+class AdminEventsTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\AdmineventsTable
+     * @var \App\Model\Table\AdminEventsTable
      */
-    public $Adminevents;
+    public $AdminEvents;
 
     /**
      * Fixtures
@@ -24,7 +24,8 @@ class AdmineventsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.adminevents'
+        'app.admin_events',
+        'app.historical_forecasts'
     ];
 
     /**
@@ -35,8 +36,8 @@ class AdmineventsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Adminevents') ? [] : ['className' => 'App\Model\Table\AdmineventsTable'];
-        $this->Adminevents = TableRegistry::get('Adminevents', $config);
+        $config = TableRegistry::exists('AdminEvents') ? [] : ['className' => 'App\Model\Table\AdminEventsTable'];
+        $this->AdminEvents = TableRegistry::get('AdminEvents', $config);
     }
 
     /**
@@ -46,7 +47,7 @@ class AdmineventsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Adminevents);
+        unset($this->AdminEvents);
 
         parent::tearDown();
     }

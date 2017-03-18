@@ -34,7 +34,7 @@ class StatesController extends AppController
     public function view($id = null)
     {
         $state = $this->States->get($id, [
-            'contain' => ['StatesUsers', 'Users']
+            'contain' => ['Users', 'Profiles']
         ]);
 
         $this->set('state', $state);
@@ -59,7 +59,8 @@ class StatesController extends AppController
                 $this->Flash->error(__('The state could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('state'));
+        $users = $this->States->Users->find('list', ['limit' => 200]);
+        $this->set(compact('state', 'users'));
         $this->set('_serialize', ['state']);
     }
 
@@ -73,7 +74,7 @@ class StatesController extends AppController
     public function edit($id = null)
     {
         $state = $this->States->get($id, [
-            'contain' => []
+            'contain' => ['Users']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $state = $this->States->patchEntity($state, $this->request->data);
@@ -85,7 +86,8 @@ class StatesController extends AppController
                 $this->Flash->error(__('The state could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('state'));
+        $users = $this->States->Users->find('list', ['limit' => 200]);
+        $this->set(compact('state', 'users'));
         $this->set('_serialize', ['state']);
     }
 

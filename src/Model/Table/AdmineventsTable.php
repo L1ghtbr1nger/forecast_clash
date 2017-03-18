@@ -7,17 +7,19 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Adminevents Model
+ * AdminEvents Model
  *
- * @method \App\Model\Entity\Adminevent get($primaryKey, $options = [])
- * @method \App\Model\Entity\Adminevent newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Adminevent[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Adminevent|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Adminevent patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Adminevent[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Adminevent findOrCreate($search, callable $callback = null)
+ * @property \Cake\ORM\Association\HasMany $HistoricalForecasts
+ *
+ * @method \App\Model\Entity\AdminEvent get($primaryKey, $options = [])
+ * @method \App\Model\Entity\AdminEvent newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\AdminEvent[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\AdminEvent|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\AdminEvent patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\AdminEvent[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\AdminEvent findOrCreate($search, callable $callback = null)
  */
-class AdmineventsTable extends Table
+class AdminEventsTable extends Table
 {
 
     /**
@@ -30,9 +32,13 @@ class AdmineventsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('adminevents');
+        $this->table('admin_events');
         $this->displayField('id');
         $this->primaryKey('id');
+
+        $this->hasMany('HistoricalForecasts', [
+            'foreignKey' => 'admin_event_id'
+        ]);
     }
 
     /**

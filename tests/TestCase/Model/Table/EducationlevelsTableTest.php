@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\EducationlevelsTable;
+use App\Model\Table\EducationLevelsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\EducationlevelsTable Test Case
+ * App\Model\Table\EducationLevelsTable Test Case
  */
-class EducationlevelsTableTest extends TestCase
+class EducationLevelsTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\EducationlevelsTable
+     * @var \App\Model\Table\EducationLevelsTable
      */
-    public $Educationlevels;
+    public $EducationLevels;
 
     /**
      * Fixtures
@@ -24,7 +24,8 @@ class EducationlevelsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.educationlevels'
+        'app.education_levels',
+        'app.profiles'
     ];
 
     /**
@@ -35,8 +36,8 @@ class EducationlevelsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Educationlevels') ? [] : ['className' => 'App\Model\Table\EducationlevelsTable'];
-        $this->Educationlevels = TableRegistry::get('Educationlevels', $config);
+        $config = TableRegistry::exists('EducationLevels') ? [] : ['className' => 'App\Model\Table\EducationLevelsTable'];
+        $this->EducationLevels = TableRegistry::get('EducationLevels', $config);
     }
 
     /**
@@ -46,7 +47,7 @@ class EducationlevelsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Educationlevels);
+        unset($this->EducationLevels);
 
         parent::tearDown();
     }

@@ -4,12 +4,16 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Weatherevent Entity
+ * WeatherEvent Entity
  *
  * @property int $id
  * @property string $weather
+ *
+ * @property \App\Model\Entity\Forecast[] $forecasts
+ * @property \App\Model\Entity\HistoricalForecast[] $historical_forecasts
+ * @property \App\Model\Entity\WeatherStatistic[] $weather_statistics
  */
-class Weatherevent extends Entity
+class WeatherEvent extends Entity
 {
 
     /**

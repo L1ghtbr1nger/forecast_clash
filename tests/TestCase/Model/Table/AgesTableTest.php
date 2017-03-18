@@ -25,22 +25,7 @@ class AgesTableTest extends TestCase
      */
     public $fixtures = [
         'app.ages',
-        'app.profiles',
-        'app.users',
-        'app.social_profiles',
-        'app.badges_users',
-        'app.final_scores',
-        'app.hail_forecasts',
-        'app.historical_forecasts',
-        'app.states_users',
-        'app.stats',
-        'app.teams_users',
-        'app.tornado_forecasts',
-        'app.weekly_contest_forecasts',
-        'app.weekly_scores',
-        'app.wind_forecasts',
-        'app.education_levels',
-        'app.states'
+        'app.profiles'
     ];
 
     /**

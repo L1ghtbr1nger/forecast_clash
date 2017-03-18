@@ -9,7 +9,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $state_name
  *
- * @property \App\Model\Entity\StatesUser[] $states_users
+ * @property \App\Model\Entity\Profile[] $profiles
  * @property \App\Model\Entity\User[] $users
  */
 class State extends Entity

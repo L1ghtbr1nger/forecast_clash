@@ -4,7 +4,7 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Teamsuser Entity
+ * TeamsUser Entity
  *
  * @property int $id
  * @property int $user_id
@@ -13,7 +13,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\Team $team
  */
-class Teamsuser extends Entity
+class TeamsUser extends Entity
 {
 
     /**

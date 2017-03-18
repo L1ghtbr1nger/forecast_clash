@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\WeathereventsTable;
+use App\Model\Table\WeatherEventsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\WeathereventsTable Test Case
+ * App\Model\Table\WeatherEventsTable Test Case
  */
-class WeathereventsTableTest extends TestCase
+class WeatherEventsTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\WeathereventsTable
+     * @var \App\Model\Table\WeatherEventsTable
      */
-    public $Weatherevents;
+    public $WeatherEvents;
 
     /**
      * Fixtures
@@ -24,7 +24,27 @@ class WeathereventsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.weatherevents'
+        'app.weather_events',
+        'app.forecasts',
+        'app.users',
+        'app.avatars',
+        'app.historical_forecasts',
+        'app.admin_events',
+        'app.notifications',
+        'app.profiles',
+        'app.education_levels',
+        'app.states',
+        'app.states_users',
+        'app.ages',
+        'app.scores',
+        'app.social_profiles',
+        'app.statistics',
+        'app.teams',
+        'app.teams_users',
+        'app.weather_statistics',
+        'app.weekly_contest_forecasts',
+        'app.badges',
+        'app.badges_users'
     ];
 
     /**
@@ -35,8 +55,8 @@ class WeathereventsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Weatherevents') ? [] : ['className' => 'App\Model\Table\WeathereventsTable'];
-        $this->Weatherevents = TableRegistry::get('Weatherevents', $config);
+        $config = TableRegistry::exists('WeatherEvents') ? [] : ['className' => 'App\Model\Table\WeatherEventsTable'];
+        $this->WeatherEvents = TableRegistry::get('WeatherEvents', $config);
     }
 
     /**
@@ -46,7 +66,7 @@ class WeathereventsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Weatherevents);
+        unset($this->WeatherEvents);
 
         parent::tearDown();
     }

@@ -34,6 +34,8 @@
                 <th scope="col"><?= __('Avatar Id') ?></th>
                 <th scope="col"><?= __('Meteorologist') ?></th>
                 <th scope="col"><?= __('Date Created') ?></th>
+                <th scope="col"><?= __('Password Reset Token') ?></th>
+                <th scope="col"><?= __('Hashval') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($avatar->users as $users): ?>
@@ -46,6 +48,8 @@
                 <td><?= h($users->avatar_id) ?></td>
                 <td><?= h($users->meteorologist) ?></td>
                 <td><?= h($users->date_created) ?></td>
+                <td><?= h($users->password_reset_token) ?></td>
+                <td><?= h($users->hashval) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Users', 'action' => 'edit', $users->id]) ?>

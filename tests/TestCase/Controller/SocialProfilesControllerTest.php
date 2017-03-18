@@ -17,18 +17,7 @@ class SocialProfilesControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.social_profiles',
-        'app.users',
-        'app.badges_users',
-        'app.final_scores',
-        'app.hail_forecasts',
-        'app.historical_forecasts',
-        'app.states_users',
-        'app.stats',
-        'app.teams_users',
-        'app.tornado_forecasts',
-        'app.weekly_contest_forecasts',
-        'app.weekly_scores',
-        'app.wind_forecasts'
+        'app.users'
     ];
 
     /**

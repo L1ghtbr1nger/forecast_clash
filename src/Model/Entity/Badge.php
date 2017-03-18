@@ -11,7 +11,7 @@ use Cake\ORM\Entity;
  * @property string $badge_desc
  * @property string $badge_img
  *
- * @property \App\Model\Entity\BadgesUser[] $badges_users
+ * @property \App\Model\Entity\User[] $users
  */
 class Badge extends Entity
 {

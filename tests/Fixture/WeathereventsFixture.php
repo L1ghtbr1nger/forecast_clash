@@ -4,10 +4,10 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * WeathereventsFixture
+ * WeatherEventsFixture
  *
  */
-class WeathereventsFixture extends TestFixture
+class WeatherEventsFixture extends TestFixture
 {
 
     /**

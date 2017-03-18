@@ -13,13 +13,7 @@ use Cake\Collection\Collection;
  */
 class TeamsController extends AppController
 {
-    
-    public function initialize(){
-        parent::initialize();
-        
-        // Load Files model
-        $this->loadModel('Files');
-    }
+
     /**
      * Index method
      *
@@ -43,7 +37,7 @@ class TeamsController extends AppController
     public function view($id = null)
     {
         $team = $this->Teams->get($id, [
-            'contain' => ['TeamsUsers']
+            'contain' => ['Users']
         ]);
 
         $this->set('team', $team);
@@ -68,7 +62,8 @@ class TeamsController extends AppController
                 $this->Flash->error(__('The team could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('team'));
+        $users = $this->Teams->Users->find('list', ['limit' => 200]);
+        $this->set(compact('team', 'users'));
         $this->set('_serialize', ['team']);
     }
 
@@ -82,7 +77,7 @@ class TeamsController extends AppController
     public function edit($id = null)
     {
         $team = $this->Teams->get($id, [
-            'contain' => []
+            'contain' => ['Users']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $team = $this->Teams->patchEntity($team, $this->request->data);
@@ -94,7 +89,8 @@ class TeamsController extends AppController
                 $this->Flash->error(__('The team could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('team'));
+        $users = $this->Teams->Users->find('list', ['limit' => 200]);
+        $this->set(compact('team', 'users'));
         $this->set('_serialize', ['team']);
     }
 
