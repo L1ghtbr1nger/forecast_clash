@@ -120,13 +120,13 @@ class TeamsController extends AppController
         $teamsUsers = TableRegistry::get('TeamsUsers');
         $users = TableRegistry::get('Users');
         $userTeam = $users->find()->where(['id' => $userID])->contain('Teams')->first(); //look for user's team
-        $teamRankings = TableRegistry::get('Scores')->find('all')->contain('Users.Teams');
+        $teamRankings = TableRegistry::get('Scores')->find('all')->contain(['TeamsUsers' => ['Teams']])->order('Teams.id');
         if($teamRanking = $teamRankings->toArray()) {
             $teamScore = [];
             $tempID = 0;
             foreach ($teamRanking as $teamRank) {
-                $team_id = $teamRank['user']['teams']['id'];
-                $team_name = $teamRank['user']['teams']['team_name'];
+                $team_id = $teamRank['teams_user']['team_id'];
+                $team_name = $teamRank['teams_user']['team']['team_name'];
                 $score = $teamRank['total_score'];
                 if ($team_id === $tempID) {
                     $teamScore[$team_id]['team_score'] += $score;
