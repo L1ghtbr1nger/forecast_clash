@@ -4286,7 +4286,8 @@ label {
     cursor: pointer;
     float: right;
     position: relative;
-    top: -24px;
+    top: -30px;
+    right: 8px;
 }
 
 .nav-tabs li.active {
@@ -7884,10 +7885,19 @@ ul {
 
 .contact .email,
 .contact .name,
-.contact textarea {
+.contact textarea,
+input[type="text"],
+input[type="password"],
+input[type="email"] {
     width: 100%;
     border: none;
     padding: 12px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    background: rgb(236, 236, 236);
 }
 
 .contact #comment-submit {

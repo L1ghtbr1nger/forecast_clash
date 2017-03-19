@@ -3,19 +3,18 @@
         <a href="#" class="logo"><img src="../webroot/img/logo-light-blue.png" alt="Forecast Clash Logo"> </a>
         <div class="card">
             <div class="auth-content">
-                <p class="text-xs-center">LOGIN TO CONTINUE</p>
                 <?= $this->Form->create('users', ['id' => 'loginForm']); ?>
                     <div class="form-group">
                         <?= $this->Form->input('email', [
                                 'label' => 'Email',
-                                'class' => 'form-control underlined'
+                                'class' => ''
                             ]); ?>
                     </div>
                     <div class="form-group">
                         <?= $this->Form->input('password', [
                                     'label' => 'Password',
                                     'type' => 'password',
-                                    'class' => 'form-control underlined'
+                                    'class' => ''
                                 ]); ?>
                     </div>
                     <div class="form-group">
@@ -49,7 +48,7 @@
                     </div>
                     <hr>
                     <div class="form-group">
-                        <p class="text-muted text-center">Do not have an account?</p>
+                        <p class="text-center">Do not have an account?</p>
                         <a class="register" href="register">Sign Up!</a>
                     </div>
             </div>
