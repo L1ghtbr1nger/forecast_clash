@@ -7,7 +7,7 @@ $(document).ready(function(){
     function callAjaxLB(datum){
         $.ajax({ //ajax call to get DB data for the leaderboard
             type: "POST",
-            url: "/forecast_clash/weatherstatistics/stats.json",
+            url: "/forecast_clash/weather-statistics/stats.json",
             dataType: 'json',
             data: datum,
             success : function(response){
@@ -100,7 +100,7 @@ $(document).ready(function(){
     function callAjaxHM(filters){
         $.ajax({ //ajax call to get DB data for the leaderboard
             type: "POST",
-            url: "/forecast_clash/historicalforecasts/heatmap.json",
+            url: "/forecast_clash/historical-forecasts/heatmap.json",
             dataType: 'json',
             data: filters,
             success : function(response){
