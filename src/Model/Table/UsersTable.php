@@ -99,7 +99,8 @@ class UsersTable extends Table
         $this->belongsToMany('Teams', [
             'foreignKey' => 'user_id',
             'targetForeignKey' => 'team_id',
-            'joinTable' => 'teams_users'
+            'joinTable' => 'teams_users',
+            'order' => 'Teams.id'
         ]);
     }
 

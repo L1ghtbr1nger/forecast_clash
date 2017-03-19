@@ -185,11 +185,10 @@ class WeatherStatisticsController extends AppController
     public function stats() {
         $session = $this->request->session();
         $userID = $session->read('Auth.User.id');
-        $teamsUsers = TableRegistry::get('TeamsUsers');
         $users = TableRegistry::get('Users');
         $teamUser = $users->find()->where(['id' => $userID])->contain('Teams')->first(); //look for user's team
         $scoreboard = TableRegistry::get('Scores');
-        $scores = $scoreboard->find('all')->order(['Scores.total_score' => 'DESC'])->limit(20)->contain(['WeatherStatistics' => ['WeatherEvents']]);
+        $scores = $scoreboard->find('all')->order(['Scores.total_score' => 'DESC'])->limit(20)->contain('WeatherStatistics.WeatherEvents');
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
             $exp = intval($data['experience']); //leaderboard experience filter
