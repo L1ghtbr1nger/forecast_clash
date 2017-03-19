@@ -195,11 +195,9 @@ class WeatherStatisticsController extends AppController
             $exp = intval($data['experience']); //leaderboard experience filter
             $players = intval($data['players']); //leaderboard tabs
             if (!$players) { //if team tab clicked
-                $scores = $teamsUsers->find()->where(['team_id' => $teamUser['teams'][0]['id']])->contain([
-                    'Scores' => function($u) {
-                        return $u->order(['Scores.total_score' => 'DESC']);
-                    }
-                ])->limit(20)->contain(['WeatherStatistics' => ['WeatherEvents']]);
+                $scores = $scores->matching('Users.Teams', function($q) use($teamUser) {
+                    return $q->where(['Teams.id' => $teamUser['teams'][0]['id']]);
+                });
             }
             $scores = $this->meteor($scores, $exp);
             $results = $this->scores($scores);
