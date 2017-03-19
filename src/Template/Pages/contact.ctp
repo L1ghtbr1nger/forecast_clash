@@ -1,3 +1,5 @@
+<?= $this->element('header'); ?>
+<?= $this->element('sidebar'); ?>
 <style>
 .container-fluid {
     padding-left: 0;
