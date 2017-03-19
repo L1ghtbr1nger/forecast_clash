@@ -126,7 +126,7 @@ class HistoricalForecastsController extends AppController
     public function compares() {
         $datePrev = new Date();
         $datePrev->modify('-3 days');
-        $query = $this->Historicalforecasts->find()->where(['forecast_date' => $datePrev]);
+        $query = $this->HistoricalForecasts->find()->where(['forecast_date' => $datePrev]);
         if ($query->toArray()) {
             debug($query);
             foreach ($query as $row) {
@@ -148,7 +148,7 @@ class HistoricalForecastsController extends AppController
                 $begin = strtotime($begin);
                 $end = strtotime($end);
                 $http = new Client();
-                $correct = $this->Historicalforecasts->get($row['id']);
+                $correct = $this->HistoricalForecasts->get($row['id']);
                 $params = 'client_id='.$appID.'&client_secret='.$appKey.'&p='.$lat.','.$lon.'&radius='.$radius.'mi&limit=1&from='.$begin.'$to='.$end;
                 if ($weather === 1) {
                     $responseTornado = $http->get('https://api.aerisapi.com/stormreports/within?filter=tornado&fields=place.state,report.timestamp,loc.lat,loc.long&'.$params);
@@ -211,7 +211,7 @@ class HistoricalForecastsController extends AppController
                     $scoreboard->save($result);
                 }
                 $weatherStats->save($statResult);
-                $this->Historicalforecasts->save($correct);
+                $this->HistoricalForecasts->save($correct);
             }
         }
         die;
@@ -228,7 +228,7 @@ class HistoricalForecastsController extends AppController
             $players = intval($data['players']); //which player tab
             $weather = $data['events']; //which weather events or none
             $correct = $data['correct'];
-            $heatmapStats = $this->Historicalforecasts->find('all')->where(['weather_event_id IN' => $weather]);
+            $heatmapStats = $this->HistoricalForecasts->find('all')->where(['weather_event_id IN' => $weather]);
             if($players === 0) { //just the user's stats
                 $heatmapStats = $heatmapStats->where(['user_id' => $userID]);
             } else if ($players === 1) { //just the user's team's stats
