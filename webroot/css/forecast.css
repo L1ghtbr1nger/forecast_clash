@@ -4211,7 +4211,7 @@ pre {
 }
 
 #map {
-    /*    height: 93vh;*/
+    height: 93vh;
     z-index: 0;
 }
 
