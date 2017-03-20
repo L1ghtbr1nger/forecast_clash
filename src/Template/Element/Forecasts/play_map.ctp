@@ -75,7 +75,7 @@
         <div class="sidebar-footer">
             <button class="btn btn-primary scoring-btn">To Forecast</button>
             <?php if ($loggedIn) {
-                echo '<input class="btn btn-primary forecast-btn login" type="submit" value="Make Your Forecast" id="forecast">';
+                echo '<input class="btn btn-primary forecast-btn login" disabled type="submit" value="Make Your Forecast" id="forecast">';
              } else {
                 echo '<a href="/forecast_clash/users/login"><input class="btn btn-primary forecast-btn forecast-link" type="submit" value="Please Login!"></a>';
             } ?>
