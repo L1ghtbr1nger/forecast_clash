@@ -64,16 +64,13 @@ $('document').ready(function() {
 
     })
 
-<<<<<<< HEAD
     var control = L.control.range({
         orient: 'vertical',
         value: 100
     });
 
     map.addControl(control);
-
-=======
->>>>>>> 7a12c6a81fb0861cfb2b77e0a7a1f06e5a032cff
+    
     // radius functionality
     var radiusInput = document.getElementById('radius');
     var radius = 50;
@@ -93,11 +90,6 @@ $('document').ready(function() {
             title: 'Make a Forecast for a Tornado',
             onClick: function(btn, map, e) {
                 $('#tornado-event').prop('checked', true);
-<<<<<<< HEAD
-=======
-                console.log("$('#tornado-event prop : checked");
-
->>>>>>> 7a12c6a81fb0861cfb2b77e0a7a1f06e5a032cff
             },
 
         }]
@@ -116,11 +108,6 @@ $('document').ready(function() {
             title: 'Make a forecast for Hail', // like its title
             onClick: function(btn, map, e) {
                 $('#hail-event').prop('checked', true);
-<<<<<<< HEAD
-=======
-                console.log("#hail-event prop : checked")
-
->>>>>>> 7a12c6a81fb0861cfb2b77e0a7a1f06e5a032cff
             },
 
         }]
@@ -139,11 +126,6 @@ $('document').ready(function() {
             title: 'Make a forecast for wind', // like its title
             onClick: function(btn, map, e) {
                 $('#wind-event').prop('checked', true);
-<<<<<<< HEAD
-=======
-                console.log("#wind-event prop : checked");
-
->>>>>>> 7a12c6a81fb0861cfb2b77e0a7a1f06e5a032cff
             },
 
         }]
