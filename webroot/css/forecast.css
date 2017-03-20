@@ -4197,6 +4197,19 @@ pre {
     }
 }
 
+.notification-image {
+    width: 100%;
+}
+div.img {
+    padding-right: 5px;
+}
+div.body-col {
+    border-left: 1px solid #b9b9b9;
+}
+div.body-col p {
+    padding-left: 5px;
+}
+
 
 /* Map */
 

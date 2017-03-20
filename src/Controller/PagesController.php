@@ -63,6 +63,11 @@ class PagesController extends AppController
             throw new NotFoundException();
         }
     }
+    
+    public function contact() {
+        
+    }
+    
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         $this->Auth->allow('display');

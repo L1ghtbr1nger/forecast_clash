@@ -106,15 +106,25 @@ class AppController extends Controller
         
         // Login Check
         $session = $this->request->session();
-        if ($session->read('Auth.User.id')) {
-            $query = TableRegistry::get('Avatars')->find()->where(['id' => $session->read('Auth.User.avatar_id')]);
+        if ($userID = $session->read('Auth.User.id')) {
+            $query = TableRegistry::get('Avatars')->find('all')->where(['id' => $session->read('Auth.User.avatar_id')]);
             $result = $query->first();
             $session->write([
                 'User.avatar' => $result['avatar_img']
             ]);
+            $notifications = TableRegistry::get('Notifications')->find('all')->where(['user_id' => $userID])->toArray();
             $this->set('loggedIn', true);
         } else {
+            $notifications[] = [
+                'id' => 0,
+                'user_id' => 0,
+                'message' => '<big>Please Login!</big>',
+                'seen' => false,
+                'link_address' => '/forecast_clash/users/login',
+                'link_image' => 'logo-light-blue.png'
+            ]; 
             $this->set('loggedIn', false);
         }
+        $this->set('notifications', $notifications);
     }
 }

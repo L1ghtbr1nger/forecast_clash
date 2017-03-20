@@ -15,45 +15,39 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
 <div class="header-block header-block-nav">
     <ul class="nav-profile">
         <li class="notifications new">
-            <a href="" data-toggle="dropdown"><i class="fa fa-bell-o"></i><sup><span class="counter">8</span></sup></a>
+            <a href="" data-toggle="dropdown"><i class="fa fa-bell-o"></i><sup><span class="counter"><?= (isset($notifications) ? count($notifications) : '') ?></span></sup></a>
             <div class="dropdown-menu notifications-dropdown-menu">
-                <ul class="notifications-container">
-                    <li>
-                        <a href="" class="notification-item">
-                            <div class="img-col">
-                                <div class="img"></div>
-                            </div>
-                            <div class="body-col">
-                                <p><span class="accent">Zack Alien</span> pushed new commit: <span class="accent">Fix page load performance issue</span>. </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" class="notification-item">
-                            <div class="img-col">
-                                <div class="img"></div>
-                            </div>
-                            <div class="body-col">
-                                <p> <span class="accent">Amaya Hatsumi</span> started new task: <span class="accent">Dashboard UI design.</span>. </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" class="notification-item">
-                            <div class="img-col">
-                                <div class="img"></div>
-                            </div>
-                            <div class="body-col">
-                                <p> <span class="accent">Andy Nouman</span> deployed new version of <span class="accent">NodeJS REST Api V3</span> </p>
-                            </div>
-                        </a>
-                    </li>
+                <ul class="notifications-container"><?php
+                    if (isset($notifications)) {
+                        foreach ($notifications as $notice) {
+                            echo '<li>';
+                                echo isset($notice['link_address']) ? '<a href="'.$notice['link_address'].'" class="notificiation-item">' : '';
+                                    echo '<div class="img-col">';
+                                        echo '<div class="img">';
+                                            if (isset($notice['link_image'])) {
+                                                echo $this->Html->image($notice['link_image'], [
+                                                    'class' => 'notification-image'
+                                                ]);
+                                            }
+                                        echo '</div>';
+                                    echo '</div>';
+                                    echo '<div class="body-col">';
+                                        echo '<p>';
+                                            echo $notice['message'];
+                                        echo '</p>';
+                                    echo '</div>';
+                                echo isset($notice['link_address']) ? '</a>' : '';
+                            echo '</li>';
+                        }
+                    } ?>
                 </ul>
+<!--
                 <footer>
                     <ul>
                         <li> <a href="">View All</a> </li>
                     </ul>
                 </footer>
+-->
             </div>
         </li>
         <li class="profile dropdown">
@@ -67,7 +61,7 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
             <img src="" alt=""></span>
             </a>
             <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
-                <a class="dropdown-item" href="/forecast_clash/Profiles/profile"> <i class="fa fa-user icon"></i> Profile </a>
+                <a class="dropdown-item" href="/forecast_clash/profiles/profile"> <i class="fa fa-user icon"></i> Profile </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="/forecast_clash/users/logout"> <i class="fa fa-power-off icon"></i> Logout </a>
             </div>
