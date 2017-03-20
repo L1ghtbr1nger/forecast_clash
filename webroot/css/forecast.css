@@ -1078,6 +1078,11 @@ body {
     -webkit-transform: scaleX(0);
     transform: scaleX(0);
 }
+.forecast-link {
+    background-color: #d7dde4 !important;
+    color: black !important;
+    font-weight: bold;
+}
 
 .animated {
     -webkit-animation-duration: .5s;

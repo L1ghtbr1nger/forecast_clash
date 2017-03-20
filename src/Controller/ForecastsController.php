@@ -125,25 +125,38 @@ class ForecastsController extends AppController
         if ($this->request->is('ajax')) {
             $userID = $this->request->session()->read('Auth.User.id');
             $data = $this->request->data;
-            $location = explode(',', $data['location']);
-            $lat = floatval($location[0]);
-            $lon = floatval($location[1]);
+            if (!empty($data['location'])) {
+                $location = explode(',', $data['location']);
+                $data['lat'] = floatval($location[0]);
+                $data['lon'] = floatval($location[1]);
+            } 
+            if (isset($data['weather_event_id'])) {
+                $weatherEventID = $data['weather_event_id'];
+            } else {
+                $weatherEventID = null;
+            }
             $table = $this->Forecasts;
             //Look if user and weather event combo already exists in Forecasts
-            if ($query = $table->find('all')->where(['user_id' => $userID, 'weather_event_id' => $data['weather_event_id']])->first()) {
-                $result = $query;
-            //If doesn't exist, create new   
-            } else {
+            if ($query = $table->find('all')->where(['user_id' => $userID, 'weather_event_id' => $weatherEventID])->first()) {
+                $result = $query;            
+            } else { //If doesn't exist, create new   
                 $result = $table->newEntity();
                 $result->user_id = $userID;
-                $result->weather_event_id = $data['weather_event_id'];
-            }   
-            $result->latitude = $lat;
-            $result->longitude = $lon;
-            $result->forecast_date = $data['forecast_date'];
-            $result->am_pm = $data['am_pm'];
-            $result->radius = $data['radius'];
-            if ($why = $this->Forecasts->save($result)) {
+            }
+            $table->patchEntity($result, $data);
+            if($result->errors()){
+                $error_msg = [];
+                foreach( $result->errors() as $errors){
+                    if(is_array($errors)){
+                        foreach($errors as $error){
+                            $error_msg[] = $error;
+                        }
+                    }else{
+                        $error_msg[] = $errors;
+                    }
+                }
+            }
+            if ($this->Forecasts->save($result)) {
                 $statistics = TableRegistry::get('Statistics');
                 if ($statistic = $statistics->find()->where(['user_id' => $userID])->first()) {
                     $statistic->active = 1;
@@ -157,7 +170,7 @@ class ForecastsController extends AppController
                 $statistics->save($statistic);
                 echo json_encode(['msg' => 'Forecast saved!', 'result' => 1, 'regLog' => 1]);
             } else {
-                echo json_encode(['msg' => 'We were unable to save your forecast at this time. Please try again.', 'result' => 0, 'regLog' => 1]);
+                echo json_encode(['msg' => $error_msg, 'result' => 0, 'regLog' => 0]);
             }
             die;
         }

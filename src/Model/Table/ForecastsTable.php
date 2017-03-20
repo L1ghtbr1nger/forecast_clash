@@ -66,27 +66,46 @@ class ForecastsTable extends Table
         $validator
             ->date('forecast_date')
             ->requirePresence('forecast_date', 'create')
-            ->notEmpty('forecast_date');
+            ->notEmpty('forecast_date', 'Please select a Forecast Date');
 
         $validator
             ->boolean('am_pm')
-            ->requirePresence('am_pm', 'create')
-            ->notEmpty('am_pm');
+            ->requirePresence([
+                'am_pm' => [
+                    'mode' => 'create',
+                    'message' => 'Please select the time of day for your forecast'
+                ]
+            ])
+            ->notEmpty('am_pm', 'Please select the time of day for your forecast');
 
         $validator
             ->integer('radius')
             ->requirePresence('radius', 'create')
             ->notEmpty('radius');
+        
+        $validator
+            ->integer('weather_event_id')
+            ->requirePresence([
+                'weather_event_id' => [
+                    'mode' => 'create',
+                    'message' => 'Please select the icon for the weather event you are forecasting'
+                ]
+            ])
+            ->notEmpty('weather_event_id', 'Please select the icon for the weather event you are forecasting');
 
         $validator
             ->numeric('latitude')
-            ->requirePresence('latitude', 'create')
-            ->notEmpty('latitude');
+            ->requirePresence([
+                'latitude' => [
+                    'mode' => 'create',
+                    'message' => 'Please select a point on the map'
+                ]
+            ])
+            ->notEmpty('latitude', 'Please select a point on the map');
 
         $validator
             ->numeric('longitude')
-            ->requirePresence('longitude', 'create')
-            ->notEmpty('longitude');
+            ->allowEmpty('longitude');
 
         return $validator;
     }
