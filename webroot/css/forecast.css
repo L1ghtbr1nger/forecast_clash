@@ -4206,6 +4206,7 @@ pre {
     width: 100%;
     height: 100%;
 }
+
 .notification-image {
     width: 100%;
 }
@@ -4223,17 +4224,21 @@ div.body-col {
 div.body-col p {
     padding-left: 5px;
 }
+
 #notice {
     border-bottom: 1.5px solid black;
 }
+
 #notice h4 {
     margin-top: 3.5px;
     padding-left: 10px;
 }
+
 #notice span {
     float: right;
     padding-right: 7px;
 }
+
 .seen-unseen {
     float: right;
     padding-right: 5px;
@@ -4243,6 +4248,7 @@ div.body-col p {
     border: 1px solid black;
     border-radius: 100%;
 }
+
 .unseen {
     background-color: #00ed00;
     box-shadow: 0 0 4px #00ff00;
@@ -4714,6 +4720,10 @@ label {
 
 
 /* SVG GLOBAL */
+
+.active-event {
+    fill: rgb(61, 182, 239);
+}
 
 svg:not(:root) {
     overflow: visible;
