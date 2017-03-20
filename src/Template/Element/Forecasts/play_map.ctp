@@ -74,7 +74,7 @@
         </div>
         <div class="sidebar-footer">
             <button class="btn btn-primary scoring-btn">To Forecast</button>
-            <input class="btn btn-primary forecast-btn login" type="submit" value="Make Your Forecast" id="forecast">
+            <input class="btn btn-primary forecast-btn login" disabled type="submit" value="Make Your Forecast" id="forecast">
         </div>
     </div>
     <div id="map"></div>
