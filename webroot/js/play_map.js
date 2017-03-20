@@ -63,13 +63,6 @@ $('document').ready(function() {
         }).addTo(map);
 
     })
-
-    var control = L.control.range({
-        orient: 'vertical',
-        value: 100
-    });
-
-    map.addControl(control);
     
     // radius functionality
     var radiusInput = document.getElementById('radius');
