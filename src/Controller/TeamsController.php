@@ -158,7 +158,7 @@ class TeamsController extends AppController
         } else {
             $this->set('rankResult', false);
         }
-        if ($userTeam) { //if user has team
+        if (!empty($userTeam['teams'])) { //if user has team
             $teamID = $userTeam['teams'][0]['id'];
             $teammates = $this->Teams->find('all')->where(['id' => $teamID])->contain([
                 'Users'=> function($q) {
