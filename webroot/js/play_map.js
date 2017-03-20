@@ -69,9 +69,6 @@ $('document').ready(function() {
         value: 100
     });
 
-    control.on('change input', function(e) {
-        console.log(e.value);
-    })
     map.addControl(control);
 
     // radius functionality
@@ -91,40 +88,7 @@ $('document').ready(function() {
             icon: tornadoSVG,
             title: 'Make a Forecast for a Tornado',
             onClick: function(btn, map, e) {
-
                 $('#tornado-event').prop('checked', true);
-                console.log("$('#tornado-event prop : checked");
-
-//                map.on('click', function(e) {
-//
-//                    lat = e.latlng.lat;
-//                    lng = e.latlng.lng;
-//
-//                    // sets lat/lng to 5 decimal places
-//                    var latToFixed = lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
-//                    var lngToFixed = lng.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
-//
-//                    // sets latlng input to value of lat + lng
-//                    $('#latlng').val(lat + ', ' + lng);
-//
-//                    if (typeof(circle) === 'undefined') {
-//                        circle = new L.circle(e.latlng, radius, {
-//                            color: 'rgb(61, 182, 239)',
-//                            fillColor: 'rgb(61, 182, 239)',
-//                            fillOpacity: 0.5
-//                        });
-//
-//                        circle.addTo(map);
-//                        circle.bindPopup("Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
-//
-//                        //var radius = circle.getRadius();
-//                        
-//                    } else {
-//                        circle.setLatLng(e.latlng);
-//                        circle.bindPopup("Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
-//                    }
-//
-//                })
             },
 
         }]
@@ -142,42 +106,7 @@ $('document').ready(function() {
             icon: hailSVG, // and define its properties
             title: 'Make a forecast for Hail', // like its title
             onClick: function(btn, map, e) {
-
                 $('#hail-event').prop('checked', true);
-                console.log("#hail-event prop : checked")
-
-
-
-//                map.on('click', function(e) {
-//
-//                    var lat = e.latlng.lat;
-//                    var lng = e.latlng.lng;
-//
-//                    // sets lat/lng to 5 decimal places
-//                    var latToFixed = lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
-//                    var lngToFixed = lng.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
-//
-//                    // sets latlng input to value of lat + lng
-//                    $('#latlng').val(lat + ', ' + lng);
-//
-//                    if (typeof(circle) === 'undefined') {
-//                        circle = new L.circle(e.latlng, {
-//                            color: 'red',
-//                            fillColor: '#f03',
-//                            fillOpacity: 0.5,
-//                            radius: 5000
-//                        });
-//
-//                        circle.addTo(map);
-//                        circle.bindPopup("Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
-//
-//                    } else {
-//                        circle.setLatLng(e.latlng);
-//                        circle.bindPopup("Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
-//                    }
-//
-//                })
-
             },
 
         }]
@@ -196,38 +125,6 @@ $('document').ready(function() {
             title: 'Make a forecast for wind', // like its title
             onClick: function(btn, map, e) {
                 $('#wind-event').prop('checked', true);
-                console.log("#wind-event prop : checked");
-
-//                map.on('click', function(e) {
-//
-//                    var lat = e.latlng.lat;
-//                    var lng = e.latlng.lng;
-//
-//                    // sets lat/lng to 5 decimal places
-//                    var latToFixed = lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
-//                    var lngToFixed = lng.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
-//
-//                    // sets latlng input to value of lat + lng
-//                    $('#latlng').val(lat + ', ' + lng);
-//
-//                    if (typeof(circle) === 'undefined') {
-//                        circle = new L.circle(e.latlng, {
-//                            color: 'red',
-//                            fillColor: '#f03',
-//                            fillOpacity: 0.5,
-//                            radius: 5000
-//                        });
-//
-//                        circle.addTo(map);
-//                        circle.bindPopup("Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
-//
-//                    } else {
-//                        circle.setLatLng(e.latlng);
-//                        circle.bindPopup("Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
-//                    }
-//
-//                })
-
             },
 
         }]
@@ -274,7 +171,6 @@ $('document').ready(function() {
         cMarker(e);   
     });
     radiusInput.onchange = function() {
-        console.log('Radius: ' + radiusInput.value);
         radius = radiusInput.value,
         cMarker();
     }

@@ -17,11 +17,14 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
         <li class="notifications new">
             <a href="" data-toggle="dropdown"><i class="fa fa-bell-o"></i><sup><span class="counter"><?= (isset($notifications) ? count($notifications) : '') ?></span></sup></a>
             <div class="dropdown-menu notifications-dropdown-menu">
+                <header id="notice">
+                    <h4>Notificatons <span><small>Unread</small></span></h4>
+                </header>
                 <ul class="notifications-container"><?php
                     if (isset($notifications)) {
                         foreach ($notifications as $notice) {
                             echo '<li>';
-                                echo isset($notice['link_address']) ? '<a href="'.$notice['link_address'].'" class="notificiation-item">' : '';
+                                echo '<a href="'.$notice['link_address'].'" class="notification-item">';
                                     echo '<div class="img-col">';
                                         echo '<div class="img">';
                                             if (isset($notice['link_image'])) {
@@ -35,8 +38,9 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
                                         echo '<p>';
                                             echo $notice['message'];
                                         echo '</p>';
+                                        echo '<div class="seen-unseen '.($notice['seen'] ? 'seen' : 'unseen').'"></div>';
                                     echo '</div>';
-                                echo isset($notice['link_address']) ? '</a>' : '';
+                                echo '</a>';
                             echo '</li>';
                         }
                     } ?>

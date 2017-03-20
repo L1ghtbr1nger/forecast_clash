@@ -121,7 +121,7 @@ class AppController extends Controller
                 'message' => '<big>Please Login!</big>',
                 'seen' => false,
                 'link_address' => '/forecast_clash/users/login',
-                'link_image' => 'logo-light-blue.png'
+                'link_image' => 'logo-mark.png'
             ]; 
             $this->set('loggedIn', false);
         }

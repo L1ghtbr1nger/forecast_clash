@@ -72,6 +72,4 @@ class PagesController extends AppController
         parent::beforeFilter($event);
         $this->Auth->allow('display');
     }
-
-    public function contact(){}
 }
