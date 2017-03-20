@@ -8260,6 +8260,7 @@ input[type=range] {
     -webkit-appearance: none;
     width: 100%;
     margin: 13.8px 0;
+    cursor: pointer;
 }
 
 input[type=range]:focus {
