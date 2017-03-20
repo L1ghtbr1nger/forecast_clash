@@ -1,3 +1,8 @@
+<style>
+    .col-md-4{
+        max-width: 200px;
+    }
+</style>
 <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12 stats-col heatmap-element">
     <div class="card sameheight-item" data-exclude="xs">
         <div class="card-header card-header-sm bordered">
