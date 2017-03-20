@@ -113,4 +113,23 @@ class NotificationsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    
+    public function notifier() {
+        $this->render(false);
+        if ($this->request->is('ajax')) {
+            $data = $this->request->data;
+            if ($data['id'] != 'guest') {
+                $notice = $this->Notifications->get($data['id']);
+                $notice->seen = 1;
+                $this->Notifications->save($notice);
+            }
+        }
+    }
+    
+    public function deleter() {
+        $session = $this->request->session();
+        if ($userID = $session->read('Auth.User.id')) {
+            $notices = $this->Notifications->deleteAll(['user_id' => $userID, 'seen' => 1]);
+        }
+    }
 }

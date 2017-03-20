@@ -62,5 +62,39 @@ $(document).ready(function(){
             }
         });
     });
+    $('.notification-item').click(function(e){
+        e.preventDefault();
+        var id = $('.notification-item').attr('id');
+        var address = $(this).attr('href');
+        if(id == "guest"){
+            window.location.href = address;
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "/forecast_clash/notifications/notifier.json",
+                dataType: 'json',
+                data: {'id': id},
+                success : function(response) {
+                    window.location.href = address;
+                },
+                error : function() {   
+                }
+            });
+        }
+    });
+    $('#dismisser').click(function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/forecast_clash/notifications/deleter.json",
+            dataType: 'json',
+            data: 0,
+            success : function(response) {
+                $('.read').hide();
+            },
+            error : function() {   
+            }
+        });
+    });
 });
 

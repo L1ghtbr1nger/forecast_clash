@@ -126,10 +126,11 @@ class ProfilesController extends AppController
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
             $session = $this->request->session();
-            $data['user_id'] = $session->read('User.id');
+            $userID = $session->read('User.id');
+            $data['user_id'] = $userID;
             if ($query = $this->Profiles->find()
                 ->where([
-                    'user_id' => $data['user_id']
+                    'user_id' => $userID
                 ])
             ) {
                 $result = $query->first();
@@ -152,6 +153,15 @@ class ProfilesController extends AppController
                 }
             }
             if ($this->Profiles->save($profile)) {
+                $notices = TableRegistry::get('Notifications');
+                $notice = $notices->newEntity();
+                $notice = $notices->patchEntity($notice, [
+                    'user_id' => $userID,
+                    'message' => 'We are happy to get to know you! Looks like you&#39;re ready to make a forecast...',
+                    'link_address' => '/forecast_clash/profiles/profile',
+                    'link_image' => 'logo-mark.png'
+                ]);
+                $notices->save($notice);
                 echo json_encode(['msg' => 'Thank you!', 'result' => 1, 'regLog' => 0]);
             } else {
                 echo json_encode(['msg' => $error_msg, 'result' => 0, 'regLog' => 0]);

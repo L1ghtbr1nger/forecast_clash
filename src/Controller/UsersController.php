@@ -168,7 +168,16 @@ class UsersController extends AppController
                     }
                 }
             }
-            if ($this->Users->save($user)) {
+            if ($result = $this->Users->save($user)) {
+                $notices = TableRegistry::get('Notifications');
+                $notice = $notices->newEntity();
+                $notice = $notices->patchEntity($notice, [
+                    'user_id' => $result['id'],
+                    'message' => 'Thank you for registering with Forecast Clash! Visit your profile page to tell us more about yourself...',
+                    'link_address' => '/forecast_clash/profiles/profile',
+                    'link_image' => 'logo-mark.png'
+                ]);
+                $notices->save($notice);
                 echo json_encode(['msg' => 'Registered!', 'result' => 1, 'regLog' => 0]);
             } else {
                 echo json_encode(['msg' => $error_msg, 'result' => 0, 'regLog' => 0]);

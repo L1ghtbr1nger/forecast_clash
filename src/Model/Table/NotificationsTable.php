@@ -59,8 +59,7 @@ class NotificationsTable extends Table
 
         $validator
             ->boolean('seen')
-            ->requirePresence('seen', 'create')
-            ->notEmpty('seen');
+            ->allowEmpty('seen');
 
         $validator
             ->requirePresence('link_address', 'create')
