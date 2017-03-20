@@ -40,17 +40,17 @@
                         <div role="tabpanel" class="tab-pane active" id="tornado-control">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <form action="#" class="search-filter forecast-tornado">
+                                    <form action="#" class="search-filter forecast-tornado" id="forecastForm">
                                         <fieldset>
                                             <label for="event_date"><strong>Date</strong></label>
-                                            <input type="text" class="datepicker" id="event_date">
+                                            <input type="text" name="forecast_date" class="datepicker" id="event_date">
                                         </fieldset>
                                         <fieldset class="time">
                                             <strong>Time</strong><br>
-                                            <input type="radio" name="time" id="am" value="0">
+                                            <input type="radio" name="am_pm" id="am" value="0">
                                             <label for="am">AM</label>
                                             <br>
-                                            <input type="radio" name="time" id="pm" value="1">
+                                            <input type="radio" name="am_pm" id="pm" value="1">
                                             <label for="pm">PM</label>
                                         </fieldset>
                                         <fieldset>
@@ -59,10 +59,10 @@
                                         </fieldset>
 
                                         <!-- hidden form fields -->
-                                        <input id="latlng" name="latlng" type="text" class="hidden" value="">
-                                        <input type="radio" class="hidden" name="event-type" id="tornado-event" value="1">
-                                        <input type="radio" class="hidden" name="event-type" id="hail-event" value="2">
-                                        <input type="radio" class="hidden" name="event-type" id="wind-event" value="3">
+                                        <input id="latlng" name="location" type="text" class="hidden" value="">
+                                        <input type="radio" class="hidden" name="weather_event_id" id="tornado-event" value="1">
+                                        <input type="radio" class="hidden" name="weather_event_id" id="hail-event" value="2">
+                                        <input type="radio" class="hidden" name="weather_event_id" id="wind-event" value="3">
 
                                     </form>
                                 </div>

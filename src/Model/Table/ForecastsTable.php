@@ -61,8 +61,7 @@ class ForecastsTable extends Table
 
         $validator
             ->dateTime('submit_date')
-            ->requirePresence('submit_date', 'create')
-            ->notEmpty('submit_date');
+            ->allowEmpty('submit_date');
 
         $validator
             ->date('forecast_date')

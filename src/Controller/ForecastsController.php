@@ -123,19 +123,19 @@ class ForecastsController extends AppController
     
     public function forecast() {
         if ($this->request->is('ajax')) {
-            $user = $this->request->session()->read('User.id');
+            $userID = $this->request->session()->read('Auth.User.id');
             $data = $this->request->data;
             $location = explode(',', $data['location']);
             $lat = floatval($location[0]);
             $lon = floatval($location[1]);
             $table = $this->Forecasts;
             //Look if user and weather event combo already exists in Forecasts
-            if ($query = $table->find('all')->where(['user_id' => $user, 'weather_event_id' => $data['weather_event_id']])->first()) {
+            if ($query = $table->find('all')->where(['user_id' => $userID, 'weather_event_id' => $data['weather_event_id']])->first()) {
                 $result = $query;
             //If doesn't exist, create new   
             } else {
                 $result = $table->newEntity();
-                $result->user_id = $user;
+                $result->user_id = $userID;
                 $result->weather_event_id = $data['weather_event_id'];
             }   
             $result->latitude = $lat;
@@ -143,13 +143,13 @@ class ForecastsController extends AppController
             $result->forecast_date = $data['forecast_date'];
             $result->am_pm = $data['am_pm'];
             $result->radius = $data['radius'];
-            if ($this->Forecasts->save($result)) {
+            if ($why = $this->Forecasts->save($result)) {
                 $statistics = TableRegistry::get('Statistics');
-                if ($statistic = $statistics->find()->where(['user_id' => $user])->first()) {
+                if ($statistic = $statistics->find()->where(['user_id' => $userID])->first()) {
                     $statistic->active = 1;
                 } else {
                     $statistic = $statistics->newEntity();
-                    $statistic->user_id = $user;
+                    $statistic->user_id = $userId;
                     $statistic->current_streak = 0;
                     $statistic->highest_streak = 0;
                     $statistic->active = 1;
