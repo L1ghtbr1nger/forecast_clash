@@ -132,7 +132,7 @@ $('.datepicker').pickadate({
     min: new Date(tomorrow),
     max: new Date(event_week),
     format: 'mmmm d, yyyy',
-    closeOnSelect: false
+    closeOnSelect: true
 });
 
 

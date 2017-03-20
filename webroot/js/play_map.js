@@ -73,7 +73,7 @@ $('document').ready(function() {
     
     // radius functionality
     var radiusInput = document.getElementById('radius');
-    var radius = 50;
+    var radius = radiusInput.value;
     
     var circle;
     var lat;
@@ -145,25 +145,23 @@ $('document').ready(function() {
 
         // sets latlng input to value of lat + lng
         $('#latlng').val(lat + ', ' + lng);
-
+        var radiusMiles = radius * 1609.344;
         if (typeof(circle) === 'undefined') {
-            circle = new L.circleMarker(e.latlng, radius, {
+            circle = new L.circle([lat, lng], radiusMiles, {
                 color: 'rgb(61, 182, 239)',
                 fillColor: '#fff',
                 fillOpacity: 0.5
             });
-            console.log(circle);
             circle.addTo(map);
             circle.bindPopup("Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
 
             //var radius = circle.getRadius();
 
         } else {
-            circle.setRadius(radius);
+            circle.setRadius(radiusMiles);
             circle.setLatLng([lat, lng]);
             circle.bindPopup("Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
             circle.addTo(map);
-            console.log(circle);
         }
 
     };
