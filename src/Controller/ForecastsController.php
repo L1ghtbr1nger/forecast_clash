@@ -142,7 +142,7 @@ class ForecastsController extends AppController
             $result->longitude = $lon;
             $result->forecast_date = $data['forecast_date'];
             $result->am_pm = $data['am_pm'];
-            $result->radius $data['radius'];
+            $result->radius = $data['radius'];
             if ($this->Forecasts->save($result)) {
                 $statistics = TableRegistry::get('Statistics');
                 if ($statistic = $statistics->find()->where(['user_id' => $user])->first()) {
