@@ -73,5 +73,5 @@ class PagesController extends AppController
         $this->Auth->allow('display');
     }
 
-    public function contact(){}
+
 }
