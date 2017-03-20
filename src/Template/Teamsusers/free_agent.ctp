@@ -12,7 +12,6 @@
                         <?= $this->Form->hidden('team_id', ['value' => $teamID]); ?>
                         <?= $this->Form->hidden('user_id', ['value' => $userID]); ?>
                         <?= $this->Form->hidden('first_name', ['value' => $first]); ?>
-                        <?= $this->Form->hidden('team_name', ['value' => $teamName]); ?>
                         <?= $this->Form->button('Add '.$first.' to my roster!', [
                             'id' => 'sign',
                             'value' => 1,

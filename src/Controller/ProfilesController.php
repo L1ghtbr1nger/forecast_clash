@@ -126,14 +126,12 @@ class ProfilesController extends AppController
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
             $session = $this->request->session();
-            $userID = $session->read('User.id');
+            $userID = $session->read('Auth.User.id');
             $data['user_id'] = $userID;
-            if ($query = $this->Profiles->find()
-                ->where([
+            if ($result = $this->Profiles->find('all')->where([
                     'user_id' => $userID
-                ])
+                ])->first()
             ) {
-                $result = $query->first();
                 $profileId = $result['id'];
                 $profile = $this->Profiles->get($profileId);
             } else {

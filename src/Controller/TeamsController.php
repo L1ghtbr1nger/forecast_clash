@@ -206,7 +206,8 @@ class TeamsController extends AppController
             $session = $this->request->session();
             $userID = $session->read('Auth.User.id');
             $team = $this->Teams->newEntity();
-            $team->team_name = $data['team_name'];
+            $teamName = $data['team_name'];
+            $team->team_name = $teamName;
             $team->privacy = $data['privacy'];
             $team->user_id = $userID;
             //check for valid file, move file to server, save file name with extension to DB
@@ -220,14 +221,23 @@ class TeamsController extends AppController
                     move_uploaded_file($file['tmp_name'], WWW_ROOT . '/img/teams/users/' . $setNewFileName . '.' . $ext);
                     $imageFileName = $setNewFileName . '.' . $ext; //prepare the filename for database entry
                 }
+                $team->team_logo = $imageFileName;
             }
-            $team->team_logo = $imageFileName;
             if ($teamID = $this->Teams->save($team)) { //if new team saved successfully, assign creating user to the team in TeamsUsers
                 $teamUsers = TableRegistry::get('TeamsUsers');
                 $teamUser = $teamUsers->newEntity();
                 $teamUser->user_id = $userID;
                 $teamUser->team_id = $teamID->id;
                 if ($teamUsers->save($teamUser)) {
+                    $notices = TableRegistry::get('Notifications');
+                    $notice = $notices->newEntity();
+                    $notice = $notices->patchEntity($notice, [
+                        'user_id' => $userID,
+                        'message' => 'You have created a team and become its captain! Visit the '.$teamName.' Dugout...',
+                        'link_address' => '/forecast_clash/teams/dugout',
+                        'link_image' => 'teams/users/'.($imageFileName ? $imageFileName : 'logo-mark.png')
+                    ]);
+                    $notices->save($notice);
                     echo json_encode(['result' => 1, 'msg' => 'Team created!']);
                     die;
                 } else {

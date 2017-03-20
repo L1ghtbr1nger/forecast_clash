@@ -126,16 +126,21 @@ class TeamsUsersController extends AppController
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
             $session = $this->request->session();
-            $user = $session->read('Auth.User.id');
+            $userID = $session->read('Auth.User.id');
             $teamID = $data['team_id'];
             $teams = TableRegistry::get('Teams');
             $team = $teams->get($teamID, ['contain' => ['Users']]);
-            $teamName = $team->team_name;
-            $address = $team->user->email;
-            $first = $team->user->first_name;
-            $last = $team->user->last_name;
+            $teamName = $team['team_name'];
+            $captain = $team['user_id'];
+            $userC = TableRegistry::get('Users')->get($captain);
+            $address = $userC['email'];
+            $first = $userC['first_name'];
+            $last = $userC['last_name'];
+            $user = TableRegistry::get('Users')->get($userID);
+            $firstName = $user['first_name'];
+            $lastName = $user['last_name'];
             if ($team->privacy) { //if the selected team is private, send email to team captain with link to accept or reject request
-                $link = Router::url(['controller' => 'TeamsUsers', 'action' => 'freeAgent'], TRUE).'/'.$teamID.'_'.$teamName.'_'.$user.'_'.$first.'_'.$last;
+                $link = Router::url(['controller' => 'TeamsUsers', 'action' => 'freeAgent'], TRUE).'/'.$teamID.'_'.$teamName.'_'.$userID.'_'.$firstName.'_'.$lastName;
                 $email = new Email();
                 $email->from('donotreply@forecastclash.com', 'Forecast Clash')
                     ->to($address, $first)
@@ -147,12 +152,12 @@ class TeamsUsersController extends AppController
             } else {
                 $teamUser = $this->TeamsUsers->newEntity();
                 $teamUser = $this->TeamsUsers->patchEntity($teamUser, [
-                    'user_id' => $user,
+                    'user_id' => $userID,
                     'team_id' => $teamID
                 ]);
                 if($teamUser->errors()){
                     $error_msg = [];
-                    foreach( $user->errors() as $errors){
+                    foreach( $teamUser->errors() as $errors){
                         if(is_array($errors)){
                             foreach($errors as $error){
                                 $error_msg[] = $error;
@@ -163,6 +168,15 @@ class TeamsUsersController extends AppController
                     }
                 }
                 if ($this->TeamsUsers->save($teamUser)) {
+                    $notices = TableRegistry::get('Notifications');
+                    $notice = $notices->newEntity();
+                    $notice = $notices->patchEntity($notice, [
+                        'user_id' => $userID,
+                        'message' => 'You have been added to a team roster! Visit the '.$teamName.' Dugout...',
+                        'link_address' => '/forecast_clash/teams/dugout',
+                        'link_image' => 'teams/users/'.($team['team_logo'] ? $team['team_logo'] : 'logo-mark.png')
+                    ]);
+                    $notices->save($notice);
                     echo json_encode(['msg' => 'Joined team!', 'result' => 1]);
                     die;
                 } else {
@@ -176,6 +190,8 @@ class TeamsUsersController extends AppController
     public function freeAgent() {
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
+            $teamID = $data['team_id'];
+            $team = TableRegistry::get('Teams')->get($teamID);
             $userID = $data['user_id'];
             $teamID = $data['team_id'];
             $first = $data['first_name'];
@@ -194,6 +210,15 @@ class TeamsUsersController extends AppController
                 $teamUser->user_id = $userID;
                 $teamUser->team_id = $teamID;
                 if ($this->TeamsUsers->save($teamUser)) {
+                    $notices = TableRegistry::get('Notifications');
+                    $notice = $notices->newEntity();
+                    $notice = $notices->patchEntity($notice, [
+                        'user_id' => $userID,
+                        'message' => 'You have been added to a team roster! Visit the '.$team['team_name'].' Dugout...',
+                        'link_address' => '/forecast_clash/teams/dugout',
+                        'link_image' => 'teams/users/'.($team['team_logo'] ? $team['team_logo'] : 'logo-mark.png')
+                    ]);
+                    $notices->save($notice);
                     echo json_encode(['msg' => $first.' was added to your roster!', 'result' => 1]);
                     die;
                 } else {

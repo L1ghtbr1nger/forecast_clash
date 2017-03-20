@@ -24,7 +24,7 @@ $(document).ready(function(){
                         window.location.href = "/forecast_clash/";
                     } else {
                         if (source == 'profiles') {
-                            window.location.href = "/forecast_clash/profiles";
+                            window.location.href = "/forecast_clash/profiles/profile";
                         } else {
                             window.location.href = "/forecast_clash/users/login";
                         }
