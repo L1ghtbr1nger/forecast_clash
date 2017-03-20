@@ -2,7 +2,7 @@
 <?= $this->element('sidebar'); ?>
 
 <div class="content">
-    <div class="row thumbnail-row">
+<!--     <div class="row thumbnail-row">
         <div class="col-md-3">
             <div class="stats-thumbnail heatmap-thumbnail">
                 <h3>Heatmaps</h3>
@@ -23,7 +23,7 @@
                 <h3>Correct Guesses</h3>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="row">
         <span>
             <?= $this->element('WeatherStatistics/stats_heatmap'); ?>

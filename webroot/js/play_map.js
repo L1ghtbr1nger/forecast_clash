@@ -64,6 +64,7 @@ $('document').ready(function() {
 
     })
 
+<<<<<<< HEAD
     var control = L.control.range({
         orient: 'vertical',
         value: 100
@@ -71,6 +72,8 @@ $('document').ready(function() {
 
     map.addControl(control);
 
+=======
+>>>>>>> 7a12c6a81fb0861cfb2b77e0a7a1f06e5a032cff
     // radius functionality
     var radiusInput = document.getElementById('radius');
     var radius = 50;
@@ -78,6 +81,7 @@ $('document').ready(function() {
     var circle;
     var lat;
     var lng;
+
     // svg tornado marker
     var tornadoSVG = "<svg version='1.1' id='tornado' class='climacon climacon_tornado leaflet-marker-icon leaflet-zoom-animated leaflet-interactive leaflet-marker-draggable' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-tornado'><g class='climacon_componentWrap climacon_componentWrap-tornado'><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine'd='M68.997,36.459H31.002c-1.104,0-2-0.896-2-1.999c0-1.104,0.896-2,2-2h37.995c1.104,0,2,0.896,2,2C70.997,35.563,70.102,36.459,68.997,36.459z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M35.002,40.459h29.996c1.104,0,2,0.896,2,2s-0.896,1.999-2,1.999H35.002c-1.104,0-2-0.896-2-1.999C33.002,41.354,33.898,40.459,35.002,40.459z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M39.001,48.458h21.998c1.104,0,1.999,0.896,1.999,1.999c0,1.104-0.896,2-1.999,2H39.001c-1.104,0-1.999-0.896-1.999-2C37.002,49.354,37.897,48.458,39.001,48.458z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M47,64.456h5.999c1.104,0,2,0.896,2,1.999s-0.896,2-2,2H47c-1.104,0-2-0.896-2-2S45.896,64.456,47,64.456z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine'd='M40.869,58.456c0-1.104,0.896-1.999,2-1.999h13.998c1.104,0,2,0.896,2,1.999c0,1.104-0.896,2-2,2H42.869C41.765,60.456,40.869,59.561,40.869,58.456z'></path></g></g></svg>";
 
@@ -89,6 +93,11 @@ $('document').ready(function() {
             title: 'Make a Forecast for a Tornado',
             onClick: function(btn, map, e) {
                 $('#tornado-event').prop('checked', true);
+<<<<<<< HEAD
+=======
+                console.log("$('#tornado-event prop : checked");
+
+>>>>>>> 7a12c6a81fb0861cfb2b77e0a7a1f06e5a032cff
             },
 
         }]
@@ -107,6 +116,11 @@ $('document').ready(function() {
             title: 'Make a forecast for Hail', // like its title
             onClick: function(btn, map, e) {
                 $('#hail-event').prop('checked', true);
+<<<<<<< HEAD
+=======
+                console.log("#hail-event prop : checked")
+
+>>>>>>> 7a12c6a81fb0861cfb2b77e0a7a1f06e5a032cff
             },
 
         }]
@@ -125,10 +139,16 @@ $('document').ready(function() {
             title: 'Make a forecast for wind', // like its title
             onClick: function(btn, map, e) {
                 $('#wind-event').prop('checked', true);
+<<<<<<< HEAD
+=======
+                console.log("#wind-event prop : checked");
+
+>>>>>>> 7a12c6a81fb0861cfb2b77e0a7a1f06e5a032cff
             },
 
         }]
     });
+
     windControl.addTo(map);
 
     function cMarker(e) {
@@ -147,7 +167,7 @@ $('document').ready(function() {
         if (typeof(circle) === 'undefined') {
             circle = new L.circleMarker(e.latlng, radius, {
                 color: 'rgb(61, 182, 239)',
-                fillColor: 'rgb(61, 182, 239)',
+                fillColor: '#fff',
                 fillOpacity: 0.5
             });
             console.log(circle);
@@ -170,6 +190,7 @@ $('document').ready(function() {
     map.on('click', function(e) {
         cMarker(e);   
     });
+    
     radiusInput.onchange = function() {
         radius = radiusInput.value,
         cMarker();
