@@ -193,7 +193,7 @@ class HistoricalForecastsController extends AppController
                         $statResult->radius = $radius;
                         $statResult->forecast_length = $row['forecast_length'];
                     }
-                    $radiusMult = 2.1 - ($radius * 2 / 100);
+                    $radiusMult = 3 - ($radius / 5 / 10);
                     $adminMult = 1;//AdminEvent multiplier needed
                     $length = $row['forecast_length'];
                     $days = round($length / 24);
