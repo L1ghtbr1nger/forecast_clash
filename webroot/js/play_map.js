@@ -63,11 +63,11 @@ $('document').ready(function() {
         }).addTo(map);
 
     })
-    
+
     // radius functionality
     var radiusInput = document.getElementById('radius');
     var radius = radiusInput.value;
-    
+
     var circle;
     var lat;
     var lng;
@@ -83,6 +83,11 @@ $('document').ready(function() {
             title: 'Make a Forecast for a Tornado',
             onClick: function(btn, map, e) {
                 $('#tornado-event').prop('checked', true);
+                $('.climacon_component-stroke_tornadoLine').css('fill', 'rgb(61, 182, 239)');
+                $('.climacon_component-stroke_hailAlt').css('fill', 'rgb(255,255,255)');
+                $('.climacon_component-stroke_cloud').css('fill', 'rgb(255,255,255)');
+                $('.climacon_component-wind_curl').css('fill', 'rgb(255,255,255)');
+                $('.climacon_component-wind').css('fill', 'rgb(255,255,255)');
             },
 
         }]
@@ -101,6 +106,12 @@ $('document').ready(function() {
             title: 'Make a forecast for Hail', // like its title
             onClick: function(btn, map, e) {
                 $('#hail-event').prop('checked', true);
+
+                $('.climacon_component-stroke_tornadoLine').css('fill', 'rgb(255, 255, 255)');
+                $('.climacon_component-stroke_hailAlt').css('fill', 'rgb(61, 182, 239)');
+                $('.climacon_component-stroke_cloud').css('fill', 'rgb(61, 182, 239)');
+                $('.climacon_component-wind_curl').css('fill', 'rgb(255,255,255)');
+                $('.climacon_component-wind').css('fill', 'rgb(255,255,255)');
             },
 
         }]
@@ -119,6 +130,12 @@ $('document').ready(function() {
             title: 'Make a forecast for wind', // like its title
             onClick: function(btn, map, e) {
                 $('#wind-event').prop('checked', true);
+                $('.climacon_component-stroke_tornadoLine').css('fill', 'rgb(255, 255, 255)');
+                $('.climacon_component-stroke_hailAlt').css('fill', 'rgb(255,255,255)');
+                $('.climacon_component-stroke_cloud').css('fill', 'rgb(255,255,255)');
+                $('.climacon_component-wind_curl').css('fill', 'rgb(61, 182, 239)');
+                $('.climacon_component-wind').css('fill', 'rgb(61, 182, 239)');
+
             },
 
         }]
@@ -127,7 +144,7 @@ $('document').ready(function() {
     windControl.addTo(map);
 
     function cMarker(e) {
-        if(typeof(e) != 'undefined') {
+        if (typeof(e) != 'undefined') {
             lat = e.latlng.lat;
             lng = e.latlng.lng;
         }
@@ -158,15 +175,15 @@ $('document').ready(function() {
         }
 
     };
-    
-    
+
+
     map.on('click', function(e) {
-        cMarker(e);   
+        cMarker(e);
     });
-    
+
     radiusInput.onchange = function() {
         radius = radiusInput.value,
-        cMarker();
+            cMarker();
     }
 
 
