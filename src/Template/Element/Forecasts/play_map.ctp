@@ -55,7 +55,7 @@
                                         </fieldset>
                                         <fieldset>
                                             <label for="radius"><strong>Radius</strong></label>
-                                            <input type="range" name="radius" id="radius" min="1" max="100" value="1">
+                                            <input type="range" name="radius" id="radius" min="50" max="100" step="5">
                                         </fieldset>
 
                                         <!-- hidden form fields -->

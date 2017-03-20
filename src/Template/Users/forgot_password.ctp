@@ -1,6 +1,6 @@
 <div class="auth">
     <div class="auth-container">
-        <a href="#" class="logo"><?= $this->Html->image('logo-white.png', ['alt' => 'Forecast Clash Logo']) ?></a>
+        <a href="#" class="logo"><?= $this->Html->image('logo-light-blue.png', ['alt' => 'Forecast Clash Logo']) ?></a>
         <div class="card">
             <div class="auth-content">
                 <p class="text-xs-center">FORGOT PASSWORD?</p>
@@ -8,7 +8,7 @@
                     <div class="form-group">
                         <?= $this->Form->input('email', [
                                 'label' => 'Please enter the Email associated with your account',
-                                'class' => 'form-control underlined'
+                                'class' => ''
                             ]); ?>
                     </div>
                     <div class="form-group">
