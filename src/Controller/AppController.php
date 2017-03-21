@@ -112,11 +112,13 @@ class AppController extends Controller
             $session->write([
                 'User.avatar' => $result['avatar_img']
             ]);
-            $notifications = TableRegistry::get('Notifications')->find('all')->where(['user_id' => $userID])->toArray();
+            $notificationsUnread = TableRegistry::get('Notifications')->find('all')->where(['user_id' => $userID, 'seen' => 0])->toArray();
+            $notificationsRead = TableRegistry::get('Notifications')->find('all')->where(['user_id' => $userID, 'seen' => 1])->toArray();
             $this->set('loggedIn', true);
+            $this->set('notificationsRead', $notificationsRead);
         } else {
-            $notifications[] = [
-                'id' => 0,
+            $notificationsUnread[] = [
+                'id' => 'guest',
                 'user_id' => 0,
                 'message' => '<big>Please Login!</big>',
                 'seen' => false,
@@ -125,6 +127,6 @@ class AppController extends Controller
             ]; 
             $this->set('loggedIn', false);
         }
-        $this->set('notifications', $notifications);
+        $this->set('notificationsUnread', $notificationsUnread);
     }
 }

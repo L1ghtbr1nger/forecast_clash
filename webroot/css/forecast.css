@@ -4206,39 +4206,32 @@ pre {
     width: 100%;
     height: 100%;
 }
-
 .notification-image {
     width: 100%;
 }
-
 div.img {
     padding-right: 5px;
 }
-
 div.body-col {
     border-left: 1px solid #d0d0d0;
     width: 100%;
     height: 100%;
 }
-
 div.body-col p {
     padding-left: 5px;
+    width: 92%;
 }
-
 #notice {
     border-bottom: 1.5px solid black;
 }
-
 #notice h4 {
     margin-top: 3.5px;
     padding-left: 10px;
 }
-
 #notice span {
     float: right;
     padding-right: 7px;
 }
-
 .seen-unseen {
     float: right;
     padding-right: 5px;
@@ -4248,10 +4241,13 @@ div.body-col p {
     border: 1px solid black;
     border-radius: 100%;
 }
-
 .unseen {
     background-color: #00ed00;
     box-shadow: 0 0 4px #00ff00;
+}
+#dismisser {
+    padding: 7px 0 7px 0;
+    margin-bottom: -5px;
 }
 
 

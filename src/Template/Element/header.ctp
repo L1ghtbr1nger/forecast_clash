@@ -15,16 +15,16 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
 <div class="header-block header-block-nav">
     <ul class="nav-profile">
         <li class="notifications new">
-            <a href="" data-toggle="dropdown"><i class="fa fa-bell-o"></i><sup><span class="counter"><?= (isset($notifications) ? count($notifications) : '') ?></span></sup></a>
+            <a href="" data-toggle="dropdown"><i class="fa fa-bell-o"></i><sup><span class="counter"><?= (!empty($notificationsUnread) ? count($notificationsUnread) : '') ?></span></sup></a>
             <div class="dropdown-menu notifications-dropdown-menu">
                 <header id="notice">
                     <h4>Notificatons <span><small>Unread</small></span></h4>
                 </header>
                 <ul class="notifications-container"><?php
-                    if (isset($notifications)) {
-                        foreach ($notifications as $notice) {
+                    if (isset($notificationsUnread)) {
+                        foreach ($notificationsUnread as $notice) {
                             echo '<li>';
-                                echo '<a href="'.$notice['link_address'].'" class="notification-item">';
+                                echo '<a href="'.$notice['link_address'].'" class="notification-item" id="'.$notice['id'].'">';
                                     echo '<div class="img-col">';
                                         echo '<div class="img">';
                                             if (isset($notice['link_image'])) {
@@ -38,20 +38,41 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
                                         echo '<p>';
                                             echo $notice['message'];
                                         echo '</p>';
-                                        echo '<div class="seen-unseen '.($notice['seen'] ? 'seen' : 'unseen').'"></div>';
+                                        echo '<div class="seen-unseen unseen"></div>';
+                                    echo '</div>';
+                                echo '</a>';
+                            echo '</li>';
+                        }
+                    }
+                    if (isset($notificationsRead)) {
+                        foreach ($notificationsRead as $notice) {
+                            echo '<li class="read">';
+                                echo '<a href="'.$notice['link_address'].'" class="notification-item" id="'.$notice['id'].'">';
+                                    echo '<div class="img-col">';
+                                        echo '<div class="img">';
+                                            if (isset($notice['link_image'])) {
+                                                echo $this->Html->image($notice['link_image'], [
+                                                    'class' => 'notification-image'
+                                                ]);
+                                            }
+                                        echo '</div>';
+                                    echo '</div>';
+                                    echo '<div class="body-col">';
+                                        echo '<p>';
+                                            echo $notice['message'];
+                                        echo '</p>';
+                                        echo '<div class="seen-unseen seen"></div>';
                                     echo '</div>';
                                 echo '</a>';
                             echo '</li>';
                         }
                     } ?>
                 </ul>
-<!--
                 <footer>
                     <ul>
-                        <li> <a href="">View All</a> </li>
+                        <li><a id="dismisser" href="">Dismiss All Read</a></li>
                     </ul>
                 </footer>
--->
             </div>
         </li>
         <li class="profile dropdown">
