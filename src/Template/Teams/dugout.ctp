@@ -1,18 +1,28 @@
 <?= $this->element('header'); ?>
 <?= $this->element('sidebar'); ?>
 <?= $this->Html->script('teams'); ?>
+<?= $this->Html->script('clipboard.min'); ?>
 <?= $this->Html->css('teams'); ?>
-</br></br></br></br>
 <?php if($hasTeam) {
+    echo '<div class="header-spacer"></div>';
+    echo $this->Form->input('', [
+        'value' => $url,
+        'id' => 'teamClip'
+    ]); 
     //send invitations via email and social media, general invitation link to copy/paste
     //leave team, if captain leaves, new captain is player with longest current streak, longest longest streak breaks tie, random if still tied
     if ($captain) {
         //add/edit team_logo, name?
         //manage roster
     } ?>
+    <div id="linker">
+        <p class="clipLabel">Recruit teammates:</p>
+        <p class="clipDisplay"><?= $url; ?></p>
+        <button class="clp-btn" data-clipboard-target="#teamClip"><?= $this->Html->image('clippy.svg', ['alt' => 'Copy to clipboard']); ?></button>
+    </div>
     <div class="headings">
         <h1><?= h($data['teams'][0]['team_name']); ?></h1>
-        <h3>Total Team Score: <?= $total ?></h3>
+        <h3>Team Score: <?= $total ?></h3>
     </div>
     <?php
     $logo = $data['teams'][0]['team_logo'];

@@ -247,6 +247,43 @@ class TeamsUsersController extends AppController
         }
     }
     
+    public function waiver() {
+        $session = $this->request->session();
+        if ($teamID = $this->request->query('q')) {
+            $userID = $this->request->query('z');
+            $session->write('User.Linker.team', $teamID);
+            $session->write('User.Linker.user', $userID);
+        } else {
+            $teamID = $session->read('User.Linker.team');
+            $userID = $session->read('User.Linker.user');
+        }
+        $cUserID = $session->read('Auth.User.id');           
+        $teams = TableRegistry::get('Teams');
+        $team = $teams->get($teamID);
+        if ($userID == $team['user_id']) { //if player who sent link is team captain or team is set to public
+            if (!$this->TeamsUsers->find()->where(['user_id' => $cUserID])->toArray()) { //if user isn't already on a team
+                $teamUser = $this->TeamsUsers->newEntity();
+                $teamUser = $this->TeamsUsers->patchEntity($teamUser, [
+                    'user_id' => $cUserID,
+                    'team_id' => $teamID
+                ]);
+                $this->TeamsUsers->save($teamUser);
+                $notices = TableRegistry::get('Notifications');
+                $notice = $notices->newEntity();
+                $notice = $notices->patchEntity($notice, [
+                    'user_id' => $userID,
+                    'message' => 'Take a trip to the podium, you! Visit the '.$teamName.' Dugout...',
+                    'link_address' => '/forecast_clash/teams/dugout',
+                    'link_image' => 'teams/users/'.($team['team_logo'] ? $team['team_logo'] : 'logo-mark.png')
+                ]);
+                $notices->save($notice);
+            }
+            
+        } else {
+
+        }
+    }
+    
     public function beforeFilter(Event $event){
         parent::beforeFilter($event);
         $this->Auth->allow();

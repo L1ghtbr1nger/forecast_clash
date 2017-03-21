@@ -157,7 +157,7 @@ class HistoricalForecastsController extends AppController
                     $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&fields=place.state,report.timestamp,loc.lat,loc.long&'.$params);
                     $jsonResponse = $responseHail->json;
                 } else {
-                    $responseWind = $http->get('https://api.aerisapi.com/observations/within?query=wind:21.7&fields=place.state,ob.dateTimeISO,loc.lat,loc.long&filter=allstations&'.$params);
+                    $responseWind = $http->get('https://api.aerisapi.com/observations/within?query=wind:50&fields=place.state,ob.dateTimeISO,loc.lat,loc.long&filter=allstations&'.$params);
                     $jsonResponse = $responseWind->json;
                 }
                 $weatherStats = TableRegistry::get('WeatherStatistics');

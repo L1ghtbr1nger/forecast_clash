@@ -16,12 +16,11 @@ $(document).ready(function(){
             dataType: 'json',
             data: $('#'+caller+'Form').serialize(),
             success : function(response) {
-                var what = response;
                 var temp = "";
-                if (what['result']) {
-                    alert(what['msg']);
-                    if (what['regLog']) {
-                        window.location.href = "/forecast_clash/";
+                if (response['result']) {
+                    alert(response['msg']);
+                    if (response['regLog']) {
+                       window.location.href = response['url'];
                     } else {
                         if (source == 'profiles') {
                             window.location.href = "/forecast_clash/profiles/profile";
@@ -30,15 +29,15 @@ $(document).ready(function(){
                         }
                     }
                 } else {
-                    if (what['regLog'] != 0) {
-                        temp = what['msg'];
+                    if (response['regLog'] != 0) {
+                        temp = response['msg'];
                     } else {
-                        $.each(what['msg'], function(index, value) {
+                        $.each(response['msg'], function(index, value) {
                             temp += value + "\n";
                         });
                     }
                     alert(temp);
-                    if (what['regLog'] == 3) {
+                    if (response['regLog'] == 3) {
                         window.location.href = "/forecast_clash/users/forgot_password";
                     }
                 }

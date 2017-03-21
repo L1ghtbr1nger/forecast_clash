@@ -131,15 +131,24 @@ class UsersController extends AppController
     
     // Login
     public function login() {
-        if ($this->request->is('ajax') || $this->request->query('provider')) {  
+        if ($this->request->is('ajax') || $this->request->query('provider')) {
+            $data = $this->request->data;
+            $referer = $data['referer'];
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
-                echo json_encode(['msg' => 'Logged in!', 'result' => 1, 'regLog' => 1]);
+                if ($referer == '/') { $referer = '/forecast_clash/'; }
+                echo json_encode(['msg' => 'Logged in!', 'result' => 1, 'regLog' => 1, 'url' => $referer]);
                 die;
             } else {
                 echo json_encode(['msg' => 'Invalid login.', 'result' => 0, 'regLog' => 1]);
                 die;
+            } 
+        } else {
+            if (substr($this->referer(), -8, -8) != 'register') {
+                $referer = $this->referer();
+                if ($referer == '/') { $referer = '/forecast_clash/'; } 
+                $this->set('referer', $referer);
             } 
         }
     }

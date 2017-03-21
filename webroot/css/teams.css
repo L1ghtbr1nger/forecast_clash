@@ -1,9 +1,16 @@
+.header-spacer {
+    height: 46px;
+    width: 100%;
+}
+
 .card {
     position: relative;
 }
 
 .headings {
+    margin-left: 15px;
     float: left;
+    clear: left;
 }
 
 #teamLogo {
@@ -83,6 +90,42 @@
 }
 #logo {
     margin-top: 5px;
+}
+
+#linker {
+    width: 100%;
+}
+#linker * {
+    float: left;
+}
+#linker .clipLabel {
+    padding: 4px 5px 4px 15px;
+    font-weight: 600;
+    font-size: 1.1em;
+}
+#teamClip {
+    position: absolute;
+    top: -999px;
+    left: -999px;
+}
+.clipDisplay {
+    height: 29px;
+    width: 300px;
+    overflow: hidden;
+    padding: 3px 8px 3px 10px;
+    border: 1px solid gray;
+    border-top-left-radius: 7px; 
+    border-bottom-left-radius: 7px;
+    border-right: 2px solid black;
+}
+.clp-btn {
+    border-top-right-radius: 7px; 
+    border-bottom-right-radius: 7px;
+    border-top: 2px solid gray;
+    border-left: 0 solid black;
+}
+.clp-btn img {
+    width: 20px;
 }
 
 #chatWindow {

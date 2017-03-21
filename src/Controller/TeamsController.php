@@ -5,6 +5,7 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Collection\Collection;
+use Cake\Routing\Router;
 
 /**
  * Teams Controller
@@ -178,6 +179,13 @@ class TeamsController extends AppController
             }
             $this->set('hasTeam', true);
             $this->set('data', $userTeam);
+            $url = Router::url([
+                'controller' => 'TeamsUsers',
+                'action' => 'waiver',
+                'q' => $teamID,
+                'z' => $userID
+            ], true);
+            $this->set('url', $url);
         } else {
             $this->set('hasTeam', false);
         }

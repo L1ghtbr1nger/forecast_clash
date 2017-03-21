@@ -17,6 +17,7 @@
                                     'class' => ''
                                 ]); ?>
                     </div>
+                    <?= $this->Form->hidden('referer', ['value' => $referer]); ?>
                     <div class="form-group">
                         <label for="remember">
                             <input class="checkbox" id="remember" type="checkbox">
