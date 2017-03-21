@@ -67,6 +67,14 @@ class PagesController extends AppController
     public function contact() {
         
     }
+
+    public function privacy() {
+        
+    }
+    
+    public function terms() {
+        
+    }
     
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);

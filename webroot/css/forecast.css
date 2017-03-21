@@ -7966,7 +7966,8 @@ ul {
 
 input[type="text"],
 input[type="password"],
-input[type="email"] {
+input[type="email"],
+textarea {
     width: 100%;
     border: none;
     padding: 12px;
