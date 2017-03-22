@@ -198,6 +198,7 @@ class TeamsUsersController extends AppController
     }
     
     public function freeAgent() {
+        $session = $this->request->session();
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
             $teamID = $data['team_id'];
