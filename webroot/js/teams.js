@@ -111,9 +111,10 @@ $(document).ready(function(){
     });
     $('#joinSubmit').click(function(e){
         e.preventDefault();
+        var id = "#"+e.target.id;
         var params = {'team_id': $('.chosen').attr('id')};
+        $(id).prop('disabled',true);
         if($(this).hasClass('disabled')){
-            alert();
         } else {
             $.ajax({
                 type: "POST",

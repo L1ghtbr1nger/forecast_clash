@@ -131,25 +131,33 @@ class UsersController extends AppController
     
     // Login
     public function login() {
+        $session = $this->request->session();
         if ($this->request->is('ajax') || $this->request->query('provider')) {
             $data = $this->request->data;
-            $referer = $data['referer'];
+            $referer = $session->read('referer');
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
-                if ($referer == '/') { $referer = '/forecast_clash/'; }
+                if ($referer == '/' || !isset($referer)) { $referer = '/forecast_clash/'; }
+                $session->write('successBox', 'Logged in!');
                 echo json_encode(['msg' => 'Logged in!', 'result' => 1, 'regLog' => 1, 'url' => $referer]);
                 die;
             } else {
+                $session->write('errorBox', 'Invalid login.');
                 echo json_encode(['msg' => 'Invalid login.', 'result' => 0, 'regLog' => 1]);
                 die;
             } 
         } else {
-            if (substr($this->referer(), -8, -8) != 'register') {
+            if (substr($this->referer(), -8, 8) == 'register') {
+                if ($session->read('referer') !== null) {
+                    $referer = $session->read('referer');
+                } else {
+                    $referer = '/forecast_clash/';
+                }
+            } else {
                 $referer = $this->referer();
-                if ($referer == '/') { $referer = '/forecast_clash/'; } 
-                $this->set('referer', $referer);
-            } 
+                $session->write('referer', $referer);
+            }
         }
     }
  
@@ -187,6 +195,7 @@ class UsersController extends AppController
                     'link_image' => 'logo-mark.png'
                 ]);
                 $notices->save($notice);
+                $session->write('successBox', 'Registered!');
                 echo json_encode(['msg' => 'Registered!', 'result' => 1, 'regLog' => 0]);
             } else {
                 echo json_encode(['msg' => $error_msg, 'result' => 0, 'regLog' => 0]);
@@ -231,6 +240,7 @@ class UsersController extends AppController
                         ->subject('Reset your Forecast Clash password')
                         ->send($reset_token_link);
                     $this->Users->save($user);
+                    $session->write('successBox', 'Email sent with password reset instructions!');
                     echo json_encode(['msg' => 'Email sent with password reset instructions!', 'result' => 1, 'regLog' => 0]);
                     die;
                 } else {
@@ -269,6 +279,7 @@ class UsersController extends AppController
                     $hashval_new = sha1($user->first_name . rand(0, 100));
                     $user->password_reset_token = $hashval_new;
                     if ($this->Users->save($user)) {
+                        $session->write('successBox', 'Your password has been changed successfully.');
                         echo json_encode(['msg' => 'Your password has been changed successfully', 'result' => 1, 'regLog' => 0]);
                     } else {
                         echo json_encode(['msg' => $error_msg, 'result' => 0, 'regLog' => 0]);

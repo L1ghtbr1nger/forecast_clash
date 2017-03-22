@@ -26,7 +26,7 @@ return [
                     'key' => 't3GXZhBaG7VrLgVpaefFoNc8R',
                     'secret' => '9huIDFyNhPf7DbKsQX2DrswoL6HH2WidZvkv1rwNh3DQ33aAel'
                 ],
-                'includeEmail' => false // Only if your app is whitelisted by Twitter Support
+                'includeEmail' => true // Only if your app is whitelisted by Twitter Support
             ]
         ],
         'debug_mode' => Configure::read('debug'),

@@ -18,7 +18,6 @@ $(document).ready(function(){
             success : function(response) {
                 var temp = "";
                 if (response['result']) {
-                    alert(response['msg']);
                     if (response['regLog']) {
                        window.location.href = response['url'];
                     } else {

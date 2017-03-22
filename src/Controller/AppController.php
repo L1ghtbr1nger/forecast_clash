@@ -97,6 +97,7 @@ class AppController extends Controller
      */
     public function beforeRender(Event $event)
     {
+        $session = $this->request->session();
         $this->set('title', 'Forecast Clash');
         if (!array_key_exists('_serialize', $this->viewVars) &&
             in_array($this->response->type(), ['application/json', 'application/xml'])
@@ -104,8 +105,17 @@ class AppController extends Controller
             $this->set('_serialize', true);
         }
         
+        //success and error box checks
+        if ($success = $session->read('successBox')) {
+            $this->set('success', $success);
+            $session->delete('successBox');
+        }
+        if ($error = $session->read('errorBox')) {
+            $this->set('error', $error);
+            $session->delete('errorBox');
+        }
+        
         // Login Check
-        $session = $this->request->session();
         if ($userID = $session->read('Auth.User.id')) {
             $query = TableRegistry::get('Avatars')->find('all')->where(['id' => $session->read('Auth.User.avatar_id')]);
             $result = $query->first();

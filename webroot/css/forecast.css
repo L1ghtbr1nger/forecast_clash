@@ -75,7 +75,7 @@ body {
 
 .main-wrapper {
     width: 100%;
-    position: absolute;
+    position: relative;
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -7812,17 +7812,22 @@ rect {
 /* Notifications */
 
 .notification {
-    padding: 32px;
+    padding: 15px 27px 15px 25px;
     box-shadow: 1px 1px 5px rgba(126, 142, 159, 0.1);
-    background: rgb(255, 255, 255);
+/*    background: rgb(255, 255, 255);*/
 }
-
+.success-notification .notification {
+    background: rgb(206, 227, 237);
+}
+.error-notification .notification {
+    background: rgb(255, 237, 237)
+}
 .success-notification,
 .error-notification {
     position: absolute;
-    top: 75px;
-    position: absolute;
-    left: 50%;
+    top: 50px;
+    left: 79%;
+    right: -15%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     color: #333;

@@ -75,7 +75,7 @@
         <div class="sidebar-footer">
             <button class="btn btn-primary scoring-btn">To Forecast</button>
             <?php if ($loggedIn) {
-                echo '<input class="btn btn-primary forecast-btn login" disabled type="submit" value="Make Your Forecast" id="forecast">';
+                echo '<input class="btn btn-primary forecast-btn login" type="submit" value="Make Your Forecast" id="forecast">';
              } else {
                 echo '<a href="/forecast_clash/users/login"><input class="btn btn-primary forecast-btn forecast-link" type="submit" value="Please Login!"></a>';
             } ?>
@@ -85,10 +85,8 @@
 </article>
 <link rel="stylesheet" href="webroot/css/leaflet.awesome-markers.css">
 <?= $this->Html->script('play_map'); ?>
-<?= $this->Html->script('leaflet.awesome-markers.min'); ?>
 <?= $this->Html->script('picker'); ?>
 <?= $this->Html->script('picker.date'); ?>
-<?= $this->Html->script('L.Control.Range-min'); ?>
 <link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
 <script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
 <link rel="stylesheet" href="webroot/css/default.css">

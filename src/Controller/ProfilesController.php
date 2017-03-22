@@ -160,6 +160,7 @@ class ProfilesController extends AppController
                     'link_image' => 'logo-mark.png'
                 ]);
                 $notices->save($notice);
+                $session->write('successBox', 'Profile completed!');
                 echo json_encode(['msg' => 'Thank you!', 'result' => 1, 'regLog' => 0]);
             } else {
                 echo json_encode(['msg' => $error_msg, 'result' => 0, 'regLog' => 0]);

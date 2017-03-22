@@ -246,6 +246,7 @@ class TeamsController extends AppController
                         'link_image' => 'teams/users/'.($imageFileName ? $imageFileName : 'logo-mark.png')
                     ]);
                     $notices->save($notice);
+                    $session->write('successBox', 'Team created!');
                     echo json_encode(['result' => 1, 'msg' => 'Team created!']);
                     die;
                 } else {

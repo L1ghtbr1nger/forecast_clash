@@ -6,6 +6,7 @@ use Cake\Event\Event;
 use Cake\Error\Debugger;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 
 
 /**
@@ -127,14 +128,16 @@ class ForecastsController extends AppController
             $data = $this->request->data;
             if (!empty($data['location'])) {
                 $location = explode(',', $data['location']);
-                $data['lat'] = floatval($location[0]);
-                $data['lon'] = floatval($location[1]);
+                $data['latitude'] = floatval($location[0]);
+                $data['longitude'] = floatval($location[1]);
             } 
             if (isset($data['weather_event_id'])) {
                 $weatherEventID = $data['weather_event_id'];
             } else {
                 $weatherEventID = null;
             }
+            $date = strtotime($data['forecast_date']);
+            $data['forecast_date'] = date('Y-m-d', $date);
             $table = $this->Forecasts;
             //Look if user and weather event combo already exists in Forecasts
             if ($query = $table->find('all')->where(['user_id' => $userID, 'weather_event_id' => $weatherEventID])->first()) {
@@ -162,13 +165,15 @@ class ForecastsController extends AppController
                     $statistic->active = 1;
                 } else {
                     $statistic = $statistics->newEntity();
-                    $statistic->user_id = $userId;
+                    $statistic->user_id = $userID;
                     $statistic->current_streak = 0;
                     $statistic->highest_streak = 0;
                     $statistic->active = 1;
                 }
                 $statistics->save($statistic);
-                echo json_encode(['msg' => 'Forecast saved!', 'result' => 1, 'regLog' => 1]);
+                $url = Router::url(['controller' => '/'], TRUE);
+                $session->write('successBox', 'Forecast saved!');
+                echo json_encode(['msg' => 'Forecast saved!', 'result' => 1, 'regLog' => 1, 'url' => $url]);
             } else {
                 echo json_encode(['msg' => $error_msg, 'result' => 0, 'regLog' => 0]);
             }

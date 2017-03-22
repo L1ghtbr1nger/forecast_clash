@@ -122,6 +122,60 @@ class TeamsUsersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
     
+    public function joining($team, $user, $addressC, $firstC, $captain) {
+        if ($team['privacy'] && !$captain) { //if selected team is private and user not invited by captain, send email to team captain with link to accept or reject request
+            $link = Router::url(['controller' => 'TeamsUsers', 'action' => 'freeAgent'], TRUE).'/'.$team['id'].'_'.h($team['team_name']).'_'.$user['id'].'_'.$user['first_name'].'_'.$user['last_name'];
+            $email = new Email();
+            $email->from('donotreply@forecastclash.com', 'Forecast Clash')
+                ->to($addressC, $firstC)
+                ->template('default', 'default')
+                ->subject('Forecast Clash Team Request')
+                ->send("Someone has requested to join your Forecast Clash team! Please follow the link for details on how to draft this person or prolong their free-agency.\r\n".$link);
+            return ['msg' => 'Request to join team was sent!', 'result' => 1, 'joined' => 0];
+        } else {
+            $query = $this->TeamsUsers->find()->where(['user_id' => $user['id']]); //check if user already has team
+            if ($result = $query->first()) { //if user has a team
+                if ($result['team_id'] === $team['id']) { //english selector for whether user is on potential team or different team
+                    $word = 'You are already a member of '.$team['team_name'];
+                } else {
+                    $word = 'You have already joined a team.';
+                }
+                return ['msg' => $word, 'result' => 0];
+            }
+            $teamUser = $this->TeamsUsers->newEntity();
+            $teamUser = $this->TeamsUsers->patchEntity($teamUser, [
+                'user_id' => $user['id'],
+                'team_id' => $team['id']
+            ]);
+            if($teamUser->errors()){
+                $error_msg = [];
+                foreach( $teamUser->errors() as $errors){
+                    if(is_array($errors)){
+                        foreach($errors as $error){
+                            $error_msg[] = $error;
+                        }
+                    }else{
+                        $error_msg[] = $errors;
+                    }
+                }
+            }
+            if ($this->TeamsUsers->save($teamUser)) {
+                $notices = TableRegistry::get('Notifications');
+                $notice = $notices->newEntity();
+                $notice = $notices->patchEntity($notice, [
+                    'user_id' => $user['id'],
+                    'message' => 'Take a trip to the podium, you have been selected! Visit the '.$team['team_name'].' Dugout...',
+                    'link_address' => '/forecast_clash/teams/dugout',
+                    'link_image' => 'teams/users/'.($team['team_logo'] ? $team['team_logo'] : 'logo-mark.png')
+                ]);
+                $notices->save($notice);
+                return ['msg' => 'Joined team!', 'result' => 1, 'joined' => 1];
+            } else {
+                return ['msg' => $error_msg, 'result' => 0];
+            }
+        }
+    }
+    
     public function joiner() {
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
@@ -129,61 +183,15 @@ class TeamsUsersController extends AppController
             $userID = $session->read('Auth.User.id');
             $teamID = $data['team_id'];
             $teams = TableRegistry::get('Teams');
-            $team = $teams->get($teamID, ['contain' => ['Users']]);
-            $teamName = $team['team_name'];
+            $team = $teams->get($teamID);
             $captain = $team['user_id'];
             $userC = TableRegistry::get('Users')->get($captain);
             $address = $userC['email'];
             $first = $userC['first_name'];
-            $last = $userC['last_name'];
             $user = TableRegistry::get('Users')->get($userID);
-            $firstName = $user['first_name'];
-            $lastName = $user['last_name'];
-            if ($team->privacy) { //if the selected team is private, send email to team captain with link to accept or reject request
-                $link = Router::url(['controller' => 'TeamsUsers', 'action' => 'freeAgent'], TRUE).'/'.$teamID.'_'.$teamName.'_'.$userID.'_'.$firstName.'_'.$lastName;
-                $email = new Email();
-                $email->from('donotreply@forecastclash.com', 'Forecast Clash')
-                    ->to($address, $first)
-                    ->template('default', 'default')
-                    ->subject('Forecast Clash Team Request')
-                    ->send("Someone has requested to join your Forecast Clash team! Please follow the link for details on how to draft this person or prolong their free-agency.\r\n".$link);
-                echo json_encode(['msg' => 'Request to join team was sent!', 'result' => 1]);
-                die;
-            } else {
-                $teamUser = $this->TeamsUsers->newEntity();
-                $teamUser = $this->TeamsUsers->patchEntity($teamUser, [
-                    'user_id' => $userID,
-                    'team_id' => $teamID
-                ]);
-                if($teamUser->errors()){
-                    $error_msg = [];
-                    foreach( $teamUser->errors() as $errors){
-                        if(is_array($errors)){
-                            foreach($errors as $error){
-                                $error_msg[] = $error;
-                            }
-                        }else{
-                            $error_msg[] = $errors;
-                        }
-                    }
-                }
-                if ($this->TeamsUsers->save($teamUser)) {
-                    $notices = TableRegistry::get('Notifications');
-                    $notice = $notices->newEntity();
-                    $notice = $notices->patchEntity($notice, [
-                        'user_id' => $userID,
-                        'message' => 'You have been added to a team roster! Visit the '.$teamName.' Dugout...',
-                        'link_address' => '/forecast_clash/teams/dugout',
-                        'link_image' => 'teams/users/'.($team['team_logo'] ? $team['team_logo'] : 'logo-mark.png')
-                    ]);
-                    $notices->save($notice);
-                    echo json_encode(['msg' => 'Joined team!', 'result' => 1]);
-                    die;
-                } else {
-                    echo json_encode(['msg' => $error_msg, 'result' => 0]);
-                    die;
-                }
-            }
+            $result = $this->joining($team, $user, $addressC, $firstC, false);
+            echo json_encode(['msg' => $result['msg'], 'result' => $result['result']]);
+            die;
         }
     }
     
@@ -192,13 +200,13 @@ class TeamsUsersController extends AppController
             $data = $this->request->data;
             $teamID = $data['team_id'];
             $team = TableRegistry::get('Teams')->get($teamID);
-            $userID = $data['user_id'];
+            $userID = $data['user_id']; //potential member's user_id
             $teamID = $data['team_id'];
-            $first = $data['first_name'];
-            if ($data['sign']) {
-                $query = $this->TeamsUsers->find()->where(['user_id' => $userID]);
-                if ($result = $query->toArray()) {
-                    if ($result['team_id'] === $teamID) {
+            $first = $data['first_name']; //potential member's first name
+            if ($data['sign']) { //if user chose to add potential member to team
+                $query = $this->TeamsUsers->find()->where(['user_id' => $userID]); //check if potential member already has team
+                if ($result = $query->toArray()) { //if potential member has a team
+                    if ($result['team_id'] === $teamID) { //english selector for whether potential member is on user's team or different team
                         $word = 'your';
                     } else {
                         $word = 'a';
@@ -214,11 +222,12 @@ class TeamsUsersController extends AppController
                     $notice = $notices->newEntity();
                     $notice = $notices->patchEntity($notice, [
                         'user_id' => $userID,
-                        'message' => 'You have been added to a team roster! Visit the '.$team['team_name'].' Dugout...',
+                        'message' => 'Take a trip to the podium, you have been selected! Visit the '.$team['team_name'].' Dugout...',
                         'link_address' => '/forecast_clash/teams/dugout',
                         'link_image' => 'teams/users/'.($team['team_logo'] ? $team['team_logo'] : 'logo-mark.png')
                     ]);
                     $notices->save($notice);
+                    $session->write('successBox', $first.' was added to your roster!');
                     echo json_encode(['msg' => $first.' was added to your roster!', 'result' => 1]);
                     die;
                 } else {
@@ -228,13 +237,23 @@ class TeamsUsersController extends AppController
             } else {
                 $users = TableRegistry::get('Users');
                 $user = $users->get($userID);
-                $link = Router::url(['controller' => 'Teamsusers', 'action' => 'dugout'], TRUE);
+                $notices = TableRegistry::get('Notifications');
+                $notice = $notices->newEntity();
+                $notice = $notices->patchEntity($notice, [
+                    'user_id' => $userID,
+                    'message' => 'Take a trip to the podium, you have been selected! Visit the '.$team['team_name'].' Dugout...',
+                    'link_address' => '/forecast_clash/teams/dugout',
+                    'link_image' => 'teams/users/'.($team['team_logo'] ? $team['team_logo'] : 'logo-mark.png')
+                ]);
+                $notices->save($notice);
+                $link = Router::url(['controller' => 'TeamsUsers', 'action' => 'dugout'], TRUE);
                 $email = new Email();
                 $email->from('donotreply@forecastclash.com', 'Forecast Clash')
                     ->to($user['email'], $first)
                     ->template('default', 'default')
                     ->subject('Forecast Clash Team Request')
                     ->send("We're sorry, but ".$data['team_name']." chose not to sign you this Storm Season. A forecaster of your calibur would be welcomed to any of Forecast Clash's public teams! Follow the link below to search for a different team with whom you can showcase your talents!\r\n".$link);
+                $session->write('successBox', $first.' has been removed from the scouting report.');
                 echo json_encode(['msg' => 'User has been notified that they did not make the team.', 'result' => 1]);
                 die;
             }
@@ -249,38 +268,34 @@ class TeamsUsersController extends AppController
     
     public function waiver() {
         $session = $this->request->session();
-        if ($teamID = $this->request->query('q')) {
-            $userID = $this->request->query('z');
-            $session->write('User.Linker.team', $teamID);
-            $session->write('User.Linker.user', $userID);
-        } else {
-            $teamID = $session->read('User.Linker.team');
-            $userID = $session->read('User.Linker.user');
-        }
-        $cUserID = $session->read('Auth.User.id');           
-        $teams = TableRegistry::get('Teams');
-        $team = $teams->get($teamID);
-        if ($userID == $team['user_id']) { //if player who sent link is team captain or team is set to public
-            if (!$this->TeamsUsers->find()->where(['user_id' => $cUserID])->toArray()) { //if user isn't already on a team
-                $teamUser = $this->TeamsUsers->newEntity();
-                $teamUser = $this->TeamsUsers->patchEntity($teamUser, [
-                    'user_id' => $cUserID,
-                    'team_id' => $teamID
-                ]);
-                $this->TeamsUsers->save($teamUser);
-                $notices = TableRegistry::get('Notifications');
-                $notice = $notices->newEntity();
-                $notice = $notices->patchEntity($notice, [
-                    'user_id' => $userID,
-                    'message' => 'Take a trip to the podium, you! Visit the '.$teamName.' Dugout...',
-                    'link_address' => '/forecast_clash/teams/dugout',
-                    'link_image' => 'teams/users/'.($team['team_logo'] ? $team['team_logo'] : 'logo-mark.png')
-                ]);
-                $notices->save($notice);
+        if ($currentUserID = $session->read('Auth.User.id')) {
+            if ($teamID = $this->request->query('q')) { //if url includes invite queries
+                $userID = $this->request->query('z');
+                $session->write('User.Linker.team', $teamID); //save those values to the session in case user leaves page and comes back
+                $session->write('User.Linker.user', $userID);
+            } else {
+                $teamID = $session->read('User.Linker.team'); //if user came with queries, left, and came back, retrieve those values
+                $userID = $session->read('User.Linker.user');
+            }        
+            $teams = TableRegistry::get('Teams');
+            $team = $teams->get($teamID);
+            $userC = TableRegistry::get('Users')->get($team['user_id']);
+            $address = $userC['email'];
+            $first = $userC['first_name'];
+            $user = TableRegistry::get('Users')->get($currentUserID);
+            ($userID == $team['user_id']) ? $captain = true : $captain = false;
+            $result = $this->joining($team, $user, $address, $first, $captain);
+            if ($result['result']) {
+                $session->write('successBox', $result['msg']);//display success box
+                if ($result['joined']){
+                    return $this->redirect(['controller' => 'teams', 'action' => 'dugout']);
+                } else {
+                    return $this->redirect(['controller' => '/']);
+                }
+            } else {
+                $session->write('errorBox', $result['msg']);
+                return $this->redirect(['controller' => '/']);
             }
-            
-        } else {
-
         }
     }
     

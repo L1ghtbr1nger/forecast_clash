@@ -62,49 +62,50 @@
         </div>
     </div>
 
-<!-- Success Notification -->
-
-<div class="row success-notification">
-
+    <!-- Success Notification -->
+    <div class="row success-notification">
         <div class="notification">
-            <p class="notification-message">This is a message of relatively little importance, you can basically ignore me.</p>
-
-    </div>
-</div>
-
-<!-- Error Notification -->
-<div class="row error-notification">
-
-        <div class="notification">
-            <p class="notification-message">This is an error and of high importance, do not ignore me.</p>
+            <p class="notification-message" id="success-message"><?= (isset($success) ? $success : ''); ?></p>
         </div>
+    </div>
 
-</div>
-<script>
+    <!-- Error Notification -->
+    <div class="row error-notification">
+        <div class="notification">
+            <p class="notification-message" id="error-message"><?= (isset($error) ? $error : ''); ?></p>
+        </div>
+    </div>
+    
+    <script>
+        if(!$.trim($('#success-message').html()) == ''){
+            $('.success-notification').show();
+        }
+        if(!$.trim($('#error-message').html()) == ''){
+            $('.error-notification').show();
+        }
 
-// Success
-setTimeout(function(){
-  $('.success-notification').fadeOut();
-}, 5000);    
+        // Success
+        setTimeout(function(){
+            $('.success-notification').fadeOut();
+        }, 5000);    
 
 
-// Error
+        // Error
 
-  $('.error-notification .notification').append('<i class="fa fa-times close-me" aria-hidden="true"></i>');
-  $('.close-me')
-    .css({
-      'float': 'right',
-      'position': 'relative',
-      'top': '-48px',
-      'left': '18px',
-      'color': 'rgb(188, 188, 188)',
-      'cursor': 'pointer'
-  })
-    .click(function(){
-        $('.error-notification').hide();
-    })
-
-</script>
+        $('.error-notification .notification').append('<i class="fa fa-times close-me" aria-hidden="true"></i>');
+        $('.close-me')
+        .css({
+          'float': 'right',
+          'position': 'relative',
+          'top': '-30px',
+          'left': '18px',
+          'color': 'rgb(188, 188, 188)',
+          'cursor': 'pointer'
+        })
+        .click(function(){
+            $('.error-notification').hide();
+        })
+    </script>
 
 
 
