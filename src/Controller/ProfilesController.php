@@ -161,6 +161,7 @@ class ProfilesController extends AppController
                 ]);
                 $notices->save($notice);
                 $session->write('successBox', 'Profile completed!');
+                $url = Router::url(['controller' => 'Profiles', 'action' => 'profile'], TRUE);
                 echo json_encode(['msg' => 'Thank you!', 'result' => 1, 'regLog' => 0]);
             } else {
                 echo json_encode(['msg' => $error_msg, 'result' => 0, 'regLog' => 0]);

@@ -122,7 +122,7 @@ class TeamsUsersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
     
-    public function joining($team, $user, $addressC, $firstC, $captain) {
+    public function joining($session, $team, $user, $addressC, $firstC, $captain) {
         if ($team['privacy'] && !$captain) { //if selected team is private and user not invited by captain, send email to team captain with link to accept or reject request
             $link = Router::url(['controller' => 'TeamsUsers', 'action' => 'freeAgent'], TRUE).'/'.$team['id'].'_'.h($team['team_name']).'_'.$user['id'].'_'.$user['first_name'].'_'.$user['last_name'];
             $email = new Email();
@@ -131,7 +131,8 @@ class TeamsUsersController extends AppController
                 ->template('default', 'default')
                 ->subject('Forecast Clash Team Request')
                 ->send("Someone has requested to join your Forecast Clash team! Please follow the link for details on how to draft this person or prolong their free-agency.\r\n".$link);
-            return ['msg' => 'Request to join team was sent!', 'result' => 1, 'joined' => 0];
+            $session->write('successBox', 'Request to join '.h($team['team_name']).' was sent!!');
+            return ['msg' => 'Request to join team was sent!', 'result' => 1];
         } else {
             $query = $this->TeamsUsers->find()->where(['user_id' => $user['id']]); //check if user already has team
             if ($result = $query->first()) { //if user has a team
@@ -169,7 +170,8 @@ class TeamsUsersController extends AppController
                     'link_image' => 'teams/users/'.($team['team_logo'] ? $team['team_logo'] : 'logo-mark.png')
                 ]);
                 $notices->save($notice);
-                return ['msg' => 'Joined team!', 'result' => 1, 'joined' => 1];
+                $session->write('successBox', 'Successfully joined team!');
+                return ['msg' => 'Joined team!', 'result' => 1];
             } else {
                 return ['msg' => $error_msg, 'result' => 0];
             }
@@ -186,10 +188,10 @@ class TeamsUsersController extends AppController
             $team = $teams->get($teamID);
             $captain = $team['user_id'];
             $userC = TableRegistry::get('Users')->get($captain);
-            $address = $userC['email'];
-            $first = $userC['first_name'];
+            $addressC = $userC['email'];
+            $firstC = $userC['first_name'];
             $user = TableRegistry::get('Users')->get($userID);
-            $result = $this->joining($team, $user, $addressC, $firstC, false);
+            $result = $this->joining($session, $team, $user, $addressC, $firstC, false);
             echo json_encode(['msg' => $result['msg'], 'result' => $result['result']]);
             die;
         }
@@ -211,7 +213,7 @@ class TeamsUsersController extends AppController
                     } else {
                         $word = 'a';
                     }
-                    echo json_encode(['msg' => $first.' is already on '.$word.' team.', 'result' => 1]);
+                    echo json_encode(['msg' => $first.' is already on '.$word.' team.', 'result' => 0]);
                     die;
                 }
                 $teamUser = $this->TeamsUsers->newEntity();
@@ -284,7 +286,7 @@ class TeamsUsersController extends AppController
             $first = $userC['first_name'];
             $user = TableRegistry::get('Users')->get($currentUserID);
             ($userID == $team['user_id']) ? $captain = true : $captain = false;
-            $result = $this->joining($team, $user, $address, $first, $captain);
+            $result = $this->joining($session, $team, $user, $address, $first, $captain);
             if ($result['result']) {
                 $session->write('successBox', $result['msg']);//display success box
                 if ($result['joined']){

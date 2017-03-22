@@ -219,7 +219,7 @@ class TeamsController extends AppController
             $team->privacy = $data['privacy'];
             $team->user_id = $userID;
             //check for valid file, move file to server, save file name with extension to DB
-            if (!empty($data['team_logo'])) {
+            if (!empty($data['team_logo']) && isset($data['team_logo']) && $data['team_logo'] != 'undefined') {
                 $file = $data['team_logo']; //put the data into a var for easy use
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
                 $arr_ext = array('jpg', 'jpeg', 'gif', 'png'); //set allowed extensions
@@ -243,10 +243,10 @@ class TeamsController extends AppController
                         'user_id' => $userID,
                         'message' => 'You have created a team and become its captain! Visit the '.$teamName.' Dugout...',
                         'link_address' => '/forecast_clash/teams/dugout',
-                        'link_image' => 'teams/users/'.($imageFileName ? $imageFileName : 'logo-mark.png')
+                        'link_image' => 'teams/users/'.(isset($imageFileName) ? $imageFileName : 'logo-mark.png')
                     ]);
                     $notices->save($notice);
-                    $session->write('successBox', 'Team created!');
+                    $session->write('successBox', 'Team successfully created!');
                     echo json_encode(['result' => 1, 'msg' => 'Team created!']);
                     die;
                 } else {

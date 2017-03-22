@@ -18,15 +18,7 @@ $(document).ready(function(){
             success : function(response) {
                 var temp = "";
                 if (response['result']) {
-                    if (response['regLog']) {
                        window.location.href = response['url'];
-                    } else {
-                        if (source == 'profiles') {
-                            window.location.href = "/forecast_clash/profiles/profile";
-                        } else {
-                            window.location.href = "/forecast_clash/users/login";
-                        }
-                    }
                 } else {
                     if (response['regLog'] != 0) {
                         temp = response['msg'];

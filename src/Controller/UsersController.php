@@ -195,8 +195,10 @@ class UsersController extends AppController
                     'link_image' => 'logo-mark.png'
                 ]);
                 $notices->save($notice);
-                $session->write('successBox', 'Registered!');
-                echo json_encode(['msg' => 'Registered!', 'result' => 1, 'regLog' => 0]);
+                $session = $this->request->session();
+                $session->write('successBox', 'Successfully registered!');
+                $url = Router::url(['controller' => 'Users', 'action' => 'login'], TRUE);
+                echo json_encode(['msg' => 'Registered!', 'result' => 1, 'regLog' => 0, 'url' => $url]);
             } else {
                 echo json_encode(['msg' => $error_msg, 'result' => 0, 'regLog' => 0]);
             }

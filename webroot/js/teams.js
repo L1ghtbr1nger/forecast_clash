@@ -23,9 +23,7 @@ $(document).ready(function(){
     });
     $('#createSubmit').click(function(e){ 
         e.preventDefault();
-        if($(e.target).hasClass('disabled')){
-            alert();
-        } else {
+        if(!$(e.target).hasClass('disabled')){
             var fd = new FormData(); //create new FormData variable to send through ajax
             fd.append('team_logo', $('#logo')[0].files[0]); //add user uploaded file to FormData
             fd.append('team_name', $('#team-name').val()); //add user submitted team_name to FormData
@@ -40,7 +38,6 @@ $(document).ready(function(){
                 contentType: false,   // tell jQuery not to set contentType
                 success : function(response) {
                     if (response['result']){
-                        alert(response['msg']);
                         location.reload();
                     } else {
                         alert(response['msg']);
@@ -123,7 +120,6 @@ $(document).ready(function(){
                 data: params,
                 success : function(response) {
                     if (response['result']){
-                        alert(response['msg']);
                         location.reload();
                     } else {
                         alert(response['msg']);
@@ -144,12 +140,10 @@ $(document).ready(function(){
             dataType: 'json',
             data: form,
             success : function(response) {
-                if (response['result']){
-                    alert(response['msg']);
-                    window.location.href = "/forecast_clash/teams/dugout";
-                } else {
+                if (!response['result']){                    
                     alert(response['msg']);
                 }
+                window.location.href = "/forecast_clash/teams/dugout";
             },
             error : function() {   
             }
