@@ -10,7 +10,7 @@ return [
                     'id' => '440116605469-v8kp8rndac7htgfe2fs02oo0a0pgq6m5.apps.googleusercontent.com',
                     'secret' => 'bJ04zWxBGEaEUHAEoi70Go-e'   
                 ],
-                'redirect_uri' => 'http://localhost/forecast_clash/hybrid-auth/endpoint?hauth.done=google'
+                'redirect_uri' => 'http://forecastclash.com/forecast_clash/hybrid-auth/endpoint?hauth.done=google'
             ],
             'Facebook' => [
                 'enabled' => true,
