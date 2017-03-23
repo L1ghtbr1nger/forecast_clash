@@ -31,7 +31,7 @@
 <div class="row">
 
     
-<div class="col-md-6">
+<div class="col-xs-12 col-sm-12 col-md-6">
     <div class="row">
         <div class="col-md-12">
             <div class="headings">
@@ -129,32 +129,6 @@
             </div>
         </div>
     </div>
-    <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
-        <div class="card sameheight-item" data-exclude="xs">
-            <div class="card-header card-header-sm bordered">
-                <div class="header-block">
-                    <h4>Locker Room</h4>
-                </div>
-            </div>
-            <div class="card-block">
-                <div id="chatWindow"></div>
-                <?= $this->Form->create(); ?>
-                <div class="form-group">
-                    <?= $this->Form->input('message', [
-                        'label' => 'Huddle up with the team:',
-                        'class' => '',
-                        'autocomplete' => 'off'
-                    ]); ?>
-                    <?= $this->Form->button('Post Message', [
-                        'id' => 'chatButton',
-                        'class' => 'btn btn-block btn-primary chatter',
-                        'type' => 'submit'
-                    ]); ?>
-                </div>
-                <?= $this->Form->end(); ?>
-            </div>
-        </div>
-    </div>
 
 <?php } else { ?>
     <div class="auth">
@@ -241,9 +215,14 @@
 
     $('#joinButton').click(function(){
         $('.teams-intro').css('display', 'none');
-    })
+    });
 
     $('#createButton').click(function(){
         $('.teams-intro').css('display', 'none');
-    })
+    });
+
+    $('#liveSearch p').click(function(){
+        $('#joinSubmit').attr('disabled', 'false');
+    });
+
 </script>
