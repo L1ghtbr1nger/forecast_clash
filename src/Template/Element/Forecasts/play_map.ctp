@@ -3,10 +3,22 @@
     padding-left: 0;
     padding-right: 0;
 }
+
 .leaflet-right .leaflet-control{
     background-color: #333;
 }
 
+li > ul li{
+    font-size: 14px;
+}
+
+.scoring-btn{
+    margin: 0px 0 12px 0px;
+}
+
+.scoring-instructions-btn{
+    margin: 22px 0 0 0;
+}
 </style>
 
 <article class="play-container">
@@ -16,18 +28,40 @@
         </div>
         <div class="sidebar-content">
             <div class="instructions">
-                <h5><strong>Instructions</strong></h5>
-                <ul>
-                    <li>Here you will select your severe weather event forecasts.</li>
-                    <li>Forecasts are selected for events any day in the following 8 days, AM or PM.</li>
-                    <li>Forecasts can be updated as often as you choose.</li>
-                </ul>
-                <h5><strong>Scoring</strong></h5>
-                <ul>
-                    <li>Points are scored by distance from reported event location and your forecast location.</li>
-                    <li>The earlier you select your forecast, the more points you will receive.</li>
-                </ul>
-                <p>Press the <i class="fa fa-question" aria-hidden="true"></i> see these instructions again.</p>
+                <div class="targeting">
+                        <h5><strong>How to Set a Target</strong></h5>
+                        <ul>
+                            <li>Select the weather icon to the right that corresponds with the type of target pin to be placed </li>
+                            <li>Choose the day to be targeted</li>
+                            <li>Set target radius.</li>
+                            <li>Click the map and set your target pin</li>
+                        </ul>
+                        <button class="btn btn-primary scoring-instructions-btn pull-right">How to Score Points</button>
+                </div>
+                <div class="scoring-instructions">
+                    <h5><strong>How to Score Points</strong></h5>
+                    <p>Points are scored based on accuracy and timing. There are three primary ways to score:</p>
+                    <ul>
+                        <li>Number of days a target is placed in advance of an event.
+                             <ul>
+                                 <li><small>Longer range forecasts = more points</small></li>
+                             </ul> 
+                         </li>
+                        <li>Radius around the target pin.
+                            <ul>
+                                <li>Smaller radius = more points</li>
+                            </ul>
+                        </li>
+                        <li>Targets can be updated as often as you choose 
+                            <ul>
+                                <li>Changes to a target as event day nears = point deduction</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p>Press the <i class="fa fa-question" aria-hidden="true"></i> see these instructions again.</p>
+                    <p><strong>You're all set!</strong></p>
+                    <button class="btn btn-primary scoring-btn pull-right">To Forecast</button>
+                </div>
             </div>
             <div class="scoring">
                 <p>Click the icon to the right followed by a point on the map .</p>
@@ -41,7 +75,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <form action="#" class="search-filter forecast-tornado" id="forecastForm">
-                                        <fieldset>
+                                        <fieldset class="play-date">
                                             <label for="event_date"><strong>Date</strong></label>
                                             <input type="text" name="forecast_date" class="datepicker" id="event_date">
                                         </fieldset>
@@ -53,11 +87,12 @@
                                             <input type="radio" name="am_pm" id="pm" value="1">
                                             <label for="pm">PM</label>
                                         </fieldset>
-                                        <fieldset>
+                                        <fieldset class="radius">
                                             <label for="radius"><strong>Radius</strong></label>
-                                            <input type="range" name="radius" id="radius" min="50" max="100" step="5">
-                                        </fieldset>
+                                            <input type="range" name="radius" id="radius" value="50" min="50" max="100" step="5">
 
+                                        </fieldset>
+                                        <h3 class="radius-output"></h3>
                                         <!-- hidden form fields -->
                                         <input id="latlng" name="location" type="text" class="hidden" value="">
                                         <input type="radio" class="hidden" name="weather_event_id" id="tornado-event" value="1">
@@ -73,7 +108,6 @@
             </div>
         </div>
         <div class="sidebar-footer">
-            <button class="btn btn-primary scoring-btn">To Forecast</button>
             <?php if ($loggedIn) {
                 echo '<input class="btn btn-primary forecast-btn login" type="submit" value="Make Your Forecast" id="forecast">';
              } else {
@@ -83,7 +117,7 @@
     </div>
     <div id="map"></div>
 </article>
-<link rel="stylesheet" href="webroot/css/leaflet.awesome-markers.css">
+<link rel="stylesheet" href="webroot/css/<leaflet class=""></leaflet>
 <?= $this->Html->script('play_map'); ?>
 <?= $this->Html->script('picker'); ?>
 <?= $this->Html->script('picker.date'); ?>
@@ -140,6 +174,5 @@ $('.datepicker').pickadate({
 
 // Set active tab
 $('.play-link').addClass('active');
-
 
 </script>
