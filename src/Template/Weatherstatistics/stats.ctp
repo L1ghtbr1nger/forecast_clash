@@ -2,6 +2,17 @@
 <?= $this->element('sidebar'); ?>
 
 <div class="content">
+<div class="row">
+    <div class="col-md-12">
+        <div class="social pull-right">
+            <a class="share-social share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3A//forecastclash.com/forecast_clash/weather-statistics/stats"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+
+            <a class="share-social share-twitter" href="https://twitter.com/home?status=http%3A//forecastclash.com/forecast_clash/weather-statistics/stats"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+
+            <a class="share-social share-google" href="https://plus.google.com/share?url=http%3A//forecastclash.com/forecast_clash/weather-statistics/stats"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+        </div>
+    </div>
+</div>
 <!--     <div class="row thumbnail-row">
         <div class="col-md-3">
             <div class="stats-thumbnail heatmap-thumbnail">
