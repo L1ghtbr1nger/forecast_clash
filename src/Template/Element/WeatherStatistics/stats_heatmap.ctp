@@ -1,6 +1,9 @@
 <style>
-    .col-md-4{
+    .col-md-3{
         max-width: 200px;
+    }
+    .col-date{
+        max-width: 350px !important;
     }
 </style>
 <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12 stats-col heatmap-element">
@@ -25,7 +28,7 @@
                     <h4 class="heatmap-filter-toggle">Filter&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i></h4>
                     <form action="" class="search-filter-heatmap collapse-me">      
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="col-md-3 col-sm-4 col-xs-4">
                                 <div class="exp-filters">
                                     <strong>Experience</strong>
                                     <div class="can-toggle can-toggle--size-small">
@@ -44,7 +47,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="col-md-3 col-sm-4 col-xs-4">
                                 <div class="exp-filters">
                                     <strong>Forecast</strong>
                                     <div class="can-toggle can-toggle--size-small">
@@ -63,7 +66,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="col-md-3 col-sm-4 col-xs-4">
                                 <strong>Event</strong>
                                 <div class="can-toggle can-toggle--size-small">
                                     <input id="tornado_hm" class="event_hm" type="checkbox" checked>
@@ -87,7 +90,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-sm-12">
+                            <div class="col-md-3 col-sm-12 col-date">
                                 <strong>Date</strong>
                                 <label for="from_input_heatmap">From</label>
                                 <input type="text" id="input_from_heatmap">
