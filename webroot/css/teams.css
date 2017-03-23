@@ -18,11 +18,17 @@
 }
 
 #teamLogo {
-    width: 350px;
+    margin: 27px 0;
 }
 
 #teamLogo img {
-    width: inherit;
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.team-roster {
+    margin-top: 27px;
 }
 
 .userTeam {
@@ -111,7 +117,7 @@
 }
 
 #linker .clipLabel {
-    padding: 4px 5px 4px 15px;
+    padding: 4px 5px 4px 0;
     font-weight: 600;
     font-size: 1.1em;
 }
@@ -149,4 +155,8 @@
     height: 200px;
     background-color: #f0f2ff;
     border: .1px solid #1f1a5f
+}
+
+.rankings {
+    margin-top: 24px;
 }
