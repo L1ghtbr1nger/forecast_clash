@@ -37,8 +37,8 @@ $('document').ready(function() {
 
     // Initialize map
     var map = new L.map('map', {
-        center: [35.2226, -95.4395],
-        zoom: 4,
+        center: [40.2226, -95.4395],
+        zoom: 5,
         doubleClickZoom: false
     })
 

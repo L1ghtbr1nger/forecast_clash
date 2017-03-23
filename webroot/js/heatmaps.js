@@ -3,7 +3,7 @@ var map = L.map('map', {
     doubleClickZoom: false
 });
 
-map.setView([35.2226, -97.4395], 7);
+map.setView([35.2226, -97.4395], 5);
 
 L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
     maxZoom: 18,
