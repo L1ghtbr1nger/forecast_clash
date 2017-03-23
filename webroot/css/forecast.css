@@ -364,7 +364,9 @@ body {
 .alert.alert-inverse .alert-link {
     color: #e6e6e6;
 }
-
+.experience label{
+    margin: 4px; 0
+}
 .btn {
     background-image: none;
     border-radius: 0;
