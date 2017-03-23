@@ -1,3 +1,8 @@
+.col-md-12 > .col {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .header-spacer {
     height: 46px;
     width: 100%;
@@ -8,31 +13,30 @@
 }
 
 .headings {
-    margin-left: 15px;
-    float: left;
+    margin-bottom: 24px;
     clear: left;
 }
 
 #teamLogo {
     width: 350px;
-    float: right;
-    margin-right: 150px;
 }
+
 #teamLogo img {
     width: inherit;
 }
 
 .userTeam {
-    background-color: #84c7ff !important;
+    background-color: rgb(198, 229, 255) !important;
 }
 
 #liveSearch {
-    width:100%;
-    height:221px;
-    border:.1px solid black;
-    border-top:none;
-    margin-top:5px;
+    width: 100%;
+    height: 221px;
+    border: .1px solid black;
+    border-top: none;
+    margin-top: 5px;
 }
+
 .chosen {
     background-color: yellow;
 }
@@ -47,12 +51,15 @@
 #creator {
     display: none;
 }
+
 #joiner {
     display: none;
 }
+
 #joinSubmit {
     display: none;
 }
+
 #createSubmit {
     display: none;
 }
@@ -63,22 +70,25 @@
     bottom: -2px;
     left: 10px;
 }
+
 #legend img {
     height: 21px;
 }
 
 .options {
-    width:100%;
+    width: 100%;
     max-height: 22px;
-    margin:0;
+    margin: 0;
     float: left;
     padding-left: 5px;
     border-bottom: .01px solid #cccccc;
 }
+
 .options:hover {
     background-color: aqua;
     cursor: pointer;
 }
+
 .privacy img {
     padding: 2px 5px 4px 0;
     max-height: 22px;
@@ -88,6 +98,7 @@
 .teamLogo {
     margin-top: 15px;
 }
+
 #logo {
     margin-top: 5px;
 }
@@ -95,35 +106,41 @@
 #linker {
     width: 100%;
 }
+
 #linker * {
     float: left;
 }
+
 #linker .clipLabel {
     padding: 4px 5px 4px 15px;
     font-weight: 600;
     font-size: 1.1em;
 }
+
 #teamClip {
     position: absolute;
     top: -999px;
     left: -999px;
 }
+
 .clipDisplay {
     height: 29px;
     width: 300px;
     overflow: hidden;
     padding: 3px 8px 3px 10px;
     border: 1px solid gray;
-    border-top-left-radius: 7px; 
+    border-top-left-radius: 7px;
     border-bottom-left-radius: 7px;
     border-right: 2px solid black;
 }
+
 .clp-btn {
-    border-top-right-radius: 7px; 
+    border-top-right-radius: 7px;
     border-bottom-right-radius: 7px;
     border-top: 2px solid gray;
     border-left: 0 solid black;
 }
+
 .clp-btn img {
     width: 20px;
 }

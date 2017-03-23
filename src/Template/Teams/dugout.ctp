@@ -1,5 +1,6 @@
 <?= $this->element('header'); ?>
 <?= $this->element('sidebar'); ?>
+<br><br>
 <?= $this->Html->script('teams'); ?>
 <?= $this->Html->script('clipboard.min'); ?>
 <?= $this->Html->css('teams'); ?>
@@ -15,24 +16,33 @@
         //add/edit team_logo, name?
         //manage roster
     } ?>
-    <div id="linker">
-        <p class="clipLabel">Recruit teammates:</p>
-        <p class="clipDisplay"><?= $url; ?></p>
-        <button class="clp-btn" data-clipboard-target="#teamClip"><?= $this->Html->image('clippy.svg', ['alt' => 'Copy to clipboard']); ?></button>
-    </div>
-    <div class="headings">
-        <h1><?= h($data['teams'][0]['team_name']); ?></h1>
-        <h3>Team Score: <?= $total ?></h3>
-    </div>
-    <?php
-    $logo = $data['teams'][0]['team_logo'];
-    if (!is_null($logo)) { ?>
-        <div id="teamLogo"><?= $this->Html->image('teams/users/'.$logo); ?></div>
-    <?php } else { ?>
-        <div></div>
-    <?php } ?>
 
-    <div class="col col-xs-12 col-sm-12 col-md-6 col-xl-7 history-col">
+<div class="row">
+    <div class="col-md-12">
+        <div id="linker">
+            <p class="clipLabel">Recruit teammates:</p>
+            <p class="clipDisplay"><?= $url; ?></p>
+            <button class="clp-btn" data-clipboard-target="#teamClip"><?= $this->Html->image('clippy.svg', ['alt' => 'Copy to clipboard']); ?></button>
+    </div>
+    </div>
+</div>
+
+
+<div class="row">
+
+    
+<div class="col-md-6">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="headings">
+                <h1><?= h($data['teams'][0]['team_name']); ?></h1>
+                <h3>Team Score: <?= $total ?></h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+                <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="card sameheight-item" data-exclude="xs">
             <div class="card-header card-header-sm bordered">
                 <div class="header-block">
@@ -66,7 +76,24 @@
             </div>
         </div>
     </div>
-    <div class="col col-xs-12 col-sm-12 col-md-6 col-xl-7 history-col">
+        </div>
+    </div>
+</div>
+
+    <div class="col-md-6">
+      <?php
+            $logo = $data['teams'][0]['team_logo'];
+                if (!is_null($logo)) { ?>
+                    <div id="teamLogo"><?= $this->Html->image('teams/users/'.$logo); ?></div>
+            <?php } else { ?>
+        <div></div>
+    <?php } ?>
+    </div>
+</div>
+
+<div class="header-spacer"></div>
+<div class="row">
+    <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <div class="card sameheight-item" data-exclude="xs">
             <div class="card-header card-header-sm bordered">
                 <div class="header-block">
@@ -102,7 +129,7 @@
             </div>
         </div>
     </div>
-    <div class="col col-xs-12 col-sm-12 col-md-6 col-xl-7 history-col">
+    <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <div class="card sameheight-item" data-exclude="xs">
             <div class="card-header card-header-sm bordered">
                 <div class="header-block">
@@ -115,7 +142,7 @@
                 <div class="form-group">
                     <?= $this->Form->input('message', [
                         'label' => 'Huddle up with the team:',
-                        'class' => 'form-control underlined',
+                        'class' => '',
                         'autocomplete' => 'off'
                     ]); ?>
                     <?= $this->Form->button('Post Message', [
@@ -131,11 +158,13 @@
 
 <?php } else { ?>
     <div class="auth">
-        <div class="auth-container">
+        <div class="auth-container dugout">
             <a href="#" class="logo"><img src="../webroot/img/logo-light-blue.png" alt="Forecast Clash Logo"> </a>
             <div class="card">
                 <div class="auth-content">
-                    <p class="text-xs-center">It appears you are not yet part of a team.</p>
+                    <p class="text-xs-center teams-intro"><!-- It appears you are not yet part of a team. -->
+                        The “team” option allows targeting and scoring to occur within smaller subsets of users. Teams are perfect for contests, organizational or classroom applications.
+                    </p>
                     <?= $this->Form->create(); ?>
                         <div class="form-group" id="createOrJoin">
                             <?= $this->Form->button('Join Team', [
@@ -150,6 +179,7 @@
                             ]); ?>
                         </div>
                     <?= $this->Form->end(); ?>
+    
                     <?= $this->Form->create('Teams', [
                         'type' => 'file',
                         'id' => 'teamForm',
@@ -157,11 +187,12 @@
                     ]); ?>
                         <div class="form-group" id="creator">
                             <?= $this->Form->input('team_name', [
-                                'label' => 'Team Name',
-                                'class' => 'form-control underlined'
+                                'label' => 'Team Name'
                             ]); ?>
-                            <label for="logo" class="teamLogo">Team Logo <small>(optional)</small></label>
-                            <?= $this->Form->input('team_logo', ['label' => false, 'type' => 'file', 'id' => 'logo']); ?>
+                            <fieldset>
+                                <label for="logo" class="teamLogo">Team Logo <small>(optional)</small></label>
+                                <?= $this->Form->input('team_logo', ['label' => false, 'type' => 'file', 'id' => 'logo']); ?>
+                            </fieldset>
                             <?= $this->Form->label('privacy', 'Create private or public team?'); ?>
                             <?= $this->Form->radio('privacy', [
                                 ['value' => 1, 'text' => 'Private', 'name' => 'privacy', 'id' => 'private'],
@@ -180,7 +211,6 @@
                         <div class="form-group" id="joiner">
                             <?= $this->Form->input('team_name', [
                                 'label' => 'Search For A Team',
-                                'class' => 'form-control underlined',
                                 'id' => 'typer',
                                 'autocomplete' => 'off'
                             ]); ?>
@@ -197,9 +227,23 @@
                     <?= $this->Form->end(); ?>
                 </div>
             </div>
-        </div>
-        <div class="text-xs-center">
+                    <div class="text-xs-center">
             <a href="/forecast_clash/" class="btn btn-secondary rounded btn-sm"> <i class="fa fa-arrow-left"></i> Back to dashboard </a>
         </div>
+        </div>
+
     </div>
+</div>
 <?php } ?>
+
+<script>
+    $('#creator').prepend('<h3>Create Your Team</h3>');
+
+    $('#joinButton').click(function(){
+        $('.teams-intro').css('display', 'none');
+    })
+
+    $('#createButton').click(function(){
+        $('.teams-intro').css('display', 'none');
+    })
+</script>

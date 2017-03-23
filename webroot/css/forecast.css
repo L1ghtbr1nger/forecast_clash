@@ -364,9 +364,13 @@ body {
 .alert.alert-inverse .alert-link {
     color: #e6e6e6;
 }
-.experience label{
-    margin: 4px; 0
+
+.experience label,
+label[for="private"],
+label[for="public"] {
+    margin: 4px;
 }
+
 .btn {
     background-image: none;
     border-radius: 0;
@@ -7816,14 +7820,17 @@ rect {
 .notification {
     padding: 15px 27px 15px 25px;
     box-shadow: 1px 1px 5px rgba(126, 142, 159, 0.1);
-/*    background: rgb(255, 255, 255);*/
+    /*    background: rgb(255, 255, 255);*/
 }
+
 .success-notification .notification {
     background: rgb(206, 227, 237);
 }
+
 .error-notification .notification {
     background: rgb(255, 237, 237)
 }
+
 .success-notification,
 .error-notification {
     position: absolute;
@@ -8393,4 +8400,25 @@ input[type=range]:focus::-ms-fill-lower {
 
 input[type=range]:focus::-ms-fill-upper {
     background: #ffffff;
+}
+
+
+/* Dugout */
+
+.dugout {
+    width: 70%;
+    max-width: 750px;
+}
+
+.dugout .logo {
+    margin-top: 48px;
+}
+
+.teams-intro {
+    margin-bottom: 48px;
+}
+
+#joiner,
+#creator {
+    margin-top: 48px;
 }
