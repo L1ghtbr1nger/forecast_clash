@@ -1,6 +1,12 @@
+<?php $session = $this->request->session(); ?>
 <?= $this->element('header'); ?>
 <?= $this->element('sidebar'); ?>
-
+<<?php 
+if ($loggedIn) {
+   
+    } else {
+    echo '<style>#team_hm, #self_hm, #team_lb{position:relative;top:-23px;}</style>'; } ?>
+?>
 <div class="content">
 <div class="row">
     <div class="col-md-12">
