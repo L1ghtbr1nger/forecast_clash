@@ -8004,6 +8004,8 @@ textarea {
 
 .contact #comment-submit {
     width: 100%;
+    max-width: 300px;
+    float: right;
     background-color: rgb(251, 109, 63);
     border: none;
     padding: 12px;
