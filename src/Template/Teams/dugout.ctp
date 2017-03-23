@@ -27,15 +27,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-6">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
             <div class="row">
-                <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="col-xs-8 col-sm-8 col-md-8">
                     <div class="headings">
                         <h1><?= h($data['teams'][0]['team_name']); ?></h1>
                         <h3>Team Score: <?= $total ?></h3>
                     </div>
                 </div>
-                <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="col-xs-4 col-sm-4 col-md-4">
                 <?php
                 $logo = $data['teams'][0]['team_logo'];
                     if (!is_null($logo)) { ?>
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-                <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6 team-roster">
+                <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-6 team-roster">
                     <div class="card sameheight-item" data-exclude="xs">
                         <div class="card-header card-header-sm bordered">
                             <div class="header-block">
@@ -81,7 +81,7 @@
                 </div>
             </div>
     
-    <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6 rankings">
+    <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-6 rankings">
         <div class="card sameheight-item" data-exclude="xs">
             <div class="card-header card-header-sm bordered">
                 <div class="header-block">
