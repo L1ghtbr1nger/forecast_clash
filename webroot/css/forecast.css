@@ -1367,7 +1367,9 @@ textarea {
 
 select {
     width: 100%;
-    padding: 6px 12px;
+    padding: 10px 12px;
+    border: none;
+    background: rgb(236, 236, 236);
 }
 
 fieldset {
@@ -7867,6 +7869,23 @@ rect {
     background: #333;
 }
 
+.play-date {
+    width: 50%;
+    float: left;
+    margin-right: 5%;
+    margin-top: 0;
+}
+
+.radius {
+    clear: both;
+    width: 100%;
+}
+
+.radius-output {
+    display: inline-block;
+    margin-top: 40px;
+}
+
 
 /*.svg-icons svg {
     width: 18%;
@@ -8309,7 +8328,7 @@ a[href='/forecast_clash/users/login?provider=Twitter']:focus {
 input[type=range] {
     -webkit-appearance: none;
     width: 100%;
-    margin: 13.8px 0;
+    margin: 10px 0;
     cursor: pointer;
 }
 
