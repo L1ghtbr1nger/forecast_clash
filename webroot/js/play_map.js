@@ -3,23 +3,31 @@ $('document').ready(function() {
     // initializes game instructions
 
     var instructionsInit = function() {
+
         $('.scoring').hide();
+        $('.scoring-instructions').hide();
         $('.forecast-btn').hide();
 
-        $('.sidebar-footer button').click(function() {
+        $('.scoring-instructions-btn').click(function(){
+            $('.scoring-instructions').show(500);
+            $('.scoring-btn').show(500);
+            $('.targeting').hide(500);
+        })
 
-            $('.instructions').hide(200);
-            $('.scoring').show(200);
-            $(this).hide();
-            $('.forecast-btn').show();
+        $('.scoring-btn').click(function() {
+            $('.scoring').show(500);
+            $('.scoring-btn').hide(500);
+            $('.scoring-instructions').hide(500);
+            $('.forecast-btn').show(500);
 
         });
 
         $('.scoring i').click(function() {
-            $('.instructions').show();
-            $('.scoring-btn').show();
-            $('.forecast-btn').hide();
-            $('.scoring').hide();
+            $('.targeting').show(500);
+            $('.scoring').hide(500);
+            $('.scoring-instructions').hide(500);
+            $('.forecast-btn').hide(500);
+     
         });
     }
 
