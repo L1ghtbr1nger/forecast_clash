@@ -48,7 +48,7 @@
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-12 experience">
                                 <?= $this->Form->label('meteorologist', 'What is your experience?'); ?>
                                 <?= $this->Form->radio('meteorologist', [
                                 ['value' => 1, 'text' => 'Meteorologist', 'name' => 'Experience', 'id' => 'meteorologist'],
