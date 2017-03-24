@@ -139,14 +139,17 @@ class UsersController extends AppController
                 $this->Auth->setUser($user);
                 if ($referer == '/' || !isset($referer)) { $referer = '/forecast_clash/'; }
                 $session->write('successBox', 'Logged in!');
-                echo json_encode(['msg' => 'Logged in!', 'result' => 1, 'regLog' => 1, 'url' => $referer]);
+                echo json_encode(['result' => 1, 'regLog' => 1, 'url' => $referer]);
                 die;
             } else {
                 echo json_encode(['msg' => 'Invalid login. Please enter an email and password associated with Fantasy Clash or sign up now.', 'result' => 0, 'regLog' => 1]);
                 die;
             } 
         } else {
-            if (substr($this->referer(), -8, 8) == 'register') {
+            $refer_url = $this->referer('/', true); //get url path minus base path
+            $url_array = Router::parse($refer_url); //explode path into array
+            $action = $url_array['action'];
+            if ($action === 'register' || $action === 'resetPassword' || $action === 'forgotPassword') {
                 if ($session->read('referer') !== null) {
                     $referer = $session->read('referer');
                 } else {
@@ -195,7 +198,7 @@ class UsersController extends AppController
                 $session = $this->request->session();
                 $session->write('successBox', 'Successfully registered!');
                 $url = Router::url(['controller' => 'Users', 'action' => 'login'], TRUE);
-                echo json_encode(['msg' => 'Registered!', 'result' => 1, 'regLog' => 0, 'url' => $url]);
+                echo json_encode(['result' => 1, 'regLog' => 0, 'url' => $url]);
             } else {
                 echo json_encode(['msg' => $error_msg, 'result' => 0, 'regLog' => 0]);
             }
@@ -219,6 +222,7 @@ class UsersController extends AppController
     
     //Function to send email to provided address with link to reset password.
     public function forgotPassword() {
+        $session = $this->request->session();
         if ($this->request->is('ajax')) {
             if (!empty($this->request->data)) {
                 $email = $this->request->data['email'];
@@ -240,7 +244,8 @@ class UsersController extends AppController
                         ->send($reset_token_link);
                     $this->Users->save($user);
                     $session->write('successBox', 'Email sent with password reset instructions!');
-                    echo json_encode(['msg' => 'Email sent with password reset instructions!', 'result' => 1, 'regLog' => 0]);
+                    $url = Router::url(['controller' => 'Users', 'action' => 'login'], TRUE);
+                    echo json_encode(['result' => 1, 'regLog' => 0, 'url' => $url]);
                     die;
                 } else {
                     echo json_encode(['msg' => 'Provided email not associated with an active Forecast Clash account.', 'result' => 0, 'regLog' => 1]);
@@ -251,18 +256,17 @@ class UsersController extends AppController
     }
     
     public function resetPassword() {
+        $session = $this->request->session();
         if ($this->request->is('ajax')) {
             if (!empty($this->request->data)) {
                 $data = $this->request->data;
                 $token = $data['token'];
-                debug($token);
-                exit();
                 $user = $this->Users->findByPasswordResetToken($token)->first();
                 if ($user) {
                     $user = $this->Users->patchEntity($user, [
                         'password' => $data['new_password'],
                         'confirm_password' => $data['confirm_password']
-                    ]);
+                    ], ['validate' => 'register']);
                     if($user->errors()){
                         $error_msg = [];
                         foreach( $user->errors() as $errors){
@@ -279,12 +283,14 @@ class UsersController extends AppController
                     $user->password_reset_token = $hashval_new;
                     if ($this->Users->save($user)) {
                         $session->write('successBox', 'Your password has been changed successfully.');
-                        echo json_encode(['msg' => 'Your password has been changed successfully', 'result' => 1, 'regLog' => 0]);
+                        $url = Router::url(['controller' => 'Users', 'action' => 'login'], TRUE);
+                        echo json_encode(['result' => 1, 'regLog' => 0, 'url' => $url]);
                     } else {
                         echo json_encode(['msg' => $error_msg, 'result' => 0, 'regLog' => 0]);
                     }
                 } else {
-                    echo json_encode(['msg' => 'Sorry your password token has expired.', 'result' => 0, 'regLog' => 3]);
+                    $url = Router::url(['controller' => 'Users', 'action' => 'forgot_password'], TRUE);
+                    echo json_encode(['msg' => 'Sorry your password token has expired.', 'result' => 0, 'regLog' => 1, 'url' => $url]);
                 }
             } else {
                 echo json_encode(['msg' => 'Error loading password reset.', 'result' => 0, 'regLog' => 1]);

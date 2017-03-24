@@ -1,4 +1,3 @@
-
 <?= $this->Html->script('teams'); ?>
 <?= $this->Html->css('teams'); ?>
 <div class="auth">

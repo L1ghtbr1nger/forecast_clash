@@ -209,6 +209,7 @@ class TeamsController extends AppController
     }
     
     public function creator() { //function to save new row to Teams
+        $url = Router::url(['controller' => 'Teams', 'action' => 'dugout'], TRUE);
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
             $session = $this->request->session();
@@ -247,16 +248,14 @@ class TeamsController extends AppController
                     ]);
                     $notices->save($notice);
                     $session->write('successBox', 'Team successfully created!');
-                    echo json_encode(['result' => 1, 'msg' => 'Team created!']);
-                    die;
                 } else {
-                    echo json_encode(['result' => 0, 'msg' => 'No save TeamUser...']);
-                    die;
+                    $session->write('errorBox', 'Error adding you to your roster...');
                 }
             } else {
-                echo json_encode(['result' => 0, 'msg' => 'No save Team...']);
-                die;
+                $session->write('errorBox', 'Unable to create team at this time...');
             }
+            echo json_encode(['url' => $url]);
+            die;
         }
     }
     

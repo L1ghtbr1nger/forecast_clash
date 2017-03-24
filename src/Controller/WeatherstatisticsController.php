@@ -202,7 +202,7 @@ class WeatherStatisticsController extends AppController
             $results = $this->scores($scores);
             $result = $results[0];
             ($result) ? $board = $results[1] : $board = [0];
-            echo json_encode(['result' => $result, 'leaderboard' => $board, 'user_id' => $userID]);
+            echo json_encode(['result' => $result, 'leaderboard' => $board, 'user_id' => $userID]); //leaderboard.js
             die;
         } else {
             if ($teamUser) { //check if team was found

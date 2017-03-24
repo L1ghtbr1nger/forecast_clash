@@ -131,8 +131,8 @@ class TeamsUsersController extends AppController
                 ->template('default', 'default')
                 ->subject('Forecast Clash Team Request')
                 ->send("Someone has requested to join your Forecast Clash team! Please follow the link for details on how to draft this person or prolong their free-agency.\r\n".$link);
-            $session->write('successBox', 'Request to join '.h($team['team_name']).' was sent!!');
-            return ['msg' => 'Request to join team was sent!', 'result' => 1];
+            $session->write('successBox', 'Request to join '.h($team['team_name']).' was sent!');
+            return;
         } else {
             $query = $this->TeamsUsers->find()->where(['user_id' => $user['id']]); //check if user already has team
             if ($result = $query->first()) { //if user has a team
@@ -141,7 +141,7 @@ class TeamsUsersController extends AppController
                 } else {
                     $word = 'You have already joined a team.';
                 }
-                return ['msg' => $word, 'result' => 0];
+                $session->write('errorBox', $word);
             }
             $teamUser = $this->TeamsUsers->newEntity();
             $teamUser = $this->TeamsUsers->patchEntity($teamUser, [
@@ -171,9 +171,10 @@ class TeamsUsersController extends AppController
                 ]);
                 $notices->save($notice);
                 $session->write('successBox', 'Successfully joined team!');
-                return ['msg' => 'Joined team!', 'result' => 1];
+                return;
             } else {
-                return ['msg' => $error_msg, 'result' => 0];
+                $session->write('errorBox', $error_msg);
+                return;
             }
         }
     }
@@ -191,8 +192,9 @@ class TeamsUsersController extends AppController
             $addressC = $userC['email'];
             $firstC = $userC['first_name'];
             $user = TableRegistry::get('Users')->get($userID);
-            $result = $this->joining($session, $team, $user, $addressC, $firstC, false);
-            echo json_encode(['msg' => $result['msg'], 'result' => $result['result']]);
+            $this->joining($session, $team, $user, $addressC, $firstC, false);
+            $url = Router::url(['controller' => 'Teams', 'action' => 'dugout'], TRUE);
+            echo json_encode(['url' => $url]);
             die;
         }
     }
@@ -214,7 +216,9 @@ class TeamsUsersController extends AppController
                     } else {
                         $word = 'a';
                     }
-                    echo json_encode(['msg' => $first.' is already on '.$word.' team.', 'result' => 0]);
+                    $session->write('errorBox', $first.' is already on '.$word.' team.');
+                    $url = Router::url(['controller' => 'Teams', 'action' => 'dugout'], TRUE);
+                    echo json_encode(['url' => $url]);
                     die;
                 }
                 $teamUser = $this->TeamsUsers->newEntity();
@@ -231,10 +235,13 @@ class TeamsUsersController extends AppController
                     ]);
                     $notices->save($notice);
                     $session->write('successBox', $first.' was added to your roster!');
-                    echo json_encode(['msg' => $first.' was added to your roster!', 'result' => 1]);
+                    $url = Router::url(['controller' => 'Teams', 'action' => 'dugout'], TRUE);
+                    echo json_encode(['url' => $url]);
                     die;
                 } else {
-                    echo json_encode(['msg' => "We're sorry, ".$first." was unable to be added to your roster at this time.", 'result' => 0]);
+                    $session->write('errorBox', "We're sorry, ".$first." was unable to be added to your roster at this time.");
+                    $url = Router::url(['controller' => 'Teams', 'action' => 'dugout'], TRUE);
+                    echo json_encode(['url' => $url]);
                     die;
                 }
             } else {
@@ -257,7 +264,8 @@ class TeamsUsersController extends AppController
                     ->subject('Forecast Clash Team Request')
                     ->send("We're sorry, but ".$data['team_name']." chose not to sign you this Storm Season. A forecaster of your calibur would be welcomed to any of Forecast Clash's public teams! Follow the link below to search for a different team with whom you can showcase your talents!\r\n".$link);
                 $session->write('successBox', $first.' has been removed from the scouting report.');
-                echo json_encode(['msg' => 'User has been notified that they did not make the team.', 'result' => 1]);
+                $url = Router::url(['controller' => 'Teams', 'action' => 'dugout'], TRUE);
+                echo json_encode(['url' => $url]);
                 die;
             }
         } else {
