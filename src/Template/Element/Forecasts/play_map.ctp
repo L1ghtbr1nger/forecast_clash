@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="webroot/css/default.css">
+<link rel="stylesheet" href="webroot/css/default.date.css">
+<link rel="stylesheet" href="webroot/css/L.Control.Range.css">
 <style>
 .container-fluid {
     padding-left: 0;
@@ -89,10 +92,11 @@ li > ul li{
                                         </fieldset>
                                         <fieldset class="radius">
                                             <label for="radius"><strong>Radius</strong></label>
+                                            <h4 id="output">40 miles</h5>
                                             <input type="range" name="radius" id="radius" value="50" min="50" max="100" step="5">
 
                                         </fieldset>
-                                        <h3 class="radius-output"></h3>
+    
                                         <!-- hidden form fields -->
                                         <input id="latlng" name="location" type="text" class="hidden" value="">
                                         <input type="radio" class="hidden" name="weather_event_id" id="tornado-event" value="1">
@@ -117,15 +121,11 @@ li > ul li{
     </div>
     <div id="map"></div>
 </article>
-<link rel="stylesheet" href="webroot/css/<leaflet class=""></leaflet>
 <?= $this->Html->script('play_map'); ?>
 <?= $this->Html->script('picker'); ?>
 <?= $this->Html->script('picker.date'); ?>
 <link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
 <script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
-<link rel="stylesheet" href="webroot/css/default.css">
-<link rel="stylesheet" href="webroot/css/default.date.css">
-<link rel="stylesheet" href="webroot/css/L.Control.Range.css">
 
 <script>
 
@@ -175,4 +175,11 @@ $('.datepicker').pickadate({
 // Set active tab
 $('.play-link').addClass('active');
 
+
+$("#radius").mousemove(function () {
+    $("#output").text($("#radius").val() + ' miles')
+});
+
 </script>
+
+
