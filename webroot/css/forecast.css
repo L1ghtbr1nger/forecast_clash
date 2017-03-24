@@ -94,11 +94,10 @@ body {
 }
 
 .app {
-    /*    position: relative;
-*/
+    position: relative;
     width: 100%;
     padding-left: 230px;
-    /*    min-height: 100vh;*/
+    min-height: 100vh;
     margin: 0 auto;
     left: 0;
     background-color: #f0f3f6;

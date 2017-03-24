@@ -22,6 +22,20 @@
                 </li>
             </ul>
         </nav>
+        <div class="row">
+            <div class="col-md-12">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- Forecast Clash -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-0836559546833963"
+                     data-ad-slot="4397637067"
+                     data-ad-format="auto"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            </div>
+        </div>
     </div>
 </aside>                        
 <div class="mobile-nav visible-sm visible-xs">
