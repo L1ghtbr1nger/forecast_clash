@@ -1,10 +1,10 @@
-<?= $this->element('header'); ?>
-<?= $this->element('sidebar'); ?>
-
 <?= $this->Html->script('teams'); ?>
 <?= $this->Html->script('clipboard.min'); ?>
 <?= $this->Html->css('teams'); ?>
 <?php if($hasTeam) {
+    echo $this->element('header');
+    echo $this->element('sidebar');
+
 
     echo $this->Form->input('', [
         'value' => $url,
@@ -214,7 +214,7 @@ $(document).ready(function(){
     $('#liveSearch p').click(function(){
         $('#joinSubmit').attr('disabled', 'false');
     });
-}
+});
 
 
 </script>

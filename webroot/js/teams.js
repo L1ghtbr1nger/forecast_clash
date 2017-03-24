@@ -37,11 +37,7 @@ $(document).ready(function(){
                 processData: false,  // tell jQuery not to process the data
                 contentType: false,   // tell jQuery not to set contentType
                 success : function(response) {
-                    if (response['result']){
-                        location.reload();
-                    } else {
-                        alert(response['msg']);
-                    }
+                    window.location.href = response['url'];
                 },
                 error : function() {   
                 }
@@ -110,20 +106,16 @@ $(document).ready(function(){
         e.preventDefault();
         var id = "#"+e.target.id;
         var params = {'team_id': $('.chosen').attr('id')};
-        $(id).prop('disabled',true);
         if($(this).hasClass('disabled')){
-        } else {
+        } else { 
+            $(id).prop('disabled',true);
             $.ajax({
                 type: "POST",
                 url: "/forecast_clash/TeamsUsers/joiner.json",
                 dataType: 'json',
                 data: params,
                 success : function(response) {
-                    if (response['result']){
-                        location.reload();
-                    } else {
-                        alert(response['msg']);
-                    }
+                    window.location.href = response['url'];
                 },
                 error : function() {   
                 }
@@ -140,9 +132,6 @@ $(document).ready(function(){
             dataType: 'json',
             data: form,
             success : function(response) {
-                if (!response['result']){                    
-                    alert(response['msg']);
-                }
                 window.location.href = "/forecast_clash/teams/dugout";
             },
             error : function() {   

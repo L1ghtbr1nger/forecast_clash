@@ -20,18 +20,17 @@ $(document).ready(function(){
                 if (response['result']) {
                        window.location.href = response['url'];
                 } else {
-                    if (response['regLog'] != 0) {
+                    if (response['regLog'] === 1) {
                         $('#error-message').html(response['msg']);
                     } else {
                         $.each(response['msg'], function(index, value) {
                             temp += value + "</br>";
                         });
                         $('#error-message').html(temp);
-                        
                     }
                     $('.error-notification').show();
-                    if (response['regLog'] == 3) {
-                        window.location.href = "/forecast_clash/users/forgot_password";
+                    if (typeof response['url'] !== 'undefined') {
+                        window.location.href = response['url'];
                     }
                 }
             },
