@@ -3448,8 +3448,8 @@ pre {
     bottom: 51px;
     width: 100%;
     left: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow-y: visible;
+    overflow-x: visible;
 }
 
 .sidebar-navigation .sidebar-container::-webkit-scrollbar-track {
