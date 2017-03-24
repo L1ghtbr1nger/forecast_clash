@@ -8471,3 +8471,10 @@ input[type=range]:focus::-ms-fill-upper {
     background: #dd4b39;
     padding: 8px 10px;
 }
+
+
+/* Google Ads */
+
+.adsbygoogle {
+    margin-bottom: 20px;
+}

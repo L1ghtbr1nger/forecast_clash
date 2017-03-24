@@ -23,7 +23,7 @@
             </ul>
         </nav>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8 col-md-offset-2">
             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                 <!-- Forecast Clash -->
                 <ins class="adsbygoogle"
