@@ -137,8 +137,10 @@ class ForecastsController extends AppController
             } else {
                 $weatherEventID = null;
             }
-            $date = strtotime($data['forecast_date']);
-            $data['forecast_date'] = date('Y-m-d', $date);
+            if (!empty($data['forecast_date'])) {
+                $date = strtotime($data['forecast_date']);
+                $data['forecast_date'] = date('Y-m-d', $date);
+            }
             $table = $this->Forecasts;
             //Look if user and weather event combo already exists in Forecasts
             if ($query = $table->find('all')->where(['user_id' => $userID, 'weather_event_id' => $weatherEventID])->first()) {
