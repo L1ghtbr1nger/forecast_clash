@@ -12,7 +12,7 @@
                     <a href="/forecast_clash"> <i class="fa fa-gamepad"></i> Play </a>
                 </li>
                 <li class="stats-link">
-                    <a href="/forecast_clash/weather-statistics/stats"> <i class="fa fa-bar-chart"></i> Statistics </a>
+                    <a href="/forecast_clash/weather-statistics/stats"><i class="fa fa-bar-chart"></i> Statistics </a>
                 </li>
                 <li>
                     <a href="/forecast_clash/teams/dugout"> <i class="fa fa-users" aria-hidden="true"></i> Team </a>
@@ -30,7 +30,7 @@
             <a href="/forecast_clash"> <i class="fa fa-gamepad"></i> Play </a>
         </li>
         <li class="stats-link">
-            <i class="fa fa-bar-chart"></i><a href="/forecast_clash/weatherstatistics/stats">Statistics </a>
+            <i class="fa fa-bar-chart"></i><a href="/forecast_clash/weather-statistics/stats">Statistics </a>
         </li>
         <li>
             <a href="/forecast_clash/teams/dugout"> <i class="fa fa-users" aria-hidden="true"></i> Team </a>
