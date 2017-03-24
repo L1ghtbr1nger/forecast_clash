@@ -1,6 +1,5 @@
 <link rel="stylesheet" href="webroot/css/default.css">
 <link rel="stylesheet" href="webroot/css/default.date.css">
-<link rel="stylesheet" href="webroot/css/L.Control.Range.css">
 <style>
 .container-fluid {
     padding-left: 0;
@@ -129,55 +128,29 @@ li > ul li{
 
 <script>
 
+// Set active tab
+$('.play-link').addClass('active');
+
+$("#radius").mousemove(function () {
+    $("#output").text($("#radius").val() + ' miles')
+});
+
 // Get tomorrows date for min date
-var tomorrow = new Date();
-var dd_tomorrow = tomorrow.getDate() + 1;
-var mm_tomorrow = tomorrow.getMonth() + 1; //January is 0!
-var yyyy_tomorrow = tomorrow.getFullYear();
+var tomorrow = new Date(); 
+var newdate = new Date();
+newdate.setDate(tomorrow.getDate() + 1);
 
-if (dd_tomorrow < 10) {
-    dd_tomorrow = '0' + dd_tomorrow
-}
-
-if (mm_tomorrow < 10) {
-    mm_tomorrow = '0' + mm_tomorrow
-}
-
-// Get 8 days out for max date
-var event_week = new Date();
-var dd_week = event_week.getDate() + 8;
-var mm_week = event_week.getMonth() + 1; //January is 0!
-var yyyy_week = event_week.getFullYear();
-
-if (dd_week < 10) {
-    dd_week = '0' + dd_week
-}
-
-if (mm_week < 10) {
-    mm_week = '0' + mm_week
-}
-
-tomorrow = mm_tomorrow + '/' + dd_tomorrow + '/' + yyyy_tomorrow;
-console.log('Tomorrow:' + tomorrow);
-event_week = mm_week + '/' + dd_week + '/' + yyyy_week;
-console.log('Week:' + event_week);
+// Get next 8 days
+var newdate_week = new Date();
+newdate_week.setDate(tomorrow.getDate() + 8);
 
 // Pickadate - http://amsul.ca/pickadate.js/date/
 
 $('.datepicker').pickadate({
-    min: new Date(tomorrow),
-    max: new Date(event_week),
+    min: new Date(newdate),
+    max: new Date(newdate_week),
     format: 'mmmm d, yyyy',
     closeOnSelect: true
-});
-
-
-// Set active tab
-$('.play-link').addClass('active');
-
-
-$("#radius").mousemove(function () {
-    $("#output").text($("#radius").val() + ' miles')
 });
 
 </script>
