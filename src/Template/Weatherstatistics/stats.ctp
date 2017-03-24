@@ -1,24 +1,27 @@
 <?php $session = $this->request->session(); ?>
 <?= $this->element('header'); ?>
 <?= $this->element('sidebar'); ?>
-<<?php 
+<?php 
 if ($loggedIn) {
-   
+  echo '<style>  .social{margin-top:0px;}</style>';
     } else {
     echo '<style>#team_hm, #self_hm, #team_lb{position:relative;top:-23px;}</style>'; } ?>
 ?>
 <div class="content">
-<div class="row">
-    <div class="col-md-12">
-        <div class="social pull-right">
-            <a class="share-social share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3A//forecastclash.com/forecast_clash/weather-statistics/stats"><i class="fa fa-facebook" aria-hidden="true"></i></a>
 
-            <a class="share-social share-twitter" href="https://twitter.com/home?status=http%3A//forecastclash.com/forecast_clash/weather-statistics/stats"><i class="fa fa-twitter" aria-hidden="true"></i></a>
 
-            <a class="share-social share-google" href="https://plus.google.com/share?url=http%3A//forecastclash.com/forecast_clash/weather-statistics/stats"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="social pull-right">
+                <a class="share-social share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3A//forecastclash.com/forecast_clash/weather-statistics/stats"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+
+                <a class="share-social share-twitter" href="https://twitter.com/home?status=http%3A//forecastclash.com/forecast_clash/weather-statistics/stats"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+
+                <a class="share-social share-google" href="https://plus.google.com/share?url=http%3A//forecastclash.com/forecast_clash/weather-statistics/stats"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+            </div>
         </div>
     </div>
-</div>
 <!--     <div class="row thumbnail-row">
         <div class="col-md-3">
             <div class="stats-thumbnail heatmap-thumbnail">
@@ -51,19 +54,20 @@ if ($loggedIn) {
             <?= $this->element('WeatherStatistics/stats_leaderboard'); ?>
         </span>
     </div>
-    <div class="row">
+<!--     <div class="row">
         <span>
-            <?= $this->element('WeatherStatistics/stats_attempts_pie'); ?>
+            $this->element('WeatherStatistics/stats_attempts_pie');
         </span>
         <span>
-            <?= $this->element('WeatherStatistics/stats_guesses_bar'); ?>
+             $this->element('WeatherStatistics/stats_guesses_bar'); 
         </span>
-    </div>
+    </div> -->
 </div>
 
 <?= $this->Html->script('leaderboard'); ?>
 <?= $this->Html->script('heatmaps'); ?>
 <?= $this->Html->script('chartist'); ?>
+
 <style>
     .hide-me{
         display:none;

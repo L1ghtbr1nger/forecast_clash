@@ -91,13 +91,13 @@ max-width: 350px !important;
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-12 col-date">
+<!--                         <div class="col-md-3 col-sm-12 col-date">
                             <strong>Date</strong>
                             <label for="from_input_heatmap">From</label>
                             <input type="text" id="input_from_heatmap">
                             <label for="to_input_heatmap">To</label>
                             <input type="text" id="input_to_heatmap">
-                        </div>
+                        </div> -->
                     </div>
                 </form>
                 <article class="heatmap">
