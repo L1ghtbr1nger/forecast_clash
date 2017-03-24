@@ -103,6 +103,7 @@ max-width: 350px !important;
                 <article class="heatmap">
                     <div id="map"></div>
                 </article>
+                </div>
             </div>
         </div>
     </div>
