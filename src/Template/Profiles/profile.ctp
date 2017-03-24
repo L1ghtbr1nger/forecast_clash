@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="card-block">
-                    <form method="post" accept-charset="utf-8" id="profileForm" action="/forecast_clash/profiles/profile">
+                    <form method="post" accept-charset="utf-8" id="updateForm" action="/forecast_clash/profiles/profile">
                         <div class="row">
                             <div class="col-md-6">
                                 <fieldset>
@@ -57,7 +57,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button id="profile" class="btn btn-primary login" type="submit">Update</button>
+                            <button id="profile" class="btn btn-primary" disabled type="submit">Update</button>
                         </div>
                     </form>
                 </div>
@@ -82,69 +82,20 @@
                                     <div class="input text">
                                         <fieldset>
                                             <label for="city"><strong>City</strong></label>
-                                            <input name="city" city="" textfield__label="City textfield__label" class="textfield__input" id="city" type="text">
+                                            <input name="city" city="" textfield__label="City textfield__label" class="textfield__input" id="city" type="text" <?= (isset($update) ? 'value="'.$update['city'].'"' : ''); ?> >
                                         </fieldset>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                            <fieldset>
-                            <label for="state"><strong>State</strong></label>
-                                <div class="textfield textfield--floatingLabel">
-                                    <select name="state_id">
-                                        <option value="">Choose State:</option>
-                                        <option value="1">Alabama</option>
-                                        <option value="2">Alaska</option>
-                                        <option value="3">Arizona</option>
-                                        <option value="4">Arkansas</option>
-                                        <option value="5">California</option>
-                                        <option value="6">Colorado</option>
-                                        <option value="7">Connecticut</option>
-                                        <option value="8">Delaware</option>
-                                        <option value="9">Florida</option>
-                                        <option value="10">Georgia</option>
-                                        <option value="11">Hawaii</option>
-                                        <option value="12">Idaho</option>
-                                        <option value="13">Illinois</option>
-                                        <option value="14">Indiana</option>
-                                        <option value="15">Iowa</option>
-                                        <option value="16">Kansas</option>
-                                        <option value="17">Kentucky</option>
-                                        <option value="18">Louisiana</option>
-                                        <option value="19">Maine</option>
-                                        <option value="20">Maryland</option>
-                                        <option value="21">Massachusetts</option>
-                                        <option value="22">Michagin</option>
-                                        <option value="23">Minnesota</option>
-                                        <option value="24">Mississippi</option>
-                                        <option value="25">Missouri</option>
-                                        <option value="26">Montana</option>
-                                        <option value="27">Nebraksa</option>
-                                        <option value="28">Nevada</option>
-                                        <option value="29">New Hampshire</option>
-                                        <option value="30">New Jersey</option>
-                                        <option value="31">New Mexico</option>
-                                        <option value="32">New York</option>
-                                        <option value="33">North Carolina</option>
-                                        <option value="34">North Dakota</option>
-                                        <option value="35">Ohio</option>
-                                        <option value="36">Oklahoma</option>
-                                        <option value="37">Oregon</option>
-                                        <option value="38">Pennsylvania</option>
-                                        <option value="39">Rhode Island</option>
-                                        <option value="40">South Carolina</option>
-                                        <option value="41">South Dakota</option>
-                                        <option value="42">Tennessee</option>
-                                        <option value="43">Texas</option>
-                                        <option value="44">Utah</option>
-                                        <option value="45">Vermont</option>
-                                        <option value="46">Virginia</option>
-                                        <option value="47">Washington</option>
-                                        <option value="48">West Virginia</option>
-                                        <option value="49">Wisconsin</option>
-                                        <option value="50">Wyoming</option>
-                                    </select>
-                                </div></fieldset>
+                                <fieldset>
+                                    <label for="state"><strong>State</strong></label>
+                                    <div class="textfield textfield--floatingLabel">
+                                        <?= $this->Form->select('state_id', $states, 
+                                            (isset($update) ? ['value' => $update['state_id']] : ['empty' => 'Choose State:'])  
+                                        ); ?>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
                         <div class="row">
@@ -152,29 +103,17 @@
                                 <div class="textfield textfield--floatingLabel">
                                 <fieldset>
                                         <label for="education_level_id"><strong>Education</strong></label>
-                                        <select name="education_level_id">
-                                            <option value="">Level of Education:</option>
-                                            <option value="1">Some High School</option>
-                                            <option value="2">Some College</option>
-                                            <option value="3">College Degree</option>
-                                            <option value="4">Graduate Degree</option>
-                                            <option value="5">Vocational/Technical School</option>
-                                        </select>
+                                        <?= $this->Form->select('education_level_id', $educationLevels,
+                                            (isset($update) ? ['value' => $update['education_level_id']] : ['empty' => 'Level of Education:'])
+                                        ); ?>
                                     </fieldset>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <fieldset><label for="age_id"><strong>Age</strong></label>
-                                    <select name="age_id">
-                                        <option value="">Age Range:</option>
-                                        <option value="1">Under 18</option>
-                                        <option value="2">18 - 24</option>
-                                        <option value="3">25 - 34</option>
-                                        <option value="4">35 - 44</option>
-                                        <option value="5">45 - 54</option>
-                                        <option value="6">55 - 64</option>
-                                        <option value="7">65+</option>
-                                    </select>
+                                    <?= $this->Form->select('age_id', $ages,
+                                        (isset($update) ? ['value' => $update['age_id']] : ['empty' => 'Age Range:'])
+                                    ); ?>
                                 </fieldset> 
                             </div>
                         </div>
@@ -182,17 +121,18 @@
                             <div class="col-md-12">
                                 <fieldset>
                                     <label for="gender"><strong>Gender</strong></label>
-                                    <input name="gender" value="" type="hidden">
-                                    <label for="male">
-                                        <input name="gender" value="1" id="male" type="radio">Male</label>
-                                    <label for="female">
-                                        <input name="gender" value="0" id="female" type="radio">Female</label>
+                                    <?= $this->Form->radio('gender', [
+                                        ['value' => true, 'text' => 'Male'],
+                                        ['value' => false, 'text' => 'Female']
+                                    ],
+                                    (isset($update) ? ['value' => $update['gender']] : [])                 
+                                    ); ?>
                                 </fieldset>
                                 
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button id="profile" class="btn btn-primary login" type="submit">Submit</button>
+                            <button id="profile" class="btn btn-primary login" type="submit"><?= (isset($update) ? 'Update' : 'Submit'); ?></button>
                         </div>
                     </form>
                 </div>

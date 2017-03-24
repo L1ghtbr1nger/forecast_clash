@@ -123,8 +123,9 @@ class ForecastsController extends AppController
     }
     
     public function forecast() {
+        $session = $this->request->session();
         if ($this->request->is('ajax')) {
-            $userID = $this->request->session()->read('Auth.User.id');
+            $userID = $session->read('Auth.User.id');
             $data = $this->request->data;
             if (!empty($data['location'])) {
                 $location = explode(',', $data['location']);

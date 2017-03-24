@@ -133,7 +133,6 @@ class UsersController extends AppController
     public function login() {
         $session = $this->request->session();
         if ($this->request->is('ajax') || $this->request->query('provider')) {
-            $data = $this->request->data;
             $referer = $session->read('referer');
             $user = $this->Auth->identify();
             if ($user) {
@@ -143,8 +142,7 @@ class UsersController extends AppController
                 echo json_encode(['msg' => 'Logged in!', 'result' => 1, 'regLog' => 1, 'url' => $referer]);
                 die;
             } else {
-                $session->write('errorBox', 'Invalid login.');
-                echo json_encode(['msg' => 'Invalid login.', 'result' => 0, 'regLog' => 1]);
+                echo json_encode(['msg' => 'Invalid login. Please enter an email and password associated with Fantasy Clash or sign up now.', 'result' => 0, 'regLog' => 1]);
                 die;
             } 
         } else {
@@ -171,8 +169,7 @@ class UsersController extends AppController
     // Registration
     public function register() {
         if ($this->request->is('ajax')) {
-            $user = $this->Users->newEntity();
-            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user = $this->Users->newEntity($this->request->data, ['validate' => 'register']);
             if($user->errors()){
                 $error_msg = [];
                 foreach( $user->errors() as $errors){

@@ -21,13 +21,15 @@ $(document).ready(function(){
                        window.location.href = response['url'];
                 } else {
                     if (response['regLog'] != 0) {
-                        temp = response['msg'];
+                        $('#error-message').html(response['msg']);
                     } else {
                         $.each(response['msg'], function(index, value) {
-                            temp += value + "\n";
+                            temp += value + "</br>";
                         });
+                        $('#error-message').html(temp);
+                        
                     }
-                    alert(temp);
+                    $('.error-notification').show();
                     if (response['regLog'] == 3) {
                         window.location.href = "/forecast_clash/users/forgot_password";
                     }

@@ -131,6 +131,15 @@ class UsersTable extends Table
             ->integer('id')
             ->allowEmpty('id', 'create');
 
+        return $validator;
+    }
+    
+    public function validationRegister(Validator $validator)
+    {
+        $validator
+            ->integer('id')
+            ->allowEmpty('id', 'create');
+
         $validator
             ->add('email', [
                 'email' => [
