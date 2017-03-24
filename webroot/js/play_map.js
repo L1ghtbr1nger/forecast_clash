@@ -8,7 +8,7 @@ $('document').ready(function() {
         $('.scoring-instructions').hide();
         $('.forecast-btn').hide();
 
-        $('.scoring-instructions-btn').click(function(){
+        $('.scoring-instructions-btn').click(function() {
             $('.scoring-instructions').show(500);
             $('.scoring-btn').show(500);
             $('.targeting').hide(500);
@@ -27,7 +27,7 @@ $('document').ready(function() {
             $('.scoring').hide(500);
             $('.scoring-instructions').hide(500);
             $('.forecast-btn').hide(500);
-     
+
         });
     }
 
@@ -65,12 +65,34 @@ $('document').ready(function() {
     // close button
     $('.close').click(function() {
 
-        L.easyButton('Test', function(btn, map) {
-            sidebar.show();
-            this.removeFrom(map);
-        }).addTo(map);
+        // L.easyButton('Test', function(btn, map) {
+        // sidebar.show();
+        // this.removeFrom(map);
+        // }).addTo(map);
 
-    })
+
+        // tornado controller
+        var openSidebarControl = L.easyButton({
+            states: [{
+                stateName: 'sidebar-closed',
+                icon: tornadoSVG,
+                title: 'Make a Forecast for a Tornado',
+                onClick: function(btn, map, e) {
+                    console.log('open sidebar');
+                    sidebar.show();
+                    this.removeFrom(map);
+                },
+
+            }]
+        });
+
+        openSidebarControl.addTo(map);
+        $('.sidebar-closed-active').html('<h5>Open Sidebar</h5');
+        $('.sidebar-closed-active h5').css({
+            'color': '#fff',
+            'text-transform': 'uppercase'
+        });
+    });
 
     // radius functionality
     var radiusInput = document.getElementById('radius');
