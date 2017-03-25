@@ -83,7 +83,7 @@ if ($loggedIn) {
 <?= $this->Html->script('leaderboard'); ?>
 <?= $this->Html->script('heatmaps'); ?>
 <?= $this->Html->script('chartist'); ?>
-<?= $this->Html->STYLE('chartist.min'); ?>
+<?= $this->Html->css('chartist.min'); ?>
 
 <style>
     .hide-me{
