@@ -64,20 +64,15 @@ class ForecastsTable extends Table
             ->allowEmpty('submit_date');
 
         $validator
-            ->date('forecast_date')
-            ->requirePresence('forecast_date', 'create')
-            ->notEmpty('forecast_date', 'Please select a Forecast Date');
-
-        $validator
-            ->boolean('am_pm')
+            ->dateTime('forecast_date_start')
             ->requirePresence([
-                'am_pm' => [
+                'forecast_date_start' => [
                     'mode' => 'create',
-                    'message' => 'Please select the time of day for your forecast'
+                    'message' => 'Please choose a Forecast date and 12hr time block (am/pm)'
                 ]
             ])
-            ->notEmpty('am_pm', 'Please select the time of day for your forecast');
-
+            ->notEmpty('forecast_date_start', 'Please choose a Forecast date and 12hr time block (am/pm)');
+        
         $validator
             ->integer('radius')
             ->requirePresence('radius', 'create')
@@ -102,10 +97,6 @@ class ForecastsTable extends Table
                 ]
             ])
             ->notEmpty('latitude', 'Please select a point on the map');
-
-        $validator
-            ->numeric('longitude')
-            ->allowEmpty('longitude');
 
         return $validator;
     }

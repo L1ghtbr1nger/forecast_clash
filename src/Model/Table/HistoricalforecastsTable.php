@@ -87,14 +87,14 @@ class HistoricalForecastsTable extends Table
             ->notEmpty('radius');
 
         $validator
-            ->date('forecast_date')
-            ->requirePresence('forecast_date', 'create')
-            ->notEmpty('forecast_date');
+            ->dateTime('forecast_date_start')
+            ->requirePresence('forecast_date_start', 'create')
+            ->notEmpty('forecast_date_start');
 
         $validator
-            ->boolean('am_pm')
-            ->requirePresence('am_pm', 'create')
-            ->notEmpty('am_pm');
+            ->dateTime('forecast_date_end')
+            ->requirePresence('forecast_date_end', 'create')
+            ->notEmpty('forecast_date_end');
 
         $validator
             ->integer('forecast_length')

@@ -11,6 +11,8 @@
         <li><?= $this->Html->link(__('New Weather Event'), ['controller' => 'WeatherEvents', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Admin Events'), ['controller' => 'AdminEvents', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Admin Event'), ['controller' => 'AdminEvents', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Teams Users'), ['controller' => 'TeamsUsers', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Teams User'), ['controller' => 'TeamsUsers', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="historicalForecasts view large-9 medium-8 columns content">
@@ -49,16 +51,41 @@
             <td><?= $this->Number->format($historicalForecast->forecast_length) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Forecast Date') ?></th>
-            <td><?= h($historicalForecast->forecast_date) ?></td>
+            <th scope="row"><?= __('Forecast Date Start') ?></th>
+            <td><?= h($historicalForecast->forecast_date_start) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Am Pm') ?></th>
-            <td><?= $historicalForecast->am_pm ? __('Yes') : __('No'); ?></td>
+            <th scope="row"><?= __('Forecast Date End') ?></th>
+            <td><?= h($historicalForecast->forecast_date_end) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Correct') ?></th>
             <td><?= $historicalForecast->correct ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>
+    <div class="related">
+        <h4><?= __('Related Teams Users') ?></h4>
+        <?php if (!empty($historicalForecast->teams_users)): ?>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th scope="col"><?= __('Id') ?></th>
+                <th scope="col"><?= __('User Id') ?></th>
+                <th scope="col"><?= __('Team Id') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
+            </tr>
+            <?php foreach ($historicalForecast->teams_users as $teamsUsers): ?>
+            <tr>
+                <td><?= h($teamsUsers->id) ?></td>
+                <td><?= h($teamsUsers->user_id) ?></td>
+                <td><?= h($teamsUsers->team_id) ?></td>
+                <td class="actions">
+                    <?= $this->Html->link(__('View'), ['controller' => 'TeamsUsers', 'action' => 'view', $teamsUsers->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['controller' => 'TeamsUsers', 'action' => 'edit', $teamsUsers->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'TeamsUsers', 'action' => 'delete', $teamsUsers->id], ['confirm' => __('Are you sure you want to delete # {0}?', $teamsUsers->id)]) ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
+    </div>
 </div>
