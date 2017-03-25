@@ -46,7 +46,7 @@ li > ul li{
                     <ul>
                         <li>Number of days a target is placed in advance of an event.
                              <ul>
-                                 <li><small>Longer range forecasts = more points</small></li>
+                                 <li>Longer range forecasts = more points</li>
                              </ul> 
                          </li>
                         <li>Radius around the target pin.
@@ -76,6 +76,14 @@ li > ul li{
                         <div role="tabpanel" class="tab-pane active" id="tornado-control">
                             <div class="row">
                                 <div class="col-md-12">
+
+
+<label for="input-time">Time in UTC: </label>
+<input value="14:30" type="time" id="input-time">
+
+<p id="local"></p>
+
+
                                     <form action="#" class="search-filter forecast-tornado" id="forecastForm">
                                         <fieldset class="play-date">
                                             <label for="event_date"><strong>Date</strong></label>
@@ -123,8 +131,13 @@ li > ul li{
 <?= $this->Html->script('play_map'); ?>
 <?= $this->Html->script('picker'); ?>
 <?= $this->Html->script('picker.date'); ?>
+
+<!-- timezones -->
+<?= $this->Html->script('jstz.min'); ?>
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
 <script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
+
 
 <script>
 
@@ -153,6 +166,11 @@ $('.datepicker').pickadate({
     closeOnSelect: true
 });
 
+if (!sessionStorage.getItem('timezone')) {
+  var tz = jstz.determine() || 'UTC';
+  sessionStorage.setItem('timezone', tz.name());
+}
+var currTZ = sessionStorage.getItem('timezone');
+console.log(currTZ);
+
 </script>
-
-
