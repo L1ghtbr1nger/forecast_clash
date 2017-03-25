@@ -132,6 +132,7 @@ class TeamsUsersController extends AppController
                 ->subject('Forecast Clash Team Request')
                 ->send("Someone has requested to join your Forecast Clash team! Please follow the link for details on how to draft this person or prolong their free-agency.\r\n".$link);
             $session->write('successBox', 'Request to join '.h($team['team_name']).' was sent!');
+            $session->delete('errorBox');
             return;
         } else {
             $query = $this->TeamsUsers->find()->where(['user_id' => $user['id']]); //check if user already has team
@@ -171,6 +172,7 @@ class TeamsUsersController extends AppController
                 ]);
                 $notices->save($notice);
                 $session->write('successBox', 'Successfully joined team!');
+                $session->delete('errorBox');
                 return;
             } else {
                 $session->write('errorBox', $error_msg);
@@ -235,6 +237,7 @@ class TeamsUsersController extends AppController
                     ]);
                     $notices->save($notice);
                     $session->write('successBox', $first.' was added to your roster!');
+                    $session->delete('errorBox');
                     $url = Router::url(['controller' => 'Teams', 'action' => 'dugout'], TRUE);
                     echo json_encode(['url' => $url]);
                     die;
@@ -264,6 +267,7 @@ class TeamsUsersController extends AppController
                     ->subject('Forecast Clash Team Request')
                     ->send("We're sorry, but ".$data['team_name']." chose not to sign you this Storm Season. A forecaster of your calibur would be welcomed to any of Forecast Clash's public teams! Follow the link below to search for a different team with whom you can showcase your talents!\r\n".$link);
                 $session->write('successBox', $first.' has been removed from the scouting report.');
+                $session->delete('errorBox');
                 $url = Router::url(['controller' => 'Teams', 'action' => 'dugout'], TRUE);
                 echo json_encode(['url' => $url]);
                 die;
@@ -297,7 +301,8 @@ class TeamsUsersController extends AppController
             ($userID == $team['user_id']) ? $captain = true : $captain = false;
             $result = $this->joining($session, $team, $user, $address, $first, $captain);
             if ($result['result']) {
-                $session->write('successBox', $result['msg']);//display success box
+                $session->write('successBox', $result['msg']); //display success box
+                $session->delete('errorBox');
                 if ($result['joined']){
                     return $this->redirect(['controller' => 'teams', 'action' => 'dugout']);
                 } else {

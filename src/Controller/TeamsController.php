@@ -248,6 +248,7 @@ class TeamsController extends AppController
                     ]);
                     $notices->save($notice);
                     $session->write('successBox', 'Team successfully created!');
+                    $session->delete('errorBox');
                 } else {
                     $session->write('errorBox', 'Error adding you to your roster...');
                 }
