@@ -149,7 +149,7 @@ class UsersController extends AppController
             $refer_url = $this->referer('/', true); //get url path minus base path
             $url_array = Router::parse($refer_url); //explode path into array
             $action = $url_array['action'];
-            if ($action === 'register' || $action === 'resetPassword' || $action === 'forgotPassword') {
+            if ($action === 'register' || $action === 'resetPassword' || $action === 'forgotPassword' || $refer_url == '/') {
                 if ($session->read('referer') !== null) {
                     $referer = $session->read('referer');
                 } else {
