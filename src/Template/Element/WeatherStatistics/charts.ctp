@@ -11,38 +11,36 @@
         </div>
         <!-- Tab panes -->
         <div class="tab-content">
-            <form action="" class="search-filter-attempts collapse-me">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4 class="attempts-filter-toggle">Filter&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i></h4>
-                    </div>
-                    <div class="col-md-6">
-                        <strong>Experience</strong>
-                        <div class="can-toggle can-toggle--size-small">
-                            <input id="amateur_attempts" class="exp_attempts" type="checkbox" checked>
-                            <label for="amateur_attempts">
-                                <div class="can-toggle__label-text">Enthusiasts</div>
-                                <div class="can-toggle__switch enthusiasts-switch" data-checked="On" data-unchecked="Off"></div>
-                            </label>
-                        </div>
-                        <div class="can-toggle can-toggle--size-small">
-                            <input id="mets_attempts" class="exp_attempts" type="checkbox" checked>
-                            <label for="mets_attempts">
-                                <div class="can-toggle__label-text">Meteorologists</div>
-                                <div class="can-toggle__switch mets-switch" data-checked="On" data-unchecked="Off"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <strong>Date</strong>
-                        <label for="from_input_attempts">From</label>
-                        <input type="text" id="input_from_attempts">
-                        <label for="to_input_attempts">To</label>
-                        <input type="text" id="input_to_attempts">
-                    </div>
-                </div>
-            </form>
             <div role="tabpanel" id="guesses_all" class="tab-pane active">
+                <h4 class="attempts-filter-toggle">Filter&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i></h4>
+                <form action="" class="search-filter-attempts collapse-me">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong>Experience</strong>
+                            <div class="can-toggle can-toggle--size-small">
+                                <input id="amateur_attempts" class="exp_attempts" type="checkbox" checked>
+                                <label for="amateur_attempts">
+                                    <div class="can-toggle__label-text">Enthusiasts</div>
+                                    <div class="can-toggle__switch enthusiasts-switch" data-checked="On" data-unchecked="Off"></div>
+                                </label>
+                            </div>
+                            <div class="can-toggle can-toggle--size-small">
+                                <input id="mets_attempts" class="exp_attempts" type="checkbox" checked>
+                                <label for="mets_attempts">
+                                    <div class="can-toggle__label-text">Meteorologists</div>
+                                    <div class="can-toggle__switch mets-switch" data-checked="On" data-unchecked="Off"></div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <strong>Date</strong>
+                            <label for="from_input_attempts">From</label>
+                            <input type="text" id="input_from_attempts">
+                            <label for="to_input_attempts">To</label>
+                            <input type="text" id="input_to_attempts">
+                        </div>
+                    </div>
+                </form>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-6">
                        <div class="guesses_bar">
