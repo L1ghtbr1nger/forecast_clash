@@ -7,12 +7,24 @@ if ($loggedIn) {
     } else {
     echo '<style>#team_hm, #self_hm, #team_lb{position:relative;top:-23px;}</style>'; } ?>
 ?>
+
 <div class="content">
 
 
     <div class="row">
-
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- Forecast Clash -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-0836559546833963"
+                 data-ad-slot="4397637067"
+                 data-ad-format="auto"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="social pull-right">
                 <a class="share-social share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3A//forecastclash.com/forecast_clash/weather-statistics/stats"><i class="fa fa-facebook" aria-hidden="true"></i></a>
 
@@ -62,11 +74,16 @@ if ($loggedIn) {
              $this->element('WeatherStatistics/stats_guesses_bar'); 
         </span>
     </div> -->
-</div>
+    <div class="row">
+        <span>
+            <?= $this->element('WeatherStatistics/charts'); ?>
+        </span>
+    </div></div>
 
 <?= $this->Html->script('leaderboard'); ?>
 <?= $this->Html->script('heatmaps'); ?>
 <?= $this->Html->script('chartist'); ?>
+<?= $this->Html->STYLE('chartist.min'); ?>
 
 <style>
     .hide-me{

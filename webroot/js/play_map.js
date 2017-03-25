@@ -4,29 +4,22 @@ $('document').ready(function() {
 
     var instructionsInit = function() {
 
-        $('.scoring').hide();
-        $('.scoring-instructions').hide();
-        $('.forecast-btn').hide();
+        $('.scoring-btn').hide();
+        $('.targeting').hide();
+
 
         $('.scoring-instructions-btn').click(function() {
-            $('.scoring-instructions').show(500);
+            $('.scoring-instructions').hide(500);
             $('.scoring-btn').show(500);
-            $('.targeting').hide(500);
-        })
+            $('.targeting').show(500);
+            $('.scoring-instructions-btn').hide();
+            $('.scoring-btn').appendTo('.modal-footer');
+        });
 
         $('.scoring-btn').click(function() {
             $('.scoring').show(500);
             $('.scoring-btn').hide(500);
             $('.scoring-instructions').hide(500);
-            $('.forecast-btn').show(500);
-
-        });
-
-        $('.scoring i').click(function() {
-            $('.targeting').show(500);
-            $('.scoring').hide(500);
-            $('.scoring-instructions').hide(500);
-            $('.forecast-btn').hide(500);
 
         });
     }
