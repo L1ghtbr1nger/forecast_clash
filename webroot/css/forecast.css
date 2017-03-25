@@ -3413,6 +3413,10 @@ pre {
     padding: 15px 0;
 }
 
+#sidebar-menu {
+    margin-bottom: 24px;
+}
+
 .sidebar-navigation {
     background-color: #333;
     width: 230px;
