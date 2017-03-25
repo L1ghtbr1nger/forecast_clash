@@ -39,7 +39,7 @@ li > ul li{
                     </fieldset>
                     <fieldset class="radius">
                         <label for="radius"><strong>Radius</strong></label>
-                        <h4 id="output">40 miles</h5>
+                        <h4 id="output">50 miles</h5>
                         <input type="range" name="radius" id="radius" value="50" min="50" max="100" step="5">
 
                     </fieldset>
