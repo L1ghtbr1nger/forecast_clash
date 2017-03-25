@@ -8353,102 +8353,91 @@ a[href='/forecast_clash/users/login?provider=Twitter']:focus {
 /* Input Range */
 
 input[type=range] {
+    /*removes default webkit styles*/
     -webkit-appearance: none;
+    
+    /*fix for FF unable to apply focus style bug */
+    border: 1px solid white;
+    
+    /*required for proper track sizing in FF*/
     width: 100%;
-    margin: 10px 0;
-    cursor: pointer;
 }
-
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    background: #ddd;
+    border: none;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: rgb(61, 182, 239);
+    margin-top: -4px;
+}
 input[type=range]:focus {
     outline: none;
 }
-
-input[type=range]::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 8.4px;
-    cursor: pointer;
-    box-shadow: 0px 0px 0px #373737, 0px 0px 0px #444444;
-    background: #ffffff;
-    border-radius: 0px;
-    border: 0.1px solid #010101;
-}
-
-input[type=range]::-webkit-slider-thumb {
-    box-shadow: 0px 0px 0px #333, 0px 0px 0px #0d0d0d;
-    border: 0.2px solid #333;
-    height: 36px;
-    width: 17px;
-    border-radius: 0px;
-    background: #3db6ef;
-    cursor: pointer;
-    -webkit-appearance: none;
-    margin-top: -13.9px;
-}
-
 input[type=range]:focus::-webkit-slider-runnable-track {
-    background: #ffffff;
+    background: #ccc;
 }
 
 input[type=range]::-moz-range-track {
     width: 100%;
-    height: 8.4px;
-    cursor: pointer;
-    box-shadow: 0px 0px 0px #373737, 0px 0px 0px #444444;
-    background: #ffffff;
-    border-radius: 0px;
-    border: 0.1px solid #010101;
+    height: 6px;
+    background: #ddd;
+    border: none;
+}
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: rgb(61, 182, 239);
 }
 
-input[type=range]::-moz-range-thumb {
-    box-shadow: 0px 0px 0px #333, 0px 0px 0px #0d0d0d;
-    border: 0.2px solid #333;
-    height: 36px;
-    width: 17px;
-    border-radius: 0px;
-    background: #3db6ef;
-    cursor: pointer;
+/*hide the outline behind the border*/
+input[type=range]:-moz-focusring{
+    outline: 1px solid white;
+    outline-offset: -1px;
 }
 
 input[type=range]::-ms-track {
     width: 100%;
-    height: 8.4px;
-    cursor: pointer;
+    height: 6px;
+    
+    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
     background: transparent;
+    
+    /*leave room for the larger thumb to overflow with a transparent border */
     border-color: transparent;
+    border-width: 6px 0;
+
+    /*remove default tick marks*/
     color: transparent;
 }
-
 input[type=range]::-ms-fill-lower {
-    background: #f2f2f2;
-    border: 0.1px solid #010101;
-    border-radius: 0px;
-    box-shadow: 0px 0px 0px #373737, 0px 0px 0px #444444;
+    background: #777;
+    border-radius: 10px;
 }
-
 input[type=range]::-ms-fill-upper {
-    background: #ffffff;
-    border: 0.1px solid #010101;
-    border-radius: 0px;
-    box-shadow: 0px 0px 0px #373737, 0px 0px 0px #444444;
+    background: #ddd;
+    border-radius: 10px;
 }
-
 input[type=range]::-ms-thumb {
-    box-shadow: 0px 0px 0px #333, 0px 0px 0px #0d0d0d;
-    border: 0.2px solid #333;
-    height: 36px;
-    width: 17px;
-    border-radius: 0px;
-    background: #3db6ef;
-    cursor: pointer;
-    height: 8.4px;
+    border: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: rgb(61, 182, 239);
 }
-
 input[type=range]:focus::-ms-fill-lower {
-    background: #ffffff;
+    background: #888;
 }
-
 input[type=range]:focus::-ms-fill-upper {
-    background: #ffffff;
+    background: #ccc;
 }
 
 
