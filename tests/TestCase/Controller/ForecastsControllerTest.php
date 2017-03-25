@@ -18,7 +18,25 @@ class ForecastsControllerTest extends IntegrationTestCase
     public $fixtures = [
         'app.forecasts',
         'app.users',
-        'app.weather_events'
+        'app.social_profiles',
+        'app.avatars',
+        'app.historical_forecasts',
+        'app.weather_events',
+        'app.weather_statistics',
+        'app.scores',
+        'app.teams_users',
+        'app.teams',
+        'app.admin_events',
+        'app.notifications',
+        'app.profiles',
+        'app.education_levels',
+        'app.states',
+        'app.states_users',
+        'app.ages',
+        'app.statistics',
+        'app.weekly_contest_forecasts',
+        'app.badges',
+        'app.badges_users'
     ];
 
     /**
@@ -67,6 +85,36 @@ class ForecastsControllerTest extends IntegrationTestCase
      * @return void
      */
     public function testDelete()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test forecast method
+     *
+     * @return void
+     */
+    public function testForecast()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test locker method
+     *
+     * @return void
+     */
+    public function testLocker()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test beforeFilter method
+     *
+     * @return void
+     */
+    public function testBeforeFilter()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

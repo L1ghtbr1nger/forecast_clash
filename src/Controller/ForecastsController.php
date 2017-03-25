@@ -138,8 +138,21 @@ class ForecastsController extends AppController
                 $weatherEventID = null;
             }
             if (!empty($data['forecast_date'])) {
-                $date = strtotime($data['forecast_date']);
-                $data['forecast_date'] = date('Y-m-d', $date);
+                if (isset($data['am_pm'])) {
+                    $tz = 'America/Chicago'; //$data['currTZ']; //Get timezone from jQuery
+                    date_default_timezone_set($tz); //set the default timezone for any time instances about to be created.
+                    $dateStart = strtotime($data['forecast_date']); //conver Month, #Day #Year format to unix time 
+                    if ($data['am_pm']) {
+                        $dateStart = $dateStart + 43200; //if PM then move start time to noon
+                    }
+                    $dateEnd = $dateStart + 43200; //add 12 hours in seconds to unix representation of forecast start
+                    $forecastDateStart = Time::parse($dateStart)->timezone('UTC'); //convert forecast start to UTC
+                    $forecastDateEnd = Time::parse($dateEnd)->timezone('UTC'); //convert forecast end to UTC
+                    $data['forecast_date_start'] = $forecastDateStart;
+                    $data['forecast_date_end'] = $forecastDateEnd;
+                    $now = Time::now()->timezone('UTC');
+                    $data['submit_date'] = $now;
+                }
             }
             $table = $this->Forecasts;
             //Look if user and weather event combo already exists in Forecasts
@@ -184,62 +197,21 @@ class ForecastsController extends AppController
         }
     }
     
-    //Cron function that checks for forecasts that are within 12 hours of the current time and locks them in.
-    //Also sends locked records to HistoricalforecastsController to be saved to HistoricalForecasts
-    public function locker() {
-        $result;
-        //Different formats of the current time for different calculations and comparisons
-        $now = Time::now();
-        $timeNow = intval($now->i18nFormat('HH'));
-        $dateNow = $now->i18nFormat('yyyy-MM-dd');
-        $dateForecast = $dateNow.'-12';
-        $dateForecast = new Time($dateForecast.'-12');
-        $dateNext = new Time('+1 day');
-        $dateNext = $dateNext->i18nFormat('yyyy-MM-dd');
-        $dateNextForecast = $dateNext.'-00';
-        $dateNextForecast = new Time($dateNextForecast);
-        if ($timeNow < 12) {
-            $query = $this->Forecasts->find()->where(['forecast_date' => $dateNow, 'am_pm' => 1]);
-            $this->transferHistory($dateForecast,$query);
-          //  $this->Forecasts->deleteAll(['forecast_date' => $dateNow, 'am_pm' => 1]);
-        } else {
-            $query = $this->Forecasts->find()->where(['forecast_date' => $dateNext, 'am_pm' => 0]);
-            $this->transferHistory($dateNextForecast,$query);
-          //  $this->Forecasts->deleteAll(['forecast_date' => $dateNext, 'am_pm' => 0]);
-        }
-        die;
-    }
-    
-    public function transferHistory($date,$query) {
+    public function locker() { //Takes Forecasts that have locked in and moves them to HistoricalForecasts
+        $lock = Time::now('+12 hours'); //Get an instance of the current time + 12 hours
+        $query = $this->Forecasts->find()->where(['forecast_date_start <=' => $lock]); //find all forecasts starting in the next 12 hours
         $forecastHistory = TableRegistry::get('HistoricalForecasts');
         if ($query->toArray()) {
-            //Move the contents of each row of the Forecasts table that have locked into the HistoricalForecasts table. Remove extra columns, fill in forecast length column after calculating. 
             foreach ($query as $row) {
-                $history = $forecastHistory->newEntity();
                 $submitted = $row['submit_date'];
-                $submitted = $submitted->i18nFormat('yyyy-MM-dd-HH');
-                $submitted = new Time($submitted);
-                $interval = $submitted->diff($date);
-                $intervalDays = intval($interval->format('%a'));
-                $intervalHours = intval($interval->format('%H'));
-                $intervalHours += $intervalDays * 24;
-                ($intervalHours < 12) ? $intervalHours = 12 : '';
-                $forecastLength = $intervalHours;
-                $history->user_id = $row['user_id'];
-                $history->latitude = $row['latitude'];
-                $history->longitude = $row['longitude'];
-                $history->iso = $row['iso'];
-                $history->radius = $row['radius'];
-                $history->weather_event_id = $row['weather_event_id'];
-                $history->forecast_date = $row['forecast_date'];
-                $history->am_pm = $row['am_pm'];
-                $history->forecast_length = $forecastLength;
-                debug($history);
+                $interval = $submitted->diffInHours($row['forecast_date_start']);
+                ($interval < 12) ? $interval = 12 : '';
+                $row['forecast_length'] = $interval;
+                $history = $forecastHistory->newEntity($row->toArray());
                 $result = $forecastHistory->save($history);
-                return;
             }
         }
-        return;
+        $this->Forecasts->deleteAll(['forecast_date_start <=' => $lock]); //delete all transferred forecasts
     }
     
     public function beforeFilter(Event $event){

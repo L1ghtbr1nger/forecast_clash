@@ -43,12 +43,12 @@
             <td><?= h($forecast->submit_date) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Forecast Date') ?></th>
-            <td><?= h($forecast->forecast_date) ?></td>
+            <th scope="row"><?= __('Forecast Date Start') ?></th>
+            <td><?= h($forecast->forecast_date_start) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Am Pm') ?></th>
-            <td><?= $forecast->am_pm ? __('Yes') : __('No'); ?></td>
+            <th scope="row"><?= __('Forecast Date End') ?></th>
+            <td><?= h($forecast->forecast_date_end) ?></td>
         </tr>
     </table>
 </div>

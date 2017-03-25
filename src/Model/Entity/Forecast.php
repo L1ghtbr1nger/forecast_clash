@@ -10,8 +10,8 @@ use Cake\ORM\Entity;
  * @property int $user_id
  * @property int $weather_event_id
  * @property \Cake\I18n\Time $submit_date
- * @property \Cake\I18n\Time $forecast_date
- * @property bool $am_pm
+ * @property \Cake\I18n\Time $forecast_date_start
+ * @property \Cake\I18n\Time $forecast_date_end
  * @property int $radius
  * @property float $latitude
  * @property float $longitude

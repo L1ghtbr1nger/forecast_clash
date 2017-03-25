@@ -12,8 +12,8 @@ use Cake\ORM\Entity;
  * @property float $longitude
  * @property int $radius
  * @property int $weather_event_id
- * @property \Cake\I18n\Time $forecast_date
- * @property bool $am_pm
+ * @property \Cake\I18n\Time $forecast_date_start
+ * @property \Cake\I18n\Time $forecast_date_end
  * @property int $forecast_length
  * @property int $admin_event_id
  * @property bool $correct
@@ -21,6 +21,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\WeatherEvent $weather_event
  * @property \App\Model\Entity\AdminEvent $admin_event
+ * @property \App\Model\Entity\TeamsUser[] $teams_users
  */
 class HistoricalForecast extends Entity
 {
