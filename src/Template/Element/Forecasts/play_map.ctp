@@ -71,7 +71,7 @@ li > ul li{
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Welcome to Forecast Clash</h4>
+        <h4 class="modal-title">Make Your Forecast</h4>
       </div>
       <div class="modal-body">
         <div class="instructions">
@@ -158,12 +158,12 @@ $('.datepicker').pickadate({
     closeOnSelect: true
 });
 
-if (!sessionStorage.getItem('timezone')) {
-  var tz = jstz.determine() || 'UTC';
-  sessionStorage.setItem('timezone', tz.name());
-}
-var currTZ = sessionStorage.getItem('timezone');
-console.log(currTZ);
+// if (!sessionStorage.getItem('timezone')) {
+//   var tz = jstz.determine() || 'UTC';
+//   sessionStorage.setItem('timezone', tz.name());
+// }
+// var currTZ = sessionStorage.getItem('timezone');
+// console.log(currTZ);
 
 // var today = new Date();
 // var date = moment(today).format("YYYY-MM-DD");
