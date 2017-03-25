@@ -124,51 +124,43 @@ class HistoricalForecastsController extends AppController
     }
     
     public function compares() {
-        $datePrev = new Date();
-        $datePrev->modify('-3 days');
-        $query = $this->HistoricalForecasts->find()->where(['forecast_date' => $datePrev]);
-        if ($query->toArray()) {
-            debug($query);
+        $date = new Date(); //date for today
+        $datePrev = new Date('-1 day'); //date for yesterday
+        $query = $this->HistoricalForecasts->find()->where(['forecast_date_end >=' => $datePrev, 'forecast_date_end <' => $date]); //find records where the forecast ended yesterday
+        if ($query->toArray()) { //if record(s) found
             foreach ($query as $row) {
-                $appID = 'zihaMoPWm6nYiFjubD6Ox';
-                $appKey = 'Xj8hcr1gb9C1NVvEPALlZmvX38wXsjb9ArN8e7Pw';
-                $user = $row['user_id'];
+                $appID = 'zihaMoPWm6nYiFjubD6Ox'; //API key
+                $appKey = 'Xj8hcr1gb9C1NVvEPALlZmvX38wXsjb9ArN8e7Pw'; //API secret
+                $user = $row['user_id']; 
                 $weather = $row['weather_event_id'];
                 $lat = $row['latitude'];
                 $lon = $row['longitude'];
-                $am_pm = $row['am_pm'];
                 $radius = $row['radius'];
-                if (!$am_pm) {
-                    $begin = $datePrev->format('Y-m-d').'T00:00:00Z';
-                    $end = $datePrev->format('Y-m-d').'T11:59:59Z';
-                } else {
-                    $begin = $datePrev->format('Y-m-d').'T12:00:00Z';
-                    $end = $datePrev->format('Y-m-d').'T23:59:59Z';
-                }
-                $begin = strtotime($begin);
-                $end = strtotime($end);
+                $begin = $row['forecast_date_start'];
+                $end = $row['forecast_date_end'];
                 $http = new Client();
-                $correct = $this->HistoricalForecasts->get($row['id']);
-                $params = 'client_id='.$appID.'&client_secret='.$appKey.'&p='.$lat.','.$lon.'&radius='.$radius.'mi&limit=1&from='.$begin.'$to='.$end;
+                $params = 'client_id='.$appID.'&client_secret='.$appKey.'&p='.$lat.','.$lon.'&radius='.$radius.'mi&limit=1&from='.$begin.'$to='.$end; //params common to each event comparison
                 if ($weather === 1) {
                     $responseTornado = $http->get('https://api.aerisapi.com/stormreports/within?filter=tornado&fields=place.state,report.timestamp,loc.lat,loc.long&'.$params);
                     $jsonResponse = $responseTornado->json;
                 } else if ($weather === 2) {
-                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&fields=place.state,report.timestamp,loc.lat,loc.long&'.$params);
+                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&fields=place.state,report.timestamp,loc.lat,loc.long,report.detail.hailIN&'.$params);
                     $jsonResponse = $responseHail->json;
+                    debug($jsonResponse);
                 } else {
                     $responseWind = $http->get('https://api.aerisapi.com/observations/within?query=wind:50&fields=place.state,ob.dateTimeISO,loc.lat,loc.long&filter=allstations&'.$params);
                     $jsonResponse = $responseWind->json;
                 }
+                $correct = $this->HistoricalForecasts->get($row['id']); //grab the current record to mark it correct or incorrect
                 $weatherStats = TableRegistry::get('WeatherStatistics');
-                $weatherStat = $weatherStats->find()->where(['user_id' => $user, 'weather_event_id' => $weather]);
+                $weatherStat = $weatherStats->find()->where(['user_id' => $user, 'weather_event_id' => $weather]); //look for existing stats on selected weather event for selected user
                 if ($jsonResponse['error']['code'] == 'warn_no_data') { //if no events were found, mark forecast as incorrect.
                     $correct->correct = 0;
-                    if ($statResult = $weatherStat->first()) {
+                    if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;
                         $statResult->radius = $statResult['radius'] + $radius;
                         $statResult->forecast_length = $statResult['forecast_length'] + $row['forecast_length'];
-                    } else {
+                    } else { //add new record of stats for User/WeatherEvent
                         $statResult = $weatherStats->newEntity();
                         $statResult->user_id = $user;
                         $statResult->weather_event_id = $weather;
@@ -177,14 +169,14 @@ class HistoricalForecastsController extends AppController
                         $statResult->radius = $radius;
                         $statResult->forecast_length = $row['forecast_length'];
                     }
-                } else { //if any events were found, mark forecast as correct and add to user's score and weatherstats.
+                } else { //if any events were found, mark forecast as correct
                     $correct->correct = 1;
-                    if ($statResult = $weatherStat->first()) {
+                    if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;
                         $statResult->valid_attempts = $statResult['valid_attempts'] + 1;
                         $statResult->radius = $statResult['radius'] + $radius;
                         $statResult->forecast_length = $statResult['forecast_length'] + $row['forecast_length'];
-                    } else {
+                    } else { //add new record of stats for User/WeatherEvent
                         $statResult = $weatherStats->newEntity();
                         $statResult->user_id = $user;
                         $statResult->weather_event_id = $weather;
@@ -193,19 +185,19 @@ class HistoricalForecastsController extends AppController
                         $statResult->radius = $radius;
                         $statResult->forecast_length = $row['forecast_length'];
                     }
-                    $radiusMult = 3 - ($radius / 5 / 10);
+                    $radiusMult = 3 - ($radius / 5 / 10); //calculate multiplier 1.0 to 2.0 from radius
                     $adminMult = 1;//AdminEvent multiplier needed
                     $length = $row['forecast_length'];
-                    $days = round($length / 24);
-                    $timeMult = 1 + ($days / 10);
+                    $days = round($length / 24); //round hours into days
+                    $timeMult = 1 + ($days / 10); //calculate time multiplier 1.0 to 1.8 from days out
                     $scoreboard = TableRegistry::get('Scores');
-                    $score = $scoreboard->find()->where(['user_id' => $user]);
-                    if ($result = $score->first()) {
-                        $newScore = $result['total_score'] + (10 * $radiusMult * $timeMult * $adminMult);                        
-                    } else {
-                        $result = $scoreboard->newEntity();
-                        $result->user_id = $user;
-                        $newScore = 10 * $radiusMult * $timeMult * $adminMult;
+                    $score = $scoreboard->find()->where(['user_id' => $user]); //find user's score record
+                    if ($result = $score->first()) { //if found
+                        $newScore = $result['total_score'] + (10 * $radiusMult * $timeMult * $adminMult); //calculate score and add to existing
+                    } else { //if not
+                        $result = $scoreboard->newEntity(); //create new record
+                        $result->user_id = $user; //for selected user
+                        $newScore = 10 * $radiusMult * $timeMult * $adminMult; //calculate score
                     }
                     $result->total_score = $newScore;
                     $scoreboard->save($result);
@@ -214,7 +206,6 @@ class HistoricalForecastsController extends AppController
                 $this->HistoricalForecasts->save($correct);
             }
         }
-        die;
     }
     
     public function heatmap() {

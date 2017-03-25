@@ -17,8 +17,8 @@
                 <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('weather_event_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('submit_date') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('forecast_date') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('am_pm') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('forecast_date_start') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('forecast_date_end') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('radius') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('latitude') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('longitude') ?></th>
@@ -32,8 +32,8 @@
                 <td><?= $forecast->has('user') ? $this->Html->link($forecast->user->id, ['controller' => 'Users', 'action' => 'view', $forecast->user->id]) : '' ?></td>
                 <td><?= $forecast->has('weather_event') ? $this->Html->link($forecast->weather_event->id, ['controller' => 'WeatherEvents', 'action' => 'view', $forecast->weather_event->id]) : '' ?></td>
                 <td><?= h($forecast->submit_date) ?></td>
-                <td><?= h($forecast->forecast_date) ?></td>
-                <td><?= h($forecast->am_pm) ?></td>
+                <td><?= h($forecast->forecast_date_start) ?></td>
+                <td><?= h($forecast->forecast_date_end) ?></td>
                 <td><?= $this->Number->format($forecast->radius) ?></td>
                 <td><?= $this->Number->format($forecast->latitude) ?></td>
                 <td><?= $this->Number->format($forecast->longitude) ?></td>

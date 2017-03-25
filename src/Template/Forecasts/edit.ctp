@@ -22,8 +22,8 @@
             echo $this->Form->input('user_id', ['options' => $users]);
             echo $this->Form->input('weather_event_id', ['options' => $weatherEvents]);
             echo $this->Form->input('submit_date');
-            echo $this->Form->input('forecast_date');
-            echo $this->Form->input('am_pm');
+            echo $this->Form->input('forecast_date_start');
+            echo $this->Form->input('forecast_date_end');
             echo $this->Form->input('radius');
             echo $this->Form->input('latitude');
             echo $this->Form->input('longitude');

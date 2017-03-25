@@ -23,7 +23,6 @@ li > ul li{
         </div>
         <div class="sidebar-content">
             <div class="instructions">
-
                 <form action="#" class="search-filter forecast-tornado" id="forecastForm">
                     <fieldset class="play-date">
                         <label for="event_date"><strong>Date</strong></label>
@@ -48,11 +47,8 @@ li > ul li{
                     <input type="radio" class="hidden" name="weather_event_id" id="tornado-event" value="1">
                     <input type="radio" class="hidden" name="weather_event_id" id="hail-event" value="2">
                     <input type="radio" class="hidden" name="weather_event_id" id="wind-event" value="3">
-
                 </form>
-
             </div>
-
         </div>
         <div class="sidebar-footer">
             <?php if ($loggedIn) {
