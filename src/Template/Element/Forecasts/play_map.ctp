@@ -66,12 +66,12 @@ li > ul li{
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Make Your Forecast</h4>
+        <h4 class="modal-title">Welcome to Forecast Clash</h4>
       </div>
       <div class="modal-body">
         <div class="instructions">
             <div class="scoring-instructions">
-                 <p>The goal is to set a target for severe weather, including wind, hail, and tornadoes for any point in the future, out to 8-days.</p>
+                 <p>The goal is to set a target for severe weather, including wind, hail, and tornadoes for any point in the future, out to 8-days. </p>
                 <h5><strong>How to Score Points</strong></h5>
                 <p>Points are scored based on accuracy and timing. There are three primary ways to score:</p>
                 <ul>
@@ -119,8 +119,6 @@ li > ul li{
 
 <!-- timezones -->
 <?= $this->Html->script('jstz.min'); ?>
-<?= $this->Html->script('moment'); ?>
-<?= $this->Html->script('moment-timezone'); ?>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
 <script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
@@ -141,7 +139,7 @@ $("#radius").mousemove(function () {
 // Get tomorrows date for min date
 var tomorrow = new Date(); 
 var newdate = new Date();
-newdate.setDate(tomorrow.getDate() + 1);
+// newdate.setDate(tomorrow.getDate() + 1);
 
 // Get next 8 days
 var newdate_week = new Date();
@@ -155,23 +153,6 @@ $('.datepicker').pickadate({
     format: 'mmmm d, yyyy',
     closeOnSelect: true
 });
-
-// if (!sessionStorage.getItem('timezone')) {
-//   var tz = jstz.determine() || 'UTC';
-//   sessionStorage.setItem('timezone', tz.name());
-// }
-// var currTZ = sessionStorage.getItem('timezone');
-// console.log(currTZ);
-
-// var today = new Date();
-// var date = moment(today).format("YYYY-MM-DD");
-// console.log(date)
-// var stamp = date + "T" + 11 + "Z";
-// var momentTime = moment(stamp);
-// var tzTime = momentTime.tz(currTZ);
-// var formattedTime = tzTime.format('h:mm A');
-
-// console.log(currTZ + formattedTime)
 
 $(document).ready(function(){
     $('#instructions-modal').modal('show');
