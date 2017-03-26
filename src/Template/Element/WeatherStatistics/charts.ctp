@@ -32,13 +32,13 @@
                             </label>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-6">
+<!--                     <div class="col-md-6 col-sm-6">
                         <strong>Date</strong>
                         <label for="from_input_attempts">From</label>
                         <input type="text" id="input_from_attempts">
                         <label for="to_input_attempts">To</label>
                         <input type="text" id="input_to_attempts">
-                    </div>
+                    </div> -->
                 </div>
             </form>
             <div class="row">
@@ -70,30 +70,30 @@ $(document).ready(function() {
         $('.attempts .fa-chevron-down').toggleClass('flip-me');
     });
 
-    var from_input_attempts = $('#input_from_attempts').pickadate({
-        format: 'mmmm d, yyyy',
-        closeOnSelect: true,
-        onClose: function() {
+//     var from_input_attempts = $('#input_from_attempts').pickadate({
+//         format: 'mmmm d, yyyy',
+//         closeOnSelect: true,
+//         onClose: function() {
 
-            // gets from value
-            var from_value = this.get('select', 'yyyy-mm-dd');
-        }
-    }),
+//             // gets from value
+//             var from_value = this.get('select', 'yyyy-mm-dd');
+//         }
+//     }),
 
-    from_picker_attempts = from_input_attempts.pickadate('picker')
+//     from_picker_attempts = from_input_attempts.pickadate('picker')
 
-    var to_input_attempts = $('#input_to_attempts').pickadate({
-        format: 'mmmm d, yyyy',
-        closeOnSelect: true,
-        onClose: function() {
+//     var to_input_attempts = $('#input_to_attempts').pickadate({
+//         format: 'mmmm d, yyyy',
+//         closeOnSelect: true,
+//         onClose: function() {
 
-            // gets to value
-            var to_value = this.get('select', 'yyyy-mm-dd');
+//             // gets to value
+//             var to_value = this.get('select', 'yyyy-mm-dd');
 
-        }
-    }),
+//         }
+//     }),
     
-    to_picker_attempts = to_input_attempts.pickadate('picker')
+//     to_picker_attempts = to_input_attempts.pickadate('picker')
 });
 
 </script>

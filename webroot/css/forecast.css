@@ -7954,8 +7954,8 @@ ul {
 
 .easy-button-button {
     background-color: #333 !important;
-    width: 75px !important;
-    height: 75px !important;
+    width: 55px !important;
+    height: 55px !important;
 }
 
 .easy-button-button span {
@@ -7964,29 +7964,25 @@ ul {
 
 .tornado-control-active svg {
     position: relative;
-    left: -6px;
     display: inline-block;
-    width: 75px;
-    height: 75px;
+    width: 100%;
+    height: 100%;
     shape-rendering: geometricPrecision;
 }
 
 .hail-control-active svg {
     position: relative;
-    left: -6px;
-    top: -12px;
     display: inline-block;
-    width: 75px;
-    height: 75px;
+    width: 100%;
+    height: 100%;
     shape-rendering: geometricPrecision;
 }
 
 .wind-control-active svg {
     position: relative;
-    left: -6px;
     display: inline-block;
-    width: 75px;
-    height: 75px;
+    width: 100%;
+    height: 100%;
     shape-rendering: geometricPrecision;
 }
 
