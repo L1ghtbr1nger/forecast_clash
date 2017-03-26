@@ -141,20 +141,23 @@ class HistoricalForecastsController extends AppController
                 $http = new Client();
                 $params = 'client_id='.$appID.'&client_secret='.$appKey.'&p='.$lat.','.$lon.'&radius='.$radius.'mi&limit=1&from='.$begin.'$to='.$end; //params common to each event comparison
                 if ($weather === 1) {
-                    $responseTornado = $http->get('https://api.aerisapi.com/stormreports/within?filter=tornado&fields=place.state,report.timestamp,loc.lat,loc.long&'.$params);
+                    $responseTornado = $http->get('https://api.aerisapi.com/stormreports/within?filter=tornado&fields=place.state,report.timestamp,loc.lat,loc.long,report.detail,report.detail.text&'.$params);
                     $jsonResponse = $responseTornado->json;
+                    debug($jsonResponse);
                 } else if ($weather === 2) {
-                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&fields=place.state,report.timestamp,loc.lat,loc.long&'.$params);
+                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&fields=place.state,report.timestamp,loc.lat,loc.long,report.detail,report.detail.text&'.$params);
                     $jsonResponse = $responseHail->json;
+                    debug($jsonResponse);
                 } else {
                     $responseWind = $http->get('https://api.aerisapi.com/observations/within?query=wind:50&fields=place.state,ob.dateTimeISO,loc.lat,loc.long&filter=allstations&'.$params);
                     $jsonResponse = $responseWind->json;
+                    debug($jsonResponse);
                 }
                 $correct = $this->HistoricalForecasts->get($row['id']); //grab the current record to mark it correct or incorrect
                 $weatherStats = TableRegistry::get('WeatherStatistics');
                 $weatherStat = $weatherStats->find()->where(['user_id' => $user, 'weather_event_id' => $weather]); //look for existing stats on selected weather event for selected user
                 if ($jsonResponse['error']['code'] == 'warn_no_data') { //if no events were found, mark forecast as incorrect.
-                    $message = 'Congratulations!!! You correctly forecast a '.$row['weather_event']['weather'].' event!  See how your abilities stack up against your fellow forecasters...'; 
+                    $message = 'Better luck next time.  No '.$row['weather_event']['weather'].' events were located within your forecast.  See how your abilities stack up against your fellow forecasters...';
                     $correct->correct = 0;
                     if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;
@@ -170,7 +173,7 @@ class HistoricalForecastsController extends AppController
                         $statResult->forecast_length = $row['forecast_length'];
                     }
                 } else { //if any events were found, mark forecast as correct
-                    $message = 'Better luck next time.  No '.$row['weather_event']['weather'].' events were located within your forecast.  See how your abilities stack up against your fellow forecasters...'; 
+                    $message = 'Congratulations!!! You correctly forecast a '.$row['weather_event']['weather'].' event!  See how your abilities stack up against your fellow forecasters...'; 
                     $correct->correct = 1;
                     if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;
@@ -215,6 +218,7 @@ class HistoricalForecastsController extends AppController
                 ]);
                 $notices->save($notice);
             }
+            exit;
         }
     }
     

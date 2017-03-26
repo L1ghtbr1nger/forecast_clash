@@ -219,7 +219,6 @@ $(document).ready(function(){
                     series: attempts.slice(0,3)
                 };
                 var sum = function(a, b) {
-                    console.log(a);
                     return a + b
                 };
 
