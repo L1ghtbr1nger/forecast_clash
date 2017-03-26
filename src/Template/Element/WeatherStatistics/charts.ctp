@@ -60,36 +60,11 @@
 <script>
 $(document).ready(function() {
 
-    // Correct Guesses Chart
-
-    new Chartist.Bar('.bar-chart', {
-        labels: ['Tornado', 'Hail', 'Wind', 'Total'],
-        series: [
-            [3, 7, 4, 14],
-            [24, 12, 18, 54]
-        ]
-    });
-
     $('.guesses-filter-toggle').click(function() {
         $('.search-filter-guesses').toggle('collapse-me');
         $('.guesses .fa-chevron-down').toggleClass('flip-me');
     });
-
-    // Valid Attempts Pie 
-    var attempts = {
-        series: [5, 3]
-    };
-
-    var sum = function(a, b) {
-        return a + b
-    };
-
-    new Chartist.Pie('.pie-chart', attempts, {
-        labelInterpolationFnc: function(value) {
-            return Math.round(value / attempts.series.reduce(sum) * 100) + '%';
-        }
-    });
-
+    
     $('.attempts-filter-toggle').click(function() {
         $('.search-filter-attempts').toggle('collapse-me');
         $('.attempts .fa-chevron-down').toggleClass('flip-me');

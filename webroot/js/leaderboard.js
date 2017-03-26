@@ -196,8 +196,38 @@ $(document).ready(function(){
             url: "/forecast_clash/historical-forecasts/charts.json",
             dataType: 'json',
             data: filters,
-            success : function(response){
+            success : function(response){ 
+                var axis = [];
+                var correct = [];
+                var attempts = [];
+                var rCorrect = response['correct'];
+                var rAttempts = response['attempts'];
+                $.each(rAttempts, function(index, value) {
+                    axis.push(index);
+                    attempts.push(value);
+                    if(typeof rCorrect[index] !== 'undefined'){
+                        correct.push(rCorrect[index]);
+                    }
+                });
+                // Correct Forecasts Bar Chart
+                new Chartist.Bar('.bar-chart', {
+                    labels: axis,
+                    series: [correct, attempts]
+                });
                 
+                var eventAttempts = {
+                    series: attempts.slice(0,3)
+                };
+                var sum = function(a, b) {
+                    console.log(a);
+                    return a + b
+                };
+
+                new Chartist.Pie('#pie-chart-events', eventAttempts, {
+                    labelInterpolationFnc: function(value) {
+                        return Math.round(value / eventAttempts.series.reduce(sum) * 100) + '%';
+                    }
+                });
             },
             error : function(){   
 

@@ -270,12 +270,10 @@ class HistoricalForecastsController extends AppController
     
     public function charts() {
         if ($this->request->is('ajax')) {
-            $correct['total'] = 0;
-            $attempts['total'] = 0;
             $result = 0;
             $data = $this->request->data;
             $exp = $data['experience'];
-            $charts = $this->HistoricalForecasts->find('all')->where()->contain('WeatherEvents');
+            $charts = $this->HistoricalForecasts->find('all')->where()->contain('WeatherEvents')->order('weather_event_id');
             if ($exp == 3) {
                 $exp = null;
             }
@@ -286,18 +284,14 @@ class HistoricalForecastsController extends AppController
                     }
                 ]);
             }
+            $correct = ['Tornado' => 0, 'Hail' => 0, 'Wind' => 0, 'total' => 0];
+            $attempts = ['Tornado' => 0, 'Hail' => 0, 'Wind' => 0, 'total' => 0];
             foreach ($charts as $chart) {
                 $result = 1;
                 $weather = $chart['weather_event']['weather'];
-                if (!isset($correct[$weather])) {
-                    $correct[$weather] = 1;
-                }
                 if ($chart['correct']) {
                     $correct[$weather]++;
                     $correct['total']++;
-                }
-                if (!isset($attempts[$weather])) {
-                    $attempts[$weather] = 1;
                 }
                 $attempts[$weather]++;
                 $attempts['total']++;
