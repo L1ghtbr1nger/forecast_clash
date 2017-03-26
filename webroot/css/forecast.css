@@ -4279,6 +4279,13 @@ div.body-col p {
     display: none;
 }
 
+.leaflet-control-layers-base > label div span {
+    color: #fff;
+}
+
+.leaflet-retina .leaflet-control-layers-toggle{
+    background-image: url(../webroot/img/layers-2x.png);
+}
 .map-container {
     padding: 70px 0 0 0;
     margin-bottom: -70px;
@@ -4703,7 +4710,7 @@ label {
 /* Flot Charts */
 
 #guesses_all {
-    padding: 8px;
+    padding: 12px;
 }
 
 .tab-pane .chart {
@@ -8125,8 +8132,19 @@ label[for="remember"] span {
     left: -4px;
 }
 
+.legend-square-c {
+    height: 12px;
+    width: 12px;
+    background-color: rgb(244, 198, 61);
+    display: inline-block;
+    position: relative;
+    left: -4px;
+}
+
 .ct-label {
     font-weight: bold;
+    fill: #333 !important;
+    color: #333 !important;
 }
 
 
@@ -8211,7 +8229,6 @@ i span {
 .mobile-nav li {
     display: inline-block;
     background-color: #333;
-    padding: 8px;
     text-align: center;
     width: 24%;
     transition: background-color .4s ease;
@@ -8234,6 +8251,7 @@ i span {
     width: 100%;
     height: 100%;
     display: inline-block;
+    padding: 8px;
 }
 
 .mobile-nav li a {
