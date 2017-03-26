@@ -109,8 +109,8 @@ max-width: 350px !important;
     </div>
 </div>
 
-<link rel="stylesheet" href="../webroot/css/default.css">
-<link rel="stylesheet" href="../webroot/css/default.date.css">
+<link rel="stylesheet" href="/forecast_clash/webroot/css/default.css">
+<link rel="stylesheet" href="/forecast_clash/webroot/css/default.date.css">
 <?= $this->Html->script('picker'); ?>
 <?= $this->Html->script('picker.date'); ?>
 <script>
@@ -124,11 +124,7 @@ $('.heatmap-filter-toggle').click(function() {
 var from_input_heatmap = $('#input_from_heatmap').pickadate({
         format: 'mmmm d, yyyy',
         closeOnSelect: true,
-        onClose: function() {
 
-            // gets from value
-            var from_value = this.get('select', 'yyyy-mm-dd');
-        }
     }),
 
     from_picker_heatmap = from_input_heatmap.pickadate('picker');
@@ -161,7 +157,7 @@ from_picker_heatmap.on('set', function(event) {
     } else if ('clear' in event) {
         to_picker_heatmap.set('min', false);
     }
-})
+});
 
 to_picker_heatmap.on('set', function(event) {
     if (event.select) {
@@ -170,6 +166,11 @@ to_picker_heatmap.on('set', function(event) {
     } else if ('clear' in event) {
         from_picker_heatmap.set('max', false);
     }
-})
+});
+
+var t  = to_picker_heatmap.get('select');
+console.log(t);
+var f = from_picker_heatmap.get('select');
+console.log(f);
 
 </script>
