@@ -18,15 +18,15 @@
                         <div class="col-md-6">
                             <strong>Experience</strong>
                             <div class="can-toggle can-toggle--size-small">
-                                <input id="amateur_attempts" class="exp_attempts" type="checkbox" checked>
-                                <label for="amateur_attempts">
+                                <input id="amateur_c" class="exp_c" type="checkbox" checked>
+                                <label for="amateur_c">
                                     <div class="can-toggle__label-text">Enthusiasts</div>
                                     <div class="can-toggle__switch enthusiasts-switch" data-checked="On" data-unchecked="Off"></div>
                                 </label>
                             </div>
                             <div class="can-toggle can-toggle--size-small">
-                                <input id="mets_attempts" class="exp_attempts" type="checkbox" checked>
-                                <label for="mets_attempts">
+                                <input id="mets_c" class="exp_c" type="checkbox" checked>
+                                <label for="mets_c">
                                     <div class="can-toggle__label-text">Meteorologists</div>
                                     <div class="can-toggle__switch mets-switch" data-checked="On" data-unchecked="Off"></div>
                                 </label>

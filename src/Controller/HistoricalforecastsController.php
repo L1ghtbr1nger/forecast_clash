@@ -268,6 +268,45 @@ class HistoricalForecastsController extends AppController
         }
     }
     
+    public function charts() {
+        if ($this->request->is('ajax')) {
+            $correct['total'] = 0;
+            $attempts['total'] = 0;
+            $result = 0;
+            $data = $this->request->data;
+            $exp = $data['experience'];
+            $charts = $this->HistoricalForecasts->find('all')->where()->contain('WeatherEvents');
+            if ($exp == 3) {
+                $exp = null;
+            }
+            if ($exp != 2) {  
+                $charts = $charts->contain([
+                    'Users' => function($q) use($exp) {
+                        return $q->where(['Users.meteorologist' => $exp]);
+                    }
+                ]);
+            }
+            foreach ($charts as $chart) {
+                $result = 1;
+                $weather = $chart['weather_event']['weather'];
+                if (!isset($correct[$weather])) {
+                    $correct[$weather] = 1;
+                }
+                if ($chart['correct']) {
+                    $correct[$weather]++;
+                    $correct['total']++;
+                }
+                if (!isset($attempts[$weather])) {
+                    $attempts[$weather] = 1;
+                }
+                $attempts[$weather]++;
+                $attempts['total']++;
+            }
+            echo json_encode(['result' => $result, 'correct' => $correct, 'attempts' => $attempts]);
+            die;
+        }
+    }
+    
     public function beforeFilter(Event $event){
         $this->Auth->allow();
     }

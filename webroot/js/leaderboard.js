@@ -2,14 +2,15 @@ var locations = [];
 $(document).ready(function(){
     var paramsLB = {};
     var paramsHM = {};
+    var paramsC = {};
     //
     //Leaderboard
-    function callAjaxLB(datum){
+    function callAjaxLB(filters){
         $.ajax({ //ajax call to get DB data for the leaderboard
             type: "POST",
             url: "/forecast_clash/weather-statistics/stats.json",
             dataType: 'json',
-            data: datum,
+            data: filters,
             success : function(response){
                 var count = 0;
                 var result = response['result'];
@@ -170,15 +171,15 @@ $(document).ready(function(){
             callAjaxHM(paramsHM);
         }
     });
-    $('.exp_hm').change(function(){ //run experience when filters are adjusted
+    $('.exp_hm').change(function(){ //run experience when experience filters are adjusted
         experienceHM();
         callAjaxHM(paramsHM);
     });
-    $('.forecast_hm').change(function(){ //run experience when filters are adjusted
+    $('.forecast_hm').change(function(){ //run forecastHM when correct/incorrect filters are adjusted
         forecastHM();
         callAjaxHM(paramsHM);
     });
-    $('.event_hm').change(function(){ //run experience when filters are adjusted
+    $('.event_hm').change(function(){ //run weatherHM when weather event filters are adjusted
         weatherHM();
         callAjaxHM(paramsHM);
     });
@@ -188,5 +189,40 @@ $(document).ready(function(){
     forecastHM(); //run filter for correct or incorrect
     weatherHM(); //run weather events filter
     callAjaxHM(paramsHM);
+    
+    function callAjaxC(filters){
+        $.ajax({ //ajax call to get DB data for the leaderboard
+            type: "POST",
+            url: "/forecast_clash/historical-forecasts/charts.json",
+            dataType: 'json',
+            data: filters,
+            success : function(response){
+                
+            },
+            error : function(){   
+
+            }
+        });
+    };
+    
+    function experienceC(){ //which experience toggles are checked
+        if($('#amateur_c').prop('checked') && $('#mets_c').prop('checked')){
+            paramsC.experience = 2; //amateur: checked, meteorologist: checked
+        } else if($('#mets_c').prop('checked')){
+            paramsC.experience = 1; //amateur: unchecked, meteorologist: checked
+        } else if($('#amateur_c').prop('checked')) {
+            paramsC.experience = 0; //amateur: checked, meteorologist: unchecked
+        } else {
+            paramsC.experience = 3; //amateur: unchecked, meteorologist: unchecked
+        }
+    };
+    
+    $('.exp_c').change(function(){ //run experience when filters are adjusted
+        experienceC();
+        callAjaxC(paramsC);
+    });
+    
+    experienceC();
+    callAjaxC(paramsC);
 });
 
