@@ -324,8 +324,8 @@ class UsersController extends AppController
             if (empty($err)) {
                 $session = $this->request->session();
                 $email = new Email();
-                $email->from('donotreply@forecastclash.com')
-                    ->to($data['email']) //'info@forecastclash.com'
+                $email->from('info@forecastclash.com')
+                    ->to('info@forecastclash.com') //'info@forecastclash.com'
                     ->template('default', 'default')
                     ->subject($data['name'].' Contact')
                     ->send($data['name']." at ".$data['email']." says: \r\n\r\n".$data['message']);
