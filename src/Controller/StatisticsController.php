@@ -114,21 +114,21 @@ class StatisticsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
     
-    public function stats {
-        $query = $this->Statistics->find('all');
-        foreach ($query as $row) {
-            if($row['active']) {
-                $currentStreak = $row['current_streak'] + 1;
-                $row->current_streak = $currentStreak;
-                $highStreak = $row['highest_streak'];
-                if ($currentStreak > $highStreak) {
-                    $row->highest_streak = $currentStreak;
-                }
-                $row->active = 0;
-            } else {
-                $row->current_streak = 0;
-            }
-            $this->Statistics->save($row);
-        }
-    }
+//    public function stats() {
+//        $query = $this->Statistics->find('all');
+//        foreach ($query as $row) {
+//            if($row['active']) {
+//                $currentStreak = $row['current_streak'] + 1;
+//                $row->current_streak = $currentStreak;
+//                $highStreak = $row['highest_streak'];
+//                if ($currentStreak > $highStreak) {
+//                    $row->highest_streak = $currentStreak;
+//                }
+//                $row->active = 0;
+//            } else {
+//                $row->current_streak = 0;
+//            }
+//            $this->Statistics->save($row);
+//        }
+//    }
 }

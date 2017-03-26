@@ -1,5 +1,6 @@
 <?= $this->element('header'); ?>
 <?= $this->element('sidebar'); ?>
+<?= $this->Html->script('contact'); ?>
 <style>
 .container-fluid {
     padding-left: 0;
@@ -10,15 +11,15 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <h1>Questions? message? Or just want to drop us a line? <br> This is the place.</h1>
-            <form action="" class="contact-form">
+            <form action="" id="contactForm" class="contact-form">
                 <div class="row">
                     <div class="col-md-6">
                         <label for="name">Name</label>
-                        <input type="text" class="name">
+                        <input name="name" type="text" class="name">
                     </div>
                     <div class="col-md-6">
-                        <label for="name">Email</label>
-                        <input type="email" class="email">
+                        <label for="email">Email</label>
+                        <input name="email" type="email" class="email">
                     </div>
                 </div>
                 <div class="row">
@@ -29,7 +30,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="submit" id="comment-submit" value="Send">
+                        <input type="submit" class="contactSubmit" id="comment-submit" value="Send">
                     </div>
                 </div>
             </form>

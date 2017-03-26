@@ -18,6 +18,7 @@ use Cake\Core\Configure;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
 use Cake\Event\Event;
+use Cake\Mailer\Email;
 
 /**
  * Static content controller
@@ -62,10 +63,6 @@ class PagesController extends AppController
             }
             throw new NotFoundException();
         }
-    }
-    
-    public function contact() {
-        
     }
 
     public function privacy() {

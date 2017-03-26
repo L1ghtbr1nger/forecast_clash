@@ -218,7 +218,6 @@ class HistoricalForecastsController extends AppController
                 ]);
                 $notices->save($notice);
             }
-            exit;
         }
     }
     

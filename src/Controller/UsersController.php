@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Form\ContactForm;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Mailer\Email;
@@ -303,6 +304,37 @@ class UsersController extends AppController
             $toke = explode('reset-password/', $url);
             $token = $toke[1];
             $this->set('token', $token);
+        }
+    }
+    
+    public function contact() {
+        $contact = new ContactForm();
+        if ($this->request->is('ajax')) {
+            $data = $this->request->data;
+            $err = [];
+            if (!$contact->validate($this->request->data())) {
+                $err[] = 'Please include a valid email address';
+            }
+            if (empty($data['name']) || !isset($data['name'])) {
+                $err[] = 'Please include your name';
+            }
+            if (empty($data['message']) || !isset($data['message'])) {
+                $err[] = 'Please include a message';
+            }
+            if (empty($err)) {
+                $session = $this->request->session();
+                $email = new Email();
+                $email->from('donotreply@forecastclash.com')
+                    ->to($data['email']) //'info@forecastclash.com'
+                    ->template('default', 'default')
+                    ->subject($data['name'].' Contact')
+                    ->send($data['name']." at ".$data['email']." says: \r\n\r\n".$data['message']);
+                $session->write('successBox', 'Message succesfully sent.  Thank you for your comments or concerns!');
+                echo json_encode(['result' => 1]);
+            } else {
+                echo json_encode(['result' => 0, 'msg' => $err]);
+            }
+            die;
         }
     }
     
