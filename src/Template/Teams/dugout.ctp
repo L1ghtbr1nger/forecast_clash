@@ -82,7 +82,7 @@
                 </div>
             </div>
     
-    <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-6 rankings">
+    <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-6 rankings pull-right">
         <div class="card sameheight-item" data-exclude="xs">
             <div class="card-header card-header-sm bordered">
                 <div class="header-block">
