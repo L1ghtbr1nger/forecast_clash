@@ -162,6 +162,8 @@ $(document).ready(function(){
             paramsHM['events'].push(3); //wind: checked
         }
     };
+    function dateHM(){
+    }
     
     $('.whom_hm').click(function(){ //run tabs when tab is selected
         if(!$(this).hasClass('current_hm')) {
@@ -182,6 +184,11 @@ $(document).ready(function(){
     $('.event_hm').change(function(){ //run weatherHM when weather event filters are adjusted
         weatherHM();
         callAjaxHM(paramsHM);
+    });
+    $('.picker').on("hidden.bs.modal", function() {
+        dateHM();
+        console.log('hello');
+//        callAjaxHM(paramsHM);
     });
     
     tabsHM(); //run tabs with default tab
