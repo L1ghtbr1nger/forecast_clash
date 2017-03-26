@@ -126,12 +126,12 @@ class HistoricalForecastsController extends AppController
     public function compares() {
         $date = new Date(); //date for today
         $datePrev = new Date('-1 day'); //date for yesterday
-        $query = $this->HistoricalForecasts->find()->where(['forecast_date_end >=' => $datePrev, 'forecast_date_end <' => $date]); //find records where the forecast ended yesterday
+        $query = $this->HistoricalForecasts->find()->where(['forecast_date_end >=' => $datePrev, 'forecast_date_end <' => $date])->contain('WeatherEvents'); //find records where the forecast ended yesterday
         if ($query->toArray()) { //if record(s) found
             foreach ($query as $row) {
                 $appID = 'zihaMoPWm6nYiFjubD6Ox'; //API key
                 $appKey = 'Xj8hcr1gb9C1NVvEPALlZmvX38wXsjb9ArN8e7Pw'; //API secret
-                $user = $row['user_id']; 
+                $user = $row['user_id'];
                 $weather = $row['weather_event_id'];
                 $lat = $row['latitude'];
                 $lon = $row['longitude'];
@@ -144,9 +144,8 @@ class HistoricalForecastsController extends AppController
                     $responseTornado = $http->get('https://api.aerisapi.com/stormreports/within?filter=tornado&fields=place.state,report.timestamp,loc.lat,loc.long&'.$params);
                     $jsonResponse = $responseTornado->json;
                 } else if ($weather === 2) {
-                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&fields=place.state,report.timestamp,loc.lat,loc.long,report.detail.hailIN&'.$params);
+                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&fields=place.state,report.timestamp,loc.lat,loc.long&'.$params);
                     $jsonResponse = $responseHail->json;
-                    debug($jsonResponse);
                 } else {
                     $responseWind = $http->get('https://api.aerisapi.com/observations/within?query=wind:50&fields=place.state,ob.dateTimeISO,loc.lat,loc.long&filter=allstations&'.$params);
                     $jsonResponse = $responseWind->json;
@@ -155,6 +154,7 @@ class HistoricalForecastsController extends AppController
                 $weatherStats = TableRegistry::get('WeatherStatistics');
                 $weatherStat = $weatherStats->find()->where(['user_id' => $user, 'weather_event_id' => $weather]); //look for existing stats on selected weather event for selected user
                 if ($jsonResponse['error']['code'] == 'warn_no_data') { //if no events were found, mark forecast as incorrect.
+                    $message = 'Congratulations!!! You correctly forecast a '.$row['weather_event']['weather'].' event!  See how your abilities stack up against your fellow forecasters...'; 
                     $correct->correct = 0;
                     if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;
@@ -170,6 +170,7 @@ class HistoricalForecastsController extends AppController
                         $statResult->forecast_length = $row['forecast_length'];
                     }
                 } else { //if any events were found, mark forecast as correct
+                    $message = 'Better luck next time.  No '.$row['weather_event']['weather'].' events were located within your forecast.  See how your abilities stack up against your fellow forecasters...'; 
                     $correct->correct = 1;
                     if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;
@@ -204,6 +205,15 @@ class HistoricalForecastsController extends AppController
                 }
                 $weatherStats->save($statResult);
                 $this->HistoricalForecasts->save($correct);
+                $notices = TableRegistry::get('Notifications');
+                $notice = $notices->newEntity();
+                $notice = $notices->patchEntity($notice, [
+                    'user_id' => $user,
+                    'message' => $message,
+                    'link_address' => '/forecast_clash/weather-statistics/stats',
+                    'link_image' => 'logo-mark.png'
+                ]);
+                $notices->save($notice);
             }
         }
     }
