@@ -3,7 +3,7 @@
         <span class="menu-toggle"><i class="fa fa-close" aria-hidden="true"></i></span>
         <div class="sidebar-navigation-header">
             <div class="brand">
-                <a href="#" class="logo"><?= $this->Html->image('logo-light-blue.png', ['alt' => 'Forecast Clash Logo']) ?></a>
+                <a href="/forecast_clash/" class="logo"><?= $this->Html->image('logo-light-blue.png', ['alt' => 'Forecast Clash Logo']) ?></a>
             </div>
         </div>
         <nav class="menu">
