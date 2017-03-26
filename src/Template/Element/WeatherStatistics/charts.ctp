@@ -61,13 +61,6 @@
 $(document).ready(function() {
 
     // Correct Guesses Chart
-    var guesses_data = {
-        labels: ['Tornado', 'Hail', 'Wind', 'Total'],
-        series: [
-            [3, 7, 4, 14],
-            [24, 12, 18, 54]
-        ]
-    };
 
     new Chartist.Bar('.bar-chart', {
         labels: ['Tornado', 'Hail', 'Wind', 'Total'],
@@ -75,15 +68,6 @@ $(document).ready(function() {
             [3, 7, 4, 14],
             [24, 12, 18, 54]
         ]
-    }, {
-
-
-    }).on('draw', function(guesses_data) {
-        if (guesses_data.type === 'bar') {
-            guesses_data.element.attr({
-                style: 'stroke-width: 30px'
-            });
-        }
     });
 
     $('.guesses-filter-toggle').click(function() {
