@@ -20,7 +20,7 @@ L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
 var legend2 = L.control({ position: 'topright' });
 legend2.onAdd = function(map) {
     var div = L.DomUtil.create('div', 'info legend2 map-logo');
-    div.innerHTML = '<img src="../img/logo-light-blue-sm.png" style="width:125px; ">';
+    div.innerHTML = '<img src="/forecast_clash/webroot/img/logo-light-blue-sm.png" style="width:125px; ">';
     return div;
 };
 legend2.addTo(map);
