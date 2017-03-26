@@ -19,9 +19,10 @@
 <div class="content">
     <div class="row">
         <div class="col-md-12">
-            <div id="linker">
-                <p class="clipLabel">Recruit teammates:</p>
-                <p class="clipDisplay"><?= $url; ?></p>
+        <br>
+            <div id="linker" class="pull-right">
+                <span class="clipLabel">Copy to Recruit Teammates</span>
+                <span class="clipDisplay"><?= $url; ?></span>
                 <button class="clp-btn" data-clipboard-target="#teamClip"><?= $this->Html->image('clippy.svg', ['alt' => 'Copy to clipboard']); ?></button>
             </div>
         </div>
