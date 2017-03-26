@@ -7857,6 +7857,7 @@ rect {
     transform: translateX(-50%);
     color: #333;
     display: none;
+    z-index: 10000;
 }
 
 .success-notification {
