@@ -133,6 +133,9 @@ class UsersController extends AppController
     // Login
     public function login() {
         $session = $this->request->session();
+        if (null !== $session->read('Auth.User')) {
+            $this->redirect('/');
+        }
         if ($this->request->is('ajax') || $this->request->query('provider')) {
             $referer = $session->read('referer');
             $user = $this->Auth->identify();
@@ -172,6 +175,10 @@ class UsersController extends AppController
     
     // Registration
     public function register() {
+        $session = $this->request->session();
+        if (null !== $session->read('Auth.User')) {
+            $this->redirect('/');
+        }
         if ($this->request->is('ajax')) {
             $user = $this->Users->newEntity($this->request->data, ['validate' => 'register']);
             if($user->errors()){
@@ -196,7 +203,6 @@ class UsersController extends AppController
                     'link_image' => 'logo-mark.png'
                 ]);
                 $notices->save($notice);
-                $session = $this->request->session();
                 $session->write('successBox', 'Successfully registered!');
                 $url = Router::url(['controller' => 'Users', 'action' => 'login'], TRUE);
                 echo json_encode(['result' => 1, 'regLog' => 0, 'url' => $url]);

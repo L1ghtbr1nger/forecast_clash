@@ -131,6 +131,9 @@ class ProfilesController extends AppController
         }
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
+            if (empty($data['gender'])) {
+                $data['gender'] = 0;
+            }
             $data['user_id'] = $userID;
             if (!$profile) {
                 $profile = $this->Profiles->newEntity();

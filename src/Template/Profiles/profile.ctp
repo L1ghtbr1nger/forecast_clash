@@ -122,8 +122,8 @@
                                 <fieldset>
                                     <label for="gender"><strong>Gender</strong></label>
                                     <?= $this->Form->radio('gender', [
-                                        ['value' => true, 'text' => 'Male'],
-                                        ['value' => false, 'text' => 'Female']
+                                        ['value' => 1, 'text' => 'Male'],
+                                        ['value' => 0, 'text' => 'Female']
                                     ],
                                     (isset($update) ? ['value' => $update['gender']] : [])                 
                                     ); ?>
