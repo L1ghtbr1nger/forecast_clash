@@ -4283,12 +4283,38 @@ div.body-col p {
     color: #fff;
 }
 
-.leaflet-retina .leaflet-control-layers-toggle{
+.leaflet-retina .leaflet-control-layers-toggle {
     background-image: url(../webroot/img/layers-2x.png);
 }
+
 .map-container {
     padding: 70px 0 0 0;
     margin-bottom: -70px;
+}
+
+@media (max-width: 420) {
+    .app .content {
+        padding: 40px 20px 70px 20px;
+    }
+    #map {
+        height: 500px;
+    }
+    #play-sidebar .sidebar-header h4 {
+        font-size: 15px;
+    }
+    #event_date {
+        padding: 6px;
+    }
+    .leaflet-sidebar .close {
+        right: -2px !important;
+        top: -6px !important;
+    }
+    .leaflet-sidebar {
+        width: 230px !important;
+    }
+    #play-sidebar h4 {
+        color:red;
+    }
 }
 
 #map {
@@ -4312,6 +4338,10 @@ div.body-col p {
 
 .leaflet-sidebar .close {
     line-height: 1.2em;
+    background-color: transparent;
+    z-index: 800;
+    right: ;
+    border-radius: 0;
 }
 
 #heatmap-sidebar {
@@ -4373,11 +4403,6 @@ label {
 
 .nav-tabs li.active {
     border-top: 1.5px solid rgb(61, 182, 239);
-}
-
-.leaflet-sidebar .close {
-    z-index: 800;
-    border-radius: 0;
 }
 
 .mobile-menu-bar {
@@ -4720,10 +4745,6 @@ label {
 
 .xaxisLabel {
     text-align: center;
-}
-
-.leaflet-sidebar .close {
-    background-color: transparent;
 }
 
 

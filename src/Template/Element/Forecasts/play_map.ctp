@@ -18,7 +18,7 @@ li > ul li{
 
 <article class="play-container">
     <div id="play-sidebar">
-        <div class="container-fluid sidebar-header">
+        <div class="container-fluid sidebar-header hidden-xs">
             <h4>Welcome to Forecast Clash</h4>
         </div>
         <div class="sidebar-content">
