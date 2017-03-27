@@ -133,6 +133,9 @@ class UsersController extends AppController
     // Login
     public function login() {
         $session = $this->request->session();
+        if (null !== $session->read('Auth.User')) {
+            $this->redirect('/');
+        }
         if ($this->request->is('ajax') || $this->request->query('provider')) {
             $referer = $session->read('referer');
             $user = $this->Auth->identify();
