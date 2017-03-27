@@ -1,8 +1,44 @@
+var paramsLB = {};
+var paramsHM = {};
+var paramsC = {};
 var locations = [];
+var heatmap;
+
+function callAjaxHM(filters){
+    $.ajax({ //ajax call to get DB data for the leaderboard
+        type: "POST",
+        url: "/forecast_clash/historical-forecasts/heatmap.json",
+        dataType: 'json',
+        data: filters,
+        success : function(response){
+            locations = response['heatmap'];
+            // Heatmap Layers
+            if(typeof heatmap !== 'undefined'){
+                map.removeLayer(heatmap); 
+            }
+            heatmap = L.heatLayer(locations, { radius: 25 }).addTo(map);
+        },
+        error : function(){   
+
+        }
+    });
+};
+
+function dateHM(){
+    if(from_value == null && to_value == null) {
+        paramsHM.range = [];
+    } else {
+        if(from_value !== null) {
+            paramsHM.range[0] = from_value;
+        }
+        if(to_value !== null) {
+            paramsHM.range[1] = to_value;
+        }
+    }
+    callAjaxHM(paramsHM);
+}
+
 $(document).ready(function(){
-    var paramsLB = {};
-    var paramsHM = {};
-    var paramsC = {};
     //
     //Leaderboard
     function callAjaxLB(filters){
@@ -96,28 +132,7 @@ $(document).ready(function(){
     callAjaxLB(paramsLB);
     
     //
-    //Heatmap
-    var heatmap;
-    function callAjaxHM(filters){
-        $.ajax({ //ajax call to get DB data for the leaderboard
-            type: "POST",
-            url: "/forecast_clash/historical-forecasts/heatmap.json",
-            dataType: 'json',
-            data: filters,
-            success : function(response){
-                locations = response['heatmap'];
-                // Heatmap Layers
-                if(typeof heatmap !== 'undefined'){
-                    map.removeLayer(heatmap); 
-                }
-                heatmap = L.heatLayer(locations, { radius: 25 }).addTo(map);
-            },
-            error : function(){   
-            
-            }
-        });
-    };
-    
+    //Heatmap    
     function tabsHM(){ //which tab is active
         var tab = $('.current_hm').attr('id');
         if(tab === 'all_hm'){
@@ -162,8 +177,6 @@ $(document).ready(function(){
             paramsHM['events'].push(3); //wind: checked
         }
     };
-    function dateHM(){
-    }
     
     $('.whom_hm').click(function(){ //run tabs when tab is selected
         if(!$(this).hasClass('current_hm')) {
@@ -185,16 +198,12 @@ $(document).ready(function(){
         weatherHM();
         callAjaxHM(paramsHM);
     });
-    $('.picker').on("hidden.bs.modal", function() {
-        dateHM();
-        console.log('hello');
-//        callAjaxHM(paramsHM);
-    });
-    
+ 
     tabsHM(); //run tabs with default tab
     experienceHM(); //run experience with default filters
     forecastHM(); //run filter for correct or incorrect
     weatherHM(); //run weather events filter
+    dateHM();
     callAjaxHM(paramsHM);
     
     function callAjaxC(filters){

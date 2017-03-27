@@ -7,6 +7,7 @@ use Cake\Error\Debugger;
 use Cake\I18n\Date;
 use Cake\ORM\TableRegistry;
 use Cake\Network\Http\Client;
+use Cake\I18n\Time;
 
 /**
  * HistoricalForecasts Controller
@@ -256,7 +257,15 @@ class HistoricalForecastsController extends AppController
             }
             if ($correct != 2) {  
                 $heatmapStats = $heatmapStats->where(['correct' => $correct]);
-            }  
+            }
+            if (isset($data['range'][0]) && !empty($data['range'][0])) {
+                $rangeF = Time::parse($data['range'][0]);
+                $heatmapStats = $heatmapStats->where(['forecast_date_end >=' => $rangeF]);
+            }
+            if (isset($data['range'][1]) && !empty($data['range'][1])) {
+                $rangeT = Time::parse($data['range'][1]);
+                $heatmapStats = $heatmapStats->where(['forecast_date_start <=' => $rangeT]);
+            }
             if ($heatmapStats = $heatmapStats->toArray()) {
                 $result = 1;
                 foreach($heatmapStats as $heatmapStat) {

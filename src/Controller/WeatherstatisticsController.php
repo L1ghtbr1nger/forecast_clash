@@ -137,7 +137,7 @@ class WeatherStatisticsController extends AppController
                 $count = 0;
                 $tempScore = $score['total_score'];
             }
-            $entry = ['rank' => $rank, 'user_id' => $user['id'], 'first_name' => $user['first_name'], 'last_name' => $user['last_name'], 'score' => $score['total_score']]; //building arrays of data for the view to put in multi-dimensional array
+            $entry = ['rank' => $rank, 'user_id' => $user['id'], 'first_name' => h($user['first_name']), 'last_name' => h($user['last_name']), 'score' => $score['total_score']]; //building arrays of data for the view to put in multi-dimensional array
             $totalAttempts = 0;
             $totalValid = 0;
             foreach ($weatherStats as $stat) { //calculate percentages for each weather event and total

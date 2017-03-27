@@ -120,11 +120,17 @@ $('.heatmap-filter-toggle').click(function() {
     $('.search-filter-heatmap').toggle('collapse-me');
     $('.heatmap .fa-chevron-down').toggleClass('flip-me');
 });
-
+var to_value = null;
+var from_value = null;
+    
 var from_input_heatmap = $('#input_from_heatmap').pickadate({
         format: 'mmmm d, yyyy',
         closeOnSelect: true,
-
+        onClose: function() {
+            // gets to value
+            from_value = this.get('select', 'yyyy-mm-dd');
+            dateHM();
+        }
     }),
 
     from_picker_heatmap = from_input_heatmap.pickadate('picker');
@@ -133,9 +139,9 @@ var to_input_heatmap = $('#input_to_heatmap').pickadate({
         format: 'mmmm d, yyyy',
         closeOnSelect: true,
         onClose: function() {
-
             // gets to value
-            var to_value = this.get('select', 'yyyy-mm-dd');
+            to_value = this.get('select', 'yyyy-mm-dd');
+            dateHM();
         }
     }),
     to_picker_heatmap = to_input_heatmap.pickadate('picker');
@@ -167,10 +173,5 @@ to_picker_heatmap.on('set', function(event) {
         from_picker_heatmap.set('max', false);
     }
 });
-
-var t  = to_picker_heatmap.get('select');
-console.log(t);
-var f = from_picker_heatmap.get('select');
-console.log(f);
 
 </script>

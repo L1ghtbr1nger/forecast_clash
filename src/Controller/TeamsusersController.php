@@ -124,7 +124,7 @@ class TeamsUsersController extends AppController
     
     public function joining($session, $team, $user, $addressC, $firstC, $captain) {
         if ($team['privacy'] && !$captain) { //if selected team is private and user not invited by captain, send email to team captain with link to accept or reject request
-            $link = Router::url(['controller' => 'TeamsUsers', 'action' => 'freeAgent'], TRUE).'/'.$team['id'].'_'.h($team['team_name']).'_'.$user['id'].'_'.$user['first_name'].'_'.$user['last_name'];
+            $link = Router::url(['controller' => 'TeamsUsers', 'action' => 'freeAgent'], TRUE).'/'.$team['id'].'_'.h($team['team_name']).'_'.$user['id'].'_'.h($user['first_name']).'_'.h($user['last_name']);
             $email = new Email();
             $email->from('donotreply@forecastclash.com', 'Forecast Clash')
                 ->to($addressC, $firstC)
@@ -138,7 +138,7 @@ class TeamsUsersController extends AppController
             $query = $this->TeamsUsers->find()->where(['user_id' => $user['id']]); //check if user already has team
             if ($result = $query->first()) { //if user has a team
                 if ($result['team_id'] === $team['id']) { //english selector for whether user is on potential team or different team
-                    $word = 'You are already a member of '.$team['team_name'];
+                    $word = 'You are already a member of '.h($team['team_name']);
                 } else {
                     $word = 'You have already joined a team.';
                 }
@@ -166,7 +166,7 @@ class TeamsUsersController extends AppController
                 $notice = $notices->newEntity();
                 $notice = $notices->patchEntity($notice, [
                     'user_id' => $user['id'],
-                    'message' => 'Take a trip to the podium, you have been selected! Visit the '.$team['team_name'].' Dugout...',
+                    'message' => 'Take a trip to the podium, you have been selected! Visit the '.h($team['team_name']).' Dugout...',
                     'link_address' => '/forecast_clash/teams/dugout',
                     'link_image' => 'teams/users/'.($team['team_logo'] ? $team['team_logo'] : 'logo-mark.png')
                 ]);
@@ -192,7 +192,7 @@ class TeamsUsersController extends AppController
             $captain = $team['user_id'];
             $userC = TableRegistry::get('Users')->get($captain);
             $addressC = $userC['email'];
-            $firstC = $userC['first_name'];
+            $firstC = h($userC['first_name']);
             $user = TableRegistry::get('Users')->get($userID);
             $this->joining($session, $team, $user, $addressC, $firstC, false);
             $url = Router::url(['controller' => 'Teams', 'action' => 'dugout'], TRUE);
@@ -209,7 +209,7 @@ class TeamsUsersController extends AppController
             $team = TableRegistry::get('Teams')->get($teamID);
             $userID = $data['user_id']; //potential member's user_id
             $teamID = $data['team_id'];
-            $first = $data['first_name']; //potential member's first name
+            $first = h($data['first_name']); //potential member's first name
             if ($data['sign']) { //if user chose to add potential member to team
                 $query = $this->TeamsUsers->find()->where(['user_id' => $userID]); //check if potential member already has team
                 if ($result = $query->toArray()) { //if potential member has a team
@@ -231,7 +231,7 @@ class TeamsUsersController extends AppController
                     $notice = $notices->newEntity();
                     $notice = $notices->patchEntity($notice, [
                         'user_id' => $userID,
-                        'message' => 'Take a trip to the podium, you have been selected! Visit the '.$team['team_name'].' Dugout...',
+                        'message' => 'Take a trip to the podium, you have been selected! Visit the '.h($team['team_name']).' Dugout...',
                         'link_address' => '/forecast_clash/teams/dugout',
                         'link_image' => 'teams/users/'.($team['team_logo'] ? $team['team_logo'] : 'logo-mark.png')
                     ]);
@@ -276,7 +276,7 @@ class TeamsUsersController extends AppController
             $url = Router::url("",true);
             $params = explode('agent/', $url);
             $param = explode('_', $params[1]);
-            $data = ['teamID' => $param[0], 'teamName' => $param[1], 'userID' => $param[2], 'first' => $param[3], 'last' => $param[4]];
+            $data = ['teamID' => $param[0], 'teamName' => h($param[1]), 'userID' => $param[2], 'first' => h($param[3]), 'last' => h($param[4])];
             $this->set($data);
         }
     }
@@ -296,7 +296,7 @@ class TeamsUsersController extends AppController
             $team = $teams->get($teamID);
             $userC = TableRegistry::get('Users')->get($team['user_id']);
             $address = $userC['email'];
-            $first = $userC['first_name'];
+            $first = h($userC['first_name']);
             $user = TableRegistry::get('Users')->get($currentUserID);
             ($userID == $team['user_id']) ? $captain = true : $captain = false;
             $result = $this->joining($session, $team, $user, $address, $first, $captain);
