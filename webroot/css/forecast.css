@@ -2248,8 +2248,6 @@ span a {
 
 /* Let's get this party started */
 
-
-
 .no-results {
     padding: 8px;
     margin-bottom: 0;
@@ -8103,6 +8101,12 @@ ul {
 .menu i {
     font-size: 24px;
     margin-right: 2px;
+}
+
+.social h5 {
+    height: 0;
+    position: relative;
+    top: -12px;
 }
 
 

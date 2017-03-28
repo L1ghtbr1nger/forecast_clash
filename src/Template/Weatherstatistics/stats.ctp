@@ -23,7 +23,9 @@ if ($loggedIn) {
             </script>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-12">
+
             <div class="social pull-right">
+            <h5>Share Forecast Clash</h5>
                 <a class="share-social share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3A//forecastclash.com/forecast_clash/weather-statistics/stats"><i class="fa fa-facebook" aria-hidden="true"></i></a>
 
                 <a class="share-social share-twitter" href="https://twitter.com/home?status=http%3A//forecastclash.com/forecast_clash/weather-statistics/stats"><i class="fa fa-twitter" aria-hidden="true"></i></a>

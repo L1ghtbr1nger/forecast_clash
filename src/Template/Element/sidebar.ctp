@@ -38,9 +38,9 @@
         </div>
     </div>
 </aside>                        
-<div class="mobile-nav visible-sm visible-xs">
+<div class="mobile-nav visible-sm visible-xs toggle-mobile">
     <ul>
-        <li class="play-link">
+        <li class="play-link active">
             <a href="/forecast_clash"> <i class="fa fa-gamepad"></i> Play </a>
         </li>
         <li class="stats-link">
@@ -59,11 +59,4 @@
         left: 0;
     }
 </style>
-<script>
-    $('.menu-open-mobile').click(function(){
-        $('.mobile-nav').toggleClass('toggle-mobile');
-    })
 
-
-
-</script>
