@@ -8,10 +8,9 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
         </span>
     </div>
 </div>
-<div class="header-block header-block-search hidden-sm-down">
-</div>
-<div class="header-block header-block-buttons">
-</div>
+<span class="menu-open-mobile menu-open visible-sm visible-xs">
+    <i class="fa fa-bars" aria-hidden="true"><span>Menu</span></i>
+</span>
 <div class="header-block header-block-nav">
     <ul class="nav-profile">
         <li class="notifications new">

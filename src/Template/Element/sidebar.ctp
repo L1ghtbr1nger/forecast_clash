@@ -3,7 +3,7 @@
         <span class="menu-toggle"><i class="fa fa-close" aria-hidden="true"></i></span>
         <div class="sidebar-navigation-header">
             <div class="brand">
-                <a href="/forecast_clash/" class="logo"><?= $this->Html->image('logo-light-blue.png', ['alt' => 'Forecast Clash Logo']) ?></a>
+                <span class="logo"><?= $this->Html->image('logo-light-blue.png', ['alt' => 'Forecast Clash Logo']) ?></span>
             </div>
         </div>
         <nav class="menu">
@@ -54,3 +54,16 @@
         </li>
     </ul>
 </div>
+<style>
+    .toggle-mobile{
+        left: 0;
+    }
+</style>
+<script>
+    $('.menu-open-mobile').click(function(){
+        $('.mobile-nav').toggleClass('toggle-mobile');
+    })
+
+
+
+</script>
