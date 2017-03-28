@@ -10,7 +10,7 @@
                 <li role="presentation" id="team_lb" class="<?= (($teamResult) ? 'whom_lb' : '' ) ?>"><a href="#team_players" aria-controls="top_players" role="tab" data-toggle="tab"><?= (($teamResult) ? h($teamUser['teams'][0]['team_name']) : '<a href="/forecast_clash/teams/dugout">Join Team</a>' ) ?></a></li>
             </ul>
         </div>
-        <div class="card-block">
+        <div class="card-block overflow-x">
             <!-- Tab panes -->
             <div class="tab-content leaderboard">
                 <div role="tabpanel" class="tab-pane active" id="all_players">

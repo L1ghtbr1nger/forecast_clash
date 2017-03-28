@@ -101,6 +101,12 @@ $(document).ready(function() {
     $("#sidebar-collapse-btn").click(function(){
         $(".mobile-nav-close").fadeIn(3000);
     });
+
+
+    $('.menu-open-mobile').click(function(){
+        $('.mobile-nav').toggleClass('toggle-mobile');
+    });
+
     
     /*Menu-toggle*/
     $(".menu-toggle").click(function(e) {
