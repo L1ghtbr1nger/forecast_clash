@@ -56,7 +56,7 @@ li > ul li{
             <?php if ($loggedIn) {
                 echo '<input class="btn btn-primary forecast-btn login" type="submit" value="Make Your Forecast" id="forecast">';
              } else {
-                echo '<a href="/forecast_clash/users/login"><input class="btn btn-primary forecast-btn forecast-link" type="submit" value="Please Login!"></a>';
+                echo '<a href="/forecast_clash/users/login"><input class="btn forecast-btn forecast-link" type="submit" value="Please Login!"></a>';
             } ?>
         </div>
     </div>
@@ -111,7 +111,7 @@ li > ul li{
                             <h5>Wind</h5>
                         </div>
                     </li>
-                    <li><div class="clearB"></div>Choose the day to be targeted</li>
+                    <li><div class="clearB"></div>Choose the day to be targeted. Forecasts are made in your local time.</li>
                     <li>Set target radius</li>
                     <li>Click the map and set your target </li>
                 </ul>
@@ -163,11 +163,8 @@ $('.datepicker').pickadate({
     max: new Date(newdate_week),
     format: 'mmmm d, yyyy',
     closeOnSelect: true,
-    onClose: function() {
-
-    },
-    onOpen: function(){
-        $('.mobile-nav').hide();
+    onRender: function(){
+        $('.picker').appendTo('body');
     }
 });
 
