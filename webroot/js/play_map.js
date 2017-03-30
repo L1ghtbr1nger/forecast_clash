@@ -9,22 +9,59 @@ $('document').ready(function() {
 
 
         $('.scoring-instructions-btn').click(function() {
-            $('.scoring-instructions').hide(500);
-            $('.scoring-btn').show(500);
-            $('.targeting').show(500);
+            $('.scoring-instructions').hide();
+            $('.scoring-btn').show();
+            $('.targeting').show();
             $('.scoring-instructions-btn').hide();
+            $('.skip-instructions').hide();
             $('.scoring-btn').appendTo('.modal-footer');
+
         });
 
         $('.scoring-btn').click(function() {
-            $('.scoring').show(500);
-            $('.scoring-btn').hide(500);
-            $('.scoring-instructions').hide(500);
+            $('.scoring').show();
+            $('.scoring-btn').hide();
+            $('.scoring-instructions').hide();
 
         });
     }
 
     instructionsInit();
+
+
+    // Active and Pending Forecast Layers
+
+    // var forecast_lat = 12.2232400000000,
+    //     forecast_lng = 12.2323;
+
+    // // set lat/lng decimal to 5
+    // function toFixed(fixedInt) {
+    //     fixedInt.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+    // }
+
+    // if (forecast_lat && forecast_lng) {
+    //     toFixed(forecast_lat);
+    //     toFixed(forecast_lng);
+    // } else {
+    //     console.log('no lat/lng');
+    // }
+
+    // var tornado_pending = L.marker([forecast_lat, forecast_lng]).bindPopup('You have a Tornado Forecast pending at ' + forecast_lat + ',' + forecast_lng).openPopup(),
+    //     hail_pending = L.marker([forecast_lat, forecast_lng]).bindPopup('You have a Hail Forecast pending at ' + forecast_lat + ',' + forecast_lng).openPopup(),
+    //     wind_pending = L.marker([forecast_lat, forecast_lng]).bindPopup('You have a Wind Forecast pending at ' + forecast_lat + ',' + forecast_lng).openPopup(),
+    //     tornado_active = L.marker([forecast_lat, forecast_lng]).bindPopup('You have a Tornado Forecast pending at ' + forecast_lat + ',' + forecast_lng).openPopup(),
+    //     hail_active = L.marker([forecast_lat, forecast_lng]).bindPopup('You have a Hail Forecast pending at ' + forecast_lat + ',' + forecast_lng).openPopup(),
+    //     wind_active = L.marker([forecast_lat, forecast_lng]).bindPopup('You have a Tornado Forecast pending at ' + forecast_lat + ',' + forecast_lng).openPopup();
+
+
+    // var pending_layer = L.layerGroup([tornado_pending, hail_pending, wind_pending]);
+
+    // var active_layer = L.layerGroup([tornado_active, hail_active, wind_active]);
+
+    // var forecastLayers = {
+    //     "Pending Forecasts": pending_layer,
+    //     "Active Forecasts": active_layer
+    // };
 
     // initializes sidebar
     var sidebar = L.control.sidebar('play-sidebar', {
@@ -40,7 +77,8 @@ $('document').ready(function() {
     var map = new L.map('map', {
         center: [40.2226, -95.4395],
         zoom: 5,
-        doubleClickZoom: false
+        doubleClickZoom: false,
+        // layers: [pending_layer, active_layer]
     })
 
     .addControl(sidebar)
@@ -50,6 +88,8 @@ $('document').ready(function() {
 
     })
 
+    // L.control.layers(forecastLayers).addTo(map);
+
     // Set tile layer
     L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
@@ -58,12 +98,6 @@ $('document').ready(function() {
     // close button
     $('.close').click(function() {
 
-        // L.easyButton('Test', function(btn, map) {
-        // sidebar.show();
-        // this.removeFrom(map);
-        // }).addTo(map);
-
-
         // tornado controller
         var openSidebarControl = L.easyButton({
             states: [{
@@ -71,7 +105,6 @@ $('document').ready(function() {
                 icon: tornadoSVG,
                 title: 'Make a Forecast for a Tornado',
                 onClick: function(btn, map, e) {
-                    console.log('open sidebar');
                     sidebar.show();
                     this.removeFrom(map);
                 },
@@ -83,7 +116,7 @@ $('document').ready(function() {
         $('.sidebar-closed-active').html('<h5>Open Sidebar</h5');
         $('.sidebar-closed-active h5').css({
             'color': '#fff',
-            'text-transform': 'uppercase'
+            'font-size': '13px' 
         });
     });
 
@@ -150,7 +183,7 @@ $('document').ready(function() {
         states: [{
             stateName: 'wind-control', // name the state
             icon: windSVG, // and define its properties
-            title: 'Make a forecast for wind', // like its title
+            title: 'Make a forecast for Wind', // like its title
             onClick: function(btn, map, e) {
                 $('#wind-event').prop('checked', true);
                 $('.climacon_component-stroke_tornadoLine').css('fill', 'rgb(255, 255, 255)');
