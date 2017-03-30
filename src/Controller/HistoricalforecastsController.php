@@ -127,7 +127,7 @@ class HistoricalForecastsController extends AppController
     public function compares() {
         $date = new Date(); //date for today
         $datePrev = new Date('-1 day'); //date for yesterday
-        $query = $this->HistoricalForecasts->find()->where(['forecast_date_end >=' => $datePrev, 'forecast_date_end <' => $date])->contain('WeatherEvents'); //find records where the forecast ended yesterday
+        $query = $this->HistoricalForecasts->find()->where(['forecast_date_end <' => $date])->contain('WeatherEvents'); //find records where the forecast ended yesterday->where(['forecast_date_end >=' => $datePrev, 'forecast_date_end <' => $date])
         if ($query->toArray()) { //if record(s) found
             foreach ($query as $row) {
                 $appID = 'zihaMoPWm6nYiFjubD6Ox'; //API key
@@ -137,10 +137,10 @@ class HistoricalForecastsController extends AppController
                 $lat = $row['latitude'];
                 $lon = $row['longitude'];
                 $radius = $row['radius'];
-                $begin = $row['forecast_date_start'];
-                $end = $row['forecast_date_end'];
+                $begin = strtotime($row['forecast_date_start']);
+                $end = strtotime($row['forecast_date_end']);
                 $http = new Client();
-                $params = 'client_id='.$appID.'&client_secret='.$appKey.'&p='.$lat.','.$lon.'&radius='.$radius.'mi&limit=1&from='.$begin.'$to='.$end; //params common to each event comparison
+                $params = 'client_id='.$appID.'&client_secret='.$appKey.'&p='.$lat.','.$lon.'&radius='.$radius.'mi&limit=1&from='.$begin.'&to='.$end; //params common to each event comparison
                 if ($weather === 1) {
                     $responseTornado = $http->get('https://api.aerisapi.com/stormreports/within?filter=tornado&fields=place.state,report.timestamp,loc.lat,loc.long,report.detail,report.detail.text&'.$params);
                     $jsonResponse = $responseTornado->json;
@@ -148,6 +148,11 @@ class HistoricalForecastsController extends AppController
                 } else if ($weather === 2) {
                     $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&fields=place.state,report.timestamp,loc.lat,loc.long,report.detail,report.detail.text&'.$params);
                     $jsonResponse = $responseHail->json;
+                    if ($jsonResponse['error']['code'] != 'warn_no_data') {
+                        if ($jsonResponse['response'][0]['report']['detail']['hailIN'] < .75) {
+                            $jsonResponse['error']['code'] = 'warn_no_data';     
+                        }
+                    }
                     debug($jsonResponse);
                 } else {
                     $responseWind = $http->get('https://api.aerisapi.com/observations/within?query=wind:50&fields=place.state,ob.dateTimeISO,loc.lat,loc.long&filter=allstations&'.$params);
@@ -157,6 +162,8 @@ class HistoricalForecastsController extends AppController
                 $correct = $this->HistoricalForecasts->get($row['id']); //grab the current record to mark it correct or incorrect
                 $weatherStats = TableRegistry::get('WeatherStatistics');
                 $weatherStat = $weatherStats->find()->where(['user_id' => $user, 'weather_event_id' => $weather]); //look for existing stats on selected weather event for selected user
+                $scoreboard = TableRegistry::get('Scores');
+                $score = $scoreboard->find()->where(['user_id' => $user]); //find user's score record
                 if ($jsonResponse['error']['code'] == 'warn_no_data') { //if no events were found, mark forecast as incorrect.
                     $message = 'Better luck next time.  No '.$row['weather_event']['weather'].' events were located within your forecast.  See how your abilities stack up against your fellow forecasters...';
                     $correct->correct = 0;
@@ -172,6 +179,13 @@ class HistoricalForecastsController extends AppController
                         $statResult->valid_attempts = 0;
                         $statResult->radius = $radius;
                         $statResult->forecast_length = $row['forecast_length'];
+                    }
+                    if (!($result = $score->first())) { //if not found
+                        $result = $scoreboard->newEntity(); //create new record
+                        $result->user_id = $user; //for selected user
+                        $newScore = 0; //calculate score
+                        $result->total_score = $newScore; //save score to entity
+                        $scoreboard->save($result); //save results to Scores table
                     }
                 } else { //if any events were found, mark forecast as correct
                     $message = 'Congratulations!!! You correctly forecast a '.$row['weather_event']['weather'].' event!  See how your abilities stack up against your fellow forecasters...'; 
@@ -195,8 +209,6 @@ class HistoricalForecastsController extends AppController
                     $length = $row['forecast_length'];
                     $days = round($length / 24); //round hours into days
                     $timeMult = 1 + ($days / 10); //calculate time multiplier 1.0 to 1.8 from days out
-                    $scoreboard = TableRegistry::get('Scores');
-                    $score = $scoreboard->find()->where(['user_id' => $user]); //find user's score record
                     if ($result = $score->first()) { //if found
                         $newScore = $result['total_score'] + (10 * $radiusMult * $timeMult * $adminMult); //calculate score and add to existing
                     } else { //if not
@@ -220,6 +232,7 @@ class HistoricalForecastsController extends AppController
                 $notices->save($notice);
             }
         }
+        exit;
     }
     
     public function heatmap() {
@@ -269,7 +282,7 @@ class HistoricalForecastsController extends AppController
             if ($heatmapStats = $heatmapStats->toArray()) {
                 $result = 1;
                 foreach($heatmapStats as $heatmapStat) {
-                    $heatmap[] = [$heatmapStat['latitude'], $heatmapStat['longitude'], 300];
+                    $heatmap[] = [$heatmapStat['latitude'], $heatmapStat['longitude'], 200];
                 }
             } else {
                 $result = 0;

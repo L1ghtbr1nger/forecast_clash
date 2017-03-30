@@ -169,7 +169,11 @@ class TeamsController extends AppController
             $this->set('teammates', $teammates);
             $total = 0;
             foreach ($teammates as $teammate) {
-                $total += $teammate['score']['total_score'];
+                foreach ($teammate['users'] as $user) {
+                    if (isset($user['scores']) && !empty($user['scores'])) {
+                        $total += $user['scores'][0]['total_score'];
+                    }
+                }
             }
             $this->set('total', $total);
             if ($userID === $userTeam['teams'][0]['user_id']) {

@@ -157,7 +157,7 @@ class ProfilesController extends AppController
                 $notice = $notices->patchEntity($notice, [
                     'user_id' => $userID,
                     'message' => 'We are happy to get to know you! Looks like you&#39;re ready to make a forecast...',
-                    'link_address' => '/forecast_clash/profiles/profile',
+                    'link_address' => '/forecast_clash/',
                     'link_image' => 'logo-mark.png'
                 ]);
                 $notices->save($notice);

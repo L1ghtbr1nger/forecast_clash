@@ -71,7 +71,7 @@
                                             $count++;
                                             echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').' '.(($data['id'] === $user['id']) ? 'userTeam' : '').'">';
                                             echo '<td>'.h($user['first_name']).' '.h($user['last_name']).'</td>';
-                                            echo '<td>'.intval($user['total_score']).'</td>';
+                                            echo '<td>'.((isset($user['scores'][0]['total_score']) && !empty($user['scores'][0]['total_score'])) ? intval($user['scores'][0]['total_score']) : '0').'</td>';
                                             echo '<td>'.(($user['meteorologist']) ? 'Professional' : 'Enthusiast' ).'</td></tr>';
                                         }
                                     }

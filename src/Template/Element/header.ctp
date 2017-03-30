@@ -23,7 +23,7 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
                 <ul class="notifications-container"><?php
                     if (isset($notificationsUnread)) {
                         foreach ($notificationsUnread as $notice) {
-                            echo '<li>';
+                            echo '<li class="unread">';
                                 echo '<a href="'.$notice['link_address'].'" class="notification-item" id="'.$notice['id'].'">';
                                     echo '<div class="img-col">';
                                         echo '<div class="img">';
@@ -70,7 +70,8 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
                 </ul>
                 <footer>
                     <ul>
-                        <li><a id="dismisser" href="">Dismiss All Read</a></li>
+                        <li><a class="dismisser" id="dismissRead" href="">Dismiss All Read</a></li>
+                        <li><a class="dismisser" id="dismissAll" href="">Dismiss All Notices</a></li>
                     </ul>
                 </footer>
             </div>

@@ -3,7 +3,7 @@ namespace App\Shell;
 
 use Cake\Console\Shell;
 
-class LockerShell extends Shell
+class StreakShell extends Shell
 {
     public function initialize()
     {

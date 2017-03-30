@@ -4051,6 +4051,11 @@ pre {
     bottom: 100%;
 }
 
+.header .header-block-nav .notifications-dropdown-menu .notifications-container {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
 .header .header-block-nav .notifications-dropdown-menu .notifications-container .notification-item {
     border-bottom: 1px solid rgba(126, 142, 159, 0.1);
     padding: 5px;

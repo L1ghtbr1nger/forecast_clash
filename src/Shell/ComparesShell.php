@@ -5,7 +5,7 @@ use Cake\Console\Shell;
 use Cake\ORM\TableRegistry;
 use Cake\Network\Http\Client;
 
-class LockerShell extends Shell
+class ComparesShell extends Shell
 {
     public function initialize()
     {

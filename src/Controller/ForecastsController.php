@@ -139,19 +139,14 @@ class ForecastsController extends AppController
             }
             if (!empty($data['forecast_date'])) {
                 if (isset($data['am_pm'])) {
-                    $tz = 'America/Chicago'; //$data['currTZ']; //Get timezone from jQuery
-                    date_default_timezone_set($tz); //set the default timezone for any time instances about to be created.
                     $dateStart = strtotime($data['forecast_date']); //conver Month, #Day #Year format to unix time 
                     if ($data['am_pm']) {
                         $dateStart = $dateStart + 43200; //if PM then move start time to noon
                     }
                     $dateEnd = $dateStart + 43200; //add 12 hours in seconds to unix representation of forecast start
-                    $forecastDateStart = Time::parse($dateStart)->timezone('UTC'); //convert forecast start to UTC
-                    $forecastDateEnd = Time::parse($dateEnd)->timezone('UTC'); //convert forecast end to UTC
                     $data['forecast_date_start'] = $forecastDateStart;
                     $data['forecast_date_end'] = $forecastDateEnd;
-                    $now = Time::now()->timezone('UTC');
-                    $data['submit_date'] = $now;
+                    $data['submit_date'] = Time::now();
                 }
             }
             $table = $this->Forecasts;

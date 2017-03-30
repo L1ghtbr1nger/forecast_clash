@@ -139,7 +139,7 @@ $("#radius").mousemove(function () {
 // Get tomorrows date for min date
 var tomorrow = new Date(); 
 var newdate = new Date();
-// newdate.setDate(tomorrow.getDate() + 1);
+newdate.setDate(tomorrow.getDate() + 1);
 
 // Get next 8 days
 var newdate_week = new Date();

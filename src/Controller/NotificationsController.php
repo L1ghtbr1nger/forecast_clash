@@ -115,7 +115,6 @@ class NotificationsController extends AppController
     }
     
     public function notifier() {
-        $this->render(false);
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
             if ($data['id'] != 'guest') {
@@ -129,7 +128,12 @@ class NotificationsController extends AppController
     public function deleter() {
         $session = $this->request->session();
         if ($userID = $session->read('Auth.User.id')) {
-            $notices = $this->Notifications->deleteAll(['user_id' => $userID, 'seen' => 1]);
+            $data = $this->request->data;
+            if ($data['toDismiss']) {
+                $notices = $this->Notifications->deleteAll(['user_id' => $userID]);
+            } else {
+                $notices = $this->Notifications->deleteAll(['user_id' => $userID, 'seen' => 1]);
+            } 
         }
     }
 }

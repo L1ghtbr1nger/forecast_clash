@@ -73,15 +73,38 @@ $(document).ready(function(){
             });
         }
     });
-    $('#dismisser').click(function(e){
+    $('#dismissRead').click(function(e){
         e.preventDefault();
         $.ajax({
             type: "POST",
             url: "/forecast_clash/notifications/deleter.json",
             dataType: 'json',
-            data: 0,
+            data: {toDelete: 0},
             success : function(response) {
                 $('.read').hide();
+            },
+            error : function() {   
+            }
+        });
+    });
+    $('.dismisser').click(function(e){
+        if(e.target.id == 'dismissAll') {
+            var chosen = 1;
+        } else {
+            var chosen = 0;
+        }
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/forecast_clash/notifications/deleter.json",
+            dataType: 'json',
+            data: {toDismiss: chosen},
+            success : function(response) {
+                $('.read').hide();
+                if(chosen){
+                    $('.unread').hide();
+                    $('.counter').html('');
+                }
             },
             error : function() {   
             }
