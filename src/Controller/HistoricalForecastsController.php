@@ -190,7 +190,7 @@ class HistoricalForecastsController extends AppController
             }
             if ($correct != 2) {  
                 $heatmapStats = $heatmapStats->where(['correct' => $correct]);
-                $pendingStats = null;
+                $pendingStats = TableRegistry::get('Forecasts')->newEntity();
             }
             if (isset($data['range'][0]) && !empty($data['range'][0])) {
                 $rangeF = Time::parse($data['range'][0]);
