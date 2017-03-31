@@ -13,13 +13,15 @@
 li > ul li{
     font-size: 14px;
 }
-
+h4 i{
+    margin-right:12px;
+}
 </style>
 
 <article class="play-container">
     <div id="play-sidebar">
         <div class="container-fluid sidebar-header">
-            <h4 class="hidden-xs">Set Your Forecast</h4>
+            <h4><i style="color: #fff; font-size:20px" class="fa fa-bars" aria-hidden="true"></i>Set Your Forecast</h4>
         </div>
         <div class="sidebar-content">
             <div class="instructions">
@@ -111,11 +113,11 @@ li > ul li{
                             <h5>Wind</h5>
                         </div>
                     </li>
-                    <li><div class="clearB"></div>Choose the day to be targeted. Forecasts are made in your local time.</li>
+                    <li><div class="clearB"></div>Choose the day to be targeted. Forecasts are made in UTC.</li>
                     <li>Set target radius</li>
                     <li>Click the map and set your target </li>
                 </ul>
-                <p>Forecasts notifications will be sent out every 12 hours so be sure to come back and see how you did. <strong>Good Luck!</strong></p>
+                <p>Forecasts notifications will be sent out everyday at noon so be sure to come back and see how you did. <strong>Good Luck!</strong></p>
             </div>
         </div>
       </div>

@@ -91,8 +91,7 @@ $('document').ready(function() {
     // L.control.layers(forecastLayers).addTo(map);
 
     // Set tile layer
-    L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+    L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
     }).addTo(map);
 
     // close button
@@ -113,7 +112,7 @@ $('document').ready(function() {
         });
 
         openSidebarControl.addTo(map);
-        $('.sidebar-closed-active').html('<h5>Open Sidebar</h5');
+        $('.sidebar-closed-active').html('<i style="color: #fff; font-size:20px" class="fa fa-bars" aria-hidden="true"></i>');
         $('.sidebar-closed-active h5').css({
             'color': '#fff',
             'font-size': '13px' 
