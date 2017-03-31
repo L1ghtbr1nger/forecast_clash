@@ -43,8 +43,8 @@
                                 <th>Name</th>
                                 <th>Score</th>
                                 <th>Tornado Rate</th>
-                                <th>Hail Rate</th>
-                                <th>Wind Rate</th>
+                                <th>Hail Rate (>.75in)</th>
+                                <th>Wind Rate (>58mph)</th>
                                 <th>Total Rate</th>
                             </tr>
                         </thead>

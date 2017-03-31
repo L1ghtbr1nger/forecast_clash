@@ -12,7 +12,7 @@ class ClearShell extends Shell
     }
     
     public function main() {
-        $query = $this->Notifications->deleteAll(['read' => 1]); //find all read notifications
+        $query = $this->Notifications->deleteAll(['seen' => 1]); //find all read notifications
     }
 }
 ?>
