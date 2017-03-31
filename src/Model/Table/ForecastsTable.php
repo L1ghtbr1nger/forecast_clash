@@ -45,6 +45,15 @@ class ForecastsTable extends Table
             'foreignKey' => 'weather_event_id',
             'joinType' => 'INNER'
         ]);
+        
+        $this->hasMany('TeamsUsers', [
+            'foreignKey' => [
+                'user_id'
+            ],
+            'bindingKey' => [
+                'user_id'
+            ]
+        ]);
     }
 
     /**
