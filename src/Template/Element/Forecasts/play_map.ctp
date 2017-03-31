@@ -62,7 +62,16 @@ li > ul li{
     </div>
     <div id="map"></div>
 </article>
-
+<!-- Pending Forecasts hidden fields -->
+<?= $this->Form->hidden('pendingLocations', [
+    'value' => $pendingLocations
+]) ?>
+<?= $this->Form->hidden('pendingEvents', [
+    'value' => $pendingEvents
+]) ?>
+<?= $this->Form->hidden('pendingDates', [
+    'value' => $pendingDates
+]) ?>
 <div class="modal fade" tabindex="-1" role="dialog" id="instructions-modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
