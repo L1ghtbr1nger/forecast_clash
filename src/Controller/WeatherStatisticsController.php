@@ -29,13 +29,17 @@ class WeatherStatisticsController extends AppController
         $this->set('_serialize', ['weatherStatistics']);
     }
     
-    public function scores($scores) { //function to grab separate data collected from DB and do some calculations on them before returning new data
+    public function scores($scores, $userID) { //function to grab separate data collected from DB and do some calculations on them before returning new data
         $rank = 0;
         $tempScore = -1;
         $count = 0;
+        $leads = false;
         foreach($scores as $score) {
             $rank++; //simple counter to show rank
             $user = $score['user'];
+            if ($userID == $user['id']) {
+                $leads = true;
+            }
             $weatherStats = $score['weather_statistics'];
             if (isset($score['scores'])) {
                 $score = $score['scores'][0];
@@ -68,7 +72,7 @@ class WeatherStatisticsController extends AppController
             return [$result];
         } else {
             $result = 1;
-            return [$result, $data];
+            return [$result, $data, $leads];
         }
     }
     
@@ -110,7 +114,7 @@ class WeatherStatisticsController extends AppController
                 });
             }
             $scores = $this->meteor($scores, $exp);
-            $results = $this->scores($scores);
+            $results = $this->scores($scores, $userID);
             $result = $results[0];
             ($result) ? $board = $results[1] : $board = [0];
             echo json_encode(['result' => $result, 'leaderboard' => $board, 'user_id' => $userID]); //leaderboard.js
@@ -129,11 +133,29 @@ class WeatherStatisticsController extends AppController
                 $this->set('user', null);
             }
             $scores = $scores->contain(['Users']); //get top 20 scores with default filters
-            $results = $this->scores($scores); //save results of scores function which grabs the data from each found row
+            $results = $this->scores($scores, $userID); //save results of scores function which grabs the data from each found row
             $result = $results[0]; //were any rows found
             $this->set('result', $result); //tell the view
             if ($result) { //if yes
                 $board = $results[1]; //grab the result data
+                if (!$results[2]) {
+                    if ($userID) {
+                        $scorez = $scoreboard->find('all')->where(['user_id' => $userID])->contain('WeatherStatistics.WeatherEvents');
+                        if ($scorez->toArray()) {
+                            $results = $this->scores($scorez, $userID);
+                            $board[] = $results[1];
+                        } else {
+                            $board[] = [
+                                'rank' => '...',
+                                'user_id' => $userID,
+                                'first_name' => $currentUser['first_name'],
+                                'last_name' => $currentUser['last_name'],
+                                'score' => 0,
+                                'total' => 0
+                            ];
+                        }
+                    }
+                }
                 $this->set('leaderboard', $board); //share with view
             }
         }   

@@ -153,7 +153,7 @@ li > ul li{
 $('.play-link').addClass('active');
 
 $("#radius").mousemove(function () {
-    $("#output").text('(' + $("#radius").val() + ' miles)')
+    $("#output").text('(' + $("#radius").val() + ' miles)');
 });
 
 // Get tomorrows date for min date
@@ -177,27 +177,48 @@ $('.datepicker').pickadate({
     }
 });
 
+// Pending forecast data
+var pendingLocations = [];
+var pendingEvents = [];
+var pendingDates = [];
+
 $(document).ready(function(){
     $('#instructions-modal').modal('show');
 
-        $('.skip-instructions').click(function(){
-            $('#instructions-modal').modal('hide');
-            $('.scoring-instructions').show();
-            $('.scoring-instructions-btn').show();
-            $('.scoring-btn').hide();
-            $('.targeting').hide();
-        });
+    $('.skip-instructions').click(function(){
+        $('#instructions-modal').modal('hide');
+        $('.scoring-instructions').show();
+        $('.scoring-instructions-btn').show();
+        $('.scoring-btn').hide();
+        $('.targeting').hide();
+    });
 
-        $('.scoring-btn').click(function(){
-            $('#instructions-modal').modal('hide');
-        });
+    $('.scoring-btn').click(function(){
+        $('#instructions-modal').modal('hide');
+    });
 
-        $('#modalTrigger').click(function(){
-            $('#instructions-modal').modal('show');
-            $('.scoring-instructions').show();
-            $('.scoring-instructions-btn').show();
-            $('.targeting').hide();
-        })
+    $('#modalTrigger').click(function(){
+        $('#instructions-modal').modal('show');
+        $('.scoring-instructions').show();
+        $('.scoring-instructions-btn').show();
+        $('.targeting').hide();
+    });
+    
+    $.ajax({ //ajax call to get DB data for the leaderboard
+        type: "POST",
+        url: "/forecast_clash/forecasts/pending.json",
+        dataType: 'json',
+        data: 0,
+        success : function(response){
+            pendingLocations = response['pendingLocations'];
+            pendingEvents = response['pendingEvents'];
+            pendingDates = response['pendingDates'];
+            //write map layer here
+        },
+        error : function(){   
+
+        }
+    });
 });
 
 

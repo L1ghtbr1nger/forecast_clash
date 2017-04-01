@@ -118,6 +118,21 @@ class ForecastsController extends AppController
         }
     }
     
+    public function pending() {
+        if (($userID = $session->read('Auth.User.id')) && ($forecasts = $this->Forecasts->find('all')->where(['user_id' => $userID])->contain('WeatherEvents'))) {
+            foreach ($forecasts as $forecast) {
+                $pendingLocations[] = [$forecast['latitude'], $forecast['longitude']];
+                $pendingEvents[] = $forecast['weather_event']['weather'];
+                $pendingDates[] = $forecast['forecast_date_start']->i18nFormat('yyyy-MM-dd HH:mm:ss');
+            }
+        } else {
+            $pendingLocations = [];
+            $pendingEvents[] = [];
+            $pendingDates[] = [];
+        }
+        echo json_encode(['pendingLocations' => $pendingLocations, 'pendingEvents' => $pendingEvents, 'pendingDates' => $pendingDates]);
+    }
+    
     public function locker() { //Takes Forecasts that have locked in and moves them to HistoricalForecasts
         $deleter = 1;
         $lock = Time::now('+12 hours'); //Get an instance of the current time + 12 hours

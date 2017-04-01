@@ -34,7 +34,10 @@ class ProfilesController extends AppController
         $session = $this->request->session();
         $userID = $session->read('Auth.User.id');
         if ($profile = $this->Profiles->find('all')->where(['user_id' => $userID])->contain('States')->first()) {
-            $this->set('update', $profile);
+            $this->set('updateProfile', $profile);
+        }
+        if ($user = TableRegistry::get('Users')->get($userID)) {
+            $this->set('updateUser', $user);
         }
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
