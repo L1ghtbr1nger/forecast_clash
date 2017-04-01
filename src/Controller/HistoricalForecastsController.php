@@ -36,7 +36,7 @@ class HistoricalForecastsController extends AppController
     public function compares() {
         $date = new Date(); //date for today
         $datePrev = new Date('-1 day'); //date for yesterday
-        $query = $this->HistoricalForecasts->find()->where(['forecast_date_end <' => $date])->contain('WeatherEvents'); //find records where the forecast ended yesterday->where(['forecast_date_end >=' => $datePrev, 'forecast_date_end <' => $date])
+        $query = $this->HistoricalForecasts->find()->where(['forecast_date_end >=' => $datePrev, 'forecast_date_end <' => $date])->contain('WeatherEvents'); //find records where the forecast ended yesterday
         if ($query->toArray()) { //if record(s) found
             foreach ($query as $row) {
                 $appID = 'zihaMoPWm6nYiFjubD6Ox'; //API key
@@ -156,10 +156,16 @@ class HistoricalForecastsController extends AppController
             $weather = $data['events']; //which weather events or none
             $correct = $data['correct'];
             $heatmapStats = $this->HistoricalForecasts->find('all')->where(['weather_event_id IN' => $weather]);
-            if($players === 0) { //just the user's stats
+            $pendingStats = TableRegistry::get('Forecasts')->find('all')->where(['weather_event_id IN' => $weather]);
+            if ($players === 0) { //just the user's stats
                 $heatmapStats = $heatmapStats->where(['user_id' => $userID]);
+                $pendingStats = $pendingStats->where(['user_id' => $userID]);
             } else if ($players === 1) { //just the user's team's stats
                 $heatmapStats = $heatmapStats->matching('TeamsUsers', function($q) use($teamUser) {
+                        return $q->where(['TeamsUsers.team_id' => $teamUser['team_id']]);
+                    }
+                );
+                $pendingStats = $pendingStats->matching('TeamsUsers', function($q) use($teamUser) {
                         return $q->where(['TeamsUsers.team_id' => $teamUser['team_id']]);
                     }
                 );
@@ -173,26 +179,41 @@ class HistoricalForecastsController extends AppController
                         return $q->where(['Users.meteorologist' => $exp]);
                     }
                 ]);
+                $pendingStats = $pendingStats->contain([
+                    'Users' => function($q) use($exp) {
+                        return $q->where(['Users.meteorologist' => $exp]);
+                    }
+                ]);
             }
             if ($correct == 3) {
                 $correct = null;
             }
             if ($correct != 2) {  
                 $heatmapStats = $heatmapStats->where(['correct' => $correct]);
+                $pendingStats = TableRegistry::get('Forecasts')->newEntity();
             }
             if (isset($data['range'][0]) && !empty($data['range'][0])) {
                 $rangeF = Time::parse($data['range'][0]);
                 $heatmapStats = $heatmapStats->where(['forecast_date_end >=' => $rangeF]);
+                $pendingStats = $pendingStats->where(['forecast_date_end >=' => $rangeF]);
             }
             if (isset($data['range'][1]) && !empty($data['range'][1])) {
                 $rangeT = Time::parse($data['range'][1]);
                 $heatmapStats = $heatmapStats->where(['forecast_date_start <=' => $rangeT]);
+                $pendingStats = $pendingStats->where(['forecast_date_start <=' => $rangeT]);
             }
-            if ($heatmapStats = $heatmapStats->toArray()) {
-                $result = 1;
-                foreach($heatmapStats as $heatmapStat) {
-                    $heatmap[] = [$heatmapStat['latitude'], $heatmapStat['longitude'], 200];
+            if (($heatmapStats = $heatmapStats->toArray()) || ($pendingStats = $pendingStats->toArray())) {
+                if ($heatmapStats) {
+                    foreach($heatmapStats as $heatmapStat) {
+                        $heatmap[] = [$heatmapStat['latitude'], $heatmapStat['longitude'], 200];
+                    }
                 }
+                if ($pendingStats) {
+                    foreach($pendingStats as $pendingStat) {
+                        $heatmap[] = [$pendingStat['latitude'], $pendingStat['longitude'], 200];
+                    }
+                }
+                $result = 1;
             } else {
                 $result = 0;
                 $heatmap = [];

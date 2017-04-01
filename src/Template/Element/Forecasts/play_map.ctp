@@ -64,7 +64,16 @@ h4 i{
     </div>
     <div id="map"></div>
 </article>
-
+<!-- Pending Forecasts hidden fields -->
+<?= $this->Form->hidden('pendingLocations', [
+    'value' => json_encode($pendingLocations)
+]) ?>
+<?= $this->Form->hidden('pendingEvents', [
+    'value' => json_encode($pendingEvents)
+]) ?>
+<?= $this->Form->hidden('pendingDates', [
+    'value' => json_encode($pendingDates)
+]) ?>
 <div class="modal fade" tabindex="-1" role="dialog" id="instructions-modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

@@ -72,6 +72,15 @@ class TeamsUsersTable extends Table
                 'user_id'
             ]
         ]);
+        
+        $this->hasMany('Forecasts', [
+            'foreignKey' => [
+                'user_id'
+            ],
+            'bindingKey' => [
+                'user_id'
+            ]
+        ]);
     }
 
     /**
