@@ -15,7 +15,7 @@
             <div class="card sameheight-item" data-exclude="xs">
                 <div class="card-header card-header-sm bordered">
                     <div class="header-block">
-                        <h4>Update Your Accounte</h4>
+                        <h4>Update Your Account</h4>
                     </div>
                 </div>
                 <div class="card-block">

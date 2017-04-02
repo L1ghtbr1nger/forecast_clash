@@ -31,6 +31,46 @@ $('document').ready(function() {
 
     // Active and Pending Forecast Layers
 
+    // var pendingLocations = $('#pendingLocations').val();
+
+    // var locationsLength = pendingLocations.length;
+    // var res = pendingLocations.slice(1, locationsLength);
+
+    // var streetaddress = addy.split(',')[0];
+
+
+
+
+
+    // var pendingEvents = $('#pendingEvents').val();
+    // var pendingDates = $('#pendingDates').val();
+    // console.log(res);
+    // var pendingTornado = pendingLocations[0][1];
+    // console.log(pendingTornado);
+    // console.log(pendingEvents);
+    // console.log(pendingDates);
+
+
+    // [[43.5804,-99.9999],[45.1201,-99.9999],[42.7793,-99.9999]] 
+    // ["Tornado","Hail","Wind"]
+    // ["2017-04-01 00:00:00","2017-04-02 00:00:00","2017-04-03 00:00:00"]
+
+    // var matches = [];
+
+    // var pattern = /\[(.*?)\]/g;
+    // var match;
+    // while ((match = pattern.exec(res)) != null) {
+    //     matches.push(match[0]);
+    // }
+
+    // alert(matches);
+
+
+    // var matchesSplit = matches.split(',')[0];
+    // console.log(matchesSplit)
+
+
+
     // var forecast_lat = 12.2232400000000,
     //     forecast_lng = 12.2323;
 
@@ -83,26 +123,20 @@ $('document').ready(function() {
 
     .addControl(sidebar)
 
-    // on map click
-    .on('click', function(e) {
-
-    })
-
     // L.control.layers(forecastLayers).addTo(map);
 
     // Set tile layer
-    L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
-    }).addTo(map);
+    L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {}).addTo(map);
 
     // close button
     $('.close').click(function() {
 
-        // tornado controller
+        // sidebar controller
         var openSidebarControl = L.easyButton({
             states: [{
                 stateName: 'sidebar-closed',
                 icon: tornadoSVG,
-                title: 'Make a Forecast for a Tornado',
+                title: 'Open Sidebar',
                 onClick: function(btn, map, e) {
                     sidebar.show();
                     this.removeFrom(map);
@@ -115,7 +149,7 @@ $('document').ready(function() {
         $('.sidebar-closed-active').html('<i style="color: #fff; font-size:20px" class="fa fa-bars" aria-hidden="true"></i>');
         $('.sidebar-closed-active h5').css({
             'color': '#fff',
-            'font-size': '13px' 
+            'font-size': '13px'
         });
     });
 
@@ -138,11 +172,62 @@ $('document').ready(function() {
             title: 'Make a Forecast for a Tornado',
             onClick: function(btn, map, e) {
                 $('#tornado-event').prop('checked', true);
-                $('.climacon_component-stroke_tornadoLine').css('fill', 'rgb(61, 182, 239)');
+                $('.climacon_component-stroke_tornadoLine').css('fill', 'rgb(255, 51, 51)');
                 $('.climacon_component-stroke_hailAlt').css('fill', 'rgb(255,255,255)');
                 $('.climacon_component-stroke_cloud').css('fill', 'rgb(255,255,255)');
                 $('.climacon_component-wind_curl').css('fill', 'rgb(255,255,255)');
                 $('.climacon_component-wind').css('fill', 'rgb(255,255,255)');
+                $('.leaflet-interactive').css({
+                    stroke: 'rgb(255, 51, 51)',
+                    fill: 'rgb(255, 51, 51)'
+                });
+
+                $('.leaflet-popup-content strong').html('Tornado');
+
+                function tornadoMarker(e) {
+                    if (typeof(e) != 'undefined') {
+                        lat = e.latlng.lat;
+                        lng = e.latlng.lng;
+                    }
+
+                    // sets lat/lng to 5 decimal places
+                    var latToFixed = lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+                    var lngToFixed = lng.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+
+                    // sets latlng input to value of lat + lng
+                    $('#latlng').val(lat + ', ' + lng);
+                    var radiusMiles = radius * 1609.344;
+                    if (typeof(circle) === 'undefined') {
+
+
+
+                        circle = new L.circle([lat, lng], radiusMiles, {
+                            color: 'rgb(255, 51, 51)',
+                            stroke: 'rgb(255, 51, 51)'
+                        });
+
+                        circle.addTo(map);
+                        circle.bindPopup("<strong>Tornado</strong> <br> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
+
+                        //var radius = circle.getRadius();
+
+                    } else {
+                        circle.setRadius(radiusMiles);
+                        circle.setLatLng([lat, lng]);
+                        circle.bindPopup("<strong>Tornado</strong> <br> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
+                        circle.addTo(map);
+                    }
+
+                };
+
+                map.on('click', function(e) {
+                    tornadoMarker(e);
+                });
+
+                radiusInput.onchange = function() {
+                    radius = radiusInput.value,
+                        tornadoMarker();
+                }
             },
 
         }]
@@ -161,12 +246,63 @@ $('document').ready(function() {
             title: 'Make a forecast for Hail', // like its title
             onClick: function(btn, map, e) {
                 $('#hail-event').prop('checked', true);
-
                 $('.climacon_component-stroke_tornadoLine').css('fill', 'rgb(255, 255, 255)');
                 $('.climacon_component-stroke_hailAlt').css('fill', 'rgb(61, 182, 239)');
                 $('.climacon_component-stroke_cloud').css('fill', 'rgb(61, 182, 239)');
                 $('.climacon_component-wind_curl').css('fill', 'rgb(255,255,255)');
                 $('.climacon_component-wind').css('fill', 'rgb(255,255,255)');
+                $('.leaflet-interactive').css({
+                    stroke: 'rgb(61, 182, 239)',
+                    fill: 'rgb(61, 182, 239)'
+                });
+
+                $('.leaflet-popup-content strong').html('Hail');
+
+                function hailMarker(e) {
+                    if (typeof(e) != 'undefined') {
+                        lat = e.latlng.lat;
+                        lng = e.latlng.lng;
+                    }
+
+                    // sets lat/lng to 5 decimal places
+                    var latToFixed = lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+                    var lngToFixed = lng.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+
+                    // sets latlng input to value of lat + lng
+                    $('#latlng').val(lat + ', ' + lng);
+                    var radiusMiles = radius * 1609.344;
+                    if (typeof(circle) === 'undefined') {
+
+
+
+                        circle = new L.circle([lat, lng], radiusMiles, {
+                            color: 'rgb(61, 182, 239)',
+                            stroke: 'rgb(61, 182, 239)'
+                        });
+
+                        circle.addTo(map);
+                        circle.bindPopup("<strong>Hail</strong> <br> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
+
+                        //var radius = circle.getRadius();
+
+                    } else {
+                        circle.setRadius(radiusMiles);
+                        circle.setLatLng([lat, lng]);
+                        circle.bindPopup("<strong>Hail</strong> <br> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
+                        circle.addTo(map);
+                    }
+
+                };
+
+
+                map.on('click', function(e) {
+                    hailMarker(e);
+                });
+
+                radiusInput.onchange = function() {
+                    radius = radiusInput.value,
+                        hailMarker();
+                }
             },
 
         }]
@@ -188,8 +324,59 @@ $('document').ready(function() {
                 $('.climacon_component-stroke_tornadoLine').css('fill', 'rgb(255, 255, 255)');
                 $('.climacon_component-stroke_hailAlt').css('fill', 'rgb(255,255,255)');
                 $('.climacon_component-stroke_cloud').css('fill', 'rgb(255,255,255)');
-                $('.climacon_component-wind_curl').css('fill', 'rgb(61, 182, 239)');
-                $('.climacon_component-wind').css('fill', 'rgb(61, 182, 239)');
+                $('.climacon_component-wind_curl').css('fill', 'rgb(255, 165, 0');
+                $('.climacon_component-wind').css('fill', 'rgb(255, 165, 0');
+
+                $('.leaflet-interactive').css({
+                    stroke: 'rgb(255, 165, 0)',
+                    fill: 'rgb(255, 165, 0)'
+                });
+
+                $('.leaflet-popup-content strong').html('Wind');
+
+                function windMarker(e) {
+                    if (typeof(e) != 'undefined') {
+                        lat = e.latlng.lat;
+                        lng = e.latlng.lng;
+                    }
+
+                    // sets lat/lng to 5 decimal places
+                    var latToFixed = lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+                    var lngToFixed = lng.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+
+                    // sets latlng input to value of lat + lng
+                    $('#latlng').val(lat + ', ' + lng);
+                    var radiusMiles = radius * 1609.344;
+                    if (typeof(circle) === 'undefined') {
+
+                        circle = new L.circle([lat, lng], radiusMiles, {
+                            color: 'rgb(255, 165, 0)',
+                            stroke: 'rgb(255, 165, 0)'
+                        });
+
+                        circle.addTo(map);
+                        circle.bindPopup("<strong>Wind</strong> <br> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
+
+                        //var radius = circle.getRadius();
+
+                    } else {
+                        circle.setRadius(radiusMiles);
+                        circle.setLatLng([lat, lng]);
+                        circle.bindPopup("<strong>Wind</strong> <br> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
+                        circle.addTo(map);
+                    }
+
+                };
+
+
+                map.on('click', function(e) {
+                    windMarker(e);
+                });
+
+                radiusInput.onchange = function() {
+                    radius = radiusInput.value,
+                        windMarker();
+                }
 
             },
 
@@ -198,48 +385,6 @@ $('document').ready(function() {
 
     windControl.addTo(map);
 
-    function cMarker(e) {
-        if (typeof(e) != 'undefined') {
-            lat = e.latlng.lat;
-            lng = e.latlng.lng;
-        }
-
-        // sets lat/lng to 5 decimal places
-        var latToFixed = lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
-        var lngToFixed = lng.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
-
-        // sets latlng input to value of lat + lng
-        $('#latlng').val(lat + ', ' + lng);
-        var radiusMiles = radius * 1609.344;
-        if (typeof(circle) === 'undefined') {
-            circle = new L.circle([lat, lng], radiusMiles, {
-                color: 'rgb(61, 182, 239)',
-                fillColor: '#fff',
-                fillOpacity: 0.5
-            });
-            circle.addTo(map);
-            circle.bindPopup("Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
-
-            //var radius = circle.getRadius();
-
-        } else {
-            circle.setRadius(radiusMiles);
-            circle.setLatLng([lat, lng]);
-            circle.bindPopup("Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
-            circle.addTo(map);
-        }
-
-    };
-
-
-    map.on('click', function(e) {
-        cMarker(e);
-    });
-
-    radiusInput.onchange = function() {
-        radius = radiusInput.value,
-            cMarker();
-    }
 
 
 });

@@ -41,7 +41,7 @@ h4 i{
                     <fieldset class="radius">
                         <label for="radius"><strong>Radius</strong><span id="output">(50 miles)</span></label>
 
-                        <input type="range" name="radius" id="radius" value="50" min="50" max="100" step="5">
+                        <input type="range" name="radius" id="radius" value="50" min="5" max="100" step="5">
                         
                     </fieldset>
 
@@ -133,7 +133,7 @@ h4 i{
       <div class="modal-footer">
       <button class="btn btn-primary scoring-instructions-btn pull-right">How to Set a Target</button>
       <button class="btn btn-primary scoring-btn pull-right">Make Your Forecast</button>
-            <button class="btn btn-primary skip-instructions pull-left">Skip Instructions</button>
+            <button class="btn btn-primary skip-instructions pull-left">Dismiss Forever</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -185,9 +185,22 @@ var pendingEvents = [];
 var pendingDates = [];
 
 $(document).ready(function(){
-    $('#instructions-modal').modal('show');
+
+    // check for 'clicked' in sessionStorage
+    var clicked = sessionStorage.getItem('clicked');
+
+    if(!clicked){
+        // show instructions
+        $('#instructions-modal').modal('show');
+    }else{
+        // hide instructions
+        $('#instructions-modal').modal('hide');
+    }
 
     $('.skip-instructions').click(function(){
+        // on "Dismiss Instructions" click, set 'clicked' to sessionStorage
+        sessionStorage.setItem('clicked', 'true');
+
         $('#instructions-modal').modal('hide');
         $('.scoring-instructions').show();
         $('.scoring-instructions-btn').show();
@@ -222,8 +235,5 @@ $(document).ready(function(){
         }
     });
 });
-
-
-
 
 </script>
