@@ -145,13 +145,11 @@ class ForecastsController extends AppController
                 ($interval < 12) ? $interval = 12 : '';
                 $row['forecast_length'] = $interval;
                 $history = $forecastHistory->newEntity($row->toArray());
-                if (!$result = $forecastHistory->save($history)) {
-                    $deleter = 0;   
+                if ($result = $forecastHistory->save($history)) {
+                    $entity = $this->Forecasts->get($row['id']);
+                    $this->Forecasts->delete($entity);
                 }
             }
-        }
-        if ($deleter) {
-            $this->Forecasts->deleteAll(['forecast_date_start <=' => $lock]); //delete all transferred forecasts
         }
     }
     

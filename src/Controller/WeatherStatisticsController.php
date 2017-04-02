@@ -146,7 +146,7 @@ class WeatherStatisticsController extends AppController
                             $board[] = $results[1];
                         } else {
                             $board[] = [
-                                'rank' => '...',
+                                'rank' => 21,
                                 'user_id' => $userID,
                                 'first_name' => $currentUser['first_name'],
                                 'last_name' => $currentUser['last_name'],
