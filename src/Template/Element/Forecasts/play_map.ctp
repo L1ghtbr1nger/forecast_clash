@@ -185,13 +185,22 @@ var pendingEvents = [];
 var pendingDates = [];
 
 $(document).ready(function(){
-     if(sessionStorage["PopupShown"] != 'yes'){ 
-         $('#instructions-modal').modal('show');
-     }
 
+    // check for 'clicked' in sessionStorage
+    var clicked = sessionStorage.getItem('clicked');
+
+    if(!clicked){
+        // show instructions
+        $('#instructions-modal').modal('show');
+    }else{
+        // hide instructions
+        $('#instructions-modal').modal('hide');
+    }
 
     $('.skip-instructions').click(function(){
-         sessionStorage["PopupShown"] = 'yes';
+        // on "Dismiss Instructions" click, set 'clicked' to sessionStorage
+        sessionStorage.setItem('clicked', 'true');
+
         $('#instructions-modal').modal('hide');
         $('.scoring-instructions').show();
         $('.scoring-instructions-btn').show();
