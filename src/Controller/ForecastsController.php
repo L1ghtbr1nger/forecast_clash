@@ -119,6 +119,7 @@ class ForecastsController extends AppController
     }
     
     public function pending() {
+        $session = $this->request->session();
         if (($userID = $session->read('Auth.User.id')) && ($forecasts = $this->Forecasts->find('all')->where(['user_id' => $userID])->contain('WeatherEvents'))) {
             foreach ($forecasts as $forecast) {
                 $pendingLocations[] = [$forecast['latitude'], $forecast['longitude']];
