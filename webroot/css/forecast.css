@@ -4293,6 +4293,7 @@ div.body-col p {
 }
 
 #map {
+    height: 95.2vh;
     z-index: 0;
 }
 
