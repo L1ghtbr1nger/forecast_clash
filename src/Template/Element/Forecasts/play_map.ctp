@@ -66,13 +66,16 @@ h4 i{
 </article>
 <!-- Pending Forecasts hidden fields -->
 <?= $this->Form->hidden('pendingLocations', [
-    'value' => json_encode($pendingLocations)
+    'value' => json_encode($pendingLocations),
+    'id' => 'pendingLocations'
 ]) ?>
 <?= $this->Form->hidden('pendingEvents', [
-    'value' => json_encode($pendingEvents)
+    'value' => json_encode($pendingEvents),
+    'id' => 'pendingEvents'
 ]) ?>
 <?= $this->Form->hidden('pendingDates', [
-    'value' => json_encode($pendingDates)
+    'value' => json_encode($pendingDates),
+    'id' => 'pendingDates'
 ]) ?>
 <div class="modal fade" tabindex="-1" role="dialog" id="instructions-modal">
   <div class="modal-dialog" role="document">
@@ -219,21 +222,9 @@ $(document).ready(function(){
         $('.targeting').hide();
     });
     
-    $.ajax({ //ajax call to get DB data for the leaderboard
-        type: "POST",
-        url: "/forecast_clash/forecasts/pending.json",
-        dataType: 'json',
-        data: 0,
-        success : function(response){
-            pendingLocations = response['pendingLocations'];
-            pendingEvents = response['pendingEvents'];
-            pendingDates = response['pendingDates'];
-            //write map layer here
-        },
-        error : function(){   
+    var pendingLocations = JSON.parse($('#pendingLocations').val());
+    console.log(pendingLocations);
 
-        }
-    });
 });
 
 </script>
