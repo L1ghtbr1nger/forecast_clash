@@ -104,15 +104,18 @@ class ForecastsController extends AppController
             if (($userID = $session->read('Auth.User.id')) && ($forecasts = $this->Forecasts->find('all')->where(['user_id' => $userID])->contain('WeatherEvents'))) {
                 foreach ($forecasts as $forecast) {
                     $pendingLocations[] = [$forecast['latitude'], $forecast['longitude']];
+                    $pendingRadius[] = $forecast['radius'];
                     $pendingEvents[] = $forecast['weather_event']['weather'];
                     $pendingDates[] = $forecast['forecast_date_start']->i18nFormat('yyyy-MM-dd HH:mm:ss');
                 }
             } else {
                 $pendingLocations = [];
+                $pendingRadius[] = [];
                 $pendingEvents[] = [];
                 $pendingDates[] = [];
             }
             $this->set('pendingLocations', $pendingLocations);
+            $this->set('$pendingRadius', $pendingRadius);
             $this->set('pendingEvents', $pendingEvents);
             $this->set('pendingDates', $pendingDates);
         }

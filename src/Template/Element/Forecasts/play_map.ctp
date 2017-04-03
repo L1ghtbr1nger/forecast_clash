@@ -69,6 +69,10 @@ h4 i{
     'value' => json_encode($pendingLocations),
     'id' => 'pendingLocations'
 ]) ?>
+<?= $this->Form->hidden('pendingRadius', [
+    'value' => json_encode($pendingRadius),
+    'id' => 'pendingRadius'
+]) ?>
 <?= $this->Form->hidden('pendingEvents', [
     'value' => json_encode($pendingEvents),
     'id' => 'pendingEvents'
