@@ -4293,7 +4293,6 @@ div.body-col p {
 }
 
 #map {
-    height: 100vh;
     z-index: 0;
 }
 
@@ -8256,8 +8255,12 @@ label[for="remember"] span {
     color: #333;
 }
 
-.leaflet-popup-tip-container {
+/*.leaflet-popup-tip-container {
     display: none;
+}*/
+
+.leaflet-popup-content-wrapper {
+    border-radius: 0;
 }
 
 .fa-chevron-down {
