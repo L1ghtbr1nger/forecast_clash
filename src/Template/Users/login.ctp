@@ -18,10 +18,7 @@
                                 ]); ?>
                     </div>
                     <div class="form-group">
-                        <label for="remember">
-                            <input class="checkbox" id="remember" type="checkbox">
-                            <span>Remember me</span>
-                        </label> <a href="forgot_password" class="forgot-btn pull-right">Forgot password?</a> </div>
+                        <a href="forgot_password" class="forgot-btn pull-right">Forgot password?</a> </div>
                     <div class="form-group">
                         <?= $this->Form->button('Login', [
                         'id' => 'login',

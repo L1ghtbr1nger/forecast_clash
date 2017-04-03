@@ -54,7 +54,7 @@ class ForecastsController extends AppController
                     if ($data['am_pm']) {
                         $dateStart = $dateStart + 43200; //if PM then move start time to noon
                     }
-                    $dateEnd = $dateStart + 43200; //add 12 hours in seconds to unix representation of forecast start
+                    $dateEnd = $dateStart + 43199; //add 12 hours in seconds to unix representation of forecast start
                     $data['forecast_date_start'] = Time::parse($dateStart)->i18nFormat('yyyy-MM-dd HH:mm:ss');
                     $data['forecast_date_end'] = Time::parse($dateEnd)->i18nFormat('yyyy-MM-dd HH:mm:ss');
                     $data['submit_date'] = Time::now();
@@ -101,20 +101,40 @@ class ForecastsController extends AppController
             }
             die;
         } else {
-            if (($userID = $session->read('Auth.User.id')) && ($forecasts = $this->Forecasts->find('all')->where(['user_id' => $userID])->contain('WeatherEvents'))) {
-                foreach ($forecasts as $forecast) {
-                    $pendingLocations[] = [$forecast['latitude'], $forecast['longitude']];
-                    $pendingEvents[] = $forecast['weather_event']['weather'];
-                    $pendingDates[] = $forecast['forecast_date_start']->i18nFormat('yyyy-MM-dd HH:mm:ss');
+            $pendingLocations = [];
+            $pendingRadius[] = [];
+            $pendingEvents[] = [];
+            $pendingDates[] = [];
+            $activeLocations = [];
+            $activeRadius[] = [];
+            $activeEvents[] = [];
+            $activeDates[] = [];
+            if ($userID = $session->read('Auth.User.id')) {
+                if($forecasts = $this->Forecasts->find('all')->where(['user_id' => $userID])->contain('WeatherEvents')) {
+                    foreach ($forecasts as $forecast) {
+                        $pendingLocations[] = [$forecast['latitude'], $forecast['longitude']];
+                        $pendingRadius[] = $forecast['radius'];
+                        $pendingEvents[] = $forecast['weather_event']['weather'];
+                        $pendingDates[] = $forecast['forecast_date_start']->i18nFormat('yyyy-MM-dd HH:mm:ss');
+                    }
                 }
-            } else {
-                $pendingLocations = [];
-                $pendingEvents[] = [];
-                $pendingDates[] = [];
+                if($historical = TableRegistry::get('HistoricalForecasts')->find('all')->where(['user_id' => $userID, 'correct' => null])->contain('WeatherEvents')) {
+                    foreach ($historical as $history) {
+                        $activeLocations[] = [$history['latitude'], $history['longitude']];
+                        $activeRadius[] = $history['radius'];
+                        $activeEvents[] = $history['weather_event']['weather'];
+                        $activeDates[] = $history['forecast_date_start']->i18nFormat('yyyy-MM-dd HH:mm:ss');
+                    }
+                }
             }
             $this->set('pendingLocations', $pendingLocations);
+            $this->set('pendingRadius', $pendingRadius);
             $this->set('pendingEvents', $pendingEvents);
             $this->set('pendingDates', $pendingDates);
+            $this->set('activeLocations', $activeLocations);
+            $this->set('activeRadius', $activeRadius);
+            $this->set('activeEvents', $activeEvents);
+            $this->set('activeDates', $activeDates);
         }
     }
     
