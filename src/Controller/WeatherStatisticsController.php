@@ -116,7 +116,30 @@ class WeatherStatisticsController extends AppController
             $scores = $this->meteor($scores, $exp);
             $results = $this->scores($scores, $userID);
             $result = $results[0];
-            ($result) ? $board = $results[1] : $board = [0];
+            if ($result) { //if yes
+                $board = $results[1]; //grab the result data
+                if (!$results[2]) {
+                    if ($userID) {
+                        $scorez = $scoreboard->find('all')->where(['user_id' => $userID])->contain('WeatherStatistics.WeatherEvents');
+                        if ($scorez->toArray()) {
+                            $results = $this->scores($scorez, $userID);
+                            $board[] = $results[1];
+                        } else {
+                            $currentUser = $users->find()->where(['id' => $userID])->first();
+                            $board[] = [
+                                'rank' => '...',
+                                'user_id' => $userID,
+                                'first_name' => $currentUser['first_name'],
+                                'last_name' => $currentUser['last_name'],
+                                'score' => 0,
+                                'total' => 0
+                            ];
+                        }
+                    }
+                } else {
+                    $board = [0];
+                }
+            }
             echo json_encode(['result' => $result, 'leaderboard' => $board, 'user_id' => $userID]); //leaderboard.js
             die;
         } else {
@@ -146,7 +169,7 @@ class WeatherStatisticsController extends AppController
                             $board[] = $results[1];
                         } else {
                             $board[] = [
-                                'rank' => 21,
+                                'rank' => '...',
                                 'user_id' => $userID,
                                 'first_name' => $currentUser['first_name'],
                                 'last_name' => $currentUser['last_name'],
