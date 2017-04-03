@@ -3972,7 +3972,7 @@ pre {
 
 .logo img {
     max-width: 200px;
-    padding: 8px;
+    padding: 8px 8px 8px 0;
     position: relative;
     top: 12px;
     margin-top: -30px;
@@ -4293,7 +4293,7 @@ div.body-col p {
 }
 
 #map {
-    height: 95.2vh;
+    height: 100vh;
     z-index: 0;
 }
 
@@ -4315,8 +4315,9 @@ div.body-col p {
     line-height: 1.2em;
     background-color: transparent;
     z-index: 800;
-    right: ;
+    right: 10px;
     border-radius: 0;
+    opacity: 1;
 }
 
 #heatmap-sidebar {
@@ -4358,10 +4359,13 @@ label {
     width: initial;
     min-width: 300px;
 }
+
+
 /*.leaflet-tile {
     -webkit-filter: brightness(.8) contrast(105%);
     filter: brightness(1) contrast(90%) invert(90%);
 }*/
+
 .leaflet-tile {
     -webkit-filter: brightness(1.75) contrast(135%);
     filter: brightness(1.75) contrast(135%);
@@ -8001,7 +8005,6 @@ ul {
     .leaflet-sidebar .close {
         right: 0 !important;
         top: 0 !important;
-        opacity: .8;
     }
     #play-sidebar .sidebar-header {
         padding: 0;
