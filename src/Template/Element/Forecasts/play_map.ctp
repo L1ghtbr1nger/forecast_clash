@@ -81,6 +81,22 @@ h4 i{
     'value' => json_encode($pendingDates),
     'id' => 'pendingDates'
 ]) ?>
+<?= $this->Form->hidden('activeLocations', [
+    'value' => json_encode($activeLocations),
+    'id' => 'activeLocations'
+]) ?>
+<?= $this->Form->hidden('activeRadius', [
+    'value' => json_encode($activeRadius),
+    'id' => 'activeRadius'
+]) ?>
+<?= $this->Form->hidden('activeEvents', [
+    'value' => json_encode($activeEvents),
+    'id' => 'activeEvents'
+]) ?>
+<?= $this->Form->hidden('activeDates', [
+    'value' => json_encode($activeDates),
+    'id' => 'activeDates'
+]) ?>
 <div class="modal fade" tabindex="-1" role="dialog" id="instructions-modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -188,8 +204,13 @@ $('.datepicker').pickadate({
 
 // Pending forecast data
 var pendingLocations = [];
+var pendingRadius = [];
 var pendingEvents = [];
 var pendingDates = [];
+var activeLocations = [];
+var activeRadius = [];
+var activeEvents = [];
+var activeDates = [];
 
 $(document).ready(function(){
 
