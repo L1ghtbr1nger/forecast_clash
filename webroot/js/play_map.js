@@ -29,84 +29,58 @@ $('document').ready(function() {
     instructionsInit();
 
 
-    // Active and Pending Forecast Layers
+    // Pending Forecast Layers
 
-    // var pendingLocations = $('#pendingLocations').val();
+    // var tornadoIcon = new L.icon({
+    //     iconUrl: '/forecast_clash/webroot/img/markerTornado.jpg',
+    //     iconSize: [35, 31]
+    // });
 
-    // var locationsLength = pendingLocations.length;
-    // var res = pendingLocations.slice(1, locationsLength);
+    // var hailIcon = new L.icon({
+    //     iconUrl: '/forecast_clash/webroot/img/markerHail.jpg',
+    //     iconSize: [1, 1]
+    // });
 
-    // var streetaddress = addy.split(',')[0];
-
-
-
-
-
-    // var pendingEvents = $('#pendingEvents').val();
-    // var pendingDates = $('#pendingDates').val();
-    // console.log(res);
-    // var pendingTornado = pendingLocations[0][1];
-    // console.log(pendingTornado);
-    // console.log(pendingEvents);
-    // console.log(pendingDates);
+    // var windIcon = new L.icon({
+    //     iconUrl: '/forecast_clash/webroot/img/markerWind.jpg',
+    //     iconSize: [1, 1]
+    // });
+    // $('.leaflet-marker-icon').append(tornadoSVG)
 
 
-    // [[43.5804,-99.9999],[45.1201,-99.9999],[42.7793,-99.9999]] 
-    // ["Tornado","Hail","Wind"]
-    // ["2017-04-01 00:00:00","2017-04-02 00:00:00","2017-04-03 00:00:00"]
+    var pendingLocations = JSON.parse($('#pendingLocations').val());
+    var pendingEvents = JSON.parse($('#pendingEvents').val());
+    var pendingDates = JSON.parse($('#pendingDates').val());
+    var pendingRadius = JSON.parse($('#pendingRadius').val());
+    // var activeLocations = JSON.parse($('#activeLocations').val());
+    // var activeEvents = JSON.parse($('#activeEvents').val());
+    // var activeDates = JSON.parse($('#activeDates').val());
+    // var pendingRadius = JSON.parse($('#pendingRadius').val());
 
-    // var matches = [];
+    var tornado_pending = L.circle([pendingLocations[0][0], pendingLocations[0][1]], pendingRadius[1], ).bindPopup('Pending Tornado Forecast at <br><strong> ' + pendingLocations[0][0] + ',' + pendingLocations[0][1] + '</strong>').openPopup(),
 
-    // var pattern = /\[(.*?)\]/g;
-    // var match;
-    // while ((match = pattern.exec(res)) != null) {
-    //     matches.push(match[0]);
-    // }
+        hail_pending = L.circle([pendingLocations[1][0], pendingLocations[1][1]], pendingRadius[2]).bindPopup('Pending Hail Forecast <br><strong> ' + pendingLocations[1][0] + ',' + pendingLocations[1][1] + '</strong>').openPopup(),
 
-    // alert(matches);
+        wind_pending = L.circle([pendingLocations[2][0], pendingLocations[2][1]], pendingRadius[3]).bindPopup('Pending Wind Forecast <br><strong> ' + pendingLocations[2][0] + ',' + pendingLocations[2][1] + '</strong>').openPopup();
 
+    // var tornado_active = L.marker([activeLocations[0][0], activeLocations[0][1]], { icon: tornadoIcon }).bindPopup('active Tornado Forecast at <br><strong> ' + activeLocations[0][0] + ',' + activeLocations[0][1] + '</strong>').openPopup(),
 
-    // var matchesSplit = matches.split(',')[0];
-    // console.log(matchesSplit)
+    //     hail_active = L.marker([activeLocations[1][0], activeLocations[1][1]], { icon: hailIcon }).bindPopup('active Hail Forecast <br><strong> ' + activeLocations[1][0] + ',' + activeLocations[1][1] + '</strong>').openPopup(),
 
-
-
-    // var forecast_lat = 12.2232400000000,
-    //     forecast_lng = 12.2323;
-
-    // // set lat/lng decimal to 5
-    // function toFixed(fixedInt) {
-    //     fixedInt.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
-    // }
-
-    // if (forecast_lat && forecast_lng) {
-    //     toFixed(forecast_lat);
-    //     toFixed(forecast_lng);
-    // } else {
-    //     console.log('no lat/lng');
-    // }
-
-    // var tornado_pending = L.marker([forecast_lat, forecast_lng]).bindPopup('You have a Tornado Forecast pending at ' + forecast_lat + ',' + forecast_lng).openPopup(),
-    //     hail_pending = L.marker([forecast_lat, forecast_lng]).bindPopup('You have a Hail Forecast pending at ' + forecast_lat + ',' + forecast_lng).openPopup(),
-    //     wind_pending = L.marker([forecast_lat, forecast_lng]).bindPopup('You have a Wind Forecast pending at ' + forecast_lat + ',' + forecast_lng).openPopup(),
-    //     tornado_active = L.marker([forecast_lat, forecast_lng]).bindPopup('You have a Tornado Forecast pending at ' + forecast_lat + ',' + forecast_lng).openPopup(),
-    //     hail_active = L.marker([forecast_lat, forecast_lng]).bindPopup('You have a Hail Forecast pending at ' + forecast_lat + ',' + forecast_lng).openPopup(),
-    //     wind_active = L.marker([forecast_lat, forecast_lng]).bindPopup('You have a Tornado Forecast pending at ' + forecast_lat + ',' + forecast_lng).openPopup();
-
-
-    // var pending_layer = L.layerGroup([tornado_pending, hail_pending, wind_pending]);
+    //     wind_active = L.marker([activeLocations[2][0], activeLocations[2][1]], { icon: windIcon }).bindPopup('active Wind Forecast <br><strong> ' + activeLocations[2][0] + ',' + activeLocations[2][1] + '</strong>').openPopup();
 
     // var active_layer = L.layerGroup([tornado_active, hail_active, wind_active]);
 
-    // var forecastLayers = {
-    //     "Pending Forecasts": pending_layer,
-    //     "Active Forecasts": active_layer
-    // };
-
-    // initializes sidebar
+    var pending_layer = L.layerGroup([tornado_pending, hail_pending, wind_pending]);
+    console.log(pendingRadius[1])
+        // initializes sidebar
     var sidebar = L.control.sidebar('play-sidebar', {
         closeButton: true,
     });
+
+    var overlayMaps = {
+        "Pending": pending_layer
+    };
 
     // Show sidebar after .5s
     setTimeout(function() {
@@ -118,12 +92,11 @@ $('document').ready(function() {
         center: [40.2226, -95.4395],
         zoom: 5,
         doubleClickZoom: false,
-        // layers: [pending_layer, active_layer]
+        layers: [pending_layer]
     })
 
     .addControl(sidebar)
-
-    // L.control.layers(forecastLayers).addTo(map);
+    L.control.layers(overlayMaps).addTo(map);
 
     // Set tile layer
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {}).addTo(map);

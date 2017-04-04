@@ -149,7 +149,8 @@ h4 i{
                     <li>Set target radius</li>
                     <li>Click the map and set your target </li>
                 </ul>
-                <p>Forecasts notifications will be sent out everyday at noon so be sure to come back and see how you did. <strong>Good Luck!</strong></p>
+                <p>Forecasts lock in 12 hours before the event and notifications will be sent out everyday at noon so be sure to come back and see how you did. <strong>Good Luck!</strong></p>
+
             </div>
         </div>
       </div>
@@ -203,14 +204,14 @@ $('.datepicker').pickadate({
 });
 
 // Pending forecast data
-var pendingLocations = [];
-var pendingRadius = [];
-var pendingEvents = [];
-var pendingDates = [];
-var activeLocations = [];
-var activeRadius = [];
-var activeEvents = [];
-var activeDates = [];
+// var pendingLocations = [];
+// var pendingRadius = [];
+// var pendingEvents = [];
+// var pendingDates = [];
+// var activeLocations = [];
+// var activeRadius = [];
+// var activeEvents = [];
+// var activeDates = [];
 
 $(document).ready(function(){
 
@@ -247,8 +248,8 @@ $(document).ready(function(){
         $('.targeting').hide();
     });
     
-    var pendingLocations = JSON.parse($('#pendingLocations').val());
-    console.log(pendingLocations);
+    // var pendingLocations = JSON.parse($('#pendingLocations').val());
+    // console.log(pendingLocations);
 
 });
 
