@@ -203,16 +203,6 @@ $('.datepicker').pickadate({
     }
 });
 
-// Pending forecast data
-// var pendingLocations = [];
-// var pendingRadius = [];
-// var pendingEvents = [];
-// var pendingDates = [];
-// var activeLocations = [];
-// var activeRadius = [];
-// var activeEvents = [];
-// var activeDates = [];
-
 $(document).ready(function(){
 
     // check for 'clicked' in sessionStorage
@@ -247,10 +237,6 @@ $(document).ready(function(){
         $('.scoring-instructions-btn').show();
         $('.targeting').hide();
     });
-    
-    // var pendingLocations = JSON.parse($('#pendingLocations').val());
-    // console.log(pendingLocations);
-
 });
 
 </script>

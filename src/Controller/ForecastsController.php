@@ -102,13 +102,13 @@ class ForecastsController extends AppController
             die;
         } else {
             $pendingLocations = [];
-            $pendingRadius[] = [];
-            $pendingEvents[] = [];
-            $pendingDates[] = [];
+            $pendingRadius = [];
+            $pendingEvents = [];
+            $pendingDates = [];
             $activeLocations = [];
-            $activeRadius[] = [];
-            $activeEvents[] = [];
-            $activeDates[] = [];
+            $activeRadius = [];
+            $activeEvents = [];
+            $activeDates = [];
             if ($userID = $session->read('Auth.User.id')) {
                 if($forecasts = $this->Forecasts->find('all')->where(['user_id' => $userID])->contain('WeatherEvents')) {
                     foreach ($forecasts as $forecast) {
@@ -118,7 +118,7 @@ class ForecastsController extends AppController
                         $pendingDates[] = $forecast['forecast_date_start']->i18nFormat('yyyy-MM-dd HH:mm:ss');
                     }
                 }
-                if($historical = TableRegistry::get('HistoricalForecasts')->find('all')->where(['user_id' => $userID, 'correct' => null])->contain('WeatherEvents')) {
+                if($historical = TableRegistry::get('HistoricalForecasts')->find('all')->where(['user_id' => $userID, 'correct IS NULL'])->contain('WeatherEvents')) {
                     foreach ($historical as $history) {
                         $activeLocations[] = [$history['latitude'], $history['longitude']];
                         $activeRadius[] = $history['radius'];

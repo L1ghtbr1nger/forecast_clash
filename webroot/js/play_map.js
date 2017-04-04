@@ -52,34 +52,39 @@ $('document').ready(function() {
     var pendingEvents = JSON.parse($('#pendingEvents').val());
     var pendingDates = JSON.parse($('#pendingDates').val());
     var pendingRadius = JSON.parse($('#pendingRadius').val());
-    // var activeLocations = JSON.parse($('#activeLocations').val());
-    // var activeEvents = JSON.parse($('#activeEvents').val());
-    // var activeDates = JSON.parse($('#activeDates').val());
-    // var pendingRadius = JSON.parse($('#pendingRadius').val());
+    var activeLocations = JSON.parse($('#activeLocations').val());
+    var activeEvents = JSON.parse($('#activeEvents').val());
+    var activeDates = JSON.parse($('#activeDates').val());
+    var activeRadius = JSON.parse($('#activeRadius').val());
+    var pending = [];
+    var active = [];
+    
+    $.each(pendingLocations, function(i, v){
+        pending.push(L.circle(v, (pendingRadius[i] * 1609.344), {
+            color: 'rgb(235, 255, 0)',
+            stroke: 'rgb(39, 0, 255)'
+        }).bindPopup('Pending '+pendingEvents[i]+' Forecast at <br><strong> '+v[0]+','+v[1]+'</strong>').openPopup());
+    });
+    $.each(activeLocations, function(i, v){
+        active.push(L.circle(v, (activeRadius[i] * 1609.344), {
+            color: 'rgb(255, 0, 186)',
+            stroke: 'rgb(255, 0, 186)'
+        }).bindPopup('Active '+activeEvents[i]+' Forecast at <br><strong> '+v[0]+','+v[1]+'</strong>').openPopup());
+    });
 
-    var tornado_pending = L.circle([pendingLocations[0][0], pendingLocations[0][1]], pendingRadius[1], ).bindPopup('Pending Tornado Forecast at <br><strong> ' + pendingLocations[0][0] + ',' + pendingLocations[0][1] + '</strong>').openPopup(),
-
-        hail_pending = L.circle([pendingLocations[1][0], pendingLocations[1][1]], pendingRadius[2]).bindPopup('Pending Hail Forecast <br><strong> ' + pendingLocations[1][0] + ',' + pendingLocations[1][1] + '</strong>').openPopup(),
-
-        wind_pending = L.circle([pendingLocations[2][0], pendingLocations[2][1]], pendingRadius[3]).bindPopup('Pending Wind Forecast <br><strong> ' + pendingLocations[2][0] + ',' + pendingLocations[2][1] + '</strong>').openPopup();
-
-    // var tornado_active = L.marker([activeLocations[0][0], activeLocations[0][1]], { icon: tornadoIcon }).bindPopup('active Tornado Forecast at <br><strong> ' + activeLocations[0][0] + ',' + activeLocations[0][1] + '</strong>').openPopup(),
-
-    //     hail_active = L.marker([activeLocations[1][0], activeLocations[1][1]], { icon: hailIcon }).bindPopup('active Hail Forecast <br><strong> ' + activeLocations[1][0] + ',' + activeLocations[1][1] + '</strong>').openPopup(),
-
-    //     wind_active = L.marker([activeLocations[2][0], activeLocations[2][1]], { icon: windIcon }).bindPopup('active Wind Forecast <br><strong> ' + activeLocations[2][0] + ',' + activeLocations[2][1] + '</strong>').openPopup();
-
-    // var active_layer = L.layerGroup([tornado_active, hail_active, wind_active]);
-
-    var pending_layer = L.layerGroup([tornado_pending, hail_pending, wind_pending]);
-    console.log(pendingRadius[1])
-        // initializes sidebar
+    var pending_layer = L.layerGroup(pending);
+    var active_layer = L.layerGroup(active);
+    
+    // initializes sidebar
     var sidebar = L.control.sidebar('play-sidebar', {
         closeButton: true,
     });
 
     var overlayMaps = {
         "Pending": pending_layer
+    };
+    var activeMaps = {
+        "Active": active_layer
     };
 
     // Show sidebar after .5s
@@ -92,11 +97,12 @@ $('document').ready(function() {
         center: [40.2226, -95.4395],
         zoom: 5,
         doubleClickZoom: false,
-        layers: [pending_layer]
+        layers: [pending_layer,active_layer]
     })
 
     .addControl(sidebar)
     L.control.layers(overlayMaps).addTo(map);
+    L.control.layers(activeMaps).addTo(map);
 
     // Set tile layer
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {}).addTo(map);
