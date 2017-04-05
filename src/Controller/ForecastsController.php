@@ -147,7 +147,6 @@ class ForecastsController extends AppController
             foreach ($query as $row) {
                 $submitted = $row['submit_date'];
                 $interval = $submitted->diffInHours($row['forecast_date_start']);
-                ($interval < 12) ? $interval = 12 : '';
                 $row['forecast_length'] = $interval;
                 $history = $forecastHistory->newEntity($row->toArray());
                 if ($result = $forecastHistory->save($history)) {
