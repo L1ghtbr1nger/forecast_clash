@@ -31,23 +31,6 @@ $('document').ready(function() {
 
     // Pending Forecast Layers
 
-    // var tornadoIcon = new L.icon({
-    //     iconUrl: '/forecast_clash/webroot/img/markerTornado.jpg',
-    //     iconSize: [35, 31]
-    // });
-
-    // var hailIcon = new L.icon({
-    //     iconUrl: '/forecast_clash/webroot/img/markerHail.jpg',
-    //     iconSize: [1, 1]
-    // });
-
-    // var windIcon = new L.icon({
-    //     iconUrl: '/forecast_clash/webroot/img/markerWind.jpg',
-    //     iconSize: [1, 1]
-    // });
-    // $('.leaflet-marker-icon').append(tornadoSVG)
-
-
     var pendingLocations = JSON.parse($('#pendingLocations').val());
     var pendingEvents = JSON.parse($('#pendingEvents').val());
     var pendingDates = JSON.parse($('#pendingDates').val());
@@ -58,32 +41,50 @@ $('document').ready(function() {
     var activeRadius = JSON.parse($('#activeRadius').val());
     var pending = [];
     var active = [];
-    
-    $.each(pendingLocations, function(i, v){
+
+    $.each(pendingLocations, function(i, v) {
+
+        var stroke;
+        if (pendingEvents[i] === 'Tornado') {
+            stroke = 'rgb(255, 51, 51)'
+        } else if (pendingEvents[i] === 'Hail') {
+            stroke = 'rgb(61, 182, 239)'
+        } else if (pendingEvents[i] === 'Wind') {
+            stroke = 'rgb(255, 165, 0)'
+        }
+
         pending.push(L.circle(v, (pendingRadius[i] * 1609.344), {
-            color: 'rgb(235, 255, 0)',
-            stroke: 'rgb(39, 0, 255)'
-        }).bindPopup('Pending '+pendingEvents[i]+' Forecast at <br><strong> '+v[0]+','+v[1]+'</strong>').openPopup());
+            color: stroke,
+            fillColor: 'rgb(255,255,255)'
+        }).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> on ').openPopup());
     });
-    $.each(activeLocations, function(i, v){
+
+    $.each(activeLocations, function(i, v) {
+
+        if (activeEvents[i] === 'Tornado') {
+            stroke = 'rgb(255, 51, 51)'
+        } else if (activeEvents[i] === 'Hail') {
+            stroke = 'rgb(61, 182, 239)'
+        } else if (activeEvents[i] === 'Wind') {
+            stroke = 'rgb(255, 165, 0)'
+        }
+
         active.push(L.circle(v, (activeRadius[i] * 1609.344), {
-            color: 'rgb(255, 0, 186)',
-            stroke: 'rgb(255, 0, 186)'
-        }).bindPopup('Active '+activeEvents[i]+' Forecast at <br><strong> '+v[0]+','+v[1]+'</strong>').openPopup());
+            color: stroke,
+            fillColor: 'rgb(255, 255, 255)'
+        }).bindPopup('Active ' + activeEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> on ').openPopup());
     });
 
     var pending_layer = L.layerGroup(pending);
     var active_layer = L.layerGroup(active);
-    
+
     // initializes sidebar
     var sidebar = L.control.sidebar('play-sidebar', {
         closeButton: true,
     });
 
     var overlayMaps = {
-        "Pending": pending_layer
-    };
-    var activeMaps = {
+        "Pending": pending_layer,
         "Active": active_layer
     };
 
@@ -97,12 +98,11 @@ $('document').ready(function() {
         center: [40.2226, -95.4395],
         zoom: 5,
         doubleClickZoom: false,
-        layers: [pending_layer,active_layer]
+        layers: [active_layer, pending_layer]
     })
 
     .addControl(sidebar)
-    L.control.layers(overlayMaps).addTo(map);
-    L.control.layers(activeMaps).addTo(map);
+    L.control.layers(overlayMaps, null, { collapsed: false }).addTo(map);
 
     // Set tile layer
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {}).addTo(map);
@@ -156,10 +156,20 @@ $('document').ready(function() {
                 $('.climacon_component-stroke_cloud').css('fill', 'rgb(255,255,255)');
                 $('.climacon_component-wind_curl').css('fill', 'rgb(255,255,255)');
                 $('.climacon_component-wind').css('fill', 'rgb(255,255,255)');
-                $('.leaflet-interactive').css({
+                $('.tornadoCircle').css({
                     stroke: 'rgb(255, 51, 51)',
                     fill: 'rgb(255, 51, 51)'
                 });
+                $('.hailCircle').css({
+                    stroke: 'rgb(255, 51, 51)',
+                    fill: 'rgb(255, 51, 51)'
+                });
+                $('.windCircle').css({
+                    stroke: 'rgb(255, 51, 51)',
+                    fill: 'rgb(255, 51, 51)'
+                });
+
+
 
                 $('.leaflet-popup-content strong').html('Tornado');
 
@@ -176,25 +186,23 @@ $('document').ready(function() {
                     // sets latlng input to value of lat + lng
                     $('#latlng').val(lat + ', ' + lng);
                     var radiusMiles = radius * 1609.344;
-                    if (typeof(circle) === 'undefined') {
+                    if (typeof(tornadoCircle) === 'undefined') {
 
-
-
-                        circle = new L.circle([lat, lng], radiusMiles, {
+                        tornadoCircle = L.circle([lat, lng], radiusMiles, {
                             color: 'rgb(255, 51, 51)',
-                            stroke: 'rgb(255, 51, 51)'
+                            stroke: 'rgb(255, 51, 51)',
+                            className: 'tornadoCircle',
+                            draggable: true
                         });
 
-                        circle.addTo(map);
-                        circle.bindPopup("<strong>Tornado</strong> <br> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
-
-                        //var radius = circle.getRadius();
+                        tornadoCircle.addTo(map);
+                        tornadoCircle.bindPopup("<h4><strong>Tornado</strong></h4> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
 
                     } else {
-                        circle.setRadius(radiusMiles);
-                        circle.setLatLng([lat, lng]);
-                        circle.bindPopup("<strong>Tornado</strong> <br> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
-                        circle.addTo(map);
+                        tornadoCircle.setRadius(radiusMiles);
+                        tornadoCircle.setLatLng([lat, lng]);
+                        tornadoCircle.bindPopup("<h4><strong>Tornado</strong></h4> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
+                        tornadoCircle.addTo(map);
                     }
 
                 };
@@ -230,7 +238,15 @@ $('document').ready(function() {
                 $('.climacon_component-stroke_cloud').css('fill', 'rgb(61, 182, 239)');
                 $('.climacon_component-wind_curl').css('fill', 'rgb(255,255,255)');
                 $('.climacon_component-wind').css('fill', 'rgb(255,255,255)');
-                $('.leaflet-interactive').css({
+                $('.hailCircle').css({
+                    stroke: 'rgb(61, 182, 239)',
+                    fill: 'rgb(61, 182, 239)'
+                });
+                $('.tornadoCircle').css({
+                    stroke: 'rgb(61, 182, 239)',
+                    fill: 'rgb(61, 182, 239)'
+                });
+                $('.windCircle').css({
                     stroke: 'rgb(61, 182, 239)',
                     fill: 'rgb(61, 182, 239)'
                 });
@@ -250,25 +266,25 @@ $('document').ready(function() {
                     // sets latlng input to value of lat + lng
                     $('#latlng').val(lat + ', ' + lng);
                     var radiusMiles = radius * 1609.344;
-                    if (typeof(circle) === 'undefined') {
+                    if (typeof(hailCircle) === 'undefined') {
 
-
-
-                        circle = new L.circle([lat, lng], radiusMiles, {
+                        hailCircle = new L.circle([lat, lng], radiusMiles, {
                             color: 'rgb(61, 182, 239)',
-                            stroke: 'rgb(61, 182, 239)'
+                            stroke: 'rgb(61, 182, 239)',
+                            className: 'hailCircle',
+                            draggable: true
                         });
 
-                        circle.addTo(map);
-                        circle.bindPopup("<strong>Hail</strong> <br> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
+                        hailCircle.addTo(map);
+                        hailCircle.bindPopup("<h4><strong>Hail</strong></h4> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
 
-                        //var radius = circle.getRadius();
+                        //var radius = hailCircle.getRadius();
 
                     } else {
-                        circle.setRadius(radiusMiles);
-                        circle.setLatLng([lat, lng]);
-                        circle.bindPopup("<strong>Hail</strong> <br> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
-                        circle.addTo(map);
+                        hailCircle.setRadius(radiusMiles);
+                        hailCircle.setLatLng([lat, lng]);
+                        hailCircle.bindPopup("<h4><strong>Hail</strong></h4> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
+                        hailCircle.addTo(map);
                     }
 
                 };
@@ -276,6 +292,7 @@ $('document').ready(function() {
 
                 map.on('click', function(e) {
                     hailMarker(e);
+
                 });
 
                 radiusInput.onchange = function() {
@@ -306,12 +323,26 @@ $('document').ready(function() {
                 $('.climacon_component-wind_curl').css('fill', 'rgb(255, 165, 0');
                 $('.climacon_component-wind').css('fill', 'rgb(255, 165, 0');
 
-                $('.leaflet-interactive').css({
+                $('.windCircle').css({
+                    stroke: 'rgb(255, 165, 0)',
+                    fill: 'rgb(255, 165, 0)'
+                });
+
+                $('.tornadoCircle').css({
+                    stroke: 'rgb(255, 165, 0)',
+                    fill: 'rgb(255, 165, 0)'
+                });
+
+                $('.hailCircle').css({
                     stroke: 'rgb(255, 165, 0)',
                     fill: 'rgb(255, 165, 0)'
                 });
 
                 $('.leaflet-popup-content strong').html('Wind');
+
+                // $('.hailCircle').css('display', 'none');
+                // $('.tornaodCircle').css('display', 'none');
+                // $('.windCircle').css('display', 'block');
 
                 function windMarker(e) {
                     if (typeof(e) != 'undefined') {
@@ -326,23 +357,25 @@ $('document').ready(function() {
                     // sets latlng input to value of lat + lng
                     $('#latlng').val(lat + ', ' + lng);
                     var radiusMiles = radius * 1609.344;
-                    if (typeof(circle) === 'undefined') {
+                    if (typeof(windCircle) === 'undefined') {
 
-                        circle = new L.circle([lat, lng], radiusMiles, {
+                        windCircle = L.circle([lat, lng], radiusMiles, {
                             color: 'rgb(255, 165, 0)',
-                            stroke: 'rgb(255, 165, 0)'
+                            stroke: 'rgb(255, 165, 0)',
+                            className: 'windCircle',
+                            draggable: 'true'
                         });
 
-                        circle.addTo(map);
-                        circle.bindPopup("<strong>Wind</strong> <br> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
+                        windCircle.addTo(map);
+                        windCircle.bindPopup("<h4><strong>Wind</strong></h4> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
 
-                        //var radius = circle.getRadius();
+                        //var radius = windCircle.getRadius();
 
                     } else {
-                        circle.setRadius(radiusMiles);
-                        circle.setLatLng([lat, lng]);
-                        circle.bindPopup("<strong>Wind</strong> <br> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
-                        circle.addTo(map);
+                        windCircle.setRadius(radiusMiles);
+                        windCircle.setLatLng([lat, lng]);
+                        windCircle.bindPopup("<h4><strong>Wind</strong></h4> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
+                        windCircle.addTo(map);
                     }
 
                 };

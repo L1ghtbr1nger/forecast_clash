@@ -149,7 +149,7 @@ h4 i{
                     <li>Set target radius</li>
                     <li>Click the map and set your target </li>
                 </ul>
-                <p>Forecasts lock in 12 hours before the event and notifications will be sent out everyday at noon so be sure to come back and see how you did. <strong>Good Luck!</strong></p>
+                <p>Forecasts are pending until 12 hours before your event forecast time, they are then active forecasts and cannot be updated. Notifications are be out everyday at noon so be sure to come back and see how you did. <strong>Good Luck!</strong></p>
 
             </div>
         </div>
