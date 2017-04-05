@@ -115,7 +115,7 @@ class ForecastsController extends AppController
                         $pendingLocations[] = [$forecast['latitude'], $forecast['longitude']];
                         $pendingRadius[] = $forecast['radius'];
                         $pendingEvents[] = $forecast['weather_event']['weather'];
-                        $pendingDates[] = $forecast['forecast_date_start']->i18nFormat('yyyy-MM-dd HH:mm:ss');
+                        $pendingDates[] = $forecast['forecast_date_start']->i18nFormat('MMMM d, H:mm');
                     }
                 }
                 if($historical = TableRegistry::get('HistoricalForecasts')->find('all')->where(['user_id' => $userID, 'correct IS NULL'])->contain('WeatherEvents')) {
@@ -123,7 +123,7 @@ class ForecastsController extends AppController
                         $activeLocations[] = [$history['latitude'], $history['longitude']];
                         $activeRadius[] = $history['radius'];
                         $activeEvents[] = $history['weather_event']['weather'];
-                        $activeDates[] = $history['forecast_date_start']->i18nFormat('yyyy-MM-dd HH:mm:ss');
+                        $activeDates[] = $history['forecast_date_start']->i18nFormat('MMMM d, H:mm');
                     }
                 }
             }
