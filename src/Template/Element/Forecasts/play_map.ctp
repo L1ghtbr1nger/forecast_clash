@@ -54,9 +54,12 @@ h4 i{
             </div>
         </div>
         <div class="sidebar-footer">
-        <a id="modalTrigger" href="#modalTrigger">Instructions</a>
+        <a id="modalTrigger" style="display: none" href="#modalTrigger">Instructions</a>
+        <span id="modalTrigger" data-toggle="modal" data-target="#instructions-modal">
+                Instructions
+        </span>
             <?php if ($loggedIn) {
-                echo '<input class="btn btn-primary forecast-btn login" type="submit" value="Make Your Forecast" id="forecast">';
+                echo '<input class="btn btn-primary forecast-btn login" type="submit" value="Set Your Forecast" id="forecast">';
              } else {
                 echo '<a href="/forecast_clash/users/login"><input class="btn forecast-btn forecast-link" type="submit" value="Please Login!"></a>';
             } ?>
@@ -186,7 +189,7 @@ $("#radius").mousemove(function () {
 var tomorrow = new Date(); 
 var newdate = new Date();
 newdate.setDate(tomorrow.getDate());
-
+console.log(tomorrow)
 // Get next 8 days
 var newdate_week = new Date();
 newdate_week.setDate(tomorrow.getDate() + 8);
@@ -208,6 +211,8 @@ $('.datepicker').pickadate({
         console.log(chosen_date);
         if(today === chosen_date){
             $('#am').attr('disabled', true);
+            $('#am').prop('checked', false);  
+            $('#pm').prop('checked', true);  
         }else{
             $('#am').attr('disabled', false);
         }

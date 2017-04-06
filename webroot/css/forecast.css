@@ -2097,6 +2097,10 @@ label,
     padding: 18px;
 }
 
+#modalTrigger {
+    cursor: pointer;
+}
+
 .modal-body.modal-tab-container {
     padding: 0;
 }
