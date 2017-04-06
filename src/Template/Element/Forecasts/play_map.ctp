@@ -188,11 +188,20 @@ $("#radius").mousemove(function () {
 // Get tomorrows date for min date
 var tomorrow = new Date(); 
 var newdate = new Date();
-newdate.setDate(tomorrow.getDate());
-console.log(tomorrow)
+
+var hr = newdate.getHours();
+if (hr > 12){
+    newdate.setDate(tomorrow.getDate() +1);
+}else{
+    newdate.setDate(tomorrow.getDate());
+}
+
 // Get next 8 days
 var newdate_week = new Date();
 newdate_week.setDate(tomorrow.getDate() + 8);
+
+
+
 
 // Pickadate - http://amsul.ca/pickadate.js/date/
 
