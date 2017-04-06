@@ -4126,12 +4126,6 @@ pre {
     font-weight: bold;
 }
 
-@media (max-width: 767px) {
-    .header .header-block-nav .profile .name {
-        display: none;
-    }
-}
-
 .header .header-block-nav .profile .arrow {
     color: rgb(61, 182, 239);
 }
