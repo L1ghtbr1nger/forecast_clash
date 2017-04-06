@@ -190,7 +190,7 @@ var tomorrow = new Date();
 var newdate = new Date();
 
 var hr = newdate.getHours();
-if (hr > 12){
+if (hr >= 12){
     newdate.setDate(tomorrow.getDate() +1);
 }else{
     newdate.setDate(tomorrow.getDate());
