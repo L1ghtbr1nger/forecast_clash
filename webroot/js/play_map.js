@@ -56,7 +56,7 @@ $('document').ready(function() {
         pending.push(L.circle(v, (pendingRadius[i] * 1609.344), {
             color: stroke,
             fillColor: 'rgb(255,255,255)'
-        }).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> on ').openPopup());
+        }).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> starting</br>'+pendingDates[i]+' UTC').openPopup());
     });
 
     $.each(activeLocations, function(i, v) {
@@ -72,7 +72,7 @@ $('document').ready(function() {
         active.push(L.circle(v, (activeRadius[i] * 1609.344), {
             color: stroke,
             fillColor: 'rgb(255, 255, 255)'
-        }).bindPopup('Active ' + activeEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> on ').openPopup());
+        }).bindPopup('Active ' + activeEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong></br>Awaiting results...').openPopup());
     });
 
     var pending_layer = L.layerGroup(pending);
