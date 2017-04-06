@@ -77,14 +77,14 @@ max-width: 350px !important;
                                 </label>
                             </div>
                             <div class="can-toggle can-toggle--size-small">
-                                <input id="hail_hm" class="event_hm" type="checkbox" checked>
+                                <input id="hail_hm" class="event_hm" type="checkbox">
                                 <label for="hail_hm">
                                     <div class="can-toggle__label-text">Hail</div>
                                     <div class="can-toggle__switch hail-switch" data-checked="On" data-unchecked="Off"></div>
                                 </label>
                             </div>
                             <div class="can-toggle can-toggle--size-small">
-                                <input id="wind_hm" class="event_hm" type="checkbox" checked>
+                                <input id="wind_hm" class="event_hm" type="checkbox">
                                 <label for="wind_hm">
                                     <div class="can-toggle__label-text">Wind</div>
                                     <div class="can-toggle__switch wind-switch" data-checked="On" data-unchecked="Off"></div>
