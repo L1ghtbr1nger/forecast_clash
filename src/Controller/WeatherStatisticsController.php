@@ -120,36 +120,34 @@ class WeatherStatisticsController extends AppController
                 $board = $results[1]; //grab the result data
                 if (!$results[2]) {
                     if ($userID) {
-                        $scorez = $scoreboard->find('all')->where(['user_id' => $userID])->contain('WeatherStatistics.WeatherEvents');
+                        $scorez = $scoreboard->find('all')->where(['user_id' => $userID])->contain(['Users', 'WeatherStatistics.WeatherEvents']);
                         if ($scorez->toArray()) {
                             $results = $this->scores($scorez, $userID);
-                            $board[] = $results[1];
+                            $results[1][0]['rank'] = '...';
+                            $board[] = $results[1][0];
                         } else {
                             $currentUser = $users->find()->where(['id' => $userID])->first();
                             $board[] = [
                                 'rank' => '...',
                                 'user_id' => $userID,
-                                'first_name' => $currentUser['first_name'],
-                                'last_name' => $currentUser['last_name'],
+                                'first_name' => h($currentUser['first_name']),
+                                'last_name' => h($currentUser['last_name']),
                                 'score' => 0,
                                 'total' => 0
                             ];
                         }
                     }
-                } else {
-                    $board = [0];
                 }
             }
             echo json_encode(['result' => $result, 'leaderboard' => $board, 'user_id' => $userID]); //leaderboard.js
             die;
         } else {
-            if ($teamUser) { //check if team was found
+            if (isset($teamUser['teams']) && !empty($teamUser['teams'])) { //check if team was found
                 $this->set('teamResult', 1); //user has team
                 $this->set('teamUser', $teamUser); //save user's team info for view
             } else {
                 $this->set('teamResult', 0); //user does not have team
             }
-            $users = TableRegistry::get('Users'); //get info about logged user
             if ($currentUser = $users->find()->where(['id' => $userID])->first()) { //if logged in user
                 $this->set('user', $currentUser); //save user info for view
             } else {
@@ -163,16 +161,17 @@ class WeatherStatisticsController extends AppController
                 $board = $results[1]; //grab the result data
                 if (!$results[2]) {
                     if ($userID) {
-                        $scorez = $scoreboard->find('all')->where(['user_id' => $userID])->contain('WeatherStatistics.WeatherEvents');
+                        $scorez = $scoreboard->find('all')->where(['user_id' => $userID])->contain(['Users', 'WeatherStatistics.WeatherEvents']);
                         if ($scorez->toArray()) {
                             $results = $this->scores($scorez, $userID);
-                            $board[] = $results[1];
+                            $results[1][0]['rank'] = '...';
+                            $board[] = $results[1][0];
                         } else {
                             $board[] = [
                                 'rank' => '...',
                                 'user_id' => $userID,
-                                'first_name' => $currentUser['first_name'],
-                                'last_name' => $currentUser['last_name'],
+                                'first_name' => h($currentUser['first_name']),
+                                'last_name' => h($currentUser['last_name']),
                                 'score' => 0,
                                 'total' => 0
                             ];
