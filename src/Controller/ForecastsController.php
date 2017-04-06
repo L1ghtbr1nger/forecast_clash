@@ -140,8 +140,8 @@ class ForecastsController extends AppController
     
     public function locker() { //Takes Forecasts that have locked in and moves them to HistoricalForecasts
         $deleter = 1;
-        $lock = Time::now('+12 hours'); //Get an instance of the current time + 12 hours
-        $query = $this->Forecasts->find()->where(['forecast_date_start <=' => $lock]); //find all forecasts starting in the next 12 hours
+        $lock = Time::now(); //Get an instance of the current time
+        $query = $this->Forecasts->find()->where(['forecast_date_start <=' => $lock]); //find all forecasts that just started
         $forecastHistory = TableRegistry::get('HistoricalForecasts');
         if ($query->toArray()) {
             foreach ($query as $row) {
