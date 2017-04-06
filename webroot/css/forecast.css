@@ -7944,7 +7944,8 @@ ul {
 
 .icon-container {
     float: left;
-    margin-left: 6px;
+    margin-right: 24px;
+    text-align: center;
 }
 
 .icon-container:last-child {
@@ -8065,6 +8066,16 @@ ul {
     color: #fff;
 }
 
+.tornado-instructions,
+.tornado-control-active {
+    border: 2px solid rgb(255, 51, 51);
+    padding: 0;
+}
+
+span.tornado-control-active {
+    padding: 5px;
+}
+
 .tornado-control-active svg {
     position: relative;
     display: inline-block;
@@ -8073,12 +8084,36 @@ ul {
     shape-rendering: geometricPrecision;
 }
 
+.hail-instructions,
+.hail-control-active {
+    border: 2px solid rgb(61, 182, 239);
+    padding: 0;
+}
+
+span.hail-control-active {
+    padding: 5px;
+}
+
 .hail-control-active svg {
     position: relative;
     display: inline-block;
     width: 100%;
     height: 100%;
     shape-rendering: geometricPrecision;
+}
+
+#cloudHailAlt {
+    top: -5px;
+}
+
+.wind-instructions,
+.wind-control-active {
+    border: 2px solid rgb(255, 165, 0);
+    padding: 0;
+}
+
+span.wind-control-active {
+    padding: 5px;
 }
 
 .wind-control-active svg {
@@ -8255,6 +8290,7 @@ label[for="remember"] span {
 .button-state .fa-compass {
     color: #333;
 }
+
 
 /*.leaflet-popup-tip-container {
     display: none;
