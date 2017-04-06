@@ -14,7 +14,8 @@
  */
 ?>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:fb="http://ogp.me/ns/fb#">
 <head>
     <script>
        // google analytics
@@ -31,13 +32,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title><?= $title ?></title>
-    <link rel="icon" type="image/png" href="webroot/img/ico.png">
+    <?=
+     $this->Html->meta('ico.png','/webroot/img/ico.png',array('type' => 'icon'));
+    ?>
     <?= $this->Html->css(['bootstrap.min', 'leaflet', 'L.Control.Sidebar.css','forecast']) ?>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 <!--     <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script> -->
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
+    <meta property="og:image" content="/webroot/img/logo-light-blue-sm.png" />
     <?= $this->Html->script('jquery.min'); ?>
     <?= $this->Html->script('bootstrap.min'); ?>
     <?= $this->Html->script('leaflet'); ?>
