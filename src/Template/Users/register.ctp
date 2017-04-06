@@ -65,6 +65,31 @@
                     ]); ?>
                             <?= $this->Form->end(); ?>
                     </div>
+                    <hr>
+                      <div class="form-group">
+                        <?= $this->Form->button('Login', [
+                        'id' => 'login',
+                        'class' => 'btn btn-block btn-primary login',
+                        'type' => 'submit'
+                    ]); ?>
+                        <hr>
+                        <?= $this->Html->link('Login with Facebook', [
+                            'controller' => 'Users',
+                            'action' => 'login',
+                            '?' => ['provider' => 'Facebook']]
+                        ); ?>
+                        <?= $this->Html->link('Login with Google', [
+                            'controller' => 'Users',
+                            'action' => 'login',
+                            '?' => ['provider' => 'google']]
+                        ); ?>
+                        <?= $this->Html->link('Login with Twitter', [
+                            'controller' => 'Users',
+                            'action' => 'login',
+                            '?' => ['provider' => 'Twitter']]
+                        ); ?>
+                            <?= $this->Form->end(); ?>
+                    </div>
                     <div class="form-group">
                         <p class="text-muted text-xs-center">Already have an account? <a href="login">Login!</a></p>
                     </div>
@@ -75,4 +100,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    $("<i class='fa fa-facebook-official' aria-hidden='true'></i>").prependTo("a[href='/forecast_clash/users/login?provider=Facebook'");
+    $("<i class='fa fa-google-plus-square' aria-hidden='true'></i>").prependTo("a[href='/forecast_clash/users/login?provider=google'");
+    $("<i class='fa fa-twitter-square' aria-hidden='true'></i>").prependTo("a[href='/forecast_clash/users/login?provider=Twitter'");
+</script>
 

@@ -8416,6 +8416,7 @@ a[href='/forecast_clash/users/login?provider=Facebook'] {
     border: 1px solid #3b5999;
     text-align: center;
     transition: all .4s;
+    padding-left: 30px;
 }
 
 a[href='/forecast_clash/users/login?provider=Facebook'] i {
