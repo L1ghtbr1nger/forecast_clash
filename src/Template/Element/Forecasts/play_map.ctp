@@ -185,7 +185,7 @@ $("#radius").mousemove(function () {
 // Get tomorrows date for min date
 var tomorrow = new Date(); 
 var newdate = new Date();
-newdate.setDate(tomorrow.getDate() + 1);
+newdate.setDate(tomorrow.getDate());
 
 // Get next 8 days
 var newdate_week = new Date();
@@ -200,6 +200,17 @@ $('.datepicker').pickadate({
     closeOnSelect: true,
     onRender: function(){
         $('.picker').appendTo('body');
+    },
+    onSet: function(){
+        var today = this.get('min', 'yyyy/mm/dd');
+        var chosen_date = this.get('highlight', 'yyyy/mm/dd');
+        console.log(today);
+        console.log(chosen_date);
+        if(today === chosen_date){
+            $('#am').attr('disabled', true);
+        }else{
+            $('#am').attr('disabled', false);
+        }
     }
 });
 

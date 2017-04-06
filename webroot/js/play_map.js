@@ -104,6 +104,8 @@ $('document').ready(function() {
     .addControl(sidebar)
     L.control.layers(overlayMaps, null, { collapsed: false }).addTo(map);
 
+    $('.leaflet-control-layers-selector').attr('type', 'checkbox').prop('checked', true);
+
     // Set tile layer
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {}).addTo(map);
 
