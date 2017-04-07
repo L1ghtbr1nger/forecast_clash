@@ -110,7 +110,7 @@ h4 i{
       <div class="modal-body">
         <div class="instructions">
             <div class="scoring-instructions">
-                 <p>The goal is to set a target for severe weather, including wind, hail, and tornadoes for any point in the future, out to 8-days. </p>
+                 <p>The goal is to set a target for severe weather, including wind, hail, and tornadoes for any point in the future, out to 2-days. </p>
                 <h5><strong>How to Score Points</strong></h5>
                 <p>Points are scored based on accuracy and timing. There are three primary ways to score:</p>
                 <ul>
@@ -196,9 +196,9 @@ if (hr >= 12){
     newdate.setDate(tomorrow.getDate());
 }
 
-// Get next 8 days
+// Get next 2 days
 var newdate_week = new Date();
-newdate_week.setDate(tomorrow.getDate() + 8);
+newdate_week.setDate(tomorrow.getDate() + 2);
 
 
 
