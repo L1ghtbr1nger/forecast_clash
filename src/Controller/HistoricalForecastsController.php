@@ -208,12 +208,12 @@ class HistoricalForecastsController extends AppController
             if (($heatmapStats = $heatmapStats->toArray()) || ($pendingStats = $pendingStats->toArray())) {
                 if ($heatmapStats) {
                     foreach($heatmapStats as $heatmapStat) {
-                        $heatmap[] = [$heatmapStat['latitude'], $heatmapStat['longitude'], 225];
+                        $heatmap[] = [$heatmapStat['latitude'], $heatmapStat['longitude'], 250];
                     }
                 }
                 if ($pendingStats) {
                     foreach($pendingStats as $pendingStat) {
-                        $heatmap[] = [$pendingStat['latitude'], $pendingStat['longitude'], 225];
+                        $heatmap[] = [$pendingStat['latitude'], $pendingStat['longitude'], 250];
                     }
                 }
                 $result = 1;
