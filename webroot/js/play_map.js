@@ -56,7 +56,7 @@ $('document').ready(function() {
         pending.push(L.circle(v, (pendingRadius[i] * 1609.344), {
             color: stroke,
             fillColor: 'rgb(255,255,255)'
-        }).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> starting</br>'+pendingDates[i]+' UTC').openPopup());
+        }).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> starting</br>' + pendingDates[i] + ' UTC').openPopup());
     });
 
     $.each(activeLocations, function(i, v) {
@@ -110,7 +110,7 @@ $('document').ready(function() {
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {}).addTo(map);
 
     // close button
-    $('.close').click(function() {
+    $('.leaflet-sidebar .close').click(function() {
 
         // sidebar controller
         var openSidebarControl = L.easyButton({
@@ -193,8 +193,7 @@ $('document').ready(function() {
                         tornadoCircle = L.circle([lat, lng], radiusMiles, {
                             color: 'rgb(255, 51, 51)',
                             stroke: 'rgb(255, 51, 51)',
-                            className: 'tornadoCircle',
-                            draggable: true
+                            className: 'tornadoCircle'
                         });
 
                         tornadoCircle.addTo(map);
