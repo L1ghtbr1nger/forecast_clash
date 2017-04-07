@@ -199,9 +199,12 @@ class HistoricalForecastsController extends AppController
             }
             if (isset($data['range'][1]) && !empty($data['range'][1])) {
                 $rangeT = Time::parse($data['range'][1]);
-                $heatmapStats = $heatmapStats->where(['forecast_date_start <=' => $rangeT]);
-                $pendingStats = $pendingStats->where(['forecast_date_start <=' => $rangeT]);
+                $rangeT->modify('+1 day');
+                $heatmapStats = $heatmapStats->where(['forecast_date_start <' => $rangeT]);
+                $pendingStats = $pendingStats->where(['forecast_date_start <' => $rangeT]);
             }
+            debug($rangeF);
+            debug($rangeT);
             if (($heatmapStats = $heatmapStats->toArray()) || ($pendingStats = $pendingStats->toArray())) {
                 if ($heatmapStats) {
                     foreach($heatmapStats as $heatmapStat) {
