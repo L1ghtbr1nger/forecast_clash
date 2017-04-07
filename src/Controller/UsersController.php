@@ -151,11 +151,11 @@ class UsersController extends AppController
                     $name = $user->first_name;
                     $reset_token_link = Router::url(['controller' => 'Users', 'action' => 'resetPassword'], TRUE) . '/' . $password_token . '#' . $hashval;
                     $email = new Email();
-                    $email->from('donotreply@forecastclash.com', 'Forecast Clash')
+                    $email->from('info@forecastclash.com', 'Forecast Clash')
                         ->to($address, $name)
                         ->template('default', 'default')
                         ->subject('Reset your Forecast Clash password')
-                        ->send($reset_token_link);
+                        ->send("Follow the link provided to reset your password:\r\n".$reset_token_link);
                     $this->Users->save($user);
                     $session->write('successBox', 'Email sent with password reset instructions!');
                     $url = Router::url(['controller' => 'Users', 'action' => 'login'], TRUE);

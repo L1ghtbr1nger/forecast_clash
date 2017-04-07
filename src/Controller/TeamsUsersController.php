@@ -37,7 +37,7 @@ class TeamsUsersController extends AppController
         if ($team['privacy'] && !$captain) { //if selected team is private and user not invited by captain, send email to team captain with link to accept or reject request
             $link = Router::url(['controller' => 'TeamsUsers', 'action' => 'freeAgent'], TRUE).'/'.$team['id'].'_'.h($team['team_name']).'_'.$user['id'].'_'.h($user['first_name']).'_'.h($user['last_name']);
             $email = new Email();
-            $email->from('donotreply@forecastclash.com', 'Forecast Clash')
+            $email->from('info@forecastclash.com', 'Forecast Clash')
                 ->to($addressC, $firstC)
                 ->template('default', 'default')
                 ->subject('Forecast Clash Team Request')
@@ -172,7 +172,7 @@ class TeamsUsersController extends AppController
                 $notices->save($notice);
                 $link = Router::url(['controller' => 'TeamsUsers', 'action' => 'dugout'], TRUE);
                 $email = new Email();
-                $email->from('donotreply@forecastclash.com', 'Forecast Clash')
+                $email->from('info@forecastclash.com', 'Forecast Clash')
                     ->to($user['email'], $first)
                     ->template('default', 'default')
                     ->subject('Forecast Clash Team Request')

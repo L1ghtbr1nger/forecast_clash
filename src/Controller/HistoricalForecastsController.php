@@ -97,7 +97,7 @@ class HistoricalForecastsController extends AppController
                         $scoreboard->save($result); //save results to Scores table
                     }
                 } else { //if any events were found, mark forecast as correct
-                    $message = 'Congratulations!!! You correctly forecast a '.$row['weather_event']['weather'].' event!  See how your abilities stack up against your fellow forecasters...'; 
+                    $message = 'Congratulations!!! You correctly forecasted a '.$row['weather_event']['weather'].' event!  See how your abilities stack up against your fellow forecasters...'; 
                     $correct->correct = 1;
                     if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;
@@ -205,12 +205,12 @@ class HistoricalForecastsController extends AppController
             if (($heatmapStats = $heatmapStats->toArray()) || ($pendingStats = $pendingStats->toArray())) {
                 if ($heatmapStats) {
                     foreach($heatmapStats as $heatmapStat) {
-                        $heatmap[] = [$heatmapStat['latitude'], $heatmapStat['longitude'], 200];
+                        $heatmap[] = [$heatmapStat['latitude'], $heatmapStat['longitude'], 225];
                     }
                 }
                 if ($pendingStats) {
                     foreach($pendingStats as $pendingStat) {
-                        $heatmap[] = [$pendingStat['latitude'], $pendingStat['longitude'], 200];
+                        $heatmap[] = [$pendingStat['latitude'], $pendingStat['longitude'], 225];
                     }
                 }
                 $result = 1;
