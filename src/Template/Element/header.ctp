@@ -66,8 +66,8 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
                 </ul>
                 <footer>
                     <ul>
-                        <li><a class="dismisser" id="dismissRead" href="">Dismiss All Read</a></li>
-                        <li><a class="dismisser" id="dismissAll" href="">Dismiss All Notices</a></li>
+                        <li><a class="dismisser" id="dismissRead" href="">Dismiss Read</a></li>
+                        <li><a class="dismisser" id="dismissAll" href="">Dismiss All</a></li>
                     </ul>
                 </footer>
             </div>

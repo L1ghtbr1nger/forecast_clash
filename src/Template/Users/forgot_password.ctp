@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="text-xs-center">
-            <a href="/forecast_clash/pages/home" class="btn btn-secondary rounded btn-sm"> <i class="fa fa-arrow-left"></i> Back to dashboard </a>
+            <a href="/forecast_clash/" class="btn btn-secondary rounded btn-sm"> <i class="fa fa-arrow-left"></i> Back to dashboard </a>
         </div>
     </div>
 </div>

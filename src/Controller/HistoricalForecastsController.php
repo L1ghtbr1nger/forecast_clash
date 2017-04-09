@@ -203,8 +203,6 @@ class HistoricalForecastsController extends AppController
                 $heatmapStats = $heatmapStats->where(['forecast_date_start <' => $rangeT]);
                 $pendingStats = $pendingStats->where(['forecast_date_start <' => $rangeT]);
             }
-            debug($rangeF);
-            debug($rangeT);
             if (($heatmapStats = $heatmapStats->toArray()) || ($pendingStats = $pendingStats->toArray())) {
                 if ($heatmapStats) {
                     foreach($heatmapStats as $heatmapStat) {
