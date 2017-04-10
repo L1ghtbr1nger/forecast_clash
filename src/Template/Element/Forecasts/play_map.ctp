@@ -181,67 +181,59 @@ h4 i{
 // Set active tab
 $('.play-link').addClass('active');
 
-$("#radius").mousemove(function () {
+$("#radius").mousemove(function() {
     $("#output").text('(' + $("#radius").val() + ' miles)');
 });
 
-// Get tomorrows date for min date
-var tomorrow = new Date(); 
-var newdate = new Date();
+var minDate = new Date();
+var maxDate = new Date();
+var max = maxDate.getDay() + 3;
+var hr = minDate.getUTCHours();
 
-var hr = newdate.getHours();
-if (hr >= 12){
-    newdate.setDate(tomorrow.getDate() +1);
-}else{
-    newdate.setDate(tomorrow.getDate());
+if (hr >= 11) {
+    var tomorrow = true;
+} else if (hr <= 11) {
+    var today = new Date();
+    var tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000));
 }
 
-// Get next 2 days
-var newdate_week = new Date();
-newdate_week.setDate(tomorrow.getDate() + 2);
-
-
-
-
-// Pickadate - http://amsul.ca/pickadate.js/date/
-
 $('.datepicker').pickadate({
-    min: new Date(newdate),
-    max: new Date(newdate_week),
+    min: tomorrow,
+    max: max,
     format: 'mmmm d, yyyy',
     closeOnSelect: true,
-    onRender: function(){
+    onRender: function() {
         $('.picker').appendTo('body');
     },
-    onSet: function(){
+    onSet: function() {
+
         var today = this.get('min', 'yyyy/mm/dd');
         var chosen_date = this.get('highlight', 'yyyy/mm/dd');
-        console.log(today);
-        console.log(chosen_date);
-        if(today === chosen_date){
+
+        if (today === chosen_date) {
             $('#am').attr('disabled', true);
-            $('#am').prop('checked', false);  
-            $('#pm').prop('checked', true);  
-        }else{
+            $('#am').prop('checked', false);
+            $('#pm').prop('checked', true);
+        } else {
             $('#am').attr('disabled', false);
         }
     }
 });
 
-$(document).ready(function(){
+$(document).ready(function() {
 
     // check for 'clicked' in sessionStorage
     var clicked = sessionStorage.getItem('clicked');
 
-    if(!clicked){
+    if (!clicked) {
         // show instructions
         $('#instructions-modal').modal('show');
-    }else{
+    } else {
         // hide instructions
         $('#instructions-modal').modal('hide');
     }
 
-    $('.skip-instructions').click(function(){
+    $('.skip-instructions').click(function() {
         // on "Dismiss Instructions" click, set 'clicked' to sessionStorage
         sessionStorage.setItem('clicked', 'true');
 
@@ -252,11 +244,11 @@ $(document).ready(function(){
         $('.targeting').hide();
     });
 
-    $('.scoring-btn').click(function(){
+    $('.scoring-btn').click(function() {
         $('#instructions-modal').modal('hide');
     });
 
-    $('#modalTrigger').click(function(){
+    $('#modalTrigger').click(function() {
         $('#instructions-modal').modal('show');
         $('.scoring-instructions').show();
         $('.scoring-instructions-btn').show();
