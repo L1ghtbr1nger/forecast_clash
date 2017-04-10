@@ -181,7 +181,7 @@ h4 i{
 // Set active tab
 $('.play-link').addClass('active');
 
-$("#radius").mousemove(function () {
+$("#radius").change(function () {
     $("#output").text('(' + $("#radius").val() + ' miles)');
 });
 
