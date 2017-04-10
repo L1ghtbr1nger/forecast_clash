@@ -203,17 +203,15 @@ class HistoricalForecastsController extends AppController
                 $heatmapStats = $heatmapStats->where(['forecast_date_start <' => $rangeT]);
                 $pendingStats = $pendingStats->where(['forecast_date_start <' => $rangeT]);
             }
-            debug($rangeF);
-            debug($rangeT);
             if (($heatmapStats = $heatmapStats->toArray()) || ($pendingStats = $pendingStats->toArray())) {
                 if ($heatmapStats) {
                     foreach($heatmapStats as $heatmapStat) {
-                        $heatmap[] = [$heatmapStat['latitude'], $heatmapStat['longitude'], 250];
+                        $heatmap[] = [$heatmapStat['latitude'], $heatmapStat['longitude'], 225];
                     }
                 }
                 if ($pendingStats) {
                     foreach($pendingStats as $pendingStat) {
-                        $heatmap[] = [$pendingStat['latitude'], $pendingStat['longitude'], 250];
+                        $heatmap[] = [$pendingStat['latitude'], $pendingStat['longitude'], 225];
                     }
                 }
                 $result = 1;

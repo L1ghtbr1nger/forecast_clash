@@ -53,7 +53,7 @@ class UsersController extends AppController
                 echo json_encode(['result' => 1, 'regLog' => 1, 'url' => $referer]);
                 die;
             } else {
-                echo json_encode(['msg' => 'Invalid login. Please enter an email and password associated with Fantasy Clash or sign up now.', 'result' => 0, 'regLog' => 1]);
+                echo json_encode(['msg' => 'Invalid login. Please enter an email and password associated with Forecast Clash or sign up now.', 'result' => 0, 'regLog' => 1]);
                 die;
             } 
         } else {
