@@ -186,7 +186,7 @@ $("#radius").mousemove(function() {
 
 var minDate = new Date();
 var maxDate = new Date();
-var max = maxDate.getDay() + 3;
+var max = maxDate.getDay() + 1;
 var hr = minDate.getUTCHours();
 
 if (hr >= 11) {
