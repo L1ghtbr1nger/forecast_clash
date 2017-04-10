@@ -178,7 +178,6 @@ h4 i{
 
 <script>
 
-// Set active tab
 $('.play-link').addClass('active');
 
 $("#radius").mousemove(function() {
