@@ -132,25 +132,27 @@ if ($loggedIn) {
 
 $(document).ready(function(){
 
-    var heatmap_thumbnail = $('.heatmap-thumbnail'),
-        leaderboard_thumbnail = $('.leaderboard-thumbnail'),
-        attempts_pie_thumbnail = $('.attempts-pie-thumbnail'),
-        guesses_bar_thumbnail = $('.guesses-bar-thumbnail');
+    // var heatmap_thumbnail = $('.heatmap-thumbnail'),
+    //     leaderboard_thumbnail = $('.leaderboard-thumbnail'),
+    //     attempts_pie_thumbnail = $('.attempts-pie-thumbnail'),
+    //     guesses_bar_thumbnail = $('.guesses-bar-thumbnail');
 
-    $(heatmap_thumbnail).click(function(){
-        $('.heatmap-element').toggleClass('hide-me');
-    });
+    // $(heatmap_thumbnail).click(function(){
+    //     $('.heatmap-element').toggleClass('hide-me');
+    // });
 
-    $(leaderboard_thumbnail).click(function(){
-        $('.leaderboard-element').toggleClass('hide-me');
-    });
+    // $(leaderboard_thumbnail).click(function(){
+    //     $('.leaderboard-element').toggleClass('hide-me');
+    // });
 
-    $(attempts_pie_thumbnail).click(function(){
-        $('.attempts-pie-element').toggleClass('hide-me');
-    });
+    // $(attempts_pie_thumbnail).click(function(){
+    //     $('.attempts-pie-element').toggleClass('hide-me');
+    // });
 
-    $(guesses_bar_thumbnail).click(function(){
-        $('.guesses-bar-element').toggleClass('hide-me');
-    });
+    // $(guesses_bar_thumbnail).click(function(){
+    //     $('.guesses-bar-element').toggleClass('hide-me');
+    // });
+
+    $('.stats-link').addClass('active');
 });
 </script>
