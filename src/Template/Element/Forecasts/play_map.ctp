@@ -185,8 +185,6 @@ $("#radius").mousemove(function() {
 });
 
 var minDate = new Date();
-var maxDate = new Date();
-var max = maxDate.getDay() + 1;
 var hr = minDate.getUTCHours();
 
 if (hr >= 11) {
@@ -198,7 +196,7 @@ if (hr >= 11) {
 
 $('.datepicker').pickadate({
     min: tomorrow,
-    max: max,
+    max: 2,
     format: 'mmmm d, yyyy',
     closeOnSelect: true,
     onRender: function() {
