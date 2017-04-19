@@ -178,7 +178,6 @@ h4 i{
 
 <script>
 
-// Set active tab
 $('.play-link').addClass('active');
 
 $("#radius").change(function () {
@@ -186,8 +185,6 @@ $("#radius").change(function () {
 });
 
 var minDate = new Date();
-var maxDate = new Date();
-var max = maxDate.getDay() + 3;
 var hr = minDate.getUTCHours();
 
 if (hr >= 11) {
@@ -199,7 +196,7 @@ if (hr >= 11) {
 
 $('.datepicker').pickadate({
     min: tomorrow,
-    max: max,
+    max: 2,
     format: 'mmmm d, yyyy',
     closeOnSelect: true,
     onRender: function() {
