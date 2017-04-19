@@ -81,7 +81,7 @@ if ($loggedIn) {
     </div></div>
 
 <?= $this->Html->script('leaderboard'); ?>
-<?= $this->Html->script('heatmaps'); ?>
+<?= $this->Html->script('heat'); ?>
 <?= $this->Html->script('chartist'); ?>
 <?= $this->Html->css('chartist.min'); ?>
 

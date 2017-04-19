@@ -144,7 +144,7 @@ class HistoricalForecastsController extends AppController
         exit;
     }
     
-    public function heatmap() {
+    public function heat() {
         if ($this->request->is('ajax')) {
             $session = $this->request->session();
             $userID = $session->read('Auth.User.id');

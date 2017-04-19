@@ -7,7 +7,7 @@ var heatmap;
 function callAjaxHM(filters){
     $.ajax({ //ajax call to get DB data for the leaderboard
         type: "POST",
-        url: "/forecast_clash/historical-forecasts/heatmap.json",
+        url: "/forecast_clash/historical-forecasts/heat.json",
         dataType: 'json',
         data: filters,
         success : function(response){
