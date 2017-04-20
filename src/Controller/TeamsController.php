@@ -159,7 +159,7 @@ class TeamsController extends AppController
                     $notice = $notices->newEntity();
                     $notice = $notices->patchEntity($notice, [
                         'user_id' => $userID,
-                        'message' => 'You have created a team and become its captain! Visit the '.h($teamName).' Dugout...',
+                        'message' => 'You have created a team and become its captain! Visit the '.h($teamName).' Dugout.',
                         'link_address' => '/forecast_clash/teams/dugout',
                         'link_image' => 'teams/users/'.(isset($imageFileName) ? $imageFileName : 'logo-mark.png')
                     ]);
@@ -167,10 +167,10 @@ class TeamsController extends AppController
                     $session->write('successBox', 'Team successfully created!');
                     $session->delete('errorBox');
                 } else {
-                    $session->write('errorBox', 'Error adding you to your roster...');
+                    $session->write('errorBox', 'Error adding you to your roster.');
                 }
             } else {
-                $session->write('errorBox', 'Unable to create team at this time...');
+                $session->write('errorBox', 'Unable to create team at this time.');
             }
             echo json_encode(['url' => $url]);
             die;

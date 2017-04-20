@@ -105,7 +105,7 @@ class UsersController extends AppController
                 $notice = $notices->newEntity();
                 $notice = $notices->patchEntity($notice, [
                     'user_id' => $result['id'],
-                    'message' => 'Thank you for registering with Forecast Clash! Visit your profile page to tell us more about yourself...',
+                    'message' => 'Thank you for registering with Forecast Clash! Visit your profile page to tell us more about yourself.',
                     'link_address' => '/forecast_clash/profiles/profile',
                     'link_image' => 'logo-mark.png'
                 ]);
