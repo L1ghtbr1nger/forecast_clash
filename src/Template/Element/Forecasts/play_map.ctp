@@ -31,12 +31,12 @@ h4 i{
                         <input type="text" name="forecast_date" class="datepicker" id="event_date">
                     </fieldset>
                     <fieldset class="time">
-                        <strong>Time</strong><br>
+                        <strong>Time (UTC)</strong><br>
                         <input type="radio" name="am_pm" id="am" value="0">
-                        <label for="am">AM</label>
+                        <label for="am">0-111</label>
                         <br>
                         <input type="radio" name="am_pm" id="pm" value="1">
-                        <label for="pm">PM</label>
+                        <label for="pm">12-24</label>
                     </fieldset>
                     <fieldset class="radius">
                         <label for="radius"><strong>Radius</strong><span id="output">(50 miles)</span></label>
