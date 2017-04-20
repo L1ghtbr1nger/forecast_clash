@@ -122,7 +122,7 @@ class AppController extends Controller
             $session->write([
                 'User.avatar' => $result['avatar_img']
             ]);
-            $notificationsUnread = TableRegistry::get('Notifications')->find('all')->where(['user_id' => $userID, 'seen' => 0])->toArray();
+            $notificationsUnread = TableRegistry::get('Notifications')->find('all')->where(['user_id' => $userID, 'seen' => 0])->order(['id' => 'DESC'])->toArray();
             $notificationsRead = TableRegistry::get('Notifications')->find('all')->where(['user_id' => $userID, 'seen' => 1])->toArray();
             $this->set('loggedIn', true);
             $this->set('notificationsRead', $notificationsRead);

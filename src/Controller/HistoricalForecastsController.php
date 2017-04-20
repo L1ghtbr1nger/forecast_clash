@@ -36,7 +36,7 @@ class HistoricalForecastsController extends AppController
     public function compares() {
         $date = new Date(); //date for today
         $datePrev = new Date('-1 day'); //date for yesterday
-        $query = $this->HistoricalForecasts->find()->where(['forecast_date_end >=' => $datePrev, 'forecast_date_end <' => $date])->contain('WeatherEvents'); //find records where the forecast ended yesterday
+        $query = $this->HistoricalForecasts->find()->where(['correct IS' => NULL, 'forecast_date_end <' => $date])->contain('WeatherEvents'); //find records where the forecast ended yesterday
         if ($query->toArray()) { //if record(s) found
             foreach ($query as $row) {
                 $appID = 'zihaMoPWm6nYiFjubD6Ox'; //API key
@@ -47,6 +47,8 @@ class HistoricalForecastsController extends AppController
                 $lon = $row['longitude'];
                 $radius = $row['radius'];
                 $begin = strtotime($row['forecast_date_start']);
+                $niceDate = new Date($row['forecast_date_start']);
+                $niceDate->nice();
                 $end = strtotime($row['forecast_date_end']);
                 $http = new Client();
                 $params = 'client_id='.$appID.'&client_secret='.$appKey.'&p='.$lat.','.$lon.'&radius='.$radius.'mi&limit=1&from='.$begin.'&to='.$end; //params common to each event comparison
@@ -74,7 +76,7 @@ class HistoricalForecastsController extends AppController
                 $scoreboard = TableRegistry::get('Scores');
                 $score = $scoreboard->find()->where(['user_id' => $user]); //find user's score record
                 if ($jsonResponse['error']['code'] == 'warn_no_data') { //if no events were found, mark forecast as incorrect.
-                    $message = 'Better luck next time.  No '.$row['weather_event']['weather'].' events were located within your forecast.  See how your abilities stack up against your fellow forecasters...';
+                    $message = 'Better luck next time.  No '.$row['weather_event']['weather'].' events were located within your forecast for '.$niceDate.'. See how your abilities stack up against your fellow forecasters...';
                     $correct->correct = 0;
                     if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;
@@ -97,7 +99,7 @@ class HistoricalForecastsController extends AppController
                         $scoreboard->save($result); //save results to Scores table
                     }
                 } else { //if any events were found, mark forecast as correct
-                    $message = 'Congratulations!!! You correctly forecasted a '.$row['weather_event']['weather'].' event!  See how your abilities stack up against your fellow forecasters...'; 
+                    $message = 'Congratulations!!! You correctly forecasted a '.$row['weather_event']['weather'].' event for '.$niceDate.'!  See how your abilities stack up against your fellow forecasters...'; 
                     $correct->correct = 1;
                     if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;
