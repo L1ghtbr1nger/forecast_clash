@@ -33,7 +33,7 @@ h4 i{
                     <fieldset class="time">
                         <strong>Time (UTC)</strong><br>
                         <input type="radio" name="am_pm" id="am" value="0">
-                        <label for="am">0-111</label>
+                        <label for="am">0-11</label>
                         <br>
                         <input type="radio" name="am_pm" id="pm" value="1">
                         <label for="pm">12-24</label>
