@@ -47,7 +47,7 @@ class ComparesShell extends Shell
                 $weatherStats = TableRegistry::get('WeatherStatistics');
                 $weatherStat = $weatherStats->find()->where(['user_id' => $user, 'weather_event_id' => $weather]); //look for existing stats on selected weather event for selected user
                 if ($jsonResponse['error']['code'] == 'warn_no_data') { //if no events were found, mark forecast as incorrect.
-                    $message = 'Better luck next time.  No '.$row['weather_event']['weather'].' events were located within your forecast.  See how your abilities stack up against your fellow forecasters...';
+                    $message = 'Better luck next time.  No '.$row['weather_event']['weather'].' events were located within your forecast.  See how your abilities stack up against your fellow forecasters.';
                     $correct->correct = 0;
                     if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;
@@ -63,7 +63,7 @@ class ComparesShell extends Shell
                         $statResult->forecast_length = $row['forecast_length'];
                     }
                 } else { //if any events were found, mark forecast as correct
-                    $message = 'Congratulations!!! You correctly forecast a '.$row['weather_event']['weather'].' event!  See how your abilities stack up against your fellow forecasters...'; 
+                    $message = 'Congratulations!!! You correctly forecast a '.$row['weather_event']['weather'].' event!  See how your abilities stack up against your fellow forecasters.'; 
                     $correct->correct = 1;
                     if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;
