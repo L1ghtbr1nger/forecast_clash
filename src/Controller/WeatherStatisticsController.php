@@ -188,4 +188,6 @@ class WeatherStatisticsController extends AppController
         $this->Auth->allow();
 
     }
+    
+    public function output() {}
 }

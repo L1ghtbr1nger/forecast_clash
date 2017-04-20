@@ -8174,7 +8174,7 @@ input[type="email"],
 textarea {
     width: 100%;
     border: none;
-    padding: 12px;
+    padding: 6px;
     background: rgb(236, 236, 236);
 }
 
@@ -8511,6 +8511,61 @@ a[href='/forecast_clash/users/login?provider=Twitter']:focus {
     text-decoration: none;
 }
 
+
+/* Checkboxes */
+
+.cbox {
+    width: 20px;
+    position: relative;
+    margin: 8px 0;
+}
+
+.cbox label .can-toggle__label-text {
+    position: relative;
+    left: 24px;
+}
+
+.cbox label {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: -webkit-linear-gradient(top, #333 0%, #333 100%);
+    background: linear-gradient(to bottom, #333 0%, #333 100%);
+    border-radius: 4px;
+}
+
+.cbox label:after {
+    content: '';
+    width: 9px;
+    height: 6px;
+    position: absolute;
+    top: 6px;
+    left: 5px;
+    border: 2px solid #fff;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    opacity: 0;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+.cbox input[type=checkbox] {
+    visibility: hidden;
+}
+
+.cbox input[type=checkbox]:checked + label:after {
+    opacity: 1;
+}
+
+/* end .cbox */
+.search-filter-heatmap{
+    margin-bottom: 12px;
+}
+.search-filter-heatmap strong {
+    display: block;
+}
 
 /* Input Range */
 

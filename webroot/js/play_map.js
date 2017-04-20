@@ -78,7 +78,7 @@ $('document').ready(function() {
 
     // initializes sidebar
     var sidebar = L.control.sidebar('play-sidebar', {
-        closeButton: true,
+        closeButton: true
     });
 
     var overlayMaps = {

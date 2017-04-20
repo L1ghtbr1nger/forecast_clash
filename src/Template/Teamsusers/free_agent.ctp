@@ -18,7 +18,7 @@
                             'class' => 'btn btn-block btn-primary freeAgent',
                             'type' => 'submit'
                         ]); ?>
-                        <?= $this->Form->button($first.' didn\'t make the cut...', [
+                        <?= $this->Form->button($first.' didn\'t make the cut.', [
                             'id' => 'cut',
                             'value' => 0,
                             'class' => 'btn btn-block btn-primary freeAgent',
