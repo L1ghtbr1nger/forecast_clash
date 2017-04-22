@@ -3,7 +3,7 @@ $(document).ready(function(){
         e.preventDefault();
         var caller = e.target.id;
         var source;
-        if (caller == 'profile' || caller == 'userUpdate' || caller == 'passwordReset') {
+        if (caller == 'profile' || caller == 'userUpdate' || caller == 'passwordReset' || caller == 'avatars') {
             source = 'profiles';
         } else if (caller == 'forecast') {
             source = 'forecasts';

@@ -139,5 +139,34 @@
                 </div>
             </div>
         </div>
+        <div class="col col-xs-12 col-sm-6 col-md-6 col-lg-6 stats-col heatmap-element">
+            <div class="card sameheight-item" data-exclude="xs">
+                <div class="card-header card-header-sm bordered">
+                    <div class="header-block">
+                        <h4>Choose an Avatar</h4>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <form method="post" accept-charset="utf-8" id="avatarsForm">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <?= $this->Form->label('avatar_id', 'Avatars'); ?>
+                                    <?php foreach($avatars as $avatar) {
+                                        echo '<input type="radio" name="avatar_id" id="'.$avatar['id'].'" value="'.$avatar['id'].'"/>';
+                                        echo '<label for="'.$avatar['id'].'">';
+                                        echo $this->Html->image($avatar['avatar_img']);
+                                        echo '</label>';
+                                    } ?>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="avatars" class="btn btn-primary login" type="submit">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

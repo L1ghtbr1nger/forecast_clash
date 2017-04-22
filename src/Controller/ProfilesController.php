@@ -42,6 +42,8 @@ class ProfilesController extends AppController
         if ($user = TableRegistry::get('Users')->get($userID)) {
             $this->set('updateUser', $user);
         }
+        $avatars = TableRegistry::get('Avatars')->find('all');
+        $this->set('avatars', $avatars);
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
             if (empty($data['gender'])) {
@@ -149,6 +151,36 @@ class ProfilesController extends AppController
         $session->write('successBox', 'Email sent to '.$address.' with password reset instructions!');
         $url = Router::url(['controller' => 'Users', 'action' => 'login'], TRUE);
         echo json_encode(['result' => 1, 'regLog' => 0, 'url' => $url]);
+        die;
+    }
+    
+    public function avatars() {
+        $session = $this->request->session();
+        $userID = $session->read('Auth.User.id');
+        $users = TableRegistry::get('Users');
+        $user = $users->get($userID);
+        $data = $this->request->data;
+        $user = $users->patchEntity($user, $data, ['validate' => 'register']);
+        if($user->errors()){
+            $error_msg = [];
+            foreach( $user->errors() as $errors){
+                if(is_array($errors)){
+                    foreach($errors as $error){
+                        $error_msg[] = $error;
+                    }
+                }else{
+                    $error_msg[] = $errors;
+                }
+            }
+        }
+        if ($users->save($user)) {
+            $session->write('successBox', 'Account updated!');
+            $session->write('Auth.User.avatar_id', $data['avatar_id']);
+            $url = Router::url(['controller' => 'Profiles', 'action' => 'profile'], TRUE);
+            echo json_encode(['result' => 1, 'regLog' => 0, 'url' => $url]);
+        } else {
+            echo json_encode(['msg' => $error_msg, 'result' => 0, 'regLog' => 0]);
+        }
         die;
     }
 }
