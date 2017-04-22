@@ -138,6 +138,8 @@ class WeatherStatisticsController extends AppController
                         }
                     }
                 }
+            } else {
+                $board = [];
             }
             echo json_encode(['result' => $result, 'leaderboard' => $board, 'user_id' => $userID]); //leaderboard.js
             die;

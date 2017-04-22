@@ -23,7 +23,6 @@ function callAjaxHM(filters){
         }
     });
 };
-
 function dateHM(){
     if(from_value == null && to_value == null) {
         paramsHM.range = [];
@@ -166,18 +165,19 @@ $(document).ready(function(){
         }
     };
     function weatherHM(){ //which experience toggles are checked
-        paramsHM['events'] = [-1];
+        temp = [-1];
         if($('#tornado_hm').prop('checked')){
-            paramsHM['events'].push(1); //tornado: checked
+            temp.push(1); //tornado: checked
         }
         if($('#hail_hm').prop('checked')){
-            paramsHM['events'].push(2); //hail: checked
+            temp.push(2); //hail: checked
         }
         if($('#wind_hm').prop('checked')){
-            paramsHM['events'].push(3); //wind: checked
+            temp.push(3); //wind: checked
         }
+        paramsHM.events = temp;
     };
-    
+
     $('.whom_hm').click(function(){ //run tabs when tab is selected
         if(!$(this).hasClass('current_hm')) {
             $('.current_hm').toggleClass('current_hm');

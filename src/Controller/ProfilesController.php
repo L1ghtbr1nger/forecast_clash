@@ -5,6 +5,9 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
+use Cake\Mailer\Email;
+use Cake\Utility\Text;
+use Cake\Utility\Security;
 
 /**
  * Profiles Controller
@@ -73,7 +76,7 @@ class ProfilesController extends AppController
                 $notices->save($notice);
                 $session->write('successBox', 'Profile completed!');
                 $url = Router::url(['controller' => 'Profiles', 'action' => 'profile'], TRUE);
-                echo json_encode(['msg' => 'Thank you!', 'result' => 1, 'regLog' => 0, 'url' => $url]);
+                echo json_encode(['result' => 1, 'regLog' => 0, 'url' => $url]);
             } else {
                 echo json_encode(['msg' => $error_msg, 'result' => 0, 'regLog' => 0]);
             }
@@ -90,5 +93,62 @@ class ProfilesController extends AppController
             $this->set(lcfirst($table), $result);
         }
         $this->set('user_id', $session->read('Auth.User.id'));
+    }
+    
+    public function userUpdate() {
+        $session = $this->request->session();
+        $userID = $session->read('Auth.User.id');
+        $users = TableRegistry::get('Users');
+        $user = $users->get($userID);
+        $data = $this->request->data;
+        $user = $users->patchEntity($user, $data, ['validate' => 'register']);
+        if($user->errors()){
+            $error_msg = [];
+            foreach( $user->errors() as $errors){
+                if(is_array($errors)){
+                    foreach($errors as $error){
+                        $error_msg[] = $error;
+                    }
+                }else{
+                    $error_msg[] = $errors;
+                }
+            }
+        }
+        if ($users->save($user)) {
+            $session->write('successBox', 'Account updated!');
+            $session->write('Auth.User.first_name', $data['first_name']);
+            $session->write('Auth.User.last_name', $data['last_name']);
+            $url = Router::url(['controller' => 'Profiles', 'action' => 'profile'], TRUE);
+            echo json_encode(['result' => 1, 'regLog' => 0, 'url' => $url]);
+        } else {
+            echo json_encode(['msg' => $error_msg, 'result' => 0, 'regLog' => 0]);
+        }
+        die;
+    }
+    
+    public function passwordReset() {
+        $session = $this->request->session();
+        $userID = $session->read('Auth.User.id');
+        $users = TableRegistry::get('Users');
+        $user = $users->get($userID);
+        $address = $user->email;
+        $password = sha1(Text::uuid());
+        $password_token = Security::hash($password, 'sha256', true);
+        $hashval = sha1($user->username . rand(0, 100));
+        $user->password_reset_token = $password_token;
+        $user->hashval = $hashval;
+        $name = $user->first_name;
+        $reset_token_link = Router::url(['controller' => 'Users', 'action' => 'resetPassword'], TRUE) . '/' . $password_token . '#' . $hashval;
+        $email = new Email();
+        $email->from('info@forecastclash.com', 'Forecast Clash')
+            ->to($address, $name)
+            ->template('default', 'default')
+            ->subject('Reset your Forecast Clash password')
+            ->send("Follow the link provided to reset your password:\r\n".$reset_token_link);
+        $users->save($user);
+        $session->write('successBox', 'Email sent to '.$address.' with password reset instructions!');
+        $url = Router::url(['controller' => 'Users', 'action' => 'login'], TRUE);
+        echo json_encode(['result' => 1, 'regLog' => 0, 'url' => $url]);
+        die;
     }
 }

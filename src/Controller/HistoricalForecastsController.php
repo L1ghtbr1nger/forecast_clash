@@ -33,7 +33,7 @@ class HistoricalForecastsController extends AppController
         $this->set('_serialize', ['historicalForecasts']);
     }
     
-    public function compares() {
+    public function compare() {
         $date = new Date(); //date for today
         $datePrev = new Date('-1 day'); //date for yesterday
         $query = $this->HistoricalForecasts->find()->where(['correct IS' => NULL, 'forecast_date_end <' => $date])->contain('WeatherEvents'); //find records where the forecast ended yesterday
@@ -187,13 +187,6 @@ class HistoricalForecastsController extends AppController
                     }
                 ]);
             }
-            if ($correct == 3) {
-                $correct = null;
-            }
-            if ($correct != 2) {  
-                $heatmapStats = $heatmapStats->where(['correct' => $correct]);
-                $pendingStats = TableRegistry::get('Forecasts')->newEntity();
-            }
             if (isset($data['range'][0]) && !empty($data['range'][0])) {
                 $rangeF = Time::parse($data['range'][0]);
                 $heatmapStats = $heatmapStats->where(['forecast_date_end >=' => $rangeF]);
@@ -204,6 +197,13 @@ class HistoricalForecastsController extends AppController
                 $rangeT->modify('+1 day');
                 $heatmapStats = $heatmapStats->where(['forecast_date_start <' => $rangeT]);
                 $pendingStats = $pendingStats->where(['forecast_date_start <' => $rangeT]);
+            }
+            if ($correct == 3) {
+                $correct = null;
+            }
+            if ($correct != 2) {  
+                $heatmapStats = $heatmapStats->where(['correct' => $correct]);
+                $pendingStats = TableRegistry::get('Forecasts')->newEntity();
             }
             if (($heatmapStats = $heatmapStats->toArray()) || ($pendingStats = $pendingStats->toArray())) {
                 if ($heatmapStats) {
