@@ -80,7 +80,7 @@ class CompareShell extends Shell
                         $scoreboard->save($result); //save results to Scores table
                     }
                 } else { //if any events were found, mark forecast as correct
-                    $message = 'Congratulations!!! You correctly forecasted a '.$row['weather_event']['weather'].' event for '.$niceDate.'!  See how your abilities stack up against your fellow forecasters...'; 
+                    $message = 'Congratulations!!! You correctly forecasted a '.$row['weather_event']['weather'].' event for '.$niceDate.'!  See how your abilities stack up against your fellow forecasters...';
                     $correct->correct = 1;
                     if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;

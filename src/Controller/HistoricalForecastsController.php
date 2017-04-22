@@ -76,7 +76,7 @@ class HistoricalForecastsController extends AppController
                 $scoreboard = TableRegistry::get('Scores');
                 $score = $scoreboard->find()->where(['user_id' => $user]); //find user's score record
                 if ($jsonResponse['error']['code'] == 'warn_no_data') { //if no events were found, mark forecast as incorrect.
-                    $message = 'Better luck next time.  No '.$row['weather_event']['weather'].' events were located within your forecast for '.$niceDate.'. See how your abilities stack up against your fellow forecasters...';
+                    $message = 'Better luck next time.  No '.$row['weather_event']['weather'].' events were located within your forecast for '.$niceDate.'. See how your abilities stack up against your fellow forecasters.';
                     $correct->correct = 0;
                     if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;
@@ -99,7 +99,7 @@ class HistoricalForecastsController extends AppController
                         $scoreboard->save($result); //save results to Scores table
                     }
                 } else { //if any events were found, mark forecast as correct
-                    $message = 'Congratulations!!! You correctly forecasted a '.$row['weather_event']['weather'].' event for '.$niceDate.'!  See how your abilities stack up against your fellow forecasters...'; 
+                    $message = 'Congratulations!!! You correctly forecasted a '.$row['weather_event']['weather'].' event for '.$niceDate.'!  See how your abilities stack up against your fellow forecasters.'; 
                     $correct->correct = 1;
                     if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;

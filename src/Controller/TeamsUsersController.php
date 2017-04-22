@@ -77,7 +77,7 @@ class TeamsUsersController extends AppController
                 $notice = $notices->newEntity();
                 $notice = $notices->patchEntity($notice, [
                     'user_id' => $user['id'],
-                    'message' => 'Take a trip to the podium, you have been selected! Visit the '.h($team['team_name']).' Dugout...',
+                    'message' => 'Take a trip to the podium, you have been selected! Visit the '.h($team['team_name']).' Dugout.',
                     'link_address' => '/forecast_clash/teams/dugout',
                     'link_image' => 'teams/users/'.($team['team_logo'] ? $team['team_logo'] : 'logo-mark.png')
                 ]);

@@ -14,19 +14,18 @@
             <!-- Tab panes -->
             <div class="tab-content leaderboard">
                 <div role="tabpanel" class="tab-pane active" id="all_players">
-                    <h4 class="leaderboard-filter-toggle">Filter&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i></h4>
-                    <form action="" class="search-filter-leaderboard collapse-me">
+                    <form action="" class="search-filter-leaderboard">
                         <div class="row">
                             <div class="col-md-12">
                                 <strong>Experience</strong>
-                                <div class="can-toggle can-toggle--size-small">
+                                <div class="cbox">
                                     <input id="amateur_lb" class="exp_lb" type="checkbox" checked>
                                     <label for="amateur_lb">
                                         <div class="can-toggle__label-text">Enthusiasts</div>
                                         <div class="can-toggle__switch enthusiasts-switch" data-checked="On" data-unchecked="Off"></div>
                                     </label>
                                 </div>
-                                <div class="can-toggle can-toggle--size-small">
+                                <div class="cbox">
                                     <input id="mets_lb" class="exp_lb" type="checkbox" checked>
                                     <label for="mets_lb">
                                         <div class="can-toggle__label-text">Meteorologists</div>
@@ -81,40 +80,3 @@
         </div>
     </div>
 </div>
-<style>
-/* Search Filter */
-
-.collapse-me,
-.heatmap-filter,
-.leaderboard-filter {
-    display: none;
-    margin-bottom: 18px;
-}
-
-.fa-chevron-down {
-    transform: rotateX(0deg);
-    transition: transform .5s ease;
-}
-
-.flip-me {
-    transform: rotateX(180deg);
-    transition: transform .5s ease;
-}
-
-.heatmap-filter-toggle,
-.leaderboard-filter-toggle {
-    cursor: pointer;
-}
-</style>
-
-<script>
-$(document).ready(function() {
-
-    $('.leaderboard-filter-toggle').click(function() {
-        $('.search-filter-leaderboard').toggle('collapse-me');
-        $('.leaderboard .fa-chevron-down').toggleClass('flip-me');
-    });
-
-
-})
-</script>
