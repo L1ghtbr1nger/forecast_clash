@@ -153,10 +153,29 @@
                                 <fieldset>
                                     <?= $this->Form->label('avatar_id', 'Avatars'); ?>
                                     <?php foreach($avatars as $avatar) {
-                                        echo '<input type="radio" name="avatar_id" id="'.$avatar['id'].'" value="'.$avatar['id'].'"/>';
-                                        echo '<label for="'.$avatar['id'].'">';
-                                        echo $this->Html->image($avatar['avatar_img']);
-                                        echo '</label>';
+                                        if ($avatar['id'] < 7) {
+                                            echo '<input type="radio" name="avatar_id" id="'.$avatar['id'].'" value="'.$avatar['id'].'"/>';
+                                            echo '<label for="'.$avatar['id'].'">';
+                                            echo $this->Html->image($avatar['avatar_img']);
+                                            echo '</label>';
+                                        } else {
+                                            if ($avatar['id'] == 7 && isset($social[0]['photo_url'])) {
+                                                echo '<input type="radio" name="avatar_id" id="7" value="7"/>';
+                                                echo '<label for="7">';
+                                                echo '<img src="'.$social[0]['photo_url'].'"/>';
+                                                echo '</label>';
+                                            } else if ($avatar['id'] == 8 && isset($social[1]['photo_url'])) {
+                                                echo '<input type="radio" name="avatar_id" id="8" value="8"/>';
+                                                echo '<label for="8">';
+                                                echo '<img src="'.$social[1]['photo_url'].'"/>';
+                                                echo '</label>';
+                                            } else if ($avatar['id'] == 9 && isset($social[2]['photo_url'])) {
+                                                echo '<input type="radio" name="avatar_id" id="9" value="9"/>';
+                                                echo '<label for="9">';
+                                                echo '<img src="'.$social[2]['photo_url'].'"/>';
+                                                echo '</label>';
+                                            }
+                                        }
                                     } ?>
                                 </fieldset>
                             </div>

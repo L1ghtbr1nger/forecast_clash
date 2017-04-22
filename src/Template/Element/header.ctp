@@ -74,7 +74,7 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
         </li>
         <li class="profile dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <div class="img" style="background-image: url(/forecast_clash/img/<?= $session->read('User.avatar') ?>)"></div>
+                    <div class="img" style="background-image: url(<?= ($hasSocial) ? '' : '/forecast_clash/img/' ?><?= $session->read('User.avatar') ?>)"></div>
                     <span class="name"><?php 
                     if ($loggedIn) {
                         echo h($session->read('Auth.User.first_name'))." ".h($session->read('Auth.User.last_name'));

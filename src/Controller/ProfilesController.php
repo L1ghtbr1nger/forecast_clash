@@ -44,6 +44,19 @@ class ProfilesController extends AppController
         }
         $avatars = TableRegistry::get('Avatars')->find('all');
         $this->set('avatars', $avatars);
+        $socials = TableRegistry::get('SocialProfiles');
+        $providers = [];
+        $social = $socials->find('all')->where(['user_id' => $userID]);
+        foreach ($social as $s) {
+            if ($s['provider'] == 'Facebook') {
+                $providers[0] = $s;
+            } else if ($s['provider'] == "Google") {
+                $providers[1] = $s;
+            } else {
+                $providers[2] = $s;
+            }
+        }
+        $this->set('social', $providers);
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
             if (empty($data['gender'])) {
@@ -160,6 +173,7 @@ class ProfilesController extends AppController
         $users = TableRegistry::get('Users');
         $user = $users->get($userID);
         $data = $this->request->data;
+        $avatarID = $data['avatar_id'];
         $user = $users->patchEntity($user, $data, ['validate' => 'register']);
         if($user->errors()){
             $error_msg = [];
@@ -174,8 +188,15 @@ class ProfilesController extends AppController
             }
         }
         if ($users->save($user)) {
-            $session->write('successBox', 'Account updated!');
-            $session->write('Auth.User.avatar_id', $data['avatar_id']);
+            $session->write('successBox', 'Avatar updated!');
+            $session->write('Auth.User.avatar_id', $avatarID);
+            $query = TableRegistry::get('Avatars')->find('all')->where(['id' => $avatarID])->first();
+            if ($avatarID < 7) {
+                $session->write(['User.avatar' => $query['avatar_img']]);
+            } else {
+                $query2 = TableRegistry::get('SocialProfiles')->find('all')->where(['user_id' => $userID, 'provider' => $query['avatar_img']])->first();
+                $session->write(['User.avatar' => $query2['photo_url']]);
+            }
             $url = Router::url(['controller' => 'Profiles', 'action' => 'profile'], TRUE);
             echo json_encode(['result' => 1, 'regLog' => 0, 'url' => $url]);
         } else {

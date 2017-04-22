@@ -117,11 +117,16 @@ class AppController extends Controller
         
         // Login Check
         if ($userID = $session->read('Auth.User.id')) {
-            $query = TableRegistry::get('Avatars')->find('all')->where(['id' => $session->read('Auth.User.avatar_id')]);
-            $result = $query->first();
-            $session->write([
-                'User.avatar' => $result['avatar_img']
-            ]);
+            $avatar = $session->read('Auth.User.avatar_id');
+            $query = TableRegistry::get('Avatars')->find('all')->where(['id' => $avatar])->first();
+            if ($avatar < 7) {
+                $session->write(['User.avatar' => $query['avatar_img']]);
+                $this->set('hasSocial', false);
+            } else {
+                $query2 = TableRegistry::get('SocialProfiles')->find('all')->where(['user_id' => $userID, 'provider' => $query['avatar_img']])->first();
+                $session->write(['User.avatar' => $query2['photo_url']]);
+                $this->set('hasSocial', true);
+            }
             $notificationsUnread = TableRegistry::get('Notifications')->find('all')->where(['user_id' => $userID, 'seen' => 0])->order(['id' => 'DESC'])->toArray();
             $notificationsRead = TableRegistry::get('Notifications')->find('all')->where(['user_id' => $userID, 'seen' => 1])->toArray();
             $this->set('loggedIn', true);
