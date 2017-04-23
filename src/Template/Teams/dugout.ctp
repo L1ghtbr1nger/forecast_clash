@@ -9,14 +9,15 @@
     echo $this->Form->input('', [
         'value' => $url,
         'id' => 'teamClip'
-    ]); 
+    ]);  
     //send invitations via email and social media, general invitation link to copy/paste
     //leave team, if captain leaves, new captain is player with longest current streak, longest longest streak breaks tie, random if still tied
-    if ($captain) {
+?>
+<div class="content">
+    <?php if ($captain) { 
         //add/edit team_logo, name?
         //manage roster
     } ?>
-<div class="content">
     <div class="row">
         <div class="col-md-12">
         <br>

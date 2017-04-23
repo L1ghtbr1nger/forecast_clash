@@ -32,24 +32,21 @@ class CompareShell extends Shell
                 $niceDate->nice();
                 $end = strtotime($row['forecast_date_end']);
                 $http = new Client();
-                $params = 'client_id='.$appID.'&client_secret='.$appKey.'&p='.$lat.','.$lon.'&radius='.$radius.'mi&limit=1&from='.$begin.'&to='.$end; //params common to each event comparison
+                $params = 'client_id='.$appID.'&client_secret='.$appKey.'&fields=place.state,report.timestamp,loc.lat,loc.long,report.detail,report.detail.text&p='.$lat.','.$lon.'&radius='.$radius.'mi&limit=1&from='.$begin.'&to='.$end; //params common to each event comparison
                 if ($weather === 1) {
-                    $responseTornado = $http->get('https://api.aerisapi.com/stormreports/within?filter=tornado&fields=place.state,report.timestamp,loc.lat,loc.long,report.detail,report.detail.text&'.$params);
+                    $responseTornado = $http->get('https://api.aerisapi.com/stormreports/within?filter=tornado&'.$params);
                     $jsonResponse = $responseTornado->json;
-                    debug($jsonResponse);
                 } else if ($weather === 2) {
-                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&fields=place.state,report.timestamp,loc.lat,loc.long,report.detail,report.detail.text&'.$params);
+                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&'.$params);
                     $jsonResponse = $responseHail->json;
                     if ($jsonResponse['error']['code'] != 'warn_no_data') {
                         if ($jsonResponse['response'][0]['report']['detail']['hailIN'] < .75) {
                             $jsonResponse['error']['code'] = 'warn_no_data';     
                         }
                     }
-                    debug($jsonResponse);
                 } else {
-                    $responseWind = $http->get('https://api.aerisapi.com/observations/within?query=wind:50&fields=place.state,ob.dateTimeISO,loc.lat,loc.long&filter=allstations&'.$params);
+                    $responseWind = $http->get('https://api.aerisapi.com/stormreports/within?filter=wind&query=detail:58&'.$params);
                     $jsonResponse = $responseWind->json;
-                    debug($jsonResponse);
                 }
                 $correct = $this->HistoricalForecasts->get($row['id']); //grab the current record to mark it correct or incorrect
                 $weatherStats = TableRegistry::get('WeatherStatistics');
@@ -57,7 +54,7 @@ class CompareShell extends Shell
                 $scoreboard = TableRegistry::get('Scores');
                 $score = $scoreboard->find()->where(['user_id' => $user]); //find user's score record
                 if ($jsonResponse['error']['code'] == 'warn_no_data') { //if no events were found, mark forecast as incorrect.
-                    $message = 'Better luck next time.  No '.$row['weather_event']['weather'].' events were located within your forecast for '.$niceDate.'. See how your abilities stack up against your fellow forecasters...';
+                    $message = 'Better luck next time.  No '.$row['weather_event']['weather'].' events were located within your forecast for '.$niceDate.'. See how your abilities stack up against your fellow forecasters.';
                     $correct->correct = 0;
                     if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;
@@ -80,7 +77,7 @@ class CompareShell extends Shell
                         $scoreboard->save($result); //save results to Scores table
                     }
                 } else { //if any events were found, mark forecast as correct
-                    $message = 'Congratulations!!! You correctly forecasted a '.$row['weather_event']['weather'].' event for '.$niceDate.'!  See how your abilities stack up against your fellow forecasters...';
+                    $message = 'Congratulations!!! You correctly forecasted a '.$row['weather_event']['weather'].' event for '.$niceDate.'!  See how your abilities stack up against your fellow forecasters.'; 
                     $correct->correct = 1;
                     if ($statResult = $weatherStat->first()) { //if stats already logged, add to them
                         $statResult->attempts = $statResult['attempts'] + 1;

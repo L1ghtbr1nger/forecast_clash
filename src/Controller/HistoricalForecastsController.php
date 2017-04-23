@@ -51,13 +51,13 @@ class HistoricalForecastsController extends AppController
                 $niceDate->nice();
                 $end = strtotime($row['forecast_date_end']);
                 $http = new Client();
-                $params = 'client_id='.$appID.'&client_secret='.$appKey.'&p='.$lat.','.$lon.'&radius='.$radius.'mi&limit=1&from='.$begin.'&to='.$end; //params common to each event comparison
+                $params = 'client_id='.$appID.'&client_secret='.$appKey.'&fields=place.state,report.timestamp,loc.lat,loc.long,report.detail,report.detail.text&p='.$lat.','.$lon.'&radius='.$radius.'mi&limit=1&from='.$begin.'&to='.$end; //params common to each event comparison
                 if ($weather === 1) {
-                    $responseTornado = $http->get('https://api.aerisapi.com/stormreports/within?filter=tornado&fields=place.state,report.timestamp,loc.lat,loc.long,report.detail,report.detail.text&'.$params);
+                    $responseTornado = $http->get('https://api.aerisapi.com/stormreports/within?filter=tornado&'.$params);
                     $jsonResponse = $responseTornado->json;
                     debug($jsonResponse);
                 } else if ($weather === 2) {
-                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&fields=place.state,report.timestamp,loc.lat,loc.long,report.detail,report.detail.text&'.$params);
+                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&'.$params);
                     $jsonResponse = $responseHail->json;
                     if ($jsonResponse['error']['code'] != 'warn_no_data') {
                         if ($jsonResponse['response'][0]['report']['detail']['hailIN'] < .75) {
@@ -66,7 +66,7 @@ class HistoricalForecastsController extends AppController
                     }
                     debug($jsonResponse);
                 } else {
-                    $responseWind = $http->get('https://api.aerisapi.com/observations/within?query=wind:50&fields=place.state,ob.dateTimeISO,loc.lat,loc.long&filter=allstations&'.$params);
+                    $responseWind = $http->get('https://api.aerisapi.com/stormreports/within?filter=wind&query=detail:58&'.$params);
                     $jsonResponse = $responseWind->json;
                     debug($jsonResponse);
                 }
