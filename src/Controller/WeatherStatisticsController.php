@@ -34,6 +34,8 @@ class WeatherStatisticsController extends AppController
         $tempScore = -1;
         $count = 0;
         $leads = false;
+        $avatars = TableRegistry::get('Avatars');
+        $socials = TableRegistry::get('SocialProfiles');
         foreach($scores as $score) {
             $rank++; //simple counter to show rank
             $user = $score['user'];
@@ -52,7 +54,15 @@ class WeatherStatisticsController extends AppController
                 $count = 0;
                 $tempScore = $score['total_score'];
             }
-            $entry = ['rank' => $rank, 'user_id' => $user['id'], 'first_name' => h($user['first_name']), 'last_name' => h($user['last_name']), 'score' => $score['total_score']]; //building arrays of data for the view to put in multi-dimensional array
+            $avatarID = $user['avatar_id'];
+            $avatar = $avatars->get($avatarID);
+            if ($avatarID < 7) {
+                $pic = $avatar['avatar_img'];
+            } else {
+                $social = $socials->find('all')->where(['user_id' => $user['id'], 'provider' => $avatar['avatar_img']])->first();
+                $pic = $social['photo_url'];
+            }
+            $entry = ['rank' => $rank, 'user_id' => $user['id'], 'avatar_id' => $avatarID, 'pic' => $pic, 'first_name' => h($user['first_name']), 'last_name' => h($user['last_name']), 'score' => $score['total_score']]; //building arrays of data for the view to put in multi-dimensional array
             $totalAttempts = 0;
             $totalValid = 0;
             foreach ($weatherStats as $stat) { //calculate percentages for each weather event and total
@@ -103,7 +113,7 @@ class WeatherStatisticsController extends AppController
         $users = TableRegistry::get('Users');
         $teamUser = $users->find()->where(['id' => $userID])->contain('Teams')->first(); //look for user's team
         $scoreboard = TableRegistry::get('Scores');
-        $scores = $scoreboard->find('all')->order(['Scores.total_score' => 'DESC'])->limit(20)->contain('WeatherStatistics.WeatherEvents');
+        $scores = $scoreboard->find('all')->order(['Scores.total_score' => 'DESC'])->limit(20)->contain(['Users', 'WeatherStatistics.WeatherEvents']);
         if ($this->request->is('ajax')) {
             $data = $this->request->data;
             $exp = intval($data['experience']); //leaderboard experience filter
@@ -154,33 +164,6 @@ class WeatherStatisticsController extends AppController
                 $this->set('user', $currentUser); //save user info for view
             } else {
                 $this->set('user', null);
-            }
-            $scores = $scores->contain(['Users']); //get top 20 scores with default filters
-            $results = $this->scores($scores, $userID); //save results of scores function which grabs the data from each found row
-            $result = $results[0]; //were any rows found
-            $this->set('result', $result); //tell the view
-            if ($result) { //if yes
-                $board = $results[1]; //grab the result data
-                if (!$results[2]) {
-                    if ($userID) {
-                        $scorez = $scoreboard->find('all')->where(['user_id' => $userID])->contain(['Users', 'WeatherStatistics.WeatherEvents']);
-                        if ($scorez->toArray()) {
-                            $results = $this->scores($scorez, $userID);
-                            $results[1][0]['rank'] = '...';
-                            $board[] = $results[1][0];
-                        } else {
-                            $board[] = [
-                                'rank' => '...',
-                                'user_id' => $userID,
-                                'first_name' => h($currentUser['first_name']),
-                                'last_name' => h($currentUser['last_name']),
-                                'score' => 0,
-                                'total' => 0
-                            ];
-                        }
-                    }
-                }
-                $this->set('leaderboard', $board); //share with view
             }
         }   
     }

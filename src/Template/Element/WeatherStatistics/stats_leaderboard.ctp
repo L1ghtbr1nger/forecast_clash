@@ -47,33 +47,7 @@
                                 <th>Total Rate</th>
                             </tr>
                         </thead>
-                        <tbody id="leaders">
-                            <?php
-                            $count = 0;
-                            foreach($leaderboard as $leader) {
-                                $count++;
-                                echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').' '.(($user['id'] === $leader['user_id']) ? 'activeUser' : '').'">';
-                                echo '<td>'.$leader['rank'].'</td>';
-                                echo '<td>'.h($leader['first_name']).' '.h($leader['last_name']).'</td>';
-                                echo '<td>'.$leader['score'].'</td>';
-                                if(isset($leader['Tornado'])) {
-                                    echo '<td>'.number_format((float)$leader['Tornado'],2,'.', '').'%</td>';
-                                } else {
-                                    echo '<td>N/A</td>';
-                                }
-                                if(isset($leader['Hail'])) {
-                                    echo '<td>'.number_format((float)$leader['Hail'],2,'.', '').'%</td>';
-                                } else {
-                                    echo '<td>N/A</td>';
-                                }
-                                if(isset($leader['Wind'])) {
-                                    echo '<td>'.number_format((float)$leader['Wind'],2,'.', '').'%</td>';
-                                } else {
-                                    echo '<td>N/A</td>';
-                                }
-                                echo '<td>'.number_format((float)$leader['total'],2,'.', '').'%</td></tr>';
-                            } ?>
-                        </tbody>
+                        <tbody id="leaders"></tbody>
                     </table>
                 </div>
             </div>

@@ -74,12 +74,15 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
         </li>
         <li class="profile dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <div class="img" style="background-image: url(<?= ($hasSocial) ? '' : '/forecast_clash/img/' ?><?= $session->read('User.avatar') ?>)"></div>
+                    <div class="img" <?php if ($loggedIn) {
+                        echo 'style="background-image: url('.(($hasSocial) ? '' : '/forecast_clash/img/').''.$session->read('User.avatar').')"';
+                    } ?> ></div>
                     <span class="name"><?php 
                     if ($loggedIn) {
                         echo h($session->read('Auth.User.first_name'))." ".h($session->read('Auth.User.last_name'));
                     } else {
-                        echo '<style>.nav-link{display:none !important;}</style><a style="display: inline;" href="/forecast_clash/users/login"><strong>Please login</strong></a>'; } ?>
+                        echo '<style>.nav-link{display:none !important;}</style><a style="display: inline;" href="/forecast_clash/users/login"><strong>Please login</strong></a>'; 
+                    } ?>
             <img src="" alt=""></span>
             </a>
             <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">

@@ -55,9 +55,15 @@ $(document).ready(function(){
                     var leaders = response['leaderboard']; //separate DB data and save to leaders
                     $.each(leaders, function(key, index) { //take DB data and manipulate each row as var index
                         count++; //count for odd/even class names
+                        if(index['avatar_id']<7){
+                            var filler = '/forecast_clash/webroot/img/';
+                        } else {
+                            var filler = '';
+                        }
+                        filler += index['pic'];
                         inserted += '<tr class="'+((count & 1) ? 'odd gradeX' : 'even gradeC')+' '+((index['user_id'] === response['user_id']) ? 'activeUser' : '')+'">'+
                             '<td>'+index['rank']+'</td>'+
-                            '<td>'+index['first_name']+' '+index['last_name']+'</td>'+
+                            '<td><img src="'+filler+'"/>'+index['first_name']+' '+index['last_name']+'</td>'+
                             '<td>'+index['score']+'</td>'; //set the rank, name and score rows and alternate class names for rows
                         if(index.hasOwnProperty('Tornado')) { //if user has made any tornado forecasts
                             var tornado = index['Tornado']; //add tornado data if applicable
