@@ -37,24 +37,25 @@ class TeamsController extends AppController
         $teamRankings = TableRegistry::get('Scores')->find('all')->contain(['TeamsUsers' => ['Teams']])->order('Teams.id');
         if($teamRanking = $teamRankings->toArray()) {
             $teamScore = [];
-            $tempID = 0;
+            $tempID = 0; //team ids start at 1
             foreach ($teamRanking as $teamRank) {
-                $team_id = $teamRank['teams_user']['team_id'];
-                $team_name = $teamRank['teams_user']['team']['team_name'];
-                $score = $teamRank['total_score'];
-                if ($team_id === $tempID) {
-                    $teamScore[$team_id]['team_score'] += $score;
-                } else {
-                    $tempID = $team_id;
-                    $teamScore[$team_id] = ['team_id' => $team_id, 'team_name' => $team_name, 'team_score' => $score];
+                $team_id = $teamRank['teams_user']['team_id']; //get the team_id of the selected user's score
+                $team_name = $teamRank['teams_user']['team']['team_name']; //get the name of the selected team
+                $score = $teamRank['total_score']; //set temporary score equal to score of selected user
+                if ($team_id === $tempID) { //if current selected user has same team as previous selected user
+                    $teamScore[$team_id]['team_score'] += $score; //add selected user's score to selected team's score
+                    $teamScore[$team_id]['roster']++;
+                } else { //if not
+                    $tempID = $team_id; //set tempID to that of selected team
+                    $teamScore[$team_id] = ['team_id' => $team_id, 'team_name' => $team_name, 'team_score' => $score, 'roster' => 1]; //move to team's array key
                 }
             }
             $collection = new Collection($teamScore);
-            $rankedScores = $collection->sortBy('team_score')->toArray();
+            $rankedScores = $collection->sortBy('team_score')->toArray(); //sort the new team array by score
             $rank = 0;
             $count = 0;
             $tempScore = -1;
-            foreach ($rankedScores as $rs) {
+            foreach ($rankedScores as $rs) { //go through sorted team list and rank, accounting for ties
                 $rank++;
                 if ($rs['team_score'] === $tempScore) {
                     $rank--;

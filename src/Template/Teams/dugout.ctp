@@ -94,6 +94,7 @@
                     <thead class="flip-header">
                         <tr>
                             <th>Rank</th>
+                            <th><?= $this->Html->image('teams/roster.png'); ?></th>
                             <th>Team Name</th>
                             <th>Score</th>
                         </tr>
@@ -106,6 +107,7 @@
                                 $count++;
                                 echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').' '.(($data['teams'][0]['id'] === $rank['team_id']) ? 'userTeam' : '').'">';
                                 echo '<td>'.$rank['rank'].'</td>';
+                                echo '<td><sup>'.$rank['roster'].'</sup> &frasl; <sub>50</sub></td>';
                                 echo '<td>'.h($rank['team_name']).'</td>';
                                 echo '<td>'.intval($rank['team_score']).'</td></tr>';
                             }
