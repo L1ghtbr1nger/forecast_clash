@@ -1,5 +1,4 @@
-<link rel="stylesheet" href="webroot/css/default.css">
-<link rel="stylesheet" href="webroot/css/default.date.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
 <style>
 .container-fluid {
     padding-left: 0;
@@ -20,39 +19,24 @@ h4 i{
 
 <article class="play-container">
     <div id="play-sidebar">
-        <div class="container-fluid sidebar-header">
-            <h4><i style="color: #fff; font-size:20px" class="fa fa-bars" aria-hidden="true"></i>Set Your Forecast</h4>
-        </div>
-        <div class="sidebar-content">
-            <div class="instructions">
-                <form action="#" class="search-filter forecast-tornado" id="forecastForm">
-                    <fieldset class="play-date">
-                        <label for="event_date"><strong>Date</strong></label>
-                        <input type="text" name="forecast_date" class="datepicker" id="event_date">
-                    </fieldset>
-                    <fieldset class="time">
-                        <strong>UTC</strong><br>
-                        <input type="radio" name="am_pm" id="am" value="0">
-                        <label for="am">0Z-11:59Z</label>
-                        <br>
-                        <input type="radio" name="am_pm" id="pm" value="1">
-                        <label for="pm">12Z-23:59Z</label>
-                    </fieldset>
-                    <fieldset class="radius">
-                        <label for="radius"><strong>Radius</strong><span id="output">(50 miles)</span></label>
 
+  
+                <form action="#" class="search-filter forecast-tornado" id="forecastForm">
+                    <fieldset class="radius">
+                        <label for="radius" style="color:#fff"><strong>Radius</strong><span id="output">(50 miles)</span></label>
                         <input type="range" name="radius" id="radius" value="50" min="5" max="100" step="5">
-                        
                     </fieldset>
 
                     <!-- hidden form fields -->
+                    <input type="text" name="forecast_date" class="datepicker hidden" id="event_date">
+<!--                     <input type="radio" name="am_pm" id="am" class="hidden" value="0">
+                    <input type="radio" name="am_pm" id="pm" class="hidden" value="1"> -->
                     <input id="latlng" name="location" type="text" class="hidden" value="">
                     <input type="radio" class="hidden" name="weather_event_id" id="tornado-event" value="1">
                     <input type="radio" class="hidden" name="weather_event_id" id="hail-event" value="2">
                     <input type="radio" class="hidden" name="weather_event_id" id="wind-event" value="3">
                 </form>
-            </div>
-        </div>
+   
         <div class="sidebar-footer">
         <a id="modalTrigger" style="display: none" href="#modalTrigger">Instructions</a>
         <span id="modalTrigger" data-toggle="modal" data-target="#instructions-modal">
@@ -165,56 +149,15 @@ h4 i{
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
 <?= $this->Html->script('play_map'); ?>
-<?= $this->Html->script('picker'); ?>
-<?= $this->Html->script('picker.date'); ?>
-
-<!-- timezones -->
-<?= $this->Html->script('jstz.min'); ?>
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
-<script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
-
-
+<?= $this->Html->script('easy-button'); ?>
 <script>
 
 $('.play-link').addClass('active');
 
 $("#radius").change(function () {
     $("#output").text('(' + $("#radius").val() + ' miles)');
-});
-
-var minDate = new Date();
-var hr = minDate.getUTCHours();
-
-if (hr >= 11) {
-    var tomorrow = true;
-} else if (hr <= 11) {
-    var today = new Date();
-    var tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000));
-}
-
-$('.datepicker').pickadate({
-    min: tomorrow,
-    max: 2,
-    format: 'mmmm d, yyyy',
-    closeOnSelect: true,
-    onRender: function() {
-        $('.picker').appendTo('body');
-    },
-    onSet: function() {
-
-        var today = this.get('min', 'yyyy/mm/dd');
-        var chosen_date = this.get('highlight', 'yyyy/mm/dd');
-
-        if (today === chosen_date) {
-            $('#am').attr('disabled', true);
-            $('#am').prop('checked', false);
-            $('#pm').prop('checked', true);
-        } else {
-            $('#am').attr('disabled', false);
-        }
-    }
 });
 
 $(document).ready(function() {

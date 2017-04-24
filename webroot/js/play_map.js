@@ -76,20 +76,11 @@ $('document').ready(function() {
     var pending_layer = L.layerGroup(pending);
     var active_layer = L.layerGroup(active);
 
-    // initializes sidebar
-    var sidebar = L.control.sidebar('play-sidebar', {
-        closeButton: true
-    });
 
     var overlayMaps = {
         "Pending": pending_layer,
         "Active": active_layer
     };
-
-    // Show sidebar after .5s
-    setTimeout(function() {
-        sidebar.show();
-    }, 500);
 
     // Initialize map
     var map = new L.map('map', {
@@ -99,38 +90,13 @@ $('document').ready(function() {
         layers: [active_layer, pending_layer]
     })
 
-    .addControl(sidebar)
+    // .addControl(sidebar)
     L.control.layers(overlayMaps, null, { collapsed: false }).addTo(map);
 
     $('.leaflet-control-layers-selector').attr('type', 'checkbox').prop('checked', true);
 
     // Set tile layer
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {}).addTo(map);
-
-    // close button
-    $('.leaflet-sidebar .close').click(function() {
-
-        // sidebar controller
-        var openSidebarControl = L.easyButton({
-            states: [{
-                stateName: 'sidebar-closed',
-                icon: tornadoSVG,
-                title: 'Open Sidebar',
-                onClick: function(btn, map, e) {
-                    sidebar.show();
-                    this.removeFrom(map);
-                },
-
-            }]
-        });
-
-        openSidebarControl.addTo(map);
-        $('.sidebar-closed-active').html('<i style="color: #fff; font-size:20px" class="fa fa-bars" aria-hidden="true"></i>');
-        $('.sidebar-closed-active h5').css({
-            'color': '#fff',
-            'font-size': '13px'
-        });
-    });
 
     // radius functionality
     var radiusInput = document.getElementById('radius');
@@ -162,7 +128,7 @@ $('document').ready(function() {
                 className: 'tornadoCircle'
             });
 
-            tornadoCircle.addTo(map);
+            tornadoCircle.addTo(map).on('click', circleClick);
             tornadoCircle.bindPopup("<h4><strong>Tornado</strong></h4> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
 
         } else {
@@ -380,10 +346,6 @@ $('document').ready(function() {
 
                 $('.leaflet-popup-content strong').html('Wind');
 
-                // $('.hailCircle').css('display', 'none');
-                // $('.tornaodCircle').css('display', 'none');
-                // $('.windCircle').css('display', 'block');
-
                 map.on('click', function(e) {
                     windMarker(e);
                 });
@@ -403,4 +365,104 @@ $('document').ready(function() {
 
     windControl.addTo(map);
 
+    // range
+
+    // get day
+    var today = new Date();
+    var currentDay = today.getDay();
+    var currentDayTwo = today.getDay() + 1;
+
+    var currentDayThree = today.getDay() + 2;
+    var currentDayFour = today.getDay() + 3;
+
+    var dayName = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
+
+
+    var currentDayName = currentDay = dayName[currentDay];
+    var currentDayTwoName = currentDayTwo = dayName[currentDayTwo];
+    var currentDayThreeName = currentDayThree = dayName[currentDayThree];
+    var currentDayFourName = currentDayFour = dayName[currentDayFour];
+
+    var tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000));
+    var dateTwo = new Date(today.getTime() + (24 * 60 * 60 * 2000));
+
+
+
+    $(document).ready(function() {
+
+
+        // Set html for day of the weeks
+        $('#first-date .day').html(currentDay);
+        $('#second-date .day').html(currentDayTwo);
+        $('#fourth-date .day').html(currentDayThree);
+        $('#fifth-date .day').html(currentDayFour);
+
+        // set time inputs
+
+        // Get hr
+        var hr = today.getUTCHours();
+        if (hr >= 6) {
+            //turn off first option
+            $('#first-date').css({
+                'cursor': 'not-allowed',
+            });
+
+            $('#first-date').click(function() {
+                return false;
+            });
+
+        } else if (hr < 6) {
+            $('#first-date').click(function() {
+                $('#am').prop('checked', true);
+                $('#event_date').val(today.toISOString().slice(0, 10) + ' ' +  '18:00');
+            });
+        }
+
+        $('#second-date').click(function() {
+            $('#pm').prop('checked', true);
+            $('#event_date').val(tomorrow.toISOString().slice(0, 10) + ' ' + '06:00');
+        });
+
+        $('#third-date').click(function() {
+            $('#am').prop('checked', true);
+            $('#event_date').val(tomorrow.toISOString().slice(0, 10) + ' ' + '18:00');
+        });
+
+        $('#fourth-date').click(function() {
+            $('#pm').prop('checked', true);
+            $('#event_date').val(dateTwo.toISOString().slice(0, 10) + ' ' + '06:00');
+        });
+
+        $('#fifth-date').click(function() {
+            $('#am').prop('checked', true);
+            $('#event_date').val(dateTwo.toISOString().slice(0, 10) + ' ' + '18:00');
+        });
+
+
+
+
+    });
+
+    var rangeSlider = L.control({ position: 'topleft' });
+    rangeSlider.onAdd = function(map) {
+        var div = L.DomUtil.create('div', 'range-slider-container');
+        L.DomEvent.disableClickPropagation(div);
+        div.innerHTML = '<div class=toggle_radio><input class=toggle_option id=first_toggle name=toggle_option type=radio> <input class=toggle_option id=second_toggle name=toggle_option type=radio checked> <input class=toggle_option id=third_toggle name=toggle_option type=radio> <input class=toggle_option id=fourth_toggle name=toggle_option type=radio> <input class=toggle_option id=fifth_toggle name=toggle_option type=radio><label id="first-date" for=first_toggle><span class=description>18z-6Z</span><p class=day></p></label><label id="second-date" for=second_toggle><span class=description>6Z-18Z</span><p class=day></p></label><label id="third-date" for=third_toggle><span class=description>18z-6Z</span><p class=day></p></label><label id="fourth-date" for=fourth_toggle><span class=description>6 - 18Z</span><p class=day></p></label><label id="fifth-date" for=fifth_toggle><span class=description>18z-6Z</span><p class=day></p></label><div class=toggle_option_slider></div>';
+        return div;
+    };
+
+    rangeSlider.addTo(map);
+
+    $('.radius').prependTo('.range-slider-container');
+    $('.sidebar-footer').appendTo('.range-slider-container');
+
+    // disable map dragging on input container
+    rangeSlider.getContainer().addEventListener('mouseover', function() {
+        map.dragging.disable();
+    });
+
+    // enable map dragging on input container
+    rangeSlider.getContainer().addEventListener('mouseout', function() {
+        map.dragging.enable();
+    });
 });
