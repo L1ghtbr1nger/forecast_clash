@@ -138,5 +138,34 @@ $(document).ready(function(){
             }
         });
     });
-    var clipboard = new Clipboard('.clp-btn');
+    $('#rosterSubmit').click(function(e){
+        e.preventDefault();
+        var id = "#"+e.target.id;
+        if($(this).hasClass('disabled')){
+        } else { 
+            $(id).prop('disabled',true);                
+            $.ajax({
+                type: "POST",
+                url: "/forecast_clash/teams/manager.json",
+                dataType: 'json',
+                data: $('#rosterForm').serialize(),
+                success : function(response) {
+                    window.location.href = response['url'];
+                },
+                error : function() {   
+                }
+            });
+        }
+    });
+    $('input[type=checkbox]').change(function(e){
+        var checked = false;
+        $('input[type=checkbox]').each(function () {
+            if(this.checked){
+                checked = true;
+            }
+        });
+        if(checked){
+            $('#rosterSubmit').prop('disabled',false);
+        }
+    });
 });

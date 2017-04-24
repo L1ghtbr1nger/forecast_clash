@@ -119,20 +119,27 @@ class AppController extends Controller
         if ($userID = $session->read('Auth.User.id')) {
             $avatar = $session->read('Auth.User.avatar_id');
             $query = TableRegistry::get('Avatars')->find('all')->where(['id' => $avatar])->first();
-            if ($avatar < 7) {
+            if ($avatar < 7) { //if is a predetermined avatar
                 $session->write(['User.avatar' => $query['avatar_img']]);
                 $this->set('hasSocial', false);
-            } else {
+            } else { //if is a social media profile pic
                 $query2 = TableRegistry::get('SocialProfiles')->find('all')->where(['user_id' => $userID, 'provider' => $query['avatar_img']])->first();
                 $session->write(['User.avatar' => $query2['photo_url']]);
                 $this->set('hasSocial', true);
             }
-            $notificationsUnread = TableRegistry::get('Notifications')->find('all')->where(['user_id' => $userID, 'seen' => 0])->order(['id' => 'DESC'])->toArray();
-            $notificationsRead = TableRegistry::get('Notifications')->find('all')->where(['user_id' => $userID, 'seen' => 1])->toArray();
-            $this->set('loggedIn', true);
-            $this->set('notificationsRead', $notificationsRead);
+            if ($userTeam = TableRegistry::get('Users')->find()->where(['id' => $userID])->contain('Teams')->first()) { //Get info about user's team if one exists
+                if (isset($userTeam['teams'][0]['user_id']) && $userID === $userTeam['teams'][0]['user_id']) { //check if logged user is captain of his or her team
+                    $this->set('captain', true);
+                } else {
+                    $this->set('captain', false);
+                }
+            }
+            $notificationsUnread = TableRegistry::get('Notifications')->find('all')->where(['user_id' => $userID, 'seen' => 0])->order(['id' => 'DESC'])->toArray(); //grab all unread notifications
+            $notificationsRead = TableRegistry::get('Notifications')->find('all')->where(['user_id' => $userID, 'seen' => 1])->toArray(); //grab all read notifications
+            $this->set('loggedIn', true); //tell the view that user is logged in
+            $this->set('notificationsRead', $notificationsRead); //send read notifications to the view
         } else {
-            $notificationsUnread[] = [
+            $notificationsUnread[] = [ //sample notification for guests telling them to log in
                 'id' => 'guest',
                 'user_id' => 0,
                 'message' => '<big>Please Login!</big>',
@@ -140,8 +147,8 @@ class AppController extends Controller
                 'link_address' => '/forecast_clash/users/login',
                 'link_image' => 'logo-mark.png'
             ]; 
-            $this->set('loggedIn', false);
+            $this->set('loggedIn', false); //tell the view that user is not logged in or a guest
         }
-        $this->set('notificationsUnread', $notificationsUnread);
+        $this->set('notificationsUnread', $notificationsUnread); //send unread notifications to the view
     }
 }

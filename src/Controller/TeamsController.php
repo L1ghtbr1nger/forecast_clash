@@ -90,11 +90,6 @@ class TeamsController extends AppController
                 }
             }
             $this->set('total', $total);
-            if ($userID === $userTeam['teams'][0]['user_id']) {
-                $this->set('captain', true);
-            } else {
-                $this->set('captain', false);
-            }
             $this->set('hasTeam', true);
             $this->set('data', $userTeam);
             $url = Router::url([
@@ -132,7 +127,12 @@ class TeamsController extends AppController
             $data = $this->request->data;
             $session = $this->request->session();
             $userID = $session->read('Auth.User.id');
-            $team = $this->Teams->newEntity();
+            if ($team = $this->Teams->find('all')->where(['user_id' => $userID])->first()) {
+                $hasTeam = true;
+            } else {
+                $hasTeam = false;
+                $team = $this->Teams->newEntity();
+            }
             $teamName = $data['team_name'];
             $team->team_name = $teamName;
             $team->privacy = $data['privacy'];
@@ -151,30 +151,85 @@ class TeamsController extends AppController
                 $team->team_logo = $imageFileName;
             }
             if ($teamID = $this->Teams->save($team)) { //if new team saved successfully, assign creating user to the team in TeamsUsers
-                $teamUsers = TableRegistry::get('TeamsUsers');
-                $teamUser = $teamUsers->newEntity();
-                $teamUser->user_id = $userID;
-                $teamUser->team_id = $teamID->id;
-                if ($teamUsers->save($teamUser)) {
-                    $notices = TableRegistry::get('Notifications');
-                    $notice = $notices->newEntity();
-                    $notice = $notices->patchEntity($notice, [
-                        'user_id' => $userID,
-                        'message' => 'You have created a team and become its captain! Visit the '.h($teamName).' Dugout.',
-                        'link_address' => '/forecast_clash/teams/dugout',
-                        'link_image' => 'teams/users/'.(isset($imageFileName) ? $imageFileName : 'logo-mark.png')
-                    ]);
-                    $notices->save($notice);
-                    $session->write('successBox', 'Team successfully created!');
-                    $session->delete('errorBox');
+                if (!$hasTeam) {
+                    $teamUsers = TableRegistry::get('TeamsUsers');
+                    $teamUser = $teamUsers->newEntity();
+                    $teamUser->user_id = $userID;
+                    $teamUser->team_id = $teamID->id;
+                    if ($teamUsers->save($teamUser)) {
+                        $notices = TableRegistry::get('Notifications');
+                        $notice = $notices->newEntity();
+                        $notice = $notices->patchEntity($notice, [
+                            'user_id' => $userID,
+                            'message' => 'You have created a team and become its captain! Visit the '.h($teamName).' Dugout.',
+                            'link_address' => '/forecast_clash/teams/dugout',
+                            'link_image' => 'teams/users/'.(isset($imageFileName) ? $imageFileName : 'logo-mark.png')
+                        ]);
+                        $notices->save($notice);
+                        $session->write('successBox', 'Team successfully created!');
+                        $session->delete('errorBox');
+                    } else {
+                        $session->write('errorBox', 'Error adding you to your roster.');
+                    }
                 } else {
-                    $session->write('errorBox', 'Error adding you to your roster.');
+                    $session->write('successBox', 'Team successfully updated!');
+                    $session->delete('errorBox');
                 }
             } else {
                 $session->write('errorBox', 'Unable to create team at this time.');
             }
             echo json_encode(['url' => $url]);
             die;
+        }
+    }
+    
+    public function manager() {
+        $session = $this->request->session();
+        $userID = $session->read('Auth.User.id');
+        $teamsUsers = TableRegistry::get('TeamsUsers');
+        $users = TableRegistry::get('Users');
+        if ($this->request->is('ajax')) {
+            $list = '';
+            $count = 0;
+            $data = $this->request->data;
+            foreach ($data as $d) {
+                if ($d) {
+                    $query = $teamsUsers->find('all')->where(['user_id' => $d])->first();
+                    $user = $users->get($d);
+                    $result = $teamsUsers->delete($query);
+                    if ($result) {
+                        if ($count) {
+                            $list .= ' and ';
+                        }
+                        $list .= $user['first_name'].' '.$user['last_name'];
+                        $count++;
+                    }
+                }
+            }
+            if ($list != '') {
+                $session->write('successBox', $list.' successfully removed!');
+                $session->delete('errorBox');
+            }
+            $url = Router::url(['controller' => 'Teams', 'action' => 'dugout'], TRUE);
+            echo json_encode(['url' => $url]);
+            die;
+        } else {
+            $this->set('user_id', $userID);
+            $userTeam = $users->find()->where(['id' => $userID])->contain('Teams')->first(); //look for user and his or her team
+            $this->set('team_name', $userTeam['teams'][0]['team_name']);
+            if (isset($userTeam['teams'][0]['team_logo'])) {
+                $this->set('team_logo', $userTeam['teams'][0]['team_logo']);
+            } else {
+                $this->set('team_logo', null);
+            }
+            $this->set('privacy', $userTeam['teams'][0]['privacy']);
+            $teamID = $userTeam['teams'][0]['id'];
+            $teammates = $this->Teams->find('all')->where(['id' => $teamID])->contain([
+                'Users'=> function($q) {
+                    return $q->order('Users.first_name')->contain('Scores');
+                }
+            ])->toArray();
+            $this->set('teammates', $teammates);
         }
     }
     
