@@ -42,20 +42,23 @@
     </div>
 </aside>                        
 <div class="mobile-nav visible-sm visible-xs toggle-mobile">
-    <ul>
-        <li class="play-link active">
-            <a href="/forecast_clash"> <i class="fa fa-gamepad"></i> Play </a>
-        </li>
-        <li class="stats-link">
+    <ul
+        ><li class="play-link">
+            <a href="/forecast_clash"> <i class="fa fa-gamepad"></i> Play </a></li
+        
+        ><li class="stats-link">
             <a href="/forecast_clash/weather-statistics/stats"><i class="fa fa-bar-chart"></i>Statistics </a>
-        </li>
-        <li>
+        </li
+        ><li>
             <a href="/forecast_clash/teams/dugout"> <i class="fa fa-users" aria-hidden="true"></i> Team </a>
-        </li>
-        <li class="contact-link">
+        </li
+        ><li class="output-link">
+            <a href="/forecast_clash//weather-statistics/output"> <i class="fa fa-globe" aria-hidden="true"></i> Output</a>
+        </li
+    ><li class="contact-link">
             <a href="/forecast_clash/users/contact"> <i class="fa fa-comments-o" aria-hidden="true"></i> Contact </a>
-        </li>
-    </ul>
+        </li
+    ></ul>
 </div>
 <style>
     .toggle-mobile{
