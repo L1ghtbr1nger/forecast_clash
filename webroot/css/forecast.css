@@ -2097,10 +2097,6 @@ label,
     padding: 18px;
 }
 
-#modalTrigger {
-    cursor: pointer;
-}
-
 .modal-body.modal-tab-container {
     padding: 0;
 }
@@ -3336,7 +3332,7 @@ pre {
 
 .header {
     background-color: #d7dde4;
-    height: 46px;
+    height: 45px;
     position: absolute;
     left: 230px;
     right: 0;
@@ -3364,7 +3360,7 @@ pre {
 @media (max-width: 767px) {
     .header {
         left: 0;
-        height: 50px;
+        height: 45px;
     }
 }
 
@@ -7885,7 +7881,7 @@ rect {
 }
 
 .play-date {
-    width: 65%;
+    width: 50%;
     float: left;
     margin-right: 2%;
     margin-top: 0;
@@ -7899,6 +7895,7 @@ rect {
 .radius {
     clear: both;
     width: 100%;
+    max-width: 200px;
 }
 
 .radius-output {
@@ -7918,7 +7915,6 @@ ul {
 
 .sidebar-footer .scoring-btn,
 .sidebar-footer .forecast-btn {
-    margin: 0 18px 18px 18px;
     float: right;
 }
 
@@ -7930,10 +7926,10 @@ ul {
 }
 
 #modalTrigger {
-    padding-left: 18px;
     font-weight: 600;
-    color: #333;
+    color: #fff;
     text-decoration: underline;
+    cursor: pointer;
 }
 
 #output {
@@ -7969,10 +7965,12 @@ ul {
     margin: 0 18px;
 }
 
-@media (min-width: 420px) and (max-width: 720px) {
-    .leaflet-control-zoom {
-        display: none !important;
-    }
+.play-container .leaflet-control-zoom {
+    left: 65px;
+}
+
+.easy-button-container {
+    top: -62px;
 }
 
 @media (max-width: 720px) {
@@ -7987,16 +7985,6 @@ ul {
     }
     .modal-footer {
         margin-right: 0 !important;
-    }
-    .sidebar-footer .scoring-btn,
-    .sidebar-footer .forecast-btn {
-        margin: 0 6px 6px 6px !important;
-    }
-    .leaflet-top .leaflet-control {
-        margin-top: 4px;
-    }
-    #modalTrigger {
-        padding-left: 6px;
     }
     #play-sidebar .sidebar-content {
         padding: 6px;
@@ -8353,6 +8341,13 @@ i span {
 
 /* Mobile Nav */
 
+@media (max-width: 991px) {
+    .play-form-container {
+        bottom: 66px;
+        left: 10px;
+    }
+}
+
 .mobile-nav {
     position: fixed;
     bottom: -10px;
@@ -8370,8 +8365,17 @@ i span {
     display: inline-block;
     background-color: #333;
     text-align: center;
-    width: 24%;
+    width: 20%;
     transition: background-color .4s ease;
+    border-left: 1px solid #fff;
+}
+
+.mobile-nav li.active {
+    background: rgb(61, 182, 239);
+}
+
+.mobile-nav li:first-child {
+    border-left: none;
 }
 
 .mobile-nav li:hover,
@@ -8559,21 +8563,23 @@ a[href='/forecast_clash/users/login?provider=Twitter']:focus {
     opacity: 1;
 }
 
+
 /* end .cbox */
-.search-filter-heatmap{
+
+.search-filter-heatmap {
     margin-bottom: 12px;
 }
+
 .search-filter-heatmap strong {
     display: block;
 }
+
 
 /* Input Range */
 
 input[type=range] {
     /*removes default webkit styles*/
     -webkit-appearance: none;
-    /*fix for FF unable to apply focus style bug */
-    border: 1px solid white;
     /*required for proper track sizing in FF*/
     width: 100%;
 }
@@ -8720,4 +8726,135 @@ input[type=range]:focus::-ms-fill-upper {
 
 .adsbygoogle {
     margin-bottom: 20px;
+}
+
+
+/* Date Range Slider */
+
+.toggle_radio {
+    position: relative;
+    background: #333;
+    margin: 12px auto;
+    overflow: hidden;
+    padding: 0 !important;
+    position: relative;
+    height: 61px;
+    width: 402px;
+    border: 1px solid rgb(107, 107, 107);
+}
+
+.range-slider-container {
+    transform: scale(.9);
+    left: -21px;
+    top: -80px;
+    height: 0;
+}
+
+.toggle_radio > * {
+    float: left;
+}
+
+.toggle_radio input[type=radio] {
+    display: none;
+    /*   position: fixed; */
+}
+
+.toggle_radio label {
+    color: #fff;
+    z-index: 0;
+    display: block;
+    width: 80px;
+    height: 61px;
+    font-family: 'Open Sans';
+    cursor: pointer;
+    z-index: 1;
+    text-align: center;
+    /*    border-left: 1px solid rgb(107, 107, 107);*/
+}
+
+.toggle_radio label[for="first_toggle"] {
+    border-left: none;
+}
+
+.toggle_option_slider {
+    width: 81px;
+    height: 59px;
+    position: absolute;
+    top: -1px;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+    -webkit-transition: all .4s ease;
+    -moz-transition: all .4s ease;
+    -o-transition: all .4s ease;
+    -ms-transition: all .4s ease;
+    transition: all .4s ease;
+    border: 2px solid rgb(61, 182, 239);
+    z-index: 100001
+}
+
+#first-date,
+#third-date {
+    position: relative;
+    z-index: 10000;
+}
+
+#first-date .day {
+    width: 50%;
+}
+
+#second-date .day {
+    margin-left: -50%;
+    margin-right: -50%;
+}
+
+#fourth-date .day {
+    margin-left: -50%;
+    margin-right: -50%;
+}
+
+#fifth-date .day {
+    width: 50%;
+    margin-left: 50%;
+}
+
+#first_toggle:checked ~ .toggle_option_slider {
+    background: rgba(255, 255, 255, .3);
+    left: 0px;
+}
+
+#second_toggle:checked ~ .toggle_option_slider {
+    background: rgba(255, 255, 255, .3);
+    left: 80px;
+}
+
+#third_toggle:checked ~ .toggle_option_slider {
+    background: rgba(255, 255, 255, .3);
+    left: 160px;
+}
+
+#fourth_toggle:checked ~ .toggle_option_slider {
+    background: rgba(255, 255, 255, .3);
+    left: 240px;
+}
+
+#fifth_toggle:checked ~ .toggle_option_slider {
+    background: rgba(255, 255, 255, .3);
+    left: 320px;
+}
+
+span.description {
+    top: 0px;
+    font-size: 12px;
+    padding: 2px;
+    display: block;
+    border-bottom: 1px solid rgb(77, 77, 77);
+    border-right: 1px solid rgb(77, 77, 77);
+}
+
+p.day {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 8px;
+    border-right: 1px solid rgb(77, 77, 77);
 }
