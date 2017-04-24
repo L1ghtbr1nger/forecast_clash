@@ -47,7 +47,7 @@ class TeamsController extends AppController
                     $teamScore[$team_id]['roster']++;
                 } else { //if not
                     $tempID = $team_id; //set tempID to that of selected team
-                    $teamScore[$team_id] = ['team_id' => $team_id, 'team_name' => $team_name, 'team_score' => $score, 'roster' => 1]; //move to team's array key
+                    $teamScore[$team_id] = ['team_id' => $team_id, 'team_logo' => $teamRank['teams_user']['team']['team_logo'], 'team_name' => $team_name, 'team_score' => $score, 'roster' => 1]; //move to team's array key
                 }
             }
             $collection = new Collection($teamScore);
