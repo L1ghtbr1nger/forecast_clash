@@ -484,7 +484,7 @@ $('document').ready(function() {
             dataType: 'json',
             data: {toDelete: toDelete},
             success : function(response) {
-                location.reload();
+                window.location.href = response['url'];
             },
             error : function() {   
             }

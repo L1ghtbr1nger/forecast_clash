@@ -156,16 +156,18 @@ class ForecastsController extends AppController
     }
     
     public function deletePending() {
+        $session = $this->request->session();
         $data = $this->request->data;
         $query = $this->Forecasts->get($data['toDelete']);
         $result = $this->Forecasts->delete($query);
+        $url = Router::url(['controller' => '/'], TRUE);
         if ($result) {
             $session->write('successBox', 'Forecast removed.');
-            die;
         } else {
             $session->write('errorBox', 'Unable to delete forecast at this time...');
-            die;
         }
+        echo json_encode(['url' => $url]);
+        die;
     }
     
     public function beforeFilter(Event $event){
