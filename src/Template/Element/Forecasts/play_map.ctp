@@ -29,7 +29,7 @@ h4 i{
 
                     <!-- hidden form fields -->
                     <input type="text" name="forecast_date" class="datepicker hidden" id="event_date">
-<!--                     <input type="radio" name="am_pm" id="am" class="hidden" value="0">
+<!--                <input type="radio" name="am_pm" id="am" class="hidden" value="0">
                     <input type="radio" name="am_pm" id="pm" class="hidden" value="1"> -->
                     <input id="latlng" name="location" type="text" class="hidden" value="">
                     <input type="radio" class="hidden" name="weather_event_id" id="tornado-event" value="1">
