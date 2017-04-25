@@ -7987,6 +7987,12 @@ ul {
     .modal-footer .btn {
         width: 100%;
     }
+    .user-update-container .modal-footer {
+        height: initial;
+    }
+    #passwordForm {
+        text-align: center;
+    }
     .skip-instructions {
         margin: 6px 0;
     }
