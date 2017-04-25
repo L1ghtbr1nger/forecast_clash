@@ -203,6 +203,8 @@
 
 $(document).ready(function(){
 
+    $('.teams-link').addClass('active');
+
     $('#creator').prepend('<h3>Create Your Team</h3>');
 
     $('#joinButton').click(function(){
@@ -216,6 +218,8 @@ $(document).ready(function(){
     $('#liveSearch p').click(function(){
         $('#joinSubmit').attr('disabled', 'false');
     });
+
+    $('.rankings img').attr('alt', 'Team Logo');
 });
 
 var clipboard = new Clipboard('.clp-btn');

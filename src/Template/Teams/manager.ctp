@@ -45,23 +45,26 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
                                 <fieldset>
-                                    <label for="logo" class="teamLogo">Team Logo <small>(optional)</small></label>
-                                    <?php if (!empty($team_logo)) {
-                                        echo '<div style="width: 100px; float: right; clear: none">';
-                                        echo $this->Html->image('teams/users/'.$team_logo, [
-                                            'style' => 'width: 100%'
-                                        ]);
-                                        echo '</div>';
-                                    } ?>
-                                    <?= $this->Form->input('team_logo', [
-                                        'label' => (!empty($team_logo)) ? $team_logo : false,
-                                        'type' => 'file',
-                                        'id' => 'logo'
-                                    ]); ?>
+                                    <div class="col-md-6">
+                                        <label for="logo" class="teamLogo">Team Logo <small>(optional)</small></label>
+                                        <?= $this->Form->input('team_logo', [
+                                            'label' => (!empty($team_logo)) ? $team_logo : false,
+                                            'type' => 'file',
+                                            'id' => 'logo'
+                                        ]); ?>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <?php if (!empty($team_logo)) {
+                                            echo '<div style="width: 150px; float: left; clear: none">';
+                                            echo $this->Html->image('teams/users/'.$team_logo, [
+                                                'style' => 'width: 100%'
+                                            ]);
+                                            echo '</div>';
+                                        } ?>
+                                    </div>
                                 </fieldset>
-                            </div>
+                           </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -74,7 +77,7 @@
                 <?= $this->Form->end(); ?>
                 </div>
             </div>
-        </div>
+       
         <div class="col col-xs-12 col-sm-6 col-md-6 col-lg-6 stats-col heatmap-element">
             <div class="card sameheight-item" data-exclude="xs">
                 <div class="card-header card-header-sm bordered">
@@ -124,3 +127,9 @@
     </div>
 </div>
 <?= $this->Html->script('teams'); ?>
+
+<script>
+
+    $('.teams-link').addClass('active');
+
+</script>
