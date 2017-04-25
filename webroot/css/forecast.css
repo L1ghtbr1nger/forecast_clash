@@ -8733,6 +8733,7 @@ input[type=range]:focus::-ms-fill-upper {
 #radiusMask{
     cursor: ew-resize;
     padding: 12px 0;
+    background: transparent;
 }
 .toggle_radio {
     position: relative;
