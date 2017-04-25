@@ -49,11 +49,16 @@ class ForecastsController extends AppController
                 $weatherEventID = null;
             }
             if (!empty($data['forecast_date'])) {
-                $dateStart = strtotime($data['forecast_date']); //convert Month, #Day #Year format to unix time 
-                $dateEnd = $dateStart + 43199; //add 12 hours in seconds to unix representation of forecast start
-                $data['forecast_date_start'] = Time::parse($dateStart)->i18nFormat('yyyy-MM-dd HH:mm:ss');
-                $data['forecast_date_end'] = Time::parse($dateEnd)->i18nFormat('yyyy-MM-dd HH:mm:ss');
-                $data['submit_date'] = Time::now();
+                if (isset($data['am_pm'])) {
+                    $dateStart = strtotime($data['forecast_date']); //conver Month, #Day #Year format to unix time 
+                    if ($data['am_pm']) {
+                        $dateStart = $dateStart + 43200; //if PM then move start time to noon
+                    }
+                    $dateEnd = $dateStart + 43199; //add 12 hours in seconds to unix representation of forecast start
+                    $data['forecast_date_start'] = Time::parse($dateStart)->i18nFormat('yyyy-MM-dd HH:mm:ss');
+                    $data['forecast_date_end'] = Time::parse($dateEnd)->i18nFormat('yyyy-MM-dd HH:mm:ss');
+                    $data['submit_date'] = Time::now();
+                }
             }
             $table = $this->Forecasts;
             //Look if user and weather event combo already exists in Forecasts

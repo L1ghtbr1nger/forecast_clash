@@ -99,9 +99,7 @@ $('document').ready(function() {
     // Set tile layer
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {}).addTo(map);
 
-    // radius functionality
-    var radiusInput = document.getElementById('radius');
-    var radius = radiusInput.value;
+
 
     var circle;
     var lat;
@@ -129,7 +127,7 @@ $('document').ready(function() {
                 className: 'tornadoCircle'
             });
 
-            tornadoCircle.addTo(map).on('click', circleClick);
+            tornadoCircle.addTo(map);
             tornadoCircle.bindPopup("<h4><strong>Tornado</strong></h4> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
 
         } else {
@@ -414,35 +412,32 @@ $('document').ready(function() {
 
         } else if (hr < 6) {
             $('#first-date').click(function() {
-                $('#am').prop('checked', true);
-                $('#event_date').val(today.toISOString().slice(0, 10) + ' ' +  '18:00');
+                // $('#am').prop('checked', true);
+                $('#event_date').val(today.toISOString().slice(0, 10) + ' ' + '18:00');
             });
         }
 
         $('#second-date').click(function() {
-            $('#pm').prop('checked', true);
+            // $('#pm').prop('checked', true);
             $('#event_date').val(tomorrow.toISOString().slice(0, 10) + ' ' + '06:00');
         });
 
         $('#third-date').click(function() {
-            $('#am').prop('checked', true);
+            // $('#am').prop('checked', true);
             $('#event_date').val(tomorrow.toISOString().slice(0, 10) + ' ' + '18:00');
         });
 
         $('#fourth-date').click(function() {
-            $('#pm').prop('checked', true);
+            // $('#pm').prop('checked', true);
             $('#event_date').val(dateTwo.toISOString().slice(0, 10) + ' ' + '06:00');
         });
 
         $('#fifth-date').click(function() {
-            $('#am').prop('checked', true);
+            // $('#am').prop('checked', true);
             $('#event_date').val(dateTwo.toISOString().slice(0, 10) + ' ' + '18:00');
         });
-
-
-
-
     });
+
 
     var rangeSlider = L.control({ position: 'topleft' });
     rangeSlider.onAdd = function(map) {
@@ -452,7 +447,9 @@ $('document').ready(function() {
         return div;
     };
 
+
     rangeSlider.addTo(map);
+
 
     $('.radius').prependTo('.range-slider-container');
     $('.sidebar-footer').appendTo('.range-slider-container');
@@ -493,4 +490,13 @@ $('document').ready(function() {
             }
         });
     });
+
+    $("#radiusMask").change(function() {
+        $("#output").text('(' + $("#radiusMask").val() + ' miles)');
+        $("#radius").val($("#radiusMask").val());
+
+    });
+    // radius functionality
+    var radiusInput = document.getElementById('radiusMask');
+    var radius = radiusInput.value;
 });

@@ -22,15 +22,11 @@ h4 i{
 
   
                 <form action="#" class="search-filter forecast-tornado" id="forecastForm">
-                    <fieldset class="radius">
-                        <label for="radius" style="color:#fff"><strong>Radius</strong><span id="output">(50 miles)</span></label>
-                        <input type="range" name="radius" id="radius" value="50" min="5" max="100" step="5">
-                    </fieldset>
-
+                    
+                    <fieldset class="radius"><label for="radiusMask" style="color:#fff"><strong>Radius</strong><span id="output">(50 miles)</span></label><input type="range" name="radius" id="radiusMask" value="50" min="5" max="100" step="5"></fieldset>
                     <!-- hidden form fields -->
                     <input type="text" name="forecast_date" class="datepicker hidden" id="event_date">
-<!--                <input type="radio" name="am_pm" id="am" class="hidden" value="0">
-                    <input type="radio" name="am_pm" id="pm" class="hidden" value="1"> -->
+                    <input type="range" name="radius" id="radius" class=hidden value="50" min="5" max="100" step="5">
                     <input id="latlng" name="location" type="text" class="hidden" value="">
                     <input type="radio" class="hidden" name="weather_event_id" id="tornado-event" value="1">
                     <input type="radio" class="hidden" name="weather_event_id" id="hail-event" value="2">

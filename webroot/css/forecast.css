@@ -8746,7 +8746,7 @@ input[type=range]:focus::-ms-fill-upper {
 .range-slider-container {
     transform: scale(.9);
     left: -21px;
-    top: -80px;
+    top: -72px;
     height: 0;
 }
 
