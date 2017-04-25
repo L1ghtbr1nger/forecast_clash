@@ -82,11 +82,11 @@ body {
 }
 
 #ref .color-primary {
-    color: rgb(61, 182, 239);
+    color: rgb(81, 182, 245);
 }
 
 #ref .chart .color-primary {
-    color: rgb(61, 182, 239);
+    color: rgb(81, 182, 245);
 }
 
 #ref .chart .color-secondary {
@@ -148,7 +148,7 @@ body {
 
 .auth-container .auth-header {
     text-align: center;
-    border-bottom: 1px solid rgb(61, 182, 239);
+    border-bottom: 1px solid rgb(81, 182, 245);
 }
 
 .auth-container .auth-title {
@@ -280,8 +280,8 @@ body {
 }
 
 .alert.alert-primary {
-    background-color: rgb(61, 182, 239);
-    border-color: rgb(61, 182, 239);
+    background-color: rgb(81, 182, 245);
+    border-color: rgb(81, 182, 245);
     transition: all .4s;
     color: #ffffff;
 }
@@ -379,8 +379,8 @@ label[for="public"] {
 
 .btn.btn-primary {
     color: #ffffff;
-    background-color: rgb(61, 182, 239);
-    border-color: rgb(61, 182, 239);
+    background-color: rgb(81, 182, 245);
+    border-color: rgb(81, 182, 245);
     transition: all .4s;
 }
 
@@ -427,15 +427,15 @@ label[for="public"] {
 .btn.btn-primary.disabled.focus,
 .btn.btn-primary:disabled:focus,
 .btn.btn-primary:disabled.focus {
-    background-color: rgb(61, 182, 239);
-    border-color: rgb(61, 182, 239);
+    background-color: rgb(81, 182, 245);
+    border-color: rgb(81, 182, 245);
     transition: all .4s;
 }
 
 .btn.btn-primary.disabled:hover,
 .btn.btn-primary:disabled:hover {
-    background-color: rgb(61, 182, 239);
-    border-color: rgb(61, 182, 239);
+    background-color: rgb(81, 182, 245);
+    border-color: rgb(81, 182, 245);
     transition: all .4s;
 }
 
@@ -724,23 +724,23 @@ label[for="public"] {
 }
 
 .btn.btn-primary-outline {
-    color: rgb(61, 182, 239);
+    color: rgb(81, 182, 245);
     background-image: none;
     background-color: transparent;
-    border-color: rgb(61, 182, 239);
+    border-color: rgb(81, 182, 245);
 }
 
 .btn.btn-primary-outline:hover {
     color: #fff;
-    background-color: rgb(61, 182, 239);
-    border-color: rgb(61, 182, 239);
+    background-color: rgb(81, 182, 245);
+    border-color: rgb(81, 182, 245);
     transition: all .4s;
 }
 
 .btn.btn-primary-outline:focus,
 .btn.btn-primary-outline.focus {
     color: #fff;
-    background-color: rgb(61, 182, 239);
+    background-color: rgb(81, 182, 245);
     border-color: rgb(61, 182, 239);
     transition: all .4s;
 }
@@ -3388,7 +3388,17 @@ pre {
 }
 
 .modal-footer {
-    padding: 15px 0;
+    padding: 15px;
+}
+
+.profile .modal-footer {
+    padding: 12px 0 0 0;
+}
+
+.user-update-container .modal-footer {
+    height: 0;
+    padding: 0;
+    padding: 12px 0 0 0 !important;
 }
 
 #sidebar-menu {
@@ -8691,6 +8701,15 @@ input[type=range]:focus::-ms-fill-upper {
     margin-top: 48px;
 }
 
+.manager #creator {
+    margin-top: 0;
+}
+
+.remove-checkbox input[type="checkbox"] {
+    margin: 0 auto;
+    display: block;
+}
+
 
 /* Social Share */
 
@@ -8730,11 +8749,13 @@ input[type=range]:focus::-ms-fill-upper {
 
 
 /* Date Range Slider */
-#radiusMask{
+
+#radiusMask {
     cursor: ew-resize;
     padding: 12px 0;
     background: transparent;
 }
+
 .toggle_radio {
     position: relative;
     background: #333;
@@ -8852,6 +8873,7 @@ span.description {
     display: block;
     border-bottom: 1px solid rgb(77, 77, 77);
     border-right: 1px solid rgb(77, 77, 77);
+    rgb(81, 182, 245)
 }
 
 p.day {
@@ -8859,4 +8881,30 @@ p.day {
     font-weight: bold;
     margin-top: 8px;
     border-right: 1px solid rgb(77, 77, 77);
+}
+
+
+/* Profile */
+
+label.avatar-radio > input {
+    visibility: hidden;
+    position: absolute;
+}
+
+label.avatar-radio > input + img {
+    cursor: pointer;
+    border: 4px solid transparent;
+    float: left;
+    max-width: 75px;
+}
+
+label.avatar-radio > input:checked + img {
+    border: 1px solid rgb(81, 182, 245);
+}
+
+/* Leaderboard */
+
+#leaders img{
+    max-width: 50px;
+    margin-right: 4px;
 }

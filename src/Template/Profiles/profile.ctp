@@ -8,8 +8,12 @@
 .col-date {
     max-width: 350px !important;
 }
+.content{
+    top: 40px;
+    position: relative;
+}
 </style>
-<div class="content">
+<div class="content profile">
     <div class="row">
         <div class="col col-xs-12 col-sm-6 col-md-6 col-lg-6 stats-col heatmap-element">
             <div class="card sameheight-item" data-exclude="xs">
@@ -93,7 +97,7 @@
                         <h4>Update Your Account</h4>
                     </div>
                 </div>
-                <div class="card-block">
+                <div class="card-block user-update-container">
                     <form method="post" accept-charset="utf-8" id="userUpdateForm">
                         <div class="row">
                             <div class="col-md-6">
@@ -125,65 +129,60 @@
                 </div>
             </div>
         </div>
-        <div class="col col-xs-12 col-sm-6 col-md-6 col-lg-6 stats-col heatmap-element">
-            <div class="card sameheight-item" data-exclude="xs">
-                <div class="card-header card-header-sm bordered">
-                    <div class="header-block">
-                        <h4>Update Your Password</h4>
+    </div>
+        <form method="post" accept-charset="utf-8" id="passwordForm">
+            <button id="passwordReset" class="btn btn-primary login" type="submit">Reset Password</button>
+        </form>
+        <script>
+            $('#passwordForm').appendTo('.user-update-container');
+        </script>
+        <div class="row">
+            <div class="col col-xs-12 col-sm-6 col-md-6 col-lg-6 stats-col heatmap-element">
+                <div class="card sameheight-item" data-exclude="xs">
+                    <div class="card-header card-header-sm bordered">
+                        <div class="header-block">
+                            <h4>Choose an Avatar</h4>
+                        </div>
                     </div>
-                </div>
-                <div class="card-block">
-                    <form method="post" accept-charset="utf-8" id="passwordForm">
-                        <button id="passwordReset" class="btn btn-primary login" type="submit">Reset Password</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col col-xs-12 col-sm-6 col-md-6 col-lg-6 stats-col heatmap-element">
-            <div class="card sameheight-item" data-exclude="xs">
-                <div class="card-header card-header-sm bordered">
-                    <div class="header-block">
-                        <h4>Choose an Avatar</h4>
-                    </div>
-                </div>
-                <div class="card-block">
-                    <form method="post" accept-charset="utf-8" id="avatarsForm">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <fieldset>
-                                    <?= $this->Form->label('avatar_id', 'Avatars'); ?>
-                                    <?php foreach($avatars as $avatar) {
-                                        if ($avatar['id'] < 7) {
-                                            echo '<input type="radio" name="avatar_id" id="'.$avatar['id'].'" value="'.$avatar['id'].'"/>';
-                                            echo '<label for="'.$avatar['id'].'">';
-                                            echo $this->Html->image($avatar['avatar_img']);
-                                            echo '</label>';
-                                        } else {
-                                            if ($avatar['id'] == 7 && isset($social[0]['photo_url'])) {
-                                                echo '<input type="radio" name="avatar_id" id="7" value="7"/>';
-                                                echo '<label for="7">';
-                                                echo '<img src="'.$social[0]['photo_url'].'"/>';
+                    <div class="card-block">
+                        <form method="post" accept-charset="utf-8" id="avatarsForm">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <fieldset>
+                                        <?= $this->Form->label('avatar_id', 'Avatars'); ?>
+                                        <?php foreach($avatars as $avatar) {
+                                            if ($avatar['id'] < 7) {
+                                                echo '<label class="avatar-radio" for="'.$avatar['id'].'">';
+                                                echo '<input type="radio" name="avatar_id" id="'.$avatar['id'].'" value="'.$avatar['id'].'"/>';
+                                                echo $this->Html->image($avatar['avatar_img']);
                                                 echo '</label>';
-                                            } else if ($avatar['id'] == 8 && isset($social[1]['photo_url'])) {
-                                                echo '<input type="radio" name="avatar_id" id="8" value="8"/>';
-                                                echo '<label for="8">';
-                                                echo '<img src="'.$social[1]['photo_url'].'"/>';
-                                                echo '</label>';
-                                            } else if ($avatar['id'] == 9 && isset($social[2]['photo_url'])) {
-                                                echo '<input type="radio" name="avatar_id" id="9" value="9"/>';
-                                                echo '<label for="9">';
-                                                echo '<img src="'.$social[2]['photo_url'].'"/>';
-                                                echo '</label>';
+                                            } else {
+                                                if ($avatar['id'] == 7 && isset($social[0]['photo_url'])) {
+                                                    echo '<input type="radio" name="avatar_id" id="7" value="7"/>';
+                                                    echo '<label for="7">';
+                                                    echo '<img src="'.$social[0]['photo_url'].'"/>';
+                                                    echo '</label>';
+                                                } else if ($avatar['id'] == 8 && isset($social[1]['photo_url'])) {
+                                                    echo '<input type="radio" name="avatar_id" id="8" value="8"/>';
+                                                    echo '<label for="8">';
+                                                    echo '<img src="'.$social[1]['photo_url'].'"/>';
+                                                    echo '</label>';
+                                                } else if ($avatar['id'] == 9 && isset($social[2]['photo_url'])) {
+                                                    echo '<input type="radio" name="avatar_id" id="9" value="9"/>';
+                                                    echo '<label for="9">';
+                                                    echo '<img src="'.$social[2]['photo_url'].'"/>';
+                                                    echo '</label>';
+                                                }
                                             }
-                                        }
-                                    } ?>
-                                </fieldset>
+                                        } ?>
+                                    </fieldset>
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="avatars" class="btn btn-primary login" type="submit">Update</button>
-                        </div>
-                    </form>
+                            <div class="modal-footer">
+                                <button id="avatars" class="btn btn-primary login" type="submit">Update</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
