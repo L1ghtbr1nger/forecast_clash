@@ -8730,7 +8730,9 @@ input[type=range]:focus::-ms-fill-upper {
 
 
 /* Date Range Slider */
-
+#radiusMask{
+    cursor: ew-resize;
+}
 .toggle_radio {
     position: relative;
     background: #333;
