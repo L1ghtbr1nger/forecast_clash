@@ -29,6 +29,7 @@ $('document').ready(function() {
 
     // Pending Forecast Layers
 
+    var pendingIDs = JSON.parse($('#pendingIDs').val());
     var pendingLocations = JSON.parse($('#pendingLocations').val());
     var pendingEvents = JSON.parse($('#pendingEvents').val());
     var pendingDates = JSON.parse($('#pendingDates').val());
@@ -54,7 +55,7 @@ $('document').ready(function() {
         pending.push(L.circle(v, (pendingRadius[i] * 1609.344), {
             color: stroke,
             fillColor: 'rgb(255,255,255)'
-        }).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> starting</br>' + pendingDates[i] + ' UTC').openPopup());
+        }).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> starting</br>' + pendingDates[i] + ' UTC</br><a style="color:blue" id="deletePending" href="">Delete<input id="toDelete" name="toDelete" type="hidden" value="'+pendingIDs[i]+'"></a>').openPopup());
     });
 
     $.each(activeLocations, function(i, v) {
@@ -464,5 +465,32 @@ $('document').ready(function() {
     // enable map dragging on input container
     rangeSlider.getContainer().addEventListener('mouseout', function() {
         map.dragging.enable();
+    });
+    
+    var toDelete = 0;
+    var storage = "";
+    $(document.body).on('click', '#deletePending', function(e){
+        e.preventDefault();
+        toDelete = $(this).children('#toDelete').val();
+        storage = $(this).parent().html();
+        $(this).parent().html('Are you sure you want to delete this forecast?</br><button id="noDelete" class="btn btn-primary" style="float:left;margin-top:5px">No</button><button id="yesDelete" class="btn btn-primary" style="float:right;margin-top:5px">Yes</button><div style="width:100%;height:40px;visibility:hidden">Clear</div>');
+    });
+    $(document.body).on('click', '#noDelete', function(e){
+        e.preventDefault();
+        $(this).parent().html(storage);
+    });
+    $(document.body).on('click', '#yesDelete', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/forecast_clash/forecasts/deletePending.json",
+            dataType: 'json',
+            data: {toDelete: toDelete},
+            success : function(response) {
+                location.reload();
+            },
+            error : function() {   
+            }
+        });
     });
 });

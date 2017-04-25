@@ -52,6 +52,10 @@ h4 i{
     <div id="map"></div>
 </article>
 <!-- Pending Forecasts hidden fields -->
+<?= $this->Form->hidden('pendingIDs', [
+    'value' => json_encode($pendingIDs),
+    'id' => 'pendingIDs'
+]) ?>
 <?= $this->Form->hidden('pendingLocations', [
     'value' => json_encode($pendingLocations),
     'id' => 'pendingLocations'
@@ -136,7 +140,7 @@ h4 i{
                     <li>Set target radius</li>
                     <li>Click the map and set your target </li>
                 </ul>
-                <p>Forecasts are pending until 12 hours before your event forecast time. They are then active forecasts and cannot be updated. Results notifications occur each day at noon, so be sure to come back and see how you did. <strong>Good Luck!</strong></p>
+                <p>Forecasts are pending until your event forecast time. They are then active forecasts and cannot be updated. Results notifications occur each day at noon, so be sure to come back and see how you did. <strong>Good Luck!</strong></p>
 
             </div>
         </div>

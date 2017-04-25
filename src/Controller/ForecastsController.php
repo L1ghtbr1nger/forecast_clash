@@ -96,6 +96,7 @@ class ForecastsController extends AppController
             }
             die;
         } else {
+            $pendingIDs = [];
             $pendingLocations = [];
             $pendingRadius = [];
             $pendingEvents = [];
@@ -107,6 +108,7 @@ class ForecastsController extends AppController
             if ($userID = $session->read('Auth.User.id')) {
                 if($forecasts = $this->Forecasts->find('all')->where(['user_id' => $userID])->contain('WeatherEvents')) {
                     foreach ($forecasts as $forecast) {
+                        $pendingIDs[] = $forecast['id'];
                         $pendingLocations[] = [$forecast['latitude'], $forecast['longitude']];
                         $pendingRadius[] = $forecast['radius'];
                         $pendingEvents[] = $forecast['weather_event']['weather'];
@@ -122,6 +124,7 @@ class ForecastsController extends AppController
                     }
                 }
             }
+            $this->set('pendingIDs', $pendingIDs);
             $this->set('pendingLocations', $pendingLocations);
             $this->set('pendingRadius', $pendingRadius);
             $this->set('pendingEvents', $pendingEvents);
@@ -149,6 +152,19 @@ class ForecastsController extends AppController
                     $this->Forecasts->delete($entity);
                 }
             }
+        }
+    }
+    
+    public function deletePending() {
+        $data = $this->request->data;
+        $query = $this->Forecasts->get($data['toDelete']);
+        $result = $this->Forecasts->delete($query);
+        if ($result) {
+            $session->write('successBox', 'Forecast removed.');
+            die;
+        } else {
+            $session->write('errorBox', 'Unable to delete forecast at this time...');
+            die;
         }
     }
     
