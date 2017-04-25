@@ -8689,6 +8689,11 @@ input[type=range]:focus::-ms-fill-upper {
 
 /* Dugout */
 
+.table td{
+    display: table-cell;
+    vertical-align: middle !important;
+}
+
 .dugout {
     width: 70%;
     max-width: 750px;
