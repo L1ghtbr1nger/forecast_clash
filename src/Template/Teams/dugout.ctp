@@ -70,7 +70,7 @@
                                 foreach ($teammate['users'] as $user) {
                                     $count++;
                                     echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').' '.(($data['id'] === $user['id']) ? 'userTeam' : '').'">';
-                                    echo '<td>'.h($user['first_name']).' '.h($user['last_name']).'</td>';
+                                    echo '<td>'.$this->Html->image($user['avatar']['avatar_img'],['style' => 'max-width:35px;max-height:35px;padding-right:5px']).' '.h($user['first_name']).' '.h($user['last_name']).'</td>';
                                     echo '<td>'.((isset($user['scores'][0]['total_score']) && !empty($user['scores'][0]['total_score'])) ? intval($user['scores'][0]['total_score']) : '0').'</td>';
                                     echo '<td>'.(($user['meteorologist']) ? 'Professional' : 'Enthusiast' ).'</td></tr>';
                                 }
@@ -107,7 +107,7 @@
                                     echo '<tr class="'.(($count & 1) ? 'odd gradeX' : 'even gradeC').' '.(($data['teams'][0]['id'] === $rank['team_id']) ? 'userTeam' : '').'">';
                                     echo '<td>'.$rank['rank'].'</td>';
                                     echo '<td><sup>'.$rank['roster'].'</sup> &frasl; <sub>50</sub></td>';
-                                    echo '<td>'.(isset($rank['team_logo']) ? $this->Html->image('teams/users/'.$rank['team_logo'], ['style' => 'max-width: 75px; max-height: 75px']) : '').' '.h($rank['team_name']).'</td>';
+                                    echo '<td>'.(isset($rank['team_logo']) ? $this->Html->image('teams/users/'.$rank['team_logo'], ['style' => 'max-width: 75px; max-height: 75px']) : $this->Html->image('logo-mark.png', ['style' => 'max-width: 75px; max-height: 75px'])).' '.h($rank['team_name']).'</td>';
                                     echo '<td>'.intval($rank['team_score']).'</td></tr>';
                                 }
                             } else {

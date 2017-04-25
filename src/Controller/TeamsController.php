@@ -77,9 +77,15 @@ class TeamsController extends AppController
             $teamID = $userTeam['teams'][0]['id'];
             $teammates = $this->Teams->find('all')->where(['id' => $teamID])->contain([
                 'Users'=> function($q) {
-                    return $q->order('Users.first_name')->contain('Scores');
+                    return $q->order('Users.first_name')->contain(['Scores', 'SocialProfiles', 'Avatars']);
+                  }
+              ])->toArray();
+             foreach ($teammates as $mate) {
+                $a = $mate['users'][0]['avatar_id'];
+                if ($a > 6) {
+                    $mate['users'][0]['avatar']['avatar_img'] = $mate['users'][0]['social_profiles'][$a - 7]['photo_url'];
                 }
-            ])->toArray();
+            }
             $this->set('teammates', $teammates);
             $total = 0;
             foreach ($teammates as $teammate) {
