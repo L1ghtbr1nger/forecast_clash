@@ -131,7 +131,7 @@
         </div>
     </div>
         <form method="post" accept-charset="utf-8" id="passwordForm">
-            <button id="passwordReset" class="btn btn-primary login" type="submit">Reset Password</button>
+            <a id="passwordReset" class="btn login" type="submit">Reset Password</a>
         </form>
         <script>
             $('#passwordForm').appendTo('.user-update-container');
@@ -158,18 +158,18 @@
                                                 echo '</label>';
                                             } else {
                                                 if ($avatar['id'] == 7 && isset($social[0]['photo_url'])) {
+                                                    echo '<label class="avatar-radio" for="7">';
                                                     echo '<input type="radio" name="avatar_id" id="7" value="7"/>';
-                                                    echo '<label for="7">';
                                                     echo '<img src="'.$social[0]['photo_url'].'"/>';
                                                     echo '</label>';
                                                 } else if ($avatar['id'] == 8 && isset($social[1]['photo_url'])) {
+                                                    echo '<label class="avatar-radio" for="8">';
                                                     echo '<input type="radio" name="avatar_id" id="8" value="8"/>';
-                                                    echo '<label for="8">';
                                                     echo '<img src="'.$social[1]['photo_url'].'"/>';
                                                     echo '</label>';
                                                 } else if ($avatar['id'] == 9 && isset($social[2]['photo_url'])) {
+                                                    echo '<label class="avatar-radio" for="9">';
                                                     echo '<input type="radio" name="avatar_id" id="9" value="9"/>';
-                                                    echo '<label for="9">';
                                                     echo '<img src="'.$social[2]['photo_url'].'"/>';
                                                     echo '</label>';
                                                 }
