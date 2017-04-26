@@ -7988,7 +7988,7 @@ ul {
 
 .easy-button-container {
     top: -62px;
-    left: 85px;
+    left: 87px;
 }
 
 @media (max-width: 720px) {
@@ -8931,7 +8931,7 @@ p.day {
 
 .range-slider-container .sidebar-footer {
     position: relative;
-    top: 42px;
+    top: 17px;
 }
 
 .sidebar-footer .forecast-btn {
