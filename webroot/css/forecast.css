@@ -8245,12 +8245,10 @@ label[for="remember"] span {
 
 .pie-chart .ct-series-a path {
     fill: rgb(61, 182, 239);
-    ;
 }
 
 .pie-chart .ct-series-b path {
     fill: rgb(255, 161, 21);
-    ;
 }
 
 .legend-square-a {
@@ -8286,7 +8284,9 @@ label[for="remember"] span {
     color: #333 !important;
 }
 
-
+.ct-bar{
+    stroke-width: 15px !important;
+}
 /* Easy Buttons */
 
 .button-state .fa-compass {

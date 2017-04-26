@@ -124,8 +124,20 @@
     height: 29px;
     width: 360px;
     padding: 8px;
-    overflow: auto;
     background: rgb(236, 236, 236);
+}
+
+@media (max-width: 420px) {
+    .clipDisplay {
+        width: 200px;
+        display: inline-block;
+        overflow: hidden;
+    }
+    .clp-btn img {
+        position: relative;
+        top: -10px;
+        left: -2px;
+    }
 }
 
 .clp-btn {
