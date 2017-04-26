@@ -398,13 +398,9 @@ $('document').ready(function() {
         // set time inputs
 
         // Get hr
-
        var utcHR = moment.utc().format('hh');
-       console.log(utcHR)
-        var hr = today.getUTCHours();
 
         if (utcHR >= 6) {
-            console.log('test')
             //turn off first option
             $('#fifth-date').css({
                 'cursor': 'not-allowed',
