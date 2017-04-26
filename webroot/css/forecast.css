@@ -8809,7 +8809,7 @@ input[type=range]:focus::-ms-fill-upper {
     width: 327px;
     border: 1px solid rgb(107, 107, 107);
     transform: rotate(-90deg);
-    top: -163px;
+    top: -160px;
     left: -125px;
 }
 
@@ -8817,11 +8817,11 @@ input[type=range]:focus::-ms-fill-upper {
 /* Webkit Hack */
 
 .toggle_radio:not(*:root) {
-    top: -192px;
+    top: -187px;
 }
 
 .easy-button-container:not(*:root) {
-    top: -78px;
+    top: -73px;
 }
 
 .radius:not(*:root) {
@@ -8831,6 +8831,10 @@ input[type=range]:focus::-ms-fill-upper {
 .radius-label:not(*:root) {
     top: 10px;
     left: 30px;
+}
+
+.range-slider-container .sidebar-footer:not(*:root) {
+    top: -60px;
 }
 
 #radiusMask:not(*:root) {
@@ -8962,7 +8966,7 @@ p.day {
 
 .range-slider-container .sidebar-footer {
     position: relative;
-    top: -56px;
+    top: -38px;
     left: -1px;
 }
 
