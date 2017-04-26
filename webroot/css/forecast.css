@@ -7905,7 +7905,11 @@ rect {
 .radius {
     clear: both;
     width: 100%;
-    max-width: 200px;
+    max-width: 150px;
+    position: relative;
+    top: 42px;
+    transform: rotate(-90deg);
+    left: 61px;
 }
 
 .radius-output {
@@ -7942,8 +7946,11 @@ ul {
     cursor: pointer;
 }
 
-#output {
-    padding-left: 12px;
+.radius-label {
+    top: 6px;
+    left: 27px;
+    position: relative;
+    transform: rotate(90deg);
 }
 
 .icon-container {
@@ -7976,11 +7983,12 @@ ul {
 }
 
 .play-container .leaflet-control-zoom {
-    left: 65px;
+    left: 150px;
 }
 
 .easy-button-container {
     top: -62px;
+    left: 85px;
 }
 
 @media (max-width: 720px) {
@@ -8284,9 +8292,11 @@ label[for="remember"] span {
     color: #333 !important;
 }
 
-.ct-bar{
+.ct-bar {
     stroke-width: 15px !important;
 }
+
+
 /* Easy Buttons */
 
 .button-state .fa-compass {
@@ -8775,8 +8785,11 @@ input[type=range]:focus::-ms-fill-upper {
 
 #radiusMask {
     cursor: ew-resize;
-    padding: 12px 0;
+    padding: 24px 0;
     background: transparent;
+    position: relative;
+    top: -42px;
+    right: 40px;
 }
 
 .toggle_radio {
@@ -8786,9 +8799,19 @@ input[type=range]:focus::-ms-fill-upper {
     overflow: hidden;
     padding: 0 !important;
     position: relative;
-    height: 61px;
+    height: 80px;
     width: 402px;
     border: 1px solid rgb(107, 107, 107);
+    transform: rotate(-90deg);
+    top: -140px;
+    left: -162px;
+}
+
+.toggle_radio .description span,
+.time-to,
+.day-rotate {
+    transform: rotate(90deg);
+    display: inline-block;
 }
 
 .range-slider-container {
@@ -8810,7 +8833,7 @@ input[type=range]:focus::-ms-fill-upper {
     z-index: 0;
     display: block;
     width: 80px;
-    height: 61px;
+    height: 80px;
     font-family: 'Open Sans';
     cursor: pointer;
     z-index: 1;
@@ -8824,7 +8847,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 .toggle_option_slider {
     width: 81px;
-    height: 59px;
+    height: 79px;
     position: absolute;
     top: -1px;
     -webkit-border-radius: 1px;
@@ -8862,6 +8885,7 @@ input[type=range]:focus::-ms-fill-upper {
 #fifth-date .day {
     width: 50%;
     margin-left: 50%;
+    border-right: none;
 }
 
 #first_toggle:checked ~ .toggle_option_slider {
@@ -8896,14 +8920,22 @@ span.description {
     display: block;
     border-bottom: 1px solid rgb(77, 77, 77);
     border-right: 1px solid rgb(77, 77, 77);
-    rgb(81, 182, 245)
 }
 
 p.day {
     font-size: 14px;
     font-weight: bold;
     margin-top: 8px;
-    border-right: 1px solid rgb(77, 77, 77);
+    border-right: 1px solid rgb(255, 255, 255);
+}
+
+.range-slider-container .sidebar-footer {
+    position: relative;
+    top: 42px;
+}
+
+.sidebar-footer .forecast-btn {
+    float: none;
 }
 
 
