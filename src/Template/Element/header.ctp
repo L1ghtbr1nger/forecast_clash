@@ -19,7 +19,7 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
 <div class="clock-container header-block header-block-collapse hidden-lg-up">
     <div class="header-block header-block-collapse hidden-lg-up">
         <span>Local:</span>
-       <div id="clock" class="clock">loading ...</div><br>
+       <div id="local" class="clock">loading ...</div><br>
        <span>UTC:&nbsp;&nbsp;</span>
        <div id="utc" class="clock">loading ...</div>
     </div>
@@ -148,12 +148,19 @@ $(document).ready(function() {
 
     // Clock
 
-    function update() {
-      $('#clock').html(moment().format('hh:mm:ss'));
-      $('#utc').html(moment.utc().format('hh:mm:ss') + 'Z');
-    }
-
-    setInterval(update, 1000);
+$(function(){
+  setInterval(function(){
+    var divUtc = $('#utc');
+    var divLocal = $('#local');  
+    //put UTC time into divUTC  
+    divUtc.text(moment.utc().format('YYYY-MM-DD HH:mm:ss'));      
+    
+    //get text from divUTC and conver to local timezone  
+    var localTime  = moment.utc(divUtc.text()).toDate();
+    localTime = moment(localTime).format('YYYY-MM-DD HH:mm:ss');
+    divLocal.text(localTime);        
+  },1000);
+});
 
 });
 
