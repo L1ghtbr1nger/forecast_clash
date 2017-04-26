@@ -401,22 +401,22 @@ $('document').ready(function() {
         var hr = today.getUTCHours();
         if (hr >= 6) {
             //turn off first option
-            $('#first-date').css({
+            $('#fifth-date').css({
                 'cursor': 'not-allowed',
             });
 
-            $('#first-date').click(function() {
+            $('#fifth-date').click(function() {
                 return false;
             });
 
         } else if (hr < 6) {
-            $('#first-date').click(function() {
+            $('#fifth-date').click(function() {
                 // $('#am').prop('checked', true);
                 $('#event_date').val(today.toISOString().slice(0, 10) + ' ' + '18:00');
             });
         }
 
-        $('#second-date').click(function() {
+        $('#fourth-date').click(function() {
             // $('#pm').prop('checked', true);
             $('#event_date').val(tomorrow.toISOString().slice(0, 10) + ' ' + '06:00');
         });
@@ -426,12 +426,12 @@ $('document').ready(function() {
             $('#event_date').val(tomorrow.toISOString().slice(0, 10) + ' ' + '18:00');
         });
 
-        $('#fourth-date').click(function() {
+        $('#second-date').click(function() {
             // $('#pm').prop('checked', true);
             $('#event_date').val(dateTwo.toISOString().slice(0, 10) + ' ' + '06:00');
         });
 
-        $('#fifth-date').click(function() {
+        $('#first-date').click(function() {
             // $('#am').prop('checked', true);
             $('#event_date').val(dateTwo.toISOString().slice(0, 10) + ' ' + '18:00');
         });

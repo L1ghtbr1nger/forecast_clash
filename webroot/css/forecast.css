@@ -7951,6 +7951,7 @@ ul {
     left: 27px;
     position: relative;
     transform: rotate(90deg);
+    font-size: 13px;
 }
 
 .icon-container {
@@ -8812,6 +8813,31 @@ input[type=range]:focus::-ms-fill-upper {
     left: -125px;
 }
 
+
+/* Webkit Hack */
+
+.toggle_radio:not(*:root) {
+    top: -192px;
+}
+
+.easy-button-container:not(*:root) {
+    top: -78px;
+}
+
+.radius:not(*:root) {
+    top: 23px;
+}
+
+.radius-label:not(*:root) {
+    top: 10px;
+    left: 30px;
+}
+
+#radiusMask:not(*:root) {
+    top: -34px;
+    right: -34px;
+}
+
 .toggle_radio .description span,
 .time-to,
 .day-rotate {
@@ -8930,13 +8956,13 @@ span.description {
 p.day {
     font-size: 14px;
     font-weight: bold;
-    margin-top: 8px;
+    margin-top: 16px;
     border-right: 1px solid rgb(255, 255, 255);
 }
 
 .range-slider-container .sidebar-footer {
     position: relative;
-    top: -44px;
+    top: -56px;
     left: -1px;
 }
 
