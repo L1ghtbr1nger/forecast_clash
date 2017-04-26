@@ -19,34 +19,34 @@
         //manage roster
     } ?>
     <div class="row">
-        <div class="col-md-12">
-        <br>
-            <div id="linker" class="pull-right">
-                <span class="clipLabel">Copy to Recruit Teammates</span>
-                <span class="clipDisplay"><?= $url; ?></span>
-                <button class="clp-btn" data-clipboard-target="#teamClip"><?= $this->Html->image('clippy.svg', ['alt' => 'Copy to clipboard']); ?></button>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-            <div class="row">
-                <div class="col-xs-8 col-sm-8 col-md-8">
-                    <div class="headings">
-                        <h1><?= h($data['teams'][0]['team_name']); ?></h1>
-                        <h3>Team Score: <?= $total ?></h3>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-xs-8 col-sm-8 col-md-8">
+                        <div class="headings">
+                            <h1><?= h($data['teams'][0]['team_name']); ?></h1>
+                            <h3>Team Score: <?= $total ?></h3>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <?php
+                        $logo = $data['teams'][0]['team_logo'];
+                            if (!is_null($logo)) { ?>
+                                <div id="teamLogo"><?= $this->Html->image('teams/users/'.$logo); ?></div>
+                        <?php } else { ?>
+                        <?php } ?>
                     </div>
                 </div>
-                <div class="col-xs-4 col-sm-4 col-md-4">
-                <?php
-                $logo = $data['teams'][0]['team_logo'];
-                    if (!is_null($logo)) { ?>
-                        <div id="teamLogo"><?= $this->Html->image('teams/users/'.$logo); ?></div>
-                <?php } else { ?>
-                <?php } ?>
-                </div>
             </div>
+            <div class="col-md-6">
+                <div id="linker" class="">
+                    <span class="clipLabel">Copy to Recruit Teammates</span>
+                    <span class="clipDisplay"><?= $url; ?></span>
+                    <button class="clp-btn" data-clipboard-target="#teamClip"><?= $this->Html->image('clippy.svg', ['alt' => 'Copy to clipboard']); ?></button>
+                </div>
+            </div>   
         </div>
+
+    <div class="row">
         <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-6 team-roster">
             <div class="card sameheight-item" data-exclude="xs">
                 <div class="card-header card-header-sm bordered">

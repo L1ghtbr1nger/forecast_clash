@@ -105,7 +105,7 @@ if ($loggedIn) {
                     <div class="header-block">
                         <h4>Heatmaps</h4>
                     </div>
-                    <!-- Nav tabs -->
+            
                     <ul class="nav nav-tabs pull-right" role="tablist">
                         <li role="presentation" id="all_hm" class="active whom_hm current_hm"><a href="#all_players" aria-controls="all_players" role="tab" data-toggle="tab">All Players</a></li>
                         <li role="presentation" id="team_hm" class="<?= (($teamResult) ? 'whom_hm' : '' ) ?>"><a href="#team_players" aria-controls="team_players" role="tab" data-toggle="tab"><?= (($teamResult) ? h($teamUser['teams'][0]['team_name']) : '<a href="/forecast_clash/teams/dugout">Join Team</a>' ) ?></a>
@@ -115,7 +115,6 @@ if ($loggedIn) {
                     </ul>
                 </div>
                 <div class="card-block">
-                <!-- Tab panes -->
                 <div class="tab-content heatmap">
                     <div role="tabpanel" class="tab-pane active">
                     <?= $this->element('WeatherStatistics/stats_heatmap'); ?>

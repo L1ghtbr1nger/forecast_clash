@@ -18,17 +18,13 @@
 }
 
 #teamLogo {
-    margin: 27px 0;
+    margin: 12px 0;
 }
 
 #teamLogo img {
     display: block;
     max-width: 100%;
     height: auto;
-}
-
-.team-roster {
-    margin-top: 27px;
 }
 
 .userTeam {
@@ -108,9 +104,12 @@
     margin-top: 5px;
 }
 
+#linker {
+    margin-bottom: 12px;
+}
 
 #linker .clipLabel {
-    margin: 6px 0;
+    margin: 24px 0 12px 0;
     font-weight: 600;
     display: block;
 }
@@ -123,9 +122,9 @@
 
 .clipDisplay {
     height: 29px;
-    width: 460px;
+    width: 360px;
     padding: 8px;
-    overflow: hidden;
+    overflow: auto;
     background: rgb(236, 236, 236);
 }
 
@@ -142,8 +141,4 @@
     height: 200px;
     background-color: #f0f2ff;
     border: .1px solid #1f1a5f
-}
-
-.rankings {
-    margin-top: 24px;
 }

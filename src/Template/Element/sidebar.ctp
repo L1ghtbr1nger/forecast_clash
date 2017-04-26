@@ -18,7 +18,7 @@
                     <a href="/forecast_clash/teams/dugout"> <i class="fa fa-users" aria-hidden="true"></i> Team </a>
                 </li>
                 <li class="output-link">
-                    <a href="/forecast_clash/weather-statistics/output"><i class="fa fa-globe" aria-hidden="true"></i> Output </a>
+                    <a href="/forecast_clash/weather-statistics/output"><i class="fa fa-globe" aria-hidden="true"></i> Heatmap </a>
                 </li>
                 <li class="contact-link">
                     <a href="/forecast_clash/users/contact"> <i class="fa fa-comments-o" aria-hidden="true"></i> Contact </a>
@@ -53,7 +53,7 @@
             <a href="/forecast_clash/teams/dugout"> <i class="fa fa-users" aria-hidden="true"></i> Team </a>
         </li
         ><li class="output-link">
-            <a href="/forecast_clash//weather-statistics/output"> <i class="fa fa-globe" aria-hidden="true"></i> Output</a>
+            <a href="/forecast_clash//weather-statistics/output"> <i class="fa fa-globe" aria-hidden="true"></i> Heatmap</a>
         </li
     ><li class="contact-link">
             <a href="/forecast_clash/users/contact"> <i class="fa fa-comments-o" aria-hidden="true"></i> Contact </a>
