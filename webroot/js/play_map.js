@@ -398,8 +398,13 @@ $('document').ready(function() {
         // set time inputs
 
         // Get hr
+
+       var utcHR = moment.utc().format('hh');
+       console.log(utcHR)
         var hr = today.getUTCHours();
-        if (hr >= 6) {
+
+        if (utcHR >= 6) {
+            console.log('test')
             //turn off first option
             $('#fifth-date').css({
                 'cursor': 'not-allowed',
@@ -409,7 +414,7 @@ $('document').ready(function() {
                 return false;
             });
 
-        } else if (hr < 6) {
+        } else if (utcHR < 6) {
             $('#fifth-date').click(function() {
                 // $('#am').prop('checked', true);
                 $('#event_date').val(today.toISOString().slice(0, 10) + ' ' + '18:00');
