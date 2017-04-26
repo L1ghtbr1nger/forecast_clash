@@ -1,11 +1,27 @@
 <?php $session = $this->request->session();
 echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
 ?>
-<div class="header-block header-block-collapse hidden-lg-up hidden-sm hidden-xs">
+<style>
+    .side-menu-container{
+        display:none;
+    }
+    .clock-container .header-block-collapse{
+        margin: 0 -6px !important;
+    }
+</style>
+<div class="side-menu-container header-block header-block-collapse hidden-lg-up hidden-sm hidden-xs">
     <div class="header-block header-block-collapse hidden-lg-up">
         <span class="menu-open">
             <i class="fa fa-bars" aria-hidden="true"><span>Menu</span></i>
         </span>
+    </div>
+</div>
+<div class="clock-container header-block header-block-collapse hidden-lg-up">
+    <div class="header-block header-block-collapse hidden-lg-up">
+        <span>Local:</span>
+       <div id="clock" class="clock">loading ...</div><br>
+       <span>UTC:&nbsp;&nbsp;</span>
+       <div id="utc" class="clock">loading ...</div>
     </div>
 </div>
 <div class="header-block header-block-nav">
@@ -98,13 +114,14 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
     </ul>
 </div>
 </header>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js"></script>
 <script>
 
 $(document).ready(function() {
 
-    $("#sidebar-collapse-btn").click(function(){
-        $(".mobile-nav-close").fadeIn(3000);
+    $('#sidebar-collapse-btn').click(function(){
+        $('.mobile-nav-close').fadeIn(3000);
+        ('.side-menu-container').css('display', 'none');
     });
 
 
@@ -114,19 +131,29 @@ $(document).ready(function() {
 
     
     /*Menu-toggle*/
-    $(".menu-toggle").click(function(e) {
+    $('.menu-toggle').click(function(e) {
         e.preventDefault();
-        $(".sidebar-navigation").toggleClass("menu-collapse",3000);
-        $("#app").toggleClass("app-overwrite");
-        $(".header").toggleClass("header-overwrite");
-        $(".menu-open").css('display', 'inline-block');
+        $('.side-menu-container').css('display', 'block');
+        $('.sidebar-navigation').toggleClass('menu-collapse',3000);
+        $('#app').toggleClass('app-overwrite');
+        $('.header').toggleClass('header-overwrite');
+        $('.menu-open').css('display', 'inline-block');
     });
     $('.menu-open').click(function(){
-        $(".sidebar-navigation").toggleClass("menu-collapse",3000);
-        $("#app").toggleClass("app-overwrite");
-        $(".header").toggleClass("header-overwrite");
+        $('.sidebar-navigation').toggleClass('menu-collapse',3000);
+        $('#app').toggleClass('app-overwrite');
+        $('.header').toggleClass('header-overwrite');
         $(this).css('display', 'none');
     })
+
+    // Clock
+
+    function update() {
+      $('#clock').html(moment().format('hh:mm:ss'));
+      $('#utc').html(moment.utc().format('hh:mm:ss'));
+    }
+
+    setInterval(update, 1000);
 
 });
 

@@ -8951,34 +8951,12 @@ label[for="7"] {
 
 /* Header Clock */
 
-#date {
-    background: rgba(0, 0, 0, 0.1);
-    color: #fff;
-    font-size: 14px;
-    padding: 0.5em;
-    text-align: center;
-}
-
-#clock {
-    align-items: center;
-    -webkit-align-items: center;
-    display: flex;
-    display: -webkit-flex;
-    height: 30px;
-    justify-content: space-around;
-    -webkit-justify-content: space-around;
-    width: 100px;
-}
-
-.unit {
-    background: #333;
-    color: #fff;
-    font-family: "Open Sans", sans-serif;
-    font-size: 15px;
-    height: 100%;
-    line-height: 30px;
-    margin: 0 10px;
-    text-align: center;
-    text-shadow: 0 2px 2px #666;
-    width:23%;
+.clock {
+    display: inline;
+    background: #222;
+    color: #eee;
+    border-radius: 2px;
+    box-shadow: 0 0 7px #222;
+    text-shadow: 0 0 1px #fff;
+    padding: 0 8px;
 }
