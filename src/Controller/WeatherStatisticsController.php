@@ -137,9 +137,21 @@ class WeatherStatisticsController extends AppController
                             $board[] = $results[1][0];
                         } else {
                             $currentUser = $users->find()->where(['id' => $userID])->first();
+                            $avatars = TableRegistry::get('Avatars');
+                            $socials = TableRegistry::get('SocialProfiles');
+                            $avatarID = $currentUser['avatar_id'];
+                            $avatar = $avatars->get($avatarID);
+                            if ($avatarID < 7) {
+                                $pic = $avatar['avatar_img'];
+                            } else {
+                                $social = $socials->find('all')->where(['user_id' => $currentUser['id'], 'provider' => $avatar['avatar_img']])->first();
+                                $pic = $social['photo_url'];
+                            }
                             $board[] = [
                                 'rank' => '...',
                                 'user_id' => $userID,
+                                'avatar_id' => $avatarID,
+                                'pic' => $pic,
                                 'first_name' => h($currentUser['first_name']),
                                 'last_name' => h($currentUser['last_name']),
                                 'score' => 0,
