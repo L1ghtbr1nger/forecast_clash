@@ -7907,7 +7907,7 @@ rect {
     width: 100%;
     max-width: 150px;
     position: relative;
-    top: 42px;
+    top: 37px;
     transform: rotate(-90deg);
     left: 61px;
 }
@@ -8784,12 +8784,17 @@ input[type=range]:focus::-ms-fill-upper {
 /* Date Range Slider */
 
 #radiusMask {
-    cursor: ew-resize;
+    cursor: ns-resize;
     padding: 24px 0;
     background: transparent;
     position: relative;
     top: -42px;
-    right: 40px;
+    right: -20px;
+    max-width: 100px;
+}
+
+.radius label {
+    line-height: 1em;
 }
 
 .toggle_radio {
@@ -8800,11 +8805,11 @@ input[type=range]:focus::-ms-fill-upper {
     padding: 0 !important;
     position: relative;
     height: 80px;
-    width: 402px;
+    width: 327px;
     border: 1px solid rgb(107, 107, 107);
     transform: rotate(-90deg);
-    top: -140px;
-    left: -162px;
+    top: -163px;
+    left: -125px;
 }
 
 .toggle_radio .description span,
@@ -8832,7 +8837,7 @@ input[type=range]:focus::-ms-fill-upper {
     color: #fff;
     z-index: 0;
     display: block;
-    width: 80px;
+    width: 65px;
     height: 80px;
     font-family: 'Open Sans';
     cursor: pointer;
@@ -8846,7 +8851,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .toggle_option_slider {
-    width: 81px;
+    width: 67px;
     height: 79px;
     position: absolute;
     top: -1px;
@@ -8895,22 +8900,22 @@ input[type=range]:focus::-ms-fill-upper {
 
 #second_toggle:checked ~ .toggle_option_slider {
     background: rgba(255, 255, 255, .3);
-    left: 80px;
+    left: 65px;
 }
 
 #third_toggle:checked ~ .toggle_option_slider {
     background: rgba(255, 255, 255, .3);
-    left: 160px;
+    left: 130px;
 }
 
 #fourth_toggle:checked ~ .toggle_option_slider {
     background: rgba(255, 255, 255, .3);
-    left: 240px;
+    left: 195px;
 }
 
 #fifth_toggle:checked ~ .toggle_option_slider {
     background: rgba(255, 255, 255, .3);
-    left: 320px;
+    left: 258px;
 }
 
 span.description {
@@ -8931,7 +8936,8 @@ p.day {
 
 .range-slider-container .sidebar-footer {
     position: relative;
-    top: 17px;
+    top: -44px;
+    left: -1px;
 }
 
 .sidebar-footer .forecast-btn {
