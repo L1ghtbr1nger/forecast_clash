@@ -7905,7 +7905,11 @@ rect {
 .radius {
     clear: both;
     width: 100%;
-    max-width: 200px;
+    max-width: 150px;
+    position: relative;
+    top: 37px;
+    transform: rotate(-90deg);
+    left: 61px;
 }
 
 .radius-output {
@@ -7942,8 +7946,12 @@ ul {
     cursor: pointer;
 }
 
-#output {
-    padding-left: 12px;
+.radius-label {
+    top: 6px;
+    left: 27px;
+    position: relative;
+    transform: rotate(90deg);
+    font-size: 13px;
 }
 
 .icon-container {
@@ -7976,11 +7984,12 @@ ul {
 }
 
 .play-container .leaflet-control-zoom {
-    left: 65px;
+    left: 150px;
 }
 
 .easy-button-container {
     top: -62px;
+    left: 87px;
 }
 
 @media (max-width: 720px) {
@@ -8284,9 +8293,11 @@ label[for="remember"] span {
     color: #333 !important;
 }
 
-.ct-bar{
+.ct-bar {
     stroke-width: 15px !important;
 }
+
+
 /* Easy Buttons */
 
 .button-state .fa-compass {
@@ -8774,9 +8785,17 @@ input[type=range]:focus::-ms-fill-upper {
 /* Date Range Slider */
 
 #radiusMask {
-    cursor: ew-resize;
-    padding: 12px 0;
+    cursor: ns-resize;
+    padding: 24px 0;
     background: transparent;
+    position: relative;
+    top: -42px;
+    right: -20px;
+    max-width: 100px;
+}
+
+.radius label {
+    line-height: 1em;
 }
 
 .toggle_radio {
@@ -8786,9 +8805,48 @@ input[type=range]:focus::-ms-fill-upper {
     overflow: hidden;
     padding: 0 !important;
     position: relative;
-    height: 61px;
-    width: 402px;
+    height: 80px;
+    width: 327px;
     border: 1px solid rgb(107, 107, 107);
+    transform: rotate(-90deg);
+    top: -160px;
+    left: -125px;
+}
+
+
+/* Webkit Hack */
+
+.toggle_radio:not(*:root) {
+    top: -187px;
+}
+
+.easy-button-container:not(*:root) {
+    top: -73px;
+}
+
+.radius:not(*:root) {
+    top: 23px;
+}
+
+.radius-label:not(*:root) {
+    top: 10px;
+    left: 30px;
+}
+
+.range-slider-container .sidebar-footer:not(*:root) {
+    top: -60px;
+}
+
+#radiusMask:not(*:root) {
+    top: -34px;
+    right: -34px;
+}
+
+.toggle_radio .description span,
+.time-to,
+.day-rotate {
+    transform: rotate(90deg);
+    display: inline-block;
 }
 
 .range-slider-container {
@@ -8809,8 +8867,8 @@ input[type=range]:focus::-ms-fill-upper {
     color: #fff;
     z-index: 0;
     display: block;
-    width: 80px;
-    height: 61px;
+    width: 65px;
+    height: 80px;
     font-family: 'Open Sans';
     cursor: pointer;
     z-index: 1;
@@ -8823,8 +8881,8 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .toggle_option_slider {
-    width: 81px;
-    height: 59px;
+    width: 67px;
+    height: 79px;
     position: absolute;
     top: -1px;
     -webkit-border-radius: 1px;
@@ -8862,6 +8920,7 @@ input[type=range]:focus::-ms-fill-upper {
 #fifth-date .day {
     width: 50%;
     margin-left: 50%;
+    border-right: none;
 }
 
 #first_toggle:checked ~ .toggle_option_slider {
@@ -8871,22 +8930,22 @@ input[type=range]:focus::-ms-fill-upper {
 
 #second_toggle:checked ~ .toggle_option_slider {
     background: rgba(255, 255, 255, .3);
-    left: 80px;
+    left: 65px;
 }
 
 #third_toggle:checked ~ .toggle_option_slider {
     background: rgba(255, 255, 255, .3);
-    left: 160px;
+    left: 130px;
 }
 
 #fourth_toggle:checked ~ .toggle_option_slider {
     background: rgba(255, 255, 255, .3);
-    left: 240px;
+    left: 195px;
 }
 
 #fifth_toggle:checked ~ .toggle_option_slider {
     background: rgba(255, 255, 255, .3);
-    left: 320px;
+    left: 258px;
 }
 
 span.description {
@@ -8896,14 +8955,23 @@ span.description {
     display: block;
     border-bottom: 1px solid rgb(77, 77, 77);
     border-right: 1px solid rgb(77, 77, 77);
-    rgb(81, 182, 245)
 }
 
 p.day {
     font-size: 14px;
     font-weight: bold;
-    margin-top: 8px;
-    border-right: 1px solid rgb(77, 77, 77);
+    margin-top: 16px;
+    border-right: 1px solid rgb(255, 255, 255);
+}
+
+.range-slider-container .sidebar-footer {
+    position: relative;
+    top: -38px;
+    left: -1px;
+}
+
+.sidebar-footer .forecast-btn {
+    float: none;
 }
 
 

@@ -389,35 +389,35 @@ $('document').ready(function() {
 
     $(document).ready(function() {
 
-
         // Set html for day of the weeks
-        $('#first-date .day').html(currentDay);
-        $('#second-date .day').html(currentDayTwo);
-        $('#fourth-date .day').html(currentDayThree);
-        $('#fifth-date .day').html(currentDayFour);
+        $('#first-date .day').html("<span class='day-rotate'>" + currentDayFour + "</span>");
+        $('#second-date .day').html("<span class='day-rotate'>" + currentDayThree + "</span>");
+        $('#fourth-date .day').html("<span class='day-rotate'>" + currentDayTwo + "</span>");
+        $('#fifth-date .day').html("<span class='day-rotate'>" + currentDay + "</span>");
 
         // set time inputs
 
         // Get hr
-        var hr = today.getUTCHours();
-        if (hr >= 6) {
+       var utcHR = moment.utc().format('hh');
+
+        if (utcHR >= 18) {
             //turn off first option
-            $('#first-date').css({
+            $('#fifth-date').css({
                 'cursor': 'not-allowed',
             });
 
-            $('#first-date').click(function() {
+            $('#fifth-date').click(function() {
                 return false;
             });
 
-        } else if (hr < 6) {
-            $('#first-date').click(function() {
+        } else if (utcHR < 18) {
+            $('#fifth-date').click(function() {
                 // $('#am').prop('checked', true);
                 $('#event_date').val(today.toISOString().slice(0, 10) + ' ' + '18:00');
             });
         }
 
-        $('#second-date').click(function() {
+        $('#fourth-date').click(function() {
             // $('#pm').prop('checked', true);
             $('#event_date').val(tomorrow.toISOString().slice(0, 10) + ' ' + '06:00');
         });
@@ -427,26 +427,27 @@ $('document').ready(function() {
             $('#event_date').val(tomorrow.toISOString().slice(0, 10) + ' ' + '18:00');
         });
 
-        $('#fourth-date').click(function() {
+        $('#second-date').click(function() {
             // $('#pm').prop('checked', true);
             $('#event_date').val(dateTwo.toISOString().slice(0, 10) + ' ' + '06:00');
         });
 
-        $('#fifth-date').click(function() {
+        $('#first-date').click(function() {
             // $('#am').prop('checked', true);
             $('#event_date').val(dateTwo.toISOString().slice(0, 10) + ' ' + '18:00');
         });
     });
 
-
     var rangeSlider = L.control({ position: 'topleft' });
     rangeSlider.onAdd = function(map) {
         var div = L.DomUtil.create('div', 'range-slider-container');
         L.DomEvent.disableClickPropagation(div);
-        div.innerHTML = '<div class=toggle_radio><input class=toggle_option id=first_toggle name=toggle_option type=radio> <input class=toggle_option id=second_toggle name=toggle_option type=radio checked> <input class=toggle_option id=third_toggle name=toggle_option type=radio> <input class=toggle_option id=fourth_toggle name=toggle_option type=radio> <input class=toggle_option id=fifth_toggle name=toggle_option type=radio><label id="first-date" for=first_toggle><span class=description>18Z-6Z</span><p class=day></p></label><label id="second-date" for=second_toggle><span class=description>6Z-18Z</span><p class=day></p></label><label id="third-date" for=third_toggle><span class=description>18Z-6Z</span><p class=day></p></label><label id="fourth-date" for=fourth_toggle><span class=description>6Z-18Z</span><p class=day></p></label><label id="fifth-date" for=fifth_toggle><span class=description>18Z-6Z</span><p class=day></p></label><div class=toggle_option_slider></div>';
+        div.innerHTML = '<div class=toggle_radio><input class=toggle_option id=first_toggle name=toggle_option type=radio> <input class=toggle_option id=second_toggle name=toggle_option type=radio checked> <input class=toggle_option id=third_toggle name=toggle_option type=radio> <input class=toggle_option id=fourth_toggle name=toggle_option type=radio> <input class=toggle_option id=fifth_toggle name=toggle_option type=radio><label id="first-date" for=first_toggle><span class=description><span class="pull-left">6Z</span><span class="time-to">0Z</span><span class="pull-right">18Z</span></span><p class=day></p></label><label id="second-date" for=second_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">12Z</span><span class="pull-right">6Z</span></span><p class=day></p></label><label id="third-date" for=third_toggle><span class=description><span class="pull-left">6Z</span><span class="time-to">0Z</span><span class="pull-right">18Z</span></span><p class=day></p></label><label id="fourth-date" for=fourth_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">12Z</span><span class="pull-right">6Z</span></span><p class=day></p></label><label id="fifth-date" for=fifth_toggle><span class=description><span class="pull-left">6Z</span><span class="time-to">0Z</span><span class="pull-right">18Z</span></span><p class=day></p></label><div class=toggle_option_slider></div>';
         return div;
     };
 
+
+// <div class=toggle_radio><input class=toggle_option id=first_toggle name=toggle_option type=radio> <input class=toggle_option id=second_toggle name=toggle_option type=radio checked> <input class=toggle_option id=third_toggle name=toggle_option type=radio> <input class=toggle_option id=fourth_toggle name=toggle_option type=radio> <input class=toggle_option id=fifth_toggle name=toggle_option type=radio><label id="first-date" for=first_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">to</span><span class="pull-right">6Z</span></span><p class=day></p></label><label id="second-date" for=second_toggle><span class=description><span class="pull-left">6Z</span><span class="time-to">to</span><span class="pull-right">18Z</span></span><p class=day></p></label><label id="third-date" for=third_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">to</span><span class="pull-right">6Z</span></span><p class=day></p></label><label id="fourth-date" for=fourth_toggle><span class=description><span class="pull-left">6Z</span><span class="time-to">to</span><span class="pull-right">18Z</span></span><p class=day></p></label><label id="fifth-date" for=fifth_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">to</span><span class="pull-right">6Z</span></span><p class=day></p></label><div class=toggle_option_slider></div>
 
     rangeSlider.addTo(map);
 

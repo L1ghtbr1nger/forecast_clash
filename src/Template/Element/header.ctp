@@ -150,7 +150,7 @@ $(document).ready(function() {
 
     function update() {
       $('#clock').html(moment().format('hh:mm:ss'));
-      $('#utc').html(moment.utc().format('hh:mm:ss'));
+      $('#utc').html(moment.utc().format('hh:mm:ss') + 'Z');
     }
 
     setInterval(update, 1000);
