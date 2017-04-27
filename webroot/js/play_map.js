@@ -374,18 +374,17 @@ $('document').ready(function() {
     var currentDayThree = today.getDay() + 2;
     var currentDayFour = today.getDay() + 3;
 
-    var dayName = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
-
+    var dayName = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun", "Mon", "Tues"];
 
     var currentDayName = currentDay = dayName[currentDay];
     var currentDayTwoName = currentDayTwo = dayName[currentDayTwo];
     var currentDayThreeName = currentDayThree = dayName[currentDayThree];
     var currentDayFourName = currentDayFour = dayName[currentDayFour];
-
+    console.log(currentDayThree)
     var tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000));
     var dateTwo = new Date(today.getTime() + (24 * 60 * 60 * 2000));
 
-
+    var dateThree = new Date(today.getTime() + (24 * 60 * 60 * 2000));
 
     $(document).ready(function() {
 
@@ -400,7 +399,7 @@ $('document').ready(function() {
         // Get hr
         // var utcHR = moment.utc().format('hh');
         var utcHR = today.getUTCHours();
-        console.log(utcHR)
+
         if (utcHR > 18 || utcHR < 6) {
             //turn off first option
 
