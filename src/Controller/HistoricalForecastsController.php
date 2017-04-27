@@ -35,8 +35,9 @@ class HistoricalForecastsController extends AppController
     
     public function compare() {
         $date = new Date(); //date for today
+        $time = new Time(); //time for now
         $datePrev = new Date('-1 day'); //date for yesterday
-        $query = $this->HistoricalForecasts->find()->where(['correct IS' => NULL, 'forecast_date_end <' => $date])->contain('WeatherEvents'); //find records where the forecast ended yesterday
+        $query = $this->HistoricalForecasts->find()->where(['correct IS' => NULL, 'forecast_date_end <' => $time])->contain('WeatherEvents'); //find records where the forecast ended yesterday
         if ($query->toArray()) { //if record(s) found
             foreach ($query as $row) {
                 $appID = 'zihaMoPWm6nYiFjubD6Ox'; //API key
