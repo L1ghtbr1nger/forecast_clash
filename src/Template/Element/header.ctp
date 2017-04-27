@@ -6,8 +6,15 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
         display:none;
     }
     .clock-container .header-block-collapse{
-        margin: 0 -6px !important;
+        position:relative;
+        left:-6px;
     }
+    @media (max-width: 600px){
+        .header .header-block-collapse{
+            margin:0;
+        }        
+    }
+
 </style>
 <div class="side-menu-container header-block header-block-collapse hidden-lg-up hidden-sm hidden-xs">
     <div class="header-block header-block-collapse hidden-lg-up">
@@ -93,7 +100,7 @@ echo '<header class="header '.(($loggedIn) ? "" : "header-logged-out").'">';
                     <div class="img" <?php if ($loggedIn) {
                         echo 'style="background-image: url('.(($hasSocial) ? '' : '/forecast_clash/img/').''.$session->read('User.avatar').')"';
                     } ?> ></div>
-                    <span class="name"><?php 
+                    <span class="name hidden-xs"><?php 
                     if ($loggedIn) {
                         echo h($session->read('Auth.User.first_name'))." ".h($session->read('Auth.User.last_name'));
                     } else {
