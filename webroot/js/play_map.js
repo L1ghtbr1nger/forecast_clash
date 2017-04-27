@@ -55,7 +55,7 @@ $('document').ready(function() {
         pending.push(L.circle(v, (pendingRadius[i] * 1609.344), {
             color: stroke,
             fillColor: 'rgb(255,255,255)'
-        }).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> starting</br>' + pendingDates[i] + ' UTC</br><a style="color:blue" id="deletePending" href="">Delete<input id="toDelete" name="toDelete" type="hidden" value="'+pendingIDs[i]+'"></a>').openPopup());
+        }).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> starting</br>' + pendingDates[i] + ' UTC</br><a style="color:blue" id="deletePending" href="">Delete<input id="toDelete" name="toDelete" type="hidden" value="' + pendingIDs[i] + '"></a>').openPopup());
     });
 
     $.each(activeLocations, function(i, v) {
@@ -398,11 +398,12 @@ $('document').ready(function() {
         // set time inputs
 
         // Get hr
-       var utcHR = moment.utc().format('hh');
-console.log(utcHR)
+        // var utcHR = moment.utc().format('hh');
+        var utcHR = today.getUTCHours();
+        console.log(utcHR)
         if (utcHR > 18 || utcHR < 6) {
             //turn off first option
-            console.log('test')
+
             $('#fifth-date').css({
                 'cursor': 'not-allowed',
             });
@@ -448,7 +449,7 @@ console.log(utcHR)
     };
 
 
-// <div class=toggle_radio><input class=toggle_option id=first_toggle name=toggle_option type=radio> <input class=toggle_option id=second_toggle name=toggle_option type=radio checked> <input class=toggle_option id=third_toggle name=toggle_option type=radio> <input class=toggle_option id=fourth_toggle name=toggle_option type=radio> <input class=toggle_option id=fifth_toggle name=toggle_option type=radio><label id="first-date" for=first_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">to</span><span class="pull-right">6Z</span></span><p class=day></p></label><label id="second-date" for=second_toggle><span class=description><span class="pull-left">6Z</span><span class="time-to">to</span><span class="pull-right">18Z</span></span><p class=day></p></label><label id="third-date" for=third_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">to</span><span class="pull-right">6Z</span></span><p class=day></p></label><label id="fourth-date" for=fourth_toggle><span class=description><span class="pull-left">6Z</span><span class="time-to">to</span><span class="pull-right">18Z</span></span><p class=day></p></label><label id="fifth-date" for=fifth_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">to</span><span class="pull-right">6Z</span></span><p class=day></p></label><div class=toggle_option_slider></div>
+    // <div class=toggle_radio><input class=toggle_option id=first_toggle name=toggle_option type=radio> <input class=toggle_option id=second_toggle name=toggle_option type=radio checked> <input class=toggle_option id=third_toggle name=toggle_option type=radio> <input class=toggle_option id=fourth_toggle name=toggle_option type=radio> <input class=toggle_option id=fifth_toggle name=toggle_option type=radio><label id="first-date" for=first_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">to</span><span class="pull-right">6Z</span></span><p class=day></p></label><label id="second-date" for=second_toggle><span class=description><span class="pull-left">6Z</span><span class="time-to">to</span><span class="pull-right">18Z</span></span><p class=day></p></label><label id="third-date" for=third_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">to</span><span class="pull-right">6Z</span></span><p class=day></p></label><label id="fourth-date" for=fourth_toggle><span class=description><span class="pull-left">6Z</span><span class="time-to">to</span><span class="pull-right">18Z</span></span><p class=day></p></label><label id="fifth-date" for=fifth_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">to</span><span class="pull-right">6Z</span></span><p class=day></p></label><div class=toggle_option_slider></div>
 
     rangeSlider.addTo(map);
 
@@ -465,31 +466,30 @@ console.log(utcHR)
     rangeSlider.getContainer().addEventListener('mouseout', function() {
         map.dragging.enable();
     });
-    
+
     var toDelete = 0;
     var storage = "";
-    $(document.body).on('click', '#deletePending', function(e){
+    $(document.body).on('click', '#deletePending', function(e) {
         e.preventDefault();
         toDelete = $(this).children('#toDelete').val();
         storage = $(this).parent().html();
         $(this).parent().html('Are you sure you want to delete this forecast?</br><button id="noDelete" class="btn btn-primary" style="float:left;margin-top:5px">No</button><button id="yesDelete" class="btn btn-primary" style="float:right;margin-top:5px">Yes</button><div style="width:100%;height:40px;visibility:hidden">Clear</div>');
     });
-    $(document.body).on('click', '#noDelete', function(e){
+    $(document.body).on('click', '#noDelete', function(e) {
         e.preventDefault();
         $(this).parent().html(storage);
     });
-    $(document.body).on('click', '#yesDelete', function(e){
+    $(document.body).on('click', '#yesDelete', function(e) {
         e.preventDefault();
         $.ajax({
             type: "POST",
             url: "/forecast_clash/forecasts/deletePending.json",
             dataType: 'json',
-            data: {toDelete: toDelete},
-            success : function(response) {
+            data: { toDelete: toDelete },
+            success: function(response) {
                 window.location.href = response['url'];
             },
-            error : function() {   
-            }
+            error: function() {}
         });
     });
 
