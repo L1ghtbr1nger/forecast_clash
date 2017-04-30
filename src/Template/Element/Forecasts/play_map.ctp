@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
+<link href="https://fonts.googleapis.com/css?family=Eagle+Lake" rel="stylesheet">
 <style>
 .container-fluid {
     padding-left: 0;
@@ -19,36 +20,47 @@ h4 i{
 
 <article class="play-container">
     <div id="play-sidebar">
-
-  
-                <form action="#" class="search-filter forecast-tornado" id="forecastForm">
-                    
-                    <fieldset class="radius">
-                        <label for="radiusMask" class="pull-right radius-label" style="color:#fff">
-                            <strong>Radius</strong><br><span id="output">(50 miles)</span>
-                        </label>
-                        <input type="range" name="radius" id="radiusMask" value="50" min="5" max="100" step="5">
-                    </fieldset>
-                    <!-- hidden form fields -->
-                    <input type="text" name="forecast_date" class="datepicker hidden" id="event_date">
-                    <input type="range" name="radius" id="radius" class=hidden value="50" min="5" max="100" step="5">
-                    <input id="latlng" name="location" type="text" class="hidden" value="">
-                    <input type="radio" class="hidden" name="weather_event_id" id="tornado-event" value="1">
-                    <input type="radio" class="hidden" name="weather_event_id" id="hail-event" value="2">
-                    <input type="radio" class="hidden" name="weather_event_id" id="wind-event" value="3">
-                </form>
-   
+        <form action="#" class="search-filter forecast-tornado" id="forecastForm">
+            <fieldset class="radius">
+                <label for="radiusMask" class="pull-right radius-label" style="color:#fff">
+                    <strong>Radius</strong><br><span id="output">(50 miles)</span>
+                </label>
+                <input type="range" name="radius" id="radiusMask" value="50" min="5" max="100" step="5">
+            </fieldset>
+            <!-- hidden form fields -->
+            <input type="text" name="forecast_date" class="datepicker hidden" id="event_date">
+            <input type="range" name="radius" id="radius" class=hidden value="50" min="5" max="100" step="5">
+            <input id="latlng" name="location" type="text" class="hidden" value="">
+            <input type="radio" class="hidden" name="weather_event_id" id="tornado-event" value="1">
+            <input type="radio" class="hidden" name="weather_event_id" id="hail-event" value="2">
+            <input type="radio" class="hidden" name="weather_event_id" id="wind-event" value="3">
+        </form>
         <div class="sidebar-footer">
-
             <?php if ($loggedIn) {
                 echo '<input class="btn btn-primary forecast-btn login" type="submit" value="Set Your Forecast" id="forecast">';
              } else {
                 echo '<a href="/forecast_clash/users/login"><input class="btn forecast-btn forecast-link" type="submit" value="Please Login!"></a>';
             } ?>
-                    <br><a id="modalTrigger" style="display: none" href="#modalTrigger">Instructions</a>
-        <span id="modalTrigger" data-toggle="modal" data-target="#instructions-modal">
+            <br><a id="modalTrigger" style="display: none" href="#modalTrigger">Instructions</a>
+            <span id="modalTrigger" data-toggle="modal" data-target="#instructions-modal">
                 Instructions
-        </span>
+            </span>
+        </div>
+    </div>
+    <div id="windowContainer">
+        <div id="window">
+            <div id="day-window">
+                <div class="shadower" id="shadowerOne"></div>
+                <div class="day-options"></div>
+            </div>
+            <div id="time-window">
+                <div class="shadower" id="shadowerTwo"></div>
+                <div class="time-options"></div>
+            </div>
+            <div id="moe-window">
+                <div class="shadower" id="shadowerThree"></div>
+                <div class="moe-options"></div>
+            </div>
         </div>
     </div>
     <div id="map"></div>

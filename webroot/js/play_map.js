@@ -98,19 +98,63 @@ $('document').ready(function() {
 
     // Set tile layer
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {}).addTo(map);
+    
+    $("#radiusMask").change(function() {
+        $("#output").text('(' + $("#radiusMask").val() + ' miles)');
+        $("#radius").val($("#radiusMask").val());
 
+    });
+    // radius functionality
+    var radiusInput = document.getElementById('radiusMask');
+    var radius = radiusInput.value;
+    isRadius = radius;
 
-
-    var circle;
+    var circle;var tornadoCircle;var hailCircle;var windCircle;
     var lat;
     var lng;
-
+    var isEvent = "";
+    var isLocation = "";
+    var isRadius = 50;
+    var isStart;
+    var isEnd;
+    var isColor = "white";
+    
+    function getDMS(val) {
+        var valDeg, valMin, valSec, result;
+        val = Math.abs(val);
+        valDeg = Math.floor(val);
+        result = valDeg+"&#176;";
+        valMin = Math.floor((val - valDeg) * 60);
+        result += ("0"+valMin+"'").slice(-3);
+        valSec = Math.round((val - valDeg - valMin / 60) * 3600 * 1000).toString().slice(0,2);
+        result += valSec+'"';
+        return result;
+    };
+    
+    function dmsFormat(lat, lng) {
+        var la = parseFloat(lat); //ensure correct format
+        var ln = parseFloat(lng);
+        var latResult = (la >= 0)? 'N' : 'S'; //determine quadrant
+        var lngResult = (ln >= 0)? 'E' : 'W';
+        var latDMS = getDMS(la);
+        var lngDMS = getDMS(ln);
+        return '<span class="locDisplay">'+latResult+''+latDMS+'</span><span class="dateSpacer">,</span><span class="locDisplay">'+lngResult+''+lngDMS+'</span>';
+    };
+    
+    function dateFormat(oldDate) {
+        oldDate = oldDate.toUTCString().replace('GMT','UTC').replace(':00 ', ' ');
+        newDate = '<span class="forecastDisplay"><span class="dateTime">'+oldDate.slice(0,3)+'</span> <span class="dateTime">'+oldDate.slice(5,7)+'</span> <span class="dateTime">'+oldDate.slice(8,11)+'</span> <span class="dateTime">'+oldDate.slice(17,19)+'</span><span class="timeSpacer">:</span><span class="dateTime">'+oldDate.slice(20,22)+'</span> <span class="dateTime">'+oldDate.slice(23)+'</span></span>';
+        return newDate;
+    }
 
     function tornadoMarker(e) {
         if (typeof(e) != 'undefined') {
             lat = e.latlng.lat;
             lng = e.latlng.lng;
-        }
+            isEvent = "Tornado";
+            isLocation = dmsFormat(lat, lng);
+            isColor = "rgb(255, 51, 51)"
+        };
 
         // sets lat/lng to 5 decimal places
         var latToFixed = lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
@@ -119,6 +163,8 @@ $('document').ready(function() {
         // sets latlng input to value of lat + lng
         $('#latlng').val(lat + ', ' + lng);
         var radiusMiles = radius * 1609.344;
+        var msg = '<h4 style="color: '+isColor+'"><strong>'+isEvent+' Forecast</strong></h4><div class="rowDisplay">inside a perimeter of <strong><span class="dateTime displayRight">'+Math.round(Math.PI * isRadius * isRadius).toLocaleString()+' mi<sup>2</sup></span></strong></div></br><div class="rowDisplay">centered at <strong><span class="displayRight">'+isLocation+'</span></strong></div></br><div class="rowDisplay">between <strong><span class="displayRight">'+dateFormat(isStart)+'</span></strong></div></br><div class="rowDisplay">and <strong><span class="displayRight">'+dateFormat(isEnd)+'</span></strong></div>';
+        var popup = L.popup({'className': 'forecastPopup'}).setContent(msg).setLatLng([(lat + (radius / 69)), lng]);
         if (typeof(tornadoCircle) === 'undefined') {
 
             tornadoCircle = L.circle([lat, lng], radiusMiles, {
@@ -128,14 +174,14 @@ $('document').ready(function() {
             });
 
             tornadoCircle.addTo(map);
-            tornadoCircle.bindPopup("<h4><strong>Tornado</strong></h4> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
+            tornadoCircle.bindPopup(popup).openPopup();
 
         } else {
             tornadoCircle.setRadius(radiusMiles);
             tornadoCircle.setLatLng([lat, lng]);
-            tornadoCircle.bindPopup("<h4><strong>Tornado</strong></h4> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
+            tornadoCircle.bindPopup(popup).openPopup();
             tornadoCircle.addTo(map);
-        }
+        };
 
     };
 
@@ -143,7 +189,9 @@ $('document').ready(function() {
         if (typeof(e) != 'undefined') {
             lat = e.latlng.lat;
             lng = e.latlng.lng;
-        }
+            isEvent = "Hail";
+            isLocation = lat.toFixed(4)+", "+lng.toFixed(4);
+        };
 
         // sets lat/lng to 5 decimal places
         var latToFixed = lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
@@ -171,7 +219,7 @@ $('document').ready(function() {
             hailCircle.setLatLng([lat, lng]);
             hailCircle.bindPopup("<h4><strong>Hail</strong></h4> Lat, Lon : " + latToFixed + ", " + lngToFixed).openPopup();
             hailCircle.addTo(map);
-        }
+        };
 
     };
 
@@ -179,7 +227,9 @@ $('document').ready(function() {
         if (typeof(e) != 'undefined') {
             lat = e.latlng.lat;
             lng = e.latlng.lng;
-        }
+            isEvent = "Wind";
+            isLocation = lat.toFixed(4)+", "+lng.toFixed(4);
+        };
 
         // sets lat/lng to 5 decimal places
         var latToFixed = lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
@@ -367,104 +417,219 @@ $('document').ready(function() {
     // range
 
     // get day
-    var today = new Date();
-    var currentDay = today.getDay();
-    var currentDayTwo = today.getDay() + 1;
-
-    var currentDayThree = today.getDay() + 2;
-    var currentDayFour = today.getDay() + 3;
-
-    var dayName = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
-
-
-    var currentDayName = currentDay = dayName[currentDay];
-    var currentDayTwoName = currentDayTwo = dayName[currentDayTwo];
-    var currentDayThreeName = currentDayThree = dayName[currentDayThree];
-    var currentDayFourName = currentDayFour = dayName[currentDayFour];
-
-    var tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000));
-    var dateTwo = new Date(today.getTime() + (24 * 60 * 60 * 2000));
-
-
-
-    $(document).ready(function() {
-
-        // Set html for day of the weeks
-        $('#first-date .day').html("<span class='day-rotate'>" + currentDayFour + "</span>");
-        $('#second-date .day').html("<span class='day-rotate'>" + currentDayThree + "</span>");
-        $('#fourth-date .day').html("<span class='day-rotate'>" + currentDayTwo + "</span>");
-        $('#fifth-date .day').html("<span class='day-rotate'>" + currentDay + "</span>");
-
-        // set time inputs
-
-        // Get hr
-       var utcHR = moment.utc().format('hh');
-console.log(utcHR)
-        if (utcHR > 18 || utcHR < 6) {
-            //turn off first option
-            console.log('test')
-            $('#fifth-date').css({
-                'cursor': 'not-allowed',
-            });
-
-            $('#fifth-date').click(function() {
-                return false;
-            });
-
-        } else if (utcHR < 18 || utcHR > 6) {
-            $('#fifth-date').click(function() {
-                // $('#am').prop('checked', true);
-                $('#event_date').val(today.toISOString().slice(0, 10) + ' ' + '18:00');
-            });
+    var today = new Date(new Date().toUTCString().substr(0, 25)); //date object guaranteed UTC for current time
+    var tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000)); //date object for tomorrow
+    var dateTwo = new Date(today.getTime() + (24 * 60 * 60 * 2000)); //date object for 2 days from today
+    var utcHR = today.getHours(); //get an integer value of the current hour from the today date object
+    if(utcHR < 20){ //if a forecast can still legally be made for today
+        var days = [today.getDay()]; //insert today # into the array of legal forecast days
+        var numDays = 4; //there will be 4 total days to forecast to
+    } else { //if it's too late to make a forecast today
+        var days = [tomorrow.getDay()]; //insert tomorrow # into array of legal forecast days
+        var numDays = 3; //there will only be 3 days to forecast to until midnight UTC
+    }
+    for(var i=1; i<numDays; i++) { //complete the array of day #s
+        if(days[i-1] == 6){ //wrap back to 0 after reaching Saturday (#6)
+            days[i] = 0;
+        } else {
+            days[i] = days[i-1] + 1;
         }
-
-        $('#fourth-date').click(function() {
-            // $('#pm').prop('checked', true);
-            $('#event_date').val(tomorrow.toISOString().slice(0, 10) + ' ' + '06:00');
-        });
-
-        $('#third-date').click(function() {
-            // $('#am').prop('checked', true);
-            $('#event_date').val(tomorrow.toISOString().slice(0, 10) + ' ' + '18:00');
-        });
-
-        $('#second-date').click(function() {
-            // $('#pm').prop('checked', true);
-            $('#event_date').val(dateTwo.toISOString().slice(0, 10) + ' ' + '06:00');
-        });
-
-        $('#first-date').click(function() {
-            // $('#am').prop('checked', true);
-            $('#event_date').val(dateTwo.toISOString().slice(0, 10) + ' ' + '18:00');
-        });
+    }
+    var names = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]; //array of abbreviated day names
+    var times = ["00","01","02","03","04","05","06","07","08","09",10,11,12,13,14,15,16,17,18,19,20,21,22,23]; //array of 2 character hours for whole day
+    var moe = [1,2,3,4,5,6]; //array of time windows
+    var dayNames = []; //initialize array to take day names
+    $(days).each(function( key, value ){ //based on provided day #s
+       dayNames.push(names[value]); 
     });
+    $(dayNames).each(function( key, value ){ //insert available day names into day reel
+       $('#day-window > .day-options').append('<p>'+value+'</p>');
+    });
+    $(times).each(function( key, value ){ //insert time options into time reel
+       $('#time-window > .time-options').append('<p>'+value+':00Z</p>');
+    });
+    $(moe).each(function( key, value ){ //insert allowed windows into moe reel
+       $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
+    });
+    
+    var moveDay = 31; //initial position of day reel
+    var moveTime = -173; //initial position of time reel
+    var moveMoe = 1; //initial position of moe reel
+    var dayChoice = 1; //initial user day value
+    var timeChoice = 12; //initial user time value
+    var moeChoice = 2; //initial user moe value
+    isStart = new Date();
+    if(days[0] == today.getDay()) {
+        isStart.setUTCDate(today.getDate() + dayChoice);
+    } else {
+        isStart.setUTCDate(today.getDate() + dayChoice + 1);
+    }
+    isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
+    isEnd = new Date(isStart);
+    isEnd.setUTCHours(timeChoice + (moeChoice + 1));
+    var dayLength = days.length;
+    var timeLength = times.length;
+    var moeLength = moe.length;
+    var wasToday = false; //default false indication that the last day chosen was today
+    var wasSoon = false; //default false indication that any of the moe options have already begun
+    var lastExecution = 0; //initiate time object of last time function was run
+    function MouseWheelHandler(e) { //handles mouse wheel scroll
+        e.preventDefault(); //don't scroll page
+        var now = Date.now(); //time now
+        if (now - lastExecution < 23) return; // ~60Hz refresh rate on function
+        lastExecution = now; //set last time function was run to right now
+        var isToday = days[dayChoice] == today.getDay() ? true : false; //boolean indicating if selected day is today
+        var delta = Math.max(false, Math.min(true, (e.wheelDelta || -e.detail))); //which direction was mouse wheel rotated
+        if(!delta){ //if up
+            if(e.target.id == "shadowerOne") { //if scrolled above day reel
+                if(dayChoice > 0) { //if top choice not selected
+                    moveDay += 30; //set scroll for reel to one turn
+                    dayChoice--; //user selected day
+                    isToday = days[dayChoice] == today.getDay() ? true : false; //boolean indicating if selected day is today
+                }
+                if(isToday && !wasToday) { //if today is selected and wasn't already selected
+                    wasToday = true; //next time function runs, today will already be selected
+                    $('#time-window > .time-options p').remove(); //remove all options from time wheel
+                    for(var i=0; i<(utcHR + 3); i++) { //put in nbsp place holders for disabled options
+                        $('#time-window > .time-options').append('<p>&nbsp;</p>');
+                    }
+                    for(var i=(utcHR + 3); i<24; i++) { //start from the first enabled option and finish displaying options
+                        $('#time-window > .time-options').append('<p>'+times[i]+':00Z</p>');
+                    }
+                    if(timeChoice < utcHR + 3) { //if the current selected time is disabled by selecting today
+                        moveTime -= 30 * (utcHR + 3 - timeChoice); //scroll reel to next enabled option
+                        timeChoice = utcHR + 3; //user select that option
+                    }
+                    var gap = timeChoice - utcHR; //hours between user selected time and current time
+                    if(gap < 7 && !wasSoon) { //if any of the moes should be disabled and haven't already been
+                        $('#moe-window > .moe-options p').remove(); //remove all moe options 
+                        wasSoon = true; //moes have been disabled
+                        for(var i=0; i<(gap - 2); i++) { //add back only enabled moe options
+                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
+                        }
+                        if(moeChoice > (gap - 3)) { //if user selected moe is disabled by user selecting today 
+                            moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
+                            moeChoice = gap - 3; //user select that option
+                        }
+                    }
+                }
+            }
+            if(e.target.id == "shadowerTwo") { //if scrolled over time reel
+                if((!isToday && timeChoice > 0) || (isToday && timeChoice > (utcHR + 3))) { //if today not selected and top option not selected or today selected and top enabled option not selected
+                    moveTime += 30; //scroll reel one turn
+                    timeChoice--; //user select time option
+                }
+                if(isToday) { //if today is user selected
+                    var gap = timeChoice - utcHR; //difference between current time and user selected time
+                    if(gap < 7) { //if gap is less than longest window
+                        $('#moe-window > .moe-options p').remove(); //remove all moe options
+                        wasSoon = true; //moe options have been removed
+                        for(var i=0; i<(gap - 2); i++) { //add back enabled moe options only
+                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
+                        }
+                        if(moeChoice > (gap - 3)) { //if user selected moe is disabled by user selecting today
+                            moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
+                            moeChoice = gap - 3; //user select that option
+                        }
+                    }
+                }
+            }
+            if(e.target.id == "shadowerThree") {
+                if(moeChoice > 0) {
+                    moveMoe += 30;
+                    moeChoice--;
+                }
+            }
+        } else {
+            if(e.target.id == "shadowerOne") {
+                if(dayChoice < (dayLength - 1)) {
+                    moveDay -= 30;
+                    dayChoice++;
+                    isToday = false;
+                }
+                if(wasToday) {
+                    wasToday = false;
+                    $('#time-window > .time-options p').remove();
+                    $(times).each(function( key, value ) {
+                        $('#time-window > .time-options').append('<p>'+value+':00Z</p>');
+                    });
+                    if(wasSoon) {
+                        wasSoon = false;
+                        $('#moe-window > .moe-options p').remove(); //remove all moe options
+                        $(moe).each(function( key, value ){ //insert allowed windows into moe reel
+                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
+                        });
+                    }
+                }
+            }
+            if(e.target.id == "shadowerTwo") {
+                if(timeChoice < (timeLength - 1)) {
+                    moveTime -= 30;
+                    timeChoice++;
+                }
+                if(isToday && wasSoon) {
+                    wasSoon = false;
+                    $('#moe-window > .moe-options p').remove(); //remove all moe options
+                    $(moe).each(function( key, value ){ //insert allowed windows into moe reel
+                        $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
+                    });
+                }
+            }
+            if(e.target.id == "shadowerThree") {
+                if(moeChoice < (moeLength - 1)) {
+                    moveMoe -= 30;
+                    moeChoice++;
+                }
+            }
+        }
+        $('.day-options').animate({top: moveDay}, 100);
+        $('.time-options').animate({top: moveTime}, 100);
+        $('.moe-options').animate({top: moveMoe}, 100);
+        console.log(dayNames[dayChoice]+" "+timeChoice+":00 UTC +/- "+moe[moeChoice]+" hour"+((moe[moeChoice] == 1) ? "" : "s")+".");
+        isStart = new Date();
+        if(days[0] == today.getDay()) {
+            isStart.setUTCDate(today.getDate() + dayChoice);
+        } else {
+            isStart.setUTCDate(today.getDate() + dayChoice + 1);
+        }
+        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
+        isEnd = new Date(isStart);
+        isEnd.setUTCHours(timeChoice + (moeChoice + 1));
+        return false;
+    }
 
-    var rangeSlider = L.control({ position: 'topleft' });
-    rangeSlider.onAdd = function(map) {
-        var div = L.DomUtil.create('div', 'range-slider-container');
-        L.DomEvent.disableClickPropagation(div);
-        div.innerHTML = '<div class=toggle_radio><input class=toggle_option id=first_toggle name=toggle_option type=radio> <input class=toggle_option id=second_toggle name=toggle_option type=radio checked> <input class=toggle_option id=third_toggle name=toggle_option type=radio> <input class=toggle_option id=fourth_toggle name=toggle_option type=radio> <input class=toggle_option id=fifth_toggle name=toggle_option type=radio><label id="first-date" for=first_toggle><span class=description><span class="pull-left">6Z</span><span class="time-to">0Z</span><span class="pull-right">18Z</span></span><p class=day></p></label><label id="second-date" for=second_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">12Z</span><span class="pull-right">6Z</span></span><p class=day></p></label><label id="third-date" for=third_toggle><span class=description><span class="pull-left">6Z</span><span class="time-to">0Z</span><span class="pull-right">18Z</span></span><p class=day></p></label><label id="fourth-date" for=fourth_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">12Z</span><span class="pull-right">6Z</span></span><p class=day></p></label><label id="fifth-date" for=fifth_toggle><span class=description><span class="pull-left">6Z</span><span class="time-to">0Z</span><span class="pull-right">18Z</span></span><p class=day></p></label><div class=toggle_option_slider></div>';
-        return div;
-    };
-
-
-// <div class=toggle_radio><input class=toggle_option id=first_toggle name=toggle_option type=radio> <input class=toggle_option id=second_toggle name=toggle_option type=radio checked> <input class=toggle_option id=third_toggle name=toggle_option type=radio> <input class=toggle_option id=fourth_toggle name=toggle_option type=radio> <input class=toggle_option id=fifth_toggle name=toggle_option type=radio><label id="first-date" for=first_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">to</span><span class="pull-right">6Z</span></span><p class=day></p></label><label id="second-date" for=second_toggle><span class=description><span class="pull-left">6Z</span><span class="time-to">to</span><span class="pull-right">18Z</span></span><p class=day></p></label><label id="third-date" for=third_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">to</span><span class="pull-right">6Z</span></span><p class=day></p></label><label id="fourth-date" for=fourth_toggle><span class=description><span class="pull-left">6Z</span><span class="time-to">to</span><span class="pull-right">18Z</span></span><p class=day></p></label><label id="fifth-date" for=fifth_toggle><span class=description><span class="pull-left">18Z</span><span class="time-to">to</span><span class="pull-right">6Z</span></span><p class=day></p></label><div class=toggle_option_slider></div>
-
-    rangeSlider.addTo(map);
-
+    $('#shadowerOne').mouseover(function(){
+        var dayWindow = document.getElementById("shadowerOne");
+        if (dayWindow.addEventListener) {
+            // IE9, Chrome, Safari, Opera
+            dayWindow.addEventListener("mousewheel", MouseWheelHandler, false);
+            // Firefox
+            dayWindow.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
+        }
+    });
+    $('#shadowerTwo').mouseover(function(){
+        var timeWindow = document.getElementById("shadowerTwo");
+        if (timeWindow.addEventListener) {
+            // IE9, Chrome, Safari, Opera
+            timeWindow.addEventListener("mousewheel", MouseWheelHandler, false);
+            // Firefox
+            timeWindow.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
+        }
+    });
+    $('#shadowerThree').mouseover(function(){
+        var moeWindow = document.getElementById("shadowerThree");
+        if (moeWindow.addEventListener) {
+            // IE9, Chrome, Safari, Opera
+            moeWindow.addEventListener("mousewheel", MouseWheelHandler, false);
+            // Firefox
+            moeWindow.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
+        }
+    });
+    
 
     $('.radius').prependTo('.range-slider-container');
     $('.sidebar-footer').appendTo('.range-slider-container');
 
-    // disable map dragging on input container
-    rangeSlider.getContainer().addEventListener('mouseover', function() {
-        map.dragging.disable();
-    });
-
-    // enable map dragging on input container
-    rangeSlider.getContainer().addEventListener('mouseout', function() {
-        map.dragging.enable();
-    });
     
     var toDelete = 0;
     var storage = "";
@@ -492,13 +657,4 @@ console.log(utcHR)
             }
         });
     });
-
-    $("#radiusMask").change(function() {
-        $("#output").text('(' + $("#radiusMask").val() + ' miles)');
-        $("#radius").val($("#radiusMask").val());
-
-    });
-    // radius functionality
-    var radiusInput = document.getElementById('radiusMask');
-    var radius = radiusInput.value;
 });

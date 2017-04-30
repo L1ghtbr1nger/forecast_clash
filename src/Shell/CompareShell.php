@@ -42,7 +42,7 @@ class CompareShell extends Shell
                     $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&'.$params);
                     $jsonResponse = $responseHail->json;
                     if ($jsonResponse['error']['code'] != 'warn_no_data') {
-                        if ($jsonResponse['response'][0]['report']['detail']['hailIN'] < .75) {
+                        if ($jsonResponse['response'][0]['report']['detail']['hailIN'] < 1) {
                             $jsonResponse['error']['code'] = 'warn_no_data';     
                         }
                     }
