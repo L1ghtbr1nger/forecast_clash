@@ -9118,7 +9118,6 @@ label[for="7"] {
 
 .forecastPopup .leaflet-popup-content-wrapper, .forecastPopup .leaflet-popup-tip {
     background-color: rgba(11, 11, 11, 0.9);
-    color: white;
     border-radius: 15px;
 }
 .forecastDisplay {
