@@ -111,11 +111,67 @@ $('document').ready(function() {
     var circle;var tornadoCircle;var hailCircle;var windCircle;
     var lat;
     var lng;
+    var offsetChoice = 0;
+    var offsetTZ = [0,-4,-5,-6,-7];
+    var offsetName = ['UTC','EST','CST','MST','PST'];
     var isEvent = "";
     var isLocation = "";
-    var isStart;
-    var isEnd;
     var isColor = "white";
+    var popup = L.popup({'className': 'forecastPopup', 'interactive': false});
+    // get day
+    var today = new Date(new Date().toUTCString().substr(0, 25)); //date object guaranteed UTC for current time
+    var tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000)); //date object for tomorrow
+    var dateTwo = new Date(today.getTime() + (24 * 60 * 60 * 2000)); //date object for 2 days from today
+    var utcHR = today.getHours(); //get an integer value of the current hour from the today date object
+    if(utcHR < 20){ //if a forecast can still legally be made for today
+        var days = [today.getDay()]; //insert today # into the array of legal forecast days
+        var numDays = 4; //there will be 4 total days to forecast to
+    } else { //if it's too late to make a forecast today
+        var days = [tomorrow.getDay()]; //insert tomorrow # into array of legal forecast days
+        var numDays = 3; //there will only be 3 days to forecast to until midnight UTC
+    }
+    for(var i=1; i<numDays; i++) { //complete the array of day #s
+        if(days[i-1] == 6){ //wrap back to 0 after reaching Saturday (#6)
+            days[i] = 0;
+        } else {
+            days[i] = days[i-1] + 1;
+        }
+    }
+    var names = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]; //array of abbreviated day names
+    var times = ["00","01","02","03","04","05","06","07","08","09",10,11,12,13,14,15,16,17,18,19,20,21,22,23]; //array of 2 character hours for whole day
+    var moe = [1,2,3,4,5,6]; //array of time windows
+    var dayNames = []; //initialize array to take day names
+    var moveDay = 31; //initial position of day reel
+    var moveTime = -173; //initial position of time reel
+    var moveMoe = 1; //initial position of moe reel
+    var dayChoice = 1; //initial user day value
+    var timeChoice = 12; //initial user time value
+    var moeChoice = 2; //initial user moe value
+    var dayLength = days.length;
+    var timeLength = times.length;
+    var moeLength = moe.length;
+    $(days).each(function( key, value ){ //based on provided day #s
+       dayNames.push(names[value]); 
+    });
+    $(dayNames).each(function( key, value ){ //insert available day names into day reel
+       $('#day-window > .day-options').append('<p>'+value+'</p>');
+    });
+    $(times).each(function( key, value ){ //insert time options into time reel
+       $('#time-window > .time-options').append('<p>'+value+':00Z</p>');
+    });
+    $(moe).each(function( key, value ){ //insert allowed windows into moe reel
+       $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
+    });
+    
+    var isStart = new Date();
+    if(days[0] == today.getDay()) {
+        isStart.setUTCDate(today.getDate() + dayChoice);
+    } else {
+        isStart.setUTCDate(today.getDate() + dayChoice + 1);
+    }
+    var isEnd = new Date(isStart);
+    isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
+    isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
     
     function getDMS(val) {
         var valDeg, valMin, valSec, result;
@@ -139,14 +195,28 @@ $('document').ready(function() {
         return '<span class="locDisplay">'+latResult+''+latDMS+'</span><span class="dateSpacer">,</span><span class="locDisplay">'+lngResult+''+lngDMS+'</span>';
     };
     
-    function dateFormat(oldDate) {
-        oldDate = oldDate.toUTCString().replace('GMT','UTC').replace(':00 ', ' ');
-        newDate = '<span class="forecastDisplay"><span class="dateTime">'+oldDate.slice(0,3)+'</span> <span class="dateTime">'+oldDate.slice(5,7)+'</span> <span class="dateTime">'+oldDate.slice(8,11)+'</span> <span class="dateTime">'+oldDate.slice(17,19)+'</span><span class="timeSpacer">:</span><span class="dateTime">'+oldDate.slice(20,22)+'</span> <span class="dateTime">'+oldDate.slice(23)+'</span></span>';
+    function dateFormat(tempDate) {
+        var oldDate = new Date(tempDate);
+        oldDate.setHours(oldDate.getHours() + offsetTZ[offsetChoice]);
+        oldDate = oldDate.toUTCString().replace('GMT',offsetName[offsetChoice]).replace(':00 ', ' ');
+        var newDate = '<span class="forecastDisplay"><span class="dateTime">'+oldDate.slice(0,3)+'</span> <span class="dateTime">'+oldDate.slice(5,7)+'</span> <span class="dateTime">'+oldDate.slice(8,11)+'</span> <span class="dateTime">'+oldDate.slice(17,19)+'</span><span class="timeSpacer">:</span><span class="dateTime">'+oldDate.slice(20,22)+'</span> <span class="dateTime">'+oldDate.slice(23)+'</span></span>';
         return newDate;
     }
     
     function popupBuilder() {
-        return '<div style="color: '+isColor+'"><h4 style="color: '+isColor+'"><strong>'+isEvent+' Forecast</strong></h4><div class="rowDisplay">inside a perimeter of <strong><span class="dateTime displayRight">'+Math.round(Math.PI * radius * radius).toLocaleString()+' mi<sup>2</sup></span></strong></div></br><div class="rowDisplay">centered at <strong><span class="displayRight">'+isLocation+'</span></strong></div></br><div class="rowDisplay">between <strong><span class="displayRight">'+dateFormat(isStart)+'</span></strong></div></br><div class="rowDisplay">and <strong><span class="displayRight">'+dateFormat(isEnd)+'</span></strong></div></div>';
+        return '<div style="color: '+isColor+'"><div class="row"><div class="col-md-12"><h4><strong>'+isEvent+' Forecast</strong></h4></div></div><div class="row"><div class="col-md-6"><span>inside a perimeter of</span></div><div class="col-md-6"><strong><span class="dateTime pull-right">'+Math.round(Math.PI * radius * radius).toLocaleString()+' mi<sup>2</sup></span></strong></div></div><div class="row"><div class="col-md-4"><span>centered at</span></div><div class="col-md-8"><strong><span class="pull-right">'+isLocation+'</span></strong></div></div><div class="row"><div class="col-md-4"><span>between</span></div><div class="col-md-8"><strong><span class="pull-right">'+dateFormat(isStart)+'</span><i class="fa fa-refresh changeTZ" aria-hidden="true"></i></strong></div></div><div class="row"><div class="col-md-4">and</div><div class="col-md-8"><strong><span class="pull-right">'+dateFormat(isEnd)+'</span><i class="fa fa-refresh changeTZ" aria-hidden="true"></i></strong></div></div></div>';
+    }
+    
+    function reelNoColor() {
+        $('.day-options p').eq(dayChoice).css('color', 'white');
+        $('.time-options p').eq(timeChoice).css('color', 'white');
+        $('.moe-options p').eq(moeChoice).css('color', 'white');
+    }
+    
+    function reelColor() {
+        $('.day-options p').eq(dayChoice).css('color', isColor);
+        $('.time-options p').eq(timeChoice).css('color', isColor);
+        $('.moe-options p').eq(moeChoice).css('color', isColor);
     }
     
     var eventCircle;
@@ -154,7 +224,7 @@ $('document').ready(function() {
         $('#latlng').val(lat + ', ' + lng); // sets latlng input to value of lat + lng
         var radiusMeters = radius * 1609.344;
         var msg = popupBuilder;
-        var popup = L.popup({'className': 'forecastPopup'}).setContent(msg).setLatLng([(lat + (radius / 69)), lng]);
+        popup.setContent(msg).setLatLng([(lat + (radius / 100)), lng])
         if (eventCircle != undefined) {
             map.removeLayer(eventCircle);
         };
@@ -164,11 +234,17 @@ $('document').ready(function() {
             className: 'eventCircle'
         });
         eventCircle.addTo(map);
-        eventCircle.bindPopup(popup).openPopup();
+        popup.openOn(map);
     }
 
     // svg tornado marker
     var tornadoSVG = "<svg version='1.1' id='tornado' class='climacon climacon_tornado leaflet-marker-icon leaflet-zoom-animated leaflet-interactive leaflet-marker-draggable' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-tornado'><g class='climacon_componentWrap climacon_componentWrap-tornado'><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine'd='M68.997,36.459H31.002c-1.104,0-2-0.896-2-1.999c0-1.104,0.896-2,2-2h37.995c1.104,0,2,0.896,2,2C70.997,35.563,70.102,36.459,68.997,36.459z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M35.002,40.459h29.996c1.104,0,2,0.896,2,2s-0.896,1.999-2,1.999H35.002c-1.104,0-2-0.896-2-1.999C33.002,41.354,33.898,40.459,35.002,40.459z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M39.001,48.458h21.998c1.104,0,1.999,0.896,1.999,1.999c0,1.104-0.896,2-1.999,2H39.001c-1.104,0-1.999-0.896-1.999-2C37.002,49.354,37.897,48.458,39.001,48.458z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M47,64.456h5.999c1.104,0,2,0.896,2,1.999s-0.896,2-2,2H47c-1.104,0-2-0.896-2-2S45.896,64.456,47,64.456z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine'd='M40.869,58.456c0-1.104,0.896-1.999,2-1.999h13.998c1.104,0,2,0.896,2,1.999c0,1.104-0.896,2-2,2H42.869C41.765,60.456,40.869,59.561,40.869,58.456z'></path></g></g></svg>";
+
+    // svg hail marker
+    var hailSVG = "<svg version='1.1' id='cloudHailAlt' class='climacon climacon_cloudHailAlt' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-cloudHailAlt'><g class='climacon_wrapperComponent climacon_wrapperComponent-hailAlt'><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-left'><circle cx='42' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-middle'><circle cx='49.999' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-right'><circle cx='57.998' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-left'><circle cx='42' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-middle'><circle cx='49.999' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-right'><circle cx='57.998' cy='65.498' r='2'></circle></g></g><g class='climacon_wrapperComponent climacon_wrapperComponent-cloud'><path class='climacon_component climacon_component-stroke climacon_component-stroke_cloud' d='M63.999,64.941v-4.381c2.39-1.384,3.999-3.961,3.999-6.92c0-4.417-3.581-8-7.998-8c-1.602,0-3.084,0.48-4.334,1.291c-1.23-5.317-5.974-9.29-11.665-9.29c-6.626,0-11.998,5.372-11.998,11.998c0,3.549,1.55,6.728,3.999,8.924v4.916c-4.776-2.768-7.998-7.922-7.998-13.84c0-8.835,7.162-15.997,15.997-15.997c6.004,0,11.229,3.311,13.966,8.203c0.663-0.113,1.336-0.205,2.033-0.205c6.626,0,11.998,5.372,11.998,12C71.998,58.863,68.656,63.293,63.999,64.941z'></path></g></g></svg>";
+
+    // svg wind marker
+    var windSVG = "<svg version='1.1' id='wind' class='climacon climacon_wind' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-wind'><g class='climacon_wrapperComponent climacon_componentWrap-wind'><path class='climacon_component climacon_component-stroke climacon_component-wind climacon_component-wind_curl' d='M65.999,52L65.999,52h-3c-1.104,0-2-0.895-2-1.999c0-1.104,0.896-2,2-2h3c1.104,0,2-0.896,2-1.999c0-1.105-0.896-2-2-2s-2-0.896-2-2s0.896-2,2-2c0.138,0,0.271,0.014,0.401,0.041c3.121,0.211,5.597,2.783,5.597,5.959C71.997,49.314,69.312,52,65.999,52z'></path><path class='climacon_component climacon_component-stroke climacon_component-wind' d='M55.999,48.001h-2h-6.998H34.002c-1.104,0-1.999,0.896-1.999,2c0,1.104,0.895,1.999,1.999,1.999h2h3.999h3h4h3h3.998h2c3.313,0,6,2.688,6,6c0,3.176-2.476,5.748-5.597,5.959C56.271,63.986,56.139,64,55.999,64c-1.104,0-2-0.896-2-2c0-1.105,0.896-2,2-2s2-0.896,2-2s-0.896-2-2-2h-2h-3.998h-3h-4h-3h-3.999h-2c-3.313,0-5.999-2.686-5.999-5.999c0-3.175,2.475-5.747,5.596-5.959c0.131-0.026,0.266-0.04,0.403-0.04l0,0h12.999h6.998h2c1.104,0,2-0.896,2-2s-0.896-2-2-2s-2-0.895-2-2c0-1.104,0.896-2,2-2c0.14,0,0.272,0.015,0.403,0.041c3.121,0.211,5.597,2.783,5.597,5.959C61.999,45.314,59.312,48.001,55.999,48.001z'></path></g></g></svg>";
 
     // tornado controller
     var tornadoControl = L.easyButton({
@@ -179,12 +255,10 @@ $('document').ready(function() {
             onClick: function(btn, map, e) {
                 $('#tornado-event').prop('checked', true);
                 $('.climacon_component-stroke_tornadoLine').css('fill', 'rgb(255, 51, 51)');
-                $('.climacon_component-stroke_hailAlt').css('fill', 'rgb(255,255,255)');
-                $('.climacon_component-stroke_cloud').css('fill', 'rgb(255,255,255)');
-                $('.climacon_component-wind_curl').css('fill', 'rgb(255,255,255)');
-                $('.climacon_component-wind').css('fill', 'rgb(255,255,255)');
+                $('.climacon_component-stroke_hailAlt, .climacon_component-stroke_cloud, .climacon_component-wind_curl, .climacon_component-wind').css('fill', 'rgb(255,255,255)');
                 isEvent = "Tornado";
                 isColor = "rgb(255, 51, 51)";
+                reelColor();
                 if(eventCircle != undefined) {
                     eventMarker();
                 };
@@ -194,9 +268,6 @@ $('document').ready(function() {
     });
     tornadoControl.addTo(map);
 
-    // svg hail marker
-    var hailSVG = "<svg version='1.1' id='cloudHailAlt' class='climacon climacon_cloudHailAlt' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-cloudHailAlt'><g class='climacon_wrapperComponent climacon_wrapperComponent-hailAlt'><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-left'><circle cx='42' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-middle'><circle cx='49.999' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-right'><circle cx='57.998' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-left'><circle cx='42' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-middle'><circle cx='49.999' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-right'><circle cx='57.998' cy='65.498' r='2'></circle></g></g><g class='climacon_wrapperComponent climacon_wrapperComponent-cloud'><path class='climacon_component climacon_component-stroke climacon_component-stroke_cloud' d='M63.999,64.941v-4.381c2.39-1.384,3.999-3.961,3.999-6.92c0-4.417-3.581-8-7.998-8c-1.602,0-3.084,0.48-4.334,1.291c-1.23-5.317-5.974-9.29-11.665-9.29c-6.626,0-11.998,5.372-11.998,11.998c0,3.549,1.55,6.728,3.999,8.924v4.916c-4.776-2.768-7.998-7.922-7.998-13.84c0-8.835,7.162-15.997,15.997-15.997c6.004,0,11.229,3.311,13.966,8.203c0.663-0.113,1.336-0.205,2.033-0.205c6.626,0,11.998,5.372,11.998,12C71.998,58.863,68.656,63.293,63.999,64.941z'></path></g></g></svg>";
-
     // hail control
     var hailControl = L.easyButton({
         states: [{
@@ -205,13 +276,12 @@ $('document').ready(function() {
             title: 'Make a forecast for Hail', // like its title
             onClick: function(btn, map, e) {
                 $('#hail-event').prop('checked', true);
-                $('.climacon_component-stroke_tornadoLine').css('fill', 'rgb(255, 255, 255)');
+                $('.climacon_component-stroke_tornadoLine, .climacon_component-wind_curl, .climacon_component-wind').css('fill', 'rgb(255, 255, 255)');
                 $('.climacon_component-stroke_hailAlt').css('fill', 'rgb(61, 182, 239)');
                 $('.climacon_component-stroke_cloud').css('fill', 'rgb(61, 182, 239)');
-                $('.climacon_component-wind_curl').css('fill', 'rgb(255,255,255)');
-                $('.climacon_component-wind').css('fill', 'rgb(255,255,255)');
                 isEvent = "Hail";
                 isColor = "rgb(61, 182, 239)";
+                reelColor();
                 if(eventCircle != undefined) {
                     eventMarker();
                 }
@@ -221,9 +291,6 @@ $('document').ready(function() {
     });
     hailControl.addTo(map);
 
-    // svg wind marker
-    var windSVG = "<svg version='1.1' id='wind' class='climacon climacon_wind' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-wind'><g class='climacon_wrapperComponent climacon_componentWrap-wind'><path class='climacon_component climacon_component-stroke climacon_component-wind climacon_component-wind_curl' d='M65.999,52L65.999,52h-3c-1.104,0-2-0.895-2-1.999c0-1.104,0.896-2,2-2h3c1.104,0,2-0.896,2-1.999c0-1.105-0.896-2-2-2s-2-0.896-2-2s0.896-2,2-2c0.138,0,0.271,0.014,0.401,0.041c3.121,0.211,5.597,2.783,5.597,5.959C71.997,49.314,69.312,52,65.999,52z'></path><path class='climacon_component climacon_component-stroke climacon_component-wind' d='M55.999,48.001h-2h-6.998H34.002c-1.104,0-1.999,0.896-1.999,2c0,1.104,0.895,1.999,1.999,1.999h2h3.999h3h4h3h3.998h2c3.313,0,6,2.688,6,6c0,3.176-2.476,5.748-5.597,5.959C56.271,63.986,56.139,64,55.999,64c-1.104,0-2-0.896-2-2c0-1.105,0.896-2,2-2s2-0.896,2-2s-0.896-2-2-2h-2h-3.998h-3h-4h-3h-3.999h-2c-3.313,0-5.999-2.686-5.999-5.999c0-3.175,2.475-5.747,5.596-5.959c0.131-0.026,0.266-0.04,0.403-0.04l0,0h12.999h6.998h2c1.104,0,2-0.896,2-2s-0.896-2-2-2s-2-0.895-2-2c0-1.104,0.896-2,2-2c0.14,0,0.272,0.015,0.403,0.041c3.121,0.211,5.597,2.783,5.597,5.959C61.999,45.314,59.312,48.001,55.999,48.001z'></path></g></g></svg>";
-
     // wind control
     var windControl = L.easyButton({
         states: [{
@@ -232,13 +299,12 @@ $('document').ready(function() {
             title: 'Make a forecast for Wind', // like its title
             onClick: function(btn, map, e) {
                 $('#wind-event').prop('checked', true);
-                $('.climacon_component-stroke_tornadoLine').css('fill', 'rgb(255, 255, 255)');
-                $('.climacon_component-stroke_hailAlt').css('fill', 'rgb(255,255,255)');
-                $('.climacon_component-stroke_cloud').css('fill', 'rgb(255,255,255)');
+                $('.climacon_component-stroke_tornadoLine, .climacon_component-stroke_hailAlt, .climacon_component-stroke_cloud').css('fill', 'rgb(255,255,255)');
                 $('.climacon_component-wind_curl').css('fill', 'rgb(255, 165, 0');
                 $('.climacon_component-wind').css('fill', 'rgb(255, 165, 0');           
                 isEvent = "Wind";
                 isColor = "rgb(255, 165, 0)";
+                reelColor();
                 if(eventCircle != undefined) {
                     eventMarker();
                 }
@@ -264,60 +330,7 @@ $('document').ready(function() {
         };
     });
 
-    // get day
-    var today = new Date(new Date().toUTCString().substr(0, 25)); //date object guaranteed UTC for current time
-    var tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000)); //date object for tomorrow
-    var dateTwo = new Date(today.getTime() + (24 * 60 * 60 * 2000)); //date object for 2 days from today
-    var utcHR = today.getHours(); //get an integer value of the current hour from the today date object
-    if(utcHR < 20){ //if a forecast can still legally be made for today
-        var days = [today.getDay()]; //insert today # into the array of legal forecast days
-        var numDays = 4; //there will be 4 total days to forecast to
-    } else { //if it's too late to make a forecast today
-        var days = [tomorrow.getDay()]; //insert tomorrow # into array of legal forecast days
-        var numDays = 3; //there will only be 3 days to forecast to until midnight UTC
-    }
-    for(var i=1; i<numDays; i++) { //complete the array of day #s
-        if(days[i-1] == 6){ //wrap back to 0 after reaching Saturday (#6)
-            days[i] = 0;
-        } else {
-            days[i] = days[i-1] + 1;
-        }
-    }
-    var names = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]; //array of abbreviated day names
-    var times = ["00","01","02","03","04","05","06","07","08","09",10,11,12,13,14,15,16,17,18,19,20,21,22,23]; //array of 2 character hours for whole day
-    var moe = [1,2,3,4,5,6]; //array of time windows
-    var dayNames = []; //initialize array to take day names
-    $(days).each(function( key, value ){ //based on provided day #s
-       dayNames.push(names[value]); 
-    });
-    $(dayNames).each(function( key, value ){ //insert available day names into day reel
-       $('#day-window > .day-options').append('<p>'+value+'</p>');
-    });
-    $(times).each(function( key, value ){ //insert time options into time reel
-       $('#time-window > .time-options').append('<p>'+value+':00Z</p>');
-    });
-    $(moe).each(function( key, value ){ //insert allowed windows into moe reel
-       $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
-    });
-    
-    var moveDay = 31; //initial position of day reel
-    var moveTime = -173; //initial position of time reel
-    var moveMoe = 1; //initial position of moe reel
-    var dayChoice = 1; //initial user day value
-    var timeChoice = 12; //initial user time value
-    var moeChoice = 2; //initial user moe value
-    isStart = new Date();
-    if(days[0] == today.getDay()) {
-        isStart.setUTCDate(today.getDate() + dayChoice);
-    } else {
-        isStart.setUTCDate(today.getDate() + dayChoice + 1);
-    }
-    isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
-    isEnd = new Date(isStart);
-    isEnd.setUTCHours(timeChoice + (moeChoice + 1));
-    var dayLength = days.length;
-    var timeLength = times.length;
-    var moeLength = moe.length;
+    var wasTomorrow = days[dayChoice] == tomorrow.getDay() ? true : false;
     var wasToday = false; //default false indication that the last day chosen was today
     var wasSoon = false; //default false indication that any of the moe options have already begun
     var lastExecution = 0; //initiate time object of last time function was run
@@ -326,18 +339,21 @@ $('document').ready(function() {
         var now = Date.now(); //time now
         if (now - lastExecution < 23) return; // ~60Hz refresh rate on function
         lastExecution = now; //set last time function was run to right now
-        var isToday = days[dayChoice] == today.getDay() ? true : false; //boolean indicating if selected day is today
+        var isToday = days[dayChoice] == today.getDay() ? true : false; //boolean indicating if selected day is today    
+        var isTomorrow = days[dayChoice] == tomorrow.getDay() ? true : false; //boolean indicating if selected day is tomorrow
+        reelNoColor();
         var delta = Math.max(false, Math.min(true, (e.wheelDelta || -e.detail))); //which direction was mouse wheel rotated
         if(!delta){ //if up
-            if(e.target.id == "shadowerOne") { //if scrolled above day reel
+            if(e.target.id == "shadowerOne") { //if scrolled down over day reel
                 if(dayChoice > 0) { //if top choice not selected
                     moveDay += 30; //set scroll for reel to one turn
                     dayChoice--; //user selected day
                     isToday = days[dayChoice] == today.getDay() ? true : false; //boolean indicating if selected day is today
+                    isTomorrow = days[dayChoice] == tomorrow.getDay() ? true : false; //boolean indicating if selected day is tomorrow
                 }
                 if(isToday && !wasToday) { //if today is selected and wasn't already selected
-                    wasToday = true; //next time function runs, today will already be selected
-                    $('#time-window > .time-options p').remove(); //remove all options from time wheel
+                    wasToday = true;
+                    $('#time-window > .time-options p').remove(); //remove all options from time reel
                     for(var i=0; i<(utcHR + 3); i++) { //put in nbsp place holders for disabled options
                         $('#time-window > .time-options').append('<p>&nbsp;</p>');
                     }
@@ -349,7 +365,7 @@ $('document').ready(function() {
                         timeChoice = utcHR + 3; //user select that option
                     }
                     var gap = timeChoice - utcHR; //hours between user selected time and current time
-                    if(gap < 7 && !wasSoon) { //if any of the moes should be disabled and haven't already been
+                    if(gap < moeLength + 2 && !wasSoon) { //if any of the moes should be disabled and haven't already been
                         $('#moe-window > .moe-options p').remove(); //remove all moe options 
                         wasSoon = true; //moes have been disabled
                         for(var i=0; i<(gap - 2); i++) { //add back only enabled moe options
@@ -360,16 +376,54 @@ $('document').ready(function() {
                             moeChoice = gap - 3; //user select that option
                         }
                     }
+                } else if(isTomorrow && utcHR > 21) { //if user selects tomorrow and it is later than 21Z tonight
+                    wasTomorrow = true;
+                    $('#time-window > .time-options p').remove(); //remove all options from time reel
+                    for(var i=0; i<(utcHR - 21); i++) { //put in nbsp place holders for disabled options
+                        $('#time-window > .time-options').append('<p>&nbsp;</p>');
+                    }
+                    for(var i=(utcHR - 21); i<24; i++) { //start from the first enabled option and finish displaying options
+                        $('#time-window > .time-options').append('<p>'+times[i]+':00Z</p>');
+                    }
+                    if(timeChoice < utcHR - 21) { //if the current selected time is disabled by selecting today
+                        moveTime -= 30 * (utcHR - 21 - timeChoice); //scroll reel to next enabled option
+                        timeChoice = utcHR - 21; //user select that option
+                    }
+                    var gap = timeChoice + (24 - utcHR); //hours between user selected time and current time
+                    if(gap < moeLength + 2 && !wasSoon) { //if any of the moes should be disabled and haven't already been
+                        $('#moe-window > .moe-options p').remove(); //remove all moe options 
+                        wasSoon = true; //moes have been disabled
+                        for(var i=0; i<(gap - 2); i++) { //add back only enabled moe options
+                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
+                        }
+                        if(moeChoice > gap - 3) { //if user selected moe is disabled by user selecting today 
+                            moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
+                            moeChoice = gap - 3; //user select that option
+                        }
+                    }
                 }
             }
-            if(e.target.id == "shadowerTwo") { //if scrolled over time reel
-                if((!isToday && timeChoice > 0) || (isToday && timeChoice > (utcHR + 3))) { //if today not selected and top option not selected or today selected and top enabled option not selected
+            if(e.target.id == "shadowerTwo") { //if scrolled down over time reel
+                if((!isToday && !isTomorrow && timeChoice > 0) || (isToday && timeChoice > utcHR + 3) || (isTomorrow && ((utcHR < 22 && timeChoice > 0) || (utcHR > 21 && timeChoice > utcHR - 21)))) { //if today not selected and top option not selected or today selected and top enabled option not selected
                     moveTime += 30; //scroll reel one turn
                     timeChoice--; //user select time option
                 }
                 if(isToday) { //if today is user selected
                     var gap = timeChoice - utcHR; //difference between current time and user selected time
-                    if(gap < 7) { //if gap is less than longest window
+                    if(gap < moeLength + 2) { //if gap is less than longest window
+                        $('#moe-window > .moe-options p').remove(); //remove all moe options
+                        wasSoon = true; //moe options have been removed
+                        for(var i=0; i<(gap - 2); i++) { //add back enabled moe options only
+                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
+                        }
+                        if(moeChoice > gap - 3) { //if user selected moe is disabled by user selecting today
+                            moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
+                            moeChoice = gap - 3; //user select that option
+                        }
+                    }
+                } else if(isTomorrow && timeChoice < moeLength + 2 && utcHR > 16) {
+                    var gap = timeChoice + (24 - utcHR); //difference between current time and user selected time
+                    if(gap < moeLength + 2) { //if gap is less than longest window
                         $('#moe-window > .moe-options p').remove(); //remove all moe options
                         wasSoon = true; //moe options have been removed
                         for(var i=0; i<(gap - 2); i++) { //add back enabled moe options only
@@ -382,14 +436,14 @@ $('document').ready(function() {
                     }
                 }
             }
-            if(e.target.id == "shadowerThree") {
+            if(e.target.id == "shadowerThree") { //if user scrolls down over moe reel
                 if(moeChoice > 0) {
                     moveMoe += 30;
                     moeChoice--;
                 }
             }
         } else {
-            if(e.target.id == "shadowerOne") {
+            if(e.target.id == "shadowerOne") { //if user scrolls up over moe reel
                 if(dayChoice < (dayLength - 1)) {
                     moveDay -= 30;
                     dayChoice++;
@@ -397,6 +451,34 @@ $('document').ready(function() {
                 }
                 if(wasToday) {
                     wasToday = false;
+                    $('#time-window > .time-options p').remove();
+                    $(times).each(function( key, value ) {
+                        $('#time-window > .time-options').append('<p>'+value+':00Z</p>');
+                    });
+                    if(wasSoon) {
+                        if(utcHR > 16) {
+                            var gap = timeChoice + (24 - utcHR); //difference between current time and user selected time
+                            if(gap < moeLength + 2) { //if gap is less than longest window
+                                $('#moe-window > .moe-options p').remove(); //remove all moe options
+                                wasSoon = true; //moe options have been removed
+                                for(var i=0; i<(gap - 2); i++) { //add back enabled moe options only
+                                    $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
+                                }
+                                if(moeChoice > (gap - 3)) { //if user selected moe is disabled by user selecting today
+                                    moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
+                                    moeChoice = gap - 3; //user select that option
+                                }
+                            }
+                        } else {
+                            wasSoon = false;
+                            $('#moe-window > .moe-options p').remove(); //remove all moe options
+                            $(moe).each(function( key, value ){ //insert allowed windows into moe reel
+                                $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
+                            });
+                        }
+                    }
+                } else if(wasTomorrow) {
+                    wasTomorrow = false;
                     $('#time-window > .time-options p').remove();
                     $(times).each(function( key, value ) {
                         $('#time-window > .time-options').append('<p>'+value+':00Z</p>');
@@ -411,20 +493,52 @@ $('document').ready(function() {
                 }
             }
             if(e.target.id == "shadowerTwo") {
-                if(timeChoice < (timeLength - 1)) {
+                if(timeChoice < timeLength - 1) {
                     moveTime -= 30;
                     timeChoice++;
                 }
                 if(isToday && wasSoon) {
-                    wasSoon = false;
-                    $('#moe-window > .moe-options p').remove(); //remove all moe options
-                    $(moe).each(function( key, value ){ //insert allowed windows into moe reel
-                        $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
-                    });
+                    var gap = timeChoice - utcHR; //hours between user selected time and current time
+                    if(gap < moeLength + 2) { //if any of the moes should be disabled and haven't already been
+                        $('#moe-window > .moe-options p').remove(); //remove all moe options 
+                        wasSoon = true; //moes have been disabled
+                        for(var i=0; i<(gap - 2); i++) { //add back only enabled moe options
+                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
+                        }
+                        if(moeChoice > gap - 3) { //if user selected moe is disabled by user selecting today 
+                            moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
+                            moeChoice = gap - 3; //user select that option
+                        }
+                    } else {
+                        wasSoon = false;
+                        $('#moe-window > .moe-options p').remove(); //remove all moe options
+                        $(moe).each(function( key, value ){ //insert allowed windows into moe reel
+                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
+                        });
+                    }
+                } else if(isTomorrow && wasSoon) {
+                    var gap = timeChoice + (24 - utcHR); //difference between current time and user selected time
+                    if(gap < moeLength + 2) { //if gap is less than longest window
+                        $('#moe-window > .moe-options p').remove(); //remove all moe options
+                        wasSoon = true; //moe options have been removed
+                        for(var i=0; i<(gap - 2); i++) { //add back enabled moe options only
+                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
+                        }
+                        if(moeChoice > (gap - 3)) { //if user selected moe is disabled by user selecting today
+                            moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
+                            moeChoice = gap - 3; //user select that option
+                        }
+                    } else {
+                        wasSoon = false;
+                        $('#moe-window > .moe-options p').remove(); //remove all moe options
+                        $(moe).each(function( key, value ){ //insert allowed windows into moe reel
+                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
+                        });
+                    }
                 }
             }
             if(e.target.id == "shadowerThree") {
-                if(moeChoice < (moeLength - 1)) {
+                if(moeChoice < moeLength - 1 && ((!isToday && !isTomorrow) || (isToday && moeChoice < timeChoice - utcHR - 3) || (isTomorrow && moeChoice < timeChoice + (24 - utcHR) - 3))) {
                     moveMoe -= 30;
                     moeChoice++;
                 }
@@ -434,17 +548,18 @@ $('document').ready(function() {
         $('.time-options').animate({top: moveTime}, 100);
         $('.moe-options').animate({top: moveMoe}, 100);
         console.log(dayNames[dayChoice]+" "+timeChoice+":00 UTC +/- "+moe[moeChoice]+" hour"+((moe[moeChoice] == 1) ? "" : "s")+".");
+        reelColor();
         isStart = new Date();
         if(days[0] == today.getDay()) {
             isStart.setUTCDate(today.getDate() + dayChoice);
         } else {
             isStart.setUTCDate(today.getDate() + dayChoice + 1);
         }
-        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
         isEnd = new Date(isStart);
-        isEnd.setUTCHours(timeChoice + (moeChoice + 1));
+        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
+        isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
         var msg = popupBuilder;
-        eventCircle._popup.setContent(msg);
+        popup.setContent(msg);
         return false;
     }
 
@@ -475,20 +590,29 @@ $('document').ready(function() {
             moeWindow.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
         }
     });
+    $(document.body).on('click', '.changeTZ', function(e) {
+        if(offsetChoice == 4) {
+            offsetChoice = 0;
+        } else {
+            offsetChoice++;
+        }
+        var msg = popupBuilder;
+        popup.setContent(msg);
+    });
     
     var toDelete = 0;
     var storage = "";
-    $(document.body).on('click', '#deletePending', function(e){
+    $(document.body).on('click', '#deletePending', function(e) {
         e.preventDefault();
         toDelete = $(this).children('#toDelete').val();
         storage = $(this).parent().html();
         $(this).parent().html('Are you sure you want to delete this forecast?</br><button id="noDelete" class="btn btn-primary" style="float:left;margin-top:5px">No</button><button id="yesDelete" class="btn btn-primary" style="float:right;margin-top:5px">Yes</button><div style="width:100%;height:40px;visibility:hidden">Clear</div>');
     });
-    $(document.body).on('click', '#noDelete', function(e){
+    $(document.body).on('click', '#noDelete', function(e) {
         e.preventDefault();
         $(this).parent().html(storage);
     });
-    $(document.body).on('click', '#yesDelete', function(e){
+    $(document.body).on('click', '#yesDelete', function(e) {
         e.preventDefault();
         $.ajax({
             type: "POST",
