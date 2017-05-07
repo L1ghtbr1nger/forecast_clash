@@ -561,6 +561,7 @@ $('document').ready(function() {
         isEnd = new Date(isStart);
         isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
         isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
+        $("#event_date").val(isStart.toUTCString());
         var msg = popupBuilder;
         popup.setContent(msg);
     });
