@@ -50,15 +50,13 @@ h4 i{
     <div id="windowContainer">
         <div id="window">
             <div id="day-window">
-                <div class="shadower" id="shadowerOne"></div>
                 <div class="day-options"></div>
             </div>
             <div id="time-window">
-                <div class="shadower" id="shadowerTwo"></div>
                 <div class="time-options"></div>
+                <div class="timeShift" id="up"><i class="fa fa-fast-forward" aria-hidden="true"></i></div><div class="timeShift" id="down"><i class="fa fa-fast-forward" aria-hidden="true"></i></div>
             </div>
             <div id="moe-window">
-                <div class="shadower" id="shadowerThree"></div>
                 <div class="moe-options"></div>
             </div>
         </div>

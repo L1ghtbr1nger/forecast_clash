@@ -1,12 +1,18 @@
 $('document').ready(function() {
+    
+    // svg tornado marker
+    var tornadoSVG = "<svg version='1.1' id='tornado' class='climacon climacon_tornado leaflet-marker-icon leaflet-zoom-animated leaflet-interactive leaflet-marker-draggable' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-tornado'><g class='climacon_componentWrap climacon_componentWrap-tornado'><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine'd='M68.997,36.459H31.002c-1.104,0-2-0.896-2-1.999c0-1.104,0.896-2,2-2h37.995c1.104,0,2,0.896,2,2C70.997,35.563,70.102,36.459,68.997,36.459z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M35.002,40.459h29.996c1.104,0,2,0.896,2,2s-0.896,1.999-2,1.999H35.002c-1.104,0-2-0.896-2-1.999C33.002,41.354,33.898,40.459,35.002,40.459z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M39.001,48.458h21.998c1.104,0,1.999,0.896,1.999,1.999c0,1.104-0.896,2-1.999,2H39.001c-1.104,0-1.999-0.896-1.999-2C37.002,49.354,37.897,48.458,39.001,48.458z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M47,64.456h5.999c1.104,0,2,0.896,2,1.999s-0.896,2-2,2H47c-1.104,0-2-0.896-2-2S45.896,64.456,47,64.456z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine'd='M40.869,58.456c0-1.104,0.896-1.999,2-1.999h13.998c1.104,0,2,0.896,2,1.999c0,1.104-0.896,2-2,2H42.869C41.765,60.456,40.869,59.561,40.869,58.456z'></path></g></g></svg>";
+
+    // svg hail marker
+    var hailSVG = "<svg version='1.1' id='cloudHailAlt' class='climacon climacon_cloudHailAlt' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-cloudHailAlt'><g class='climacon_wrapperComponent climacon_wrapperComponent-hailAlt'><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-left'><circle cx='42' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-middle'><circle cx='49.999' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-right'><circle cx='57.998' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-left'><circle cx='42' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-middle'><circle cx='49.999' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-right'><circle cx='57.998' cy='65.498' r='2'></circle></g></g><g class='climacon_wrapperComponent climacon_wrapperComponent-cloud'><path class='climacon_component climacon_component-stroke climacon_component-stroke_cloud' d='M63.999,64.941v-4.381c2.39-1.384,3.999-3.961,3.999-6.92c0-4.417-3.581-8-7.998-8c-1.602,0-3.084,0.48-4.334,1.291c-1.23-5.317-5.974-9.29-11.665-9.29c-6.626,0-11.998,5.372-11.998,11.998c0,3.549,1.55,6.728,3.999,8.924v4.916c-4.776-2.768-7.998-7.922-7.998-13.84c0-8.835,7.162-15.997,15.997-15.997c6.004,0,11.229,3.311,13.966,8.203c0.663-0.113,1.336-0.205,2.033-0.205c6.626,0,11.998,5.372,11.998,12C71.998,58.863,68.656,63.293,63.999,64.941z'></path></g></g></svg>";
+
+    // svg wind marker
+    var windSVG = "<svg version='1.1' id='wind' class='climacon climacon_wind' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-wind'><g class='climacon_wrapperComponent climacon_componentWrap-wind'><path class='climacon_component climacon_component-stroke climacon_component-wind climacon_component-wind_curl' d='M65.999,52L65.999,52h-3c-1.104,0-2-0.895-2-1.999c0-1.104,0.896-2,2-2h3c1.104,0,2-0.896,2-1.999c0-1.105-0.896-2-2-2s-2-0.896-2-2s0.896-2,2-2c0.138,0,0.271,0.014,0.401,0.041c3.121,0.211,5.597,2.783,5.597,5.959C71.997,49.314,69.312,52,65.999,52z'></path><path class='climacon_component climacon_component-stroke climacon_component-wind' d='M55.999,48.001h-2h-6.998H34.002c-1.104,0-1.999,0.896-1.999,2c0,1.104,0.895,1.999,1.999,1.999h2h3.999h3h4h3h3.998h2c3.313,0,6,2.688,6,6c0,3.176-2.476,5.748-5.597,5.959C56.271,63.986,56.139,64,55.999,64c-1.104,0-2-0.896-2-2c0-1.105,0.896-2,2-2s2-0.896,2-2s-0.896-2-2-2h-2h-3.998h-3h-4h-3h-3.999h-2c-3.313,0-5.999-2.686-5.999-5.999c0-3.175,2.475-5.747,5.596-5.959c0.131-0.026,0.266-0.04,0.403-0.04l0,0h12.999h6.998h2c1.104,0,2-0.896,2-2s-0.896-2-2-2s-2-0.895-2-2c0-1.104,0.896-2,2-2c0.14,0,0.272,0.015,0.403,0.041c3.121,0.211,5.597,2.783,5.597,5.959C61.999,45.314,59.312,48.001,55.999,48.001z'></path></g></g></svg>";
 
     // initializes game instructions
-
     var instructionsInit = function() {
-
         $('.scoring-btn').hide();
         $('.targeting').hide();
-
         $('.scoring-instructions-btn').click(function() {
             $('.scoring-instructions').hide();
             $('.scoring-btn').show();
@@ -14,21 +20,16 @@ $('document').ready(function() {
             $('.scoring-instructions-btn').hide();
             $('.skip-instructions').hide();
             $('.scoring-btn').appendTo('.modal-footer');
-
         });
-
         $('.scoring-btn').click(function() {
             $('.scoring').show();
             $('.scoring-btn').hide();
             $('.scoring-instructions').hide();
-
         });
-    }
-
+    };
     instructionsInit();
 
     // Pending Forecast Layers
-
     var pendingIDs = JSON.parse($('#pendingIDs').val());
     var pendingLocations = JSON.parse($('#pendingLocations').val());
     var pendingEvents = JSON.parse($('#pendingEvents').val());
@@ -42,7 +43,6 @@ $('document').ready(function() {
     var active = [];
 
     $.each(pendingLocations, function(i, v) {
-
         var stroke;
         if (pendingEvents[i] === 'Tornado') {
             stroke = 'rgb(255, 51, 51)'
@@ -51,7 +51,6 @@ $('document').ready(function() {
         } else if (pendingEvents[i] === 'Wind') {
             stroke = 'rgb(255, 165, 0)'
         }
-
         pending.push(L.circle(v, (pendingRadius[i] * 1609.344), {
             color: stroke,
             fillColor: 'rgb(255,255,255)'
@@ -59,7 +58,6 @@ $('document').ready(function() {
     });
 
     $.each(activeLocations, function(i, v) {
-
         if (activeEvents[i] === 'Tornado') {
             stroke = 'rgb(255, 51, 51)'
         } else if (activeEvents[i] === 'Hail') {
@@ -67,7 +65,6 @@ $('document').ready(function() {
         } else if (activeEvents[i] === 'Wind') {
             stroke = 'rgb(255, 165, 0)'
         }
-
         active.push(L.circle(v, (activeRadius[i] * 1609.344), {
             color: stroke,
             fillColor: 'rgb(255, 255, 255)'
@@ -76,8 +73,6 @@ $('document').ready(function() {
 
     var pending_layer = L.layerGroup(pending);
     var active_layer = L.layerGroup(active);
-
-
     var overlayMaps = {
         "Pending": pending_layer,
         "Active": active_layer
@@ -93,24 +88,21 @@ $('document').ready(function() {
 
     // .addControl(sidebar)
     L.control.layers(overlayMaps, null, { collapsed: false }).addTo(map);
-
     $('.leaflet-control-layers-selector').attr('type', 'checkbox').prop('checked', true);
 
     // Set tile layer
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {}).addTo(map);
     
+    // radius functionality
     $("#radiusMask").change(function() {
         $("#output").text('(' + $("#radiusMask").val() + ' miles)');
         $("#radius").val($("#radiusMask").val());
-
     });
-    // radius functionality
     var radiusInput = document.getElementById('radiusMask');
     var radius = radiusInput.value;
 
     var circle;var tornadoCircle;var hailCircle;var windCircle;
-    var lat;
-    var lng;
+    var lat;var lng;
     var offsetChoice = 0;
     var offsetTZ = [0,-4,-5,-6,-7];
     var offsetName = ['UTC','EST','CST','MST','PST'];
@@ -138,11 +130,11 @@ $('document').ready(function() {
         }
     }
     var names = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]; //array of abbreviated day names
-    var times = ["00","01","02","03","04","05","06","07","08","09",10,11,12,13,14,15,16,17,18,19,20,21,22,23]; //array of 2 character hours for whole day
+    var times = ["00","01","02","03","04","05","06","07","08","09",10,11,12,13,14,15,16,17,18,19,20,21,22,23]; //array of 24, 2-character hours
     var moe = [1,2,3,4,5,6]; //array of time windows
     var dayNames = []; //initialize array to take day names
     var moveDay = 31; //initial position of day reel
-    var moveTime = -173; //initial position of time reel
+    var moveTime = -170; //initial position of time reel
     var moveMoe = 1; //initial position of moe reel
     var dayChoice = 1; //initial user day value
     var timeChoice = 12; //initial user time value
@@ -150,18 +142,31 @@ $('document').ready(function() {
     var dayLength = days.length;
     var timeLength = times.length;
     var moeLength = moe.length;
+    var isToday = false; //boolean indicating if selected day is today    
+    var isTomorrow = days[dayChoice] == tomorrow.getDay() ? true : false; //boolean indicating if selected day is tomorrow
+    var wasToday = false; //default false indication that the last day chosen was today
+    var wasTomorrow = isTomorrow;
+    var wasSoon = false; //default false indication that any of the moe options have already begun
     $(days).each(function( key, value ){ //based on provided day #s
        dayNames.push(names[value]); 
     });
     $(dayNames).each(function( key, value ){ //insert available day names into day reel
        $('#day-window > .day-options').append('<p>'+value+'</p>');
     });
-    $(times).each(function( key, value ){ //insert time options into time reel
-       $('#time-window > .time-options').append('<p>'+value+':00Z</p>');
-    });
-    $(moe).each(function( key, value ){ //insert allowed windows into moe reel
-       $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
-    });
+    function timeReset() {
+        $('#time-window > .time-options p').remove();
+        $(times).each(function( key, value ){ //insert time options into time reel
+            $('#time-window > .time-options').append('<p>'+value+':00Z</p>');
+        });
+    }
+    timeReset();
+    function moeReset() {
+        $('#moe-window > .moe-options p').remove(); //remove all moe options
+        $(moe).each(function( key, value ){ //insert allowed windows into moe reel
+            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
+        });
+    }
+    moeReset();
     
     var isStart = new Date();
     if(days[0] == today.getDay()) {
@@ -236,15 +241,6 @@ $('document').ready(function() {
         eventCircle.addTo(map);
         popup.openOn(map);
     }
-
-    // svg tornado marker
-    var tornadoSVG = "<svg version='1.1' id='tornado' class='climacon climacon_tornado leaflet-marker-icon leaflet-zoom-animated leaflet-interactive leaflet-marker-draggable' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-tornado'><g class='climacon_componentWrap climacon_componentWrap-tornado'><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine'd='M68.997,36.459H31.002c-1.104,0-2-0.896-2-1.999c0-1.104,0.896-2,2-2h37.995c1.104,0,2,0.896,2,2C70.997,35.563,70.102,36.459,68.997,36.459z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M35.002,40.459h29.996c1.104,0,2,0.896,2,2s-0.896,1.999-2,1.999H35.002c-1.104,0-2-0.896-2-1.999C33.002,41.354,33.898,40.459,35.002,40.459z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M39.001,48.458h21.998c1.104,0,1.999,0.896,1.999,1.999c0,1.104-0.896,2-1.999,2H39.001c-1.104,0-1.999-0.896-1.999-2C37.002,49.354,37.897,48.458,39.001,48.458z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M47,64.456h5.999c1.104,0,2,0.896,2,1.999s-0.896,2-2,2H47c-1.104,0-2-0.896-2-2S45.896,64.456,47,64.456z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine'd='M40.869,58.456c0-1.104,0.896-1.999,2-1.999h13.998c1.104,0,2,0.896,2,1.999c0,1.104-0.896,2-2,2H42.869C41.765,60.456,40.869,59.561,40.869,58.456z'></path></g></g></svg>";
-
-    // svg hail marker
-    var hailSVG = "<svg version='1.1' id='cloudHailAlt' class='climacon climacon_cloudHailAlt' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-cloudHailAlt'><g class='climacon_wrapperComponent climacon_wrapperComponent-hailAlt'><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-left'><circle cx='42' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-middle'><circle cx='49.999' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-right'><circle cx='57.998' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-left'><circle cx='42' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-middle'><circle cx='49.999' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-right'><circle cx='57.998' cy='65.498' r='2'></circle></g></g><g class='climacon_wrapperComponent climacon_wrapperComponent-cloud'><path class='climacon_component climacon_component-stroke climacon_component-stroke_cloud' d='M63.999,64.941v-4.381c2.39-1.384,3.999-3.961,3.999-6.92c0-4.417-3.581-8-7.998-8c-1.602,0-3.084,0.48-4.334,1.291c-1.23-5.317-5.974-9.29-11.665-9.29c-6.626,0-11.998,5.372-11.998,11.998c0,3.549,1.55,6.728,3.999,8.924v4.916c-4.776-2.768-7.998-7.922-7.998-13.84c0-8.835,7.162-15.997,15.997-15.997c6.004,0,11.229,3.311,13.966,8.203c0.663-0.113,1.336-0.205,2.033-0.205c6.626,0,11.998,5.372,11.998,12C71.998,58.863,68.656,63.293,63.999,64.941z'></path></g></g></svg>";
-
-    // svg wind marker
-    var windSVG = "<svg version='1.1' id='wind' class='climacon climacon_wind' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-wind'><g class='climacon_wrapperComponent climacon_componentWrap-wind'><path class='climacon_component climacon_component-stroke climacon_component-wind climacon_component-wind_curl' d='M65.999,52L65.999,52h-3c-1.104,0-2-0.895-2-1.999c0-1.104,0.896-2,2-2h3c1.104,0,2-0.896,2-1.999c0-1.105-0.896-2-2-2s-2-0.896-2-2s0.896-2,2-2c0.138,0,0.271,0.014,0.401,0.041c3.121,0.211,5.597,2.783,5.597,5.959C71.997,49.314,69.312,52,65.999,52z'></path><path class='climacon_component climacon_component-stroke climacon_component-wind' d='M55.999,48.001h-2h-6.998H34.002c-1.104,0-1.999,0.896-1.999,2c0,1.104,0.895,1.999,1.999,1.999h2h3.999h3h4h3h3.998h2c3.313,0,6,2.688,6,6c0,3.176-2.476,5.748-5.597,5.959C56.271,63.986,56.139,64,55.999,64c-1.104,0-2-0.896-2-2c0-1.105,0.896-2,2-2s2-0.896,2-2s-0.896-2-2-2h-2h-3.998h-3h-4h-3h-3.999h-2c-3.313,0-5.999-2.686-5.999-5.999c0-3.175,2.475-5.747,5.596-5.959c0.131-0.026,0.266-0.04,0.403-0.04l0,0h12.999h6.998h2c1.104,0,2-0.896,2-2s-0.896-2-2-2s-2-0.895-2-2c0-1.104,0.896-2,2-2c0.14,0,0.272,0.015,0.403,0.041c3.121,0.211,5.597,2.783,5.597,5.959C61.999,45.314,59.312,48.001,55.999,48.001z'></path></g></g></svg>";
 
     // tornado controller
     var tornadoControl = L.easyButton({
@@ -329,215 +325,168 @@ $('document').ready(function() {
             eventMarker();
         };
     });
-
-    var wasTomorrow = days[dayChoice] == tomorrow.getDay() ? true : false;
-    var wasToday = false; //default false indication that the last day chosen was today
-    var wasSoon = false; //default false indication that any of the moe options have already begun
+    
+    function moeSet(gap) {
+        if(gap < moeLength + 2) { //if gap is less than longest window
+            $('#moe-window > .moe-options p').remove(); //remove all moe options
+            wasSoon = true; //moe options have been removed
+            for(var i=0; i<(gap - 2); i++) { //add back enabled moe options only
+                $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
+            }
+            if(moeChoice > gap - 3) { //if user selected moe is disabled by user selecting today
+                moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
+                moeChoice = gap - 3; //user select that option
+            }
+        }
+    }
+    
+    function timeSet(cutoff) {
+        $('#time-window > .time-options p').remove(); //remove all options from time reel
+        for(var i=0; i<(cutoff); i++) { //put in nbsp place holders for disabled options
+            $('#time-window > .time-options').append('<p>&nbsp;</p>');
+        }
+        for(var i=(cutoff); i<24; i++) { //start from the first enabled option and finish displaying options
+            $('#time-window > .time-options').append('<p>'+times[i]+':00Z</p>');
+        }
+        if(timeChoice < cutoff) { //if the current selected time is disabled by selecting today
+            moveTime -= 30 * (cutoff - timeChoice); //scroll reel to next enabled option
+            timeChoice = cutoff; //user select that option
+        }
+    }
+    
+    function todaySet() {
+        wasToday = true;
+        var cutoff = utcHR + 3;
+        timeSet(cutoff);
+        var gap = timeChoice - utcHR; //hours between user selected time and current time
+        if(!wasSoon) { //if any of the moes should be disabled and haven't already been
+            moeSet(gap);
+        }
+    }
+    
+    function tomorrowSet() {
+        wasTomorrow = true;
+        if(utcHR > 21) {
+            var cutoff = utcHR - 21;
+            timeSet(cutoff);
+        }
+        var gap = timeChoice + (24 - utcHR); //hours between user selected time and current time
+        if(!wasSoon) { //if any of the moes should be disabled and haven't already been
+            moeSet(gap);
+        }
+    }
+    
+    function dayUp() {
+        isToday = days[dayChoice] == today.getDay() ? true : false; //boolean indicating if selected day is today
+        isTomorrow = days[dayChoice] == tomorrow.getDay() ? true : false; //boolean indicating if selected day is tomorrow
+        if(isToday && !wasToday) { //if today is selected and wasn't already selected
+            todaySet();
+        } else if(isTomorrow && utcHR > 16) { //if user selects tomorrow and it is later than 21Z tonight
+            tomorrowSet();
+        }
+    }
+    
+    function dayDown() {
+        isToday = false;
+        if(wasToday) {
+            wasToday = false;
+            timeReset();
+            if(wasSoon && utcHR > 16) {
+                var gap = timeChoice + (24 - utcHR); //difference between current time and user selected time
+                if(gap < moeLength + 2) { //if gap is less than longest window
+                    moeSet(gap);
+                } else {
+                    wasSoon = false;
+                    moeReset();
+                }
+            }
+        } else if(wasTomorrow) {
+            wasTomorrow = false;
+            timeReset();
+            if(wasSoon) {
+                wasSoon = false;
+                moeReset();
+            }
+        }
+    }
+    
+    function timeUp() {
+        if(isToday) { //if today is user selected
+            var gap = timeChoice - utcHR; //difference between current time and user selected time
+            moeSet(gap);
+        } else if(isTomorrow && timeChoice < moeLength + 2 && utcHR > 16) {
+            var gap = timeChoice + (24 - utcHR); //difference between current time and user selected time
+            moeSet(gap);
+        }
+    }
+    
+    function timeDown() {
+        if(isToday && wasSoon) {
+            var gap = timeChoice - utcHR; //hours between user selected time and current time
+            if(gap < moeLength + 2) { //if any of the moes should be disabled and haven't already been
+                moeSet(gap);
+            } else {
+                wasSoon = false;
+                moeReset();
+            }
+        } else if(isTomorrow && wasSoon) {
+            var gap = timeChoice + (24 - utcHR); //difference between current time and user selected time
+            if(gap < moeLength + 2) { //if gap is less than longest window
+                moeSet(gap);
+            } else {
+                wasSoon = false;
+                moeReset();
+            }
+        }
+    }
+    
     var lastExecution = 0; //initiate time object of last time function was run
     function MouseWheelHandler(e) { //handles mouse wheel scroll
         e.preventDefault(); //don't scroll page
         var now = Date.now(); //time now
         if (now - lastExecution < 23) return; // ~60Hz refresh rate on function
         lastExecution = now; //set last time function was run to right now
-        var isToday = days[dayChoice] == today.getDay() ? true : false; //boolean indicating if selected day is today    
-        var isTomorrow = days[dayChoice] == tomorrow.getDay() ? true : false; //boolean indicating if selected day is tomorrow
+        isToday = days[dayChoice] == today.getDay() ? true : false; //boolean indicating if selected day is today    
+        isTomorrow = days[dayChoice] == tomorrow.getDay() ? true : false; //boolean indicating if selected day is tomorrow
         reelNoColor();
         var delta = Math.max(false, Math.min(true, (e.wheelDelta || -e.detail))); //which direction was mouse wheel rotated
         if(!delta){ //if up
-            if(e.target.id == "shadowerOne") { //if scrolled down over day reel
+            if(e.target.id == "day-window" || $(e.target).hasClass("day-options") || $(e.target).parent().hasClass("day-options")) { //if scrolled down over day reel
                 if(dayChoice > 0) { //if top choice not selected
                     moveDay += 30; //set scroll for reel to one turn
                     dayChoice--; //user selected day
-                    isToday = days[dayChoice] == today.getDay() ? true : false; //boolean indicating if selected day is today
-                    isTomorrow = days[dayChoice] == tomorrow.getDay() ? true : false; //boolean indicating if selected day is tomorrow
-                }
-                if(isToday && !wasToday) { //if today is selected and wasn't already selected
-                    wasToday = true;
-                    $('#time-window > .time-options p').remove(); //remove all options from time reel
-                    for(var i=0; i<(utcHR + 3); i++) { //put in nbsp place holders for disabled options
-                        $('#time-window > .time-options').append('<p>&nbsp;</p>');
-                    }
-                    for(var i=(utcHR + 3); i<24; i++) { //start from the first enabled option and finish displaying options
-                        $('#time-window > .time-options').append('<p>'+times[i]+':00Z</p>');
-                    }
-                    if(timeChoice < utcHR + 3) { //if the current selected time is disabled by selecting today
-                        moveTime -= 30 * (utcHR + 3 - timeChoice); //scroll reel to next enabled option
-                        timeChoice = utcHR + 3; //user select that option
-                    }
-                    var gap = timeChoice - utcHR; //hours between user selected time and current time
-                    if(gap < moeLength + 2 && !wasSoon) { //if any of the moes should be disabled and haven't already been
-                        $('#moe-window > .moe-options p').remove(); //remove all moe options 
-                        wasSoon = true; //moes have been disabled
-                        for(var i=0; i<(gap - 2); i++) { //add back only enabled moe options
-                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
-                        }
-                        if(moeChoice > (gap - 3)) { //if user selected moe is disabled by user selecting today 
-                            moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
-                            moeChoice = gap - 3; //user select that option
-                        }
-                    }
-                } else if(isTomorrow && utcHR > 21) { //if user selects tomorrow and it is later than 21Z tonight
-                    wasTomorrow = true;
-                    $('#time-window > .time-options p').remove(); //remove all options from time reel
-                    for(var i=0; i<(utcHR - 21); i++) { //put in nbsp place holders for disabled options
-                        $('#time-window > .time-options').append('<p>&nbsp;</p>');
-                    }
-                    for(var i=(utcHR - 21); i<24; i++) { //start from the first enabled option and finish displaying options
-                        $('#time-window > .time-options').append('<p>'+times[i]+':00Z</p>');
-                    }
-                    if(timeChoice < utcHR - 21) { //if the current selected time is disabled by selecting today
-                        moveTime -= 30 * (utcHR - 21 - timeChoice); //scroll reel to next enabled option
-                        timeChoice = utcHR - 21; //user select that option
-                    }
-                    var gap = timeChoice + (24 - utcHR); //hours between user selected time and current time
-                    if(gap < moeLength + 2 && !wasSoon) { //if any of the moes should be disabled and haven't already been
-                        $('#moe-window > .moe-options p').remove(); //remove all moe options 
-                        wasSoon = true; //moes have been disabled
-                        for(var i=0; i<(gap - 2); i++) { //add back only enabled moe options
-                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
-                        }
-                        if(moeChoice > gap - 3) { //if user selected moe is disabled by user selecting today 
-                            moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
-                            moeChoice = gap - 3; //user select that option
-                        }
-                    }
+                    dayUp();
                 }
             }
-            if(e.target.id == "shadowerTwo") { //if scrolled down over time reel
+            if(e.target.id == "time-window" || $(e.target).hasClass("time-options") || $(e.target).parent().hasClass("time-options")) { //if scrolled down over time reel
                 if((!isToday && !isTomorrow && timeChoice > 0) || (isToday && timeChoice > utcHR + 3) || (isTomorrow && ((utcHR < 22 && timeChoice > 0) || (utcHR > 21 && timeChoice > utcHR - 21)))) { //if today not selected and top option not selected or today selected and top enabled option not selected
                     moveTime += 30; //scroll reel one turn
                     timeChoice--; //user select time option
-                }
-                if(isToday) { //if today is user selected
-                    var gap = timeChoice - utcHR; //difference between current time and user selected time
-                    if(gap < moeLength + 2) { //if gap is less than longest window
-                        $('#moe-window > .moe-options p').remove(); //remove all moe options
-                        wasSoon = true; //moe options have been removed
-                        for(var i=0; i<(gap - 2); i++) { //add back enabled moe options only
-                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
-                        }
-                        if(moeChoice > gap - 3) { //if user selected moe is disabled by user selecting today
-                            moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
-                            moeChoice = gap - 3; //user select that option
-                        }
-                    }
-                } else if(isTomorrow && timeChoice < moeLength + 2 && utcHR > 16) {
-                    var gap = timeChoice + (24 - utcHR); //difference between current time and user selected time
-                    if(gap < moeLength + 2) { //if gap is less than longest window
-                        $('#moe-window > .moe-options p').remove(); //remove all moe options
-                        wasSoon = true; //moe options have been removed
-                        for(var i=0; i<(gap - 2); i++) { //add back enabled moe options only
-                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
-                        }
-                        if(moeChoice > (gap - 3)) { //if user selected moe is disabled by user selecting today
-                            moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
-                            moeChoice = gap - 3; //user select that option
-                        }
-                    }
+                    timeUp();
                 }
             }
-            if(e.target.id == "shadowerThree") { //if user scrolls down over moe reel
+            if(e.target.id == "moe-window" || $(e.target).hasClass("moe-options") || $(e.target).parent().hasClass("moe-options")) { //if user scrolls down over moe reel
                 if(moeChoice > 0) {
                     moveMoe += 30;
                     moeChoice--;
                 }
             }
         } else {
-            if(e.target.id == "shadowerOne") { //if user scrolls up over moe reel
+            if(e.target.id == "day-window" || $(e.target).hasClass("day-options") || $(e.target).parent().hasClass("day-options")) { //if user scrolls up over moe reel
                 if(dayChoice < (dayLength - 1)) {
                     moveDay -= 30;
                     dayChoice++;
-                    isToday = false;
-                }
-                if(wasToday) {
-                    wasToday = false;
-                    $('#time-window > .time-options p').remove();
-                    $(times).each(function( key, value ) {
-                        $('#time-window > .time-options').append('<p>'+value+':00Z</p>');
-                    });
-                    if(wasSoon) {
-                        if(utcHR > 16) {
-                            var gap = timeChoice + (24 - utcHR); //difference between current time and user selected time
-                            if(gap < moeLength + 2) { //if gap is less than longest window
-                                $('#moe-window > .moe-options p').remove(); //remove all moe options
-                                wasSoon = true; //moe options have been removed
-                                for(var i=0; i<(gap - 2); i++) { //add back enabled moe options only
-                                    $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
-                                }
-                                if(moeChoice > (gap - 3)) { //if user selected moe is disabled by user selecting today
-                                    moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
-                                    moeChoice = gap - 3; //user select that option
-                                }
-                            }
-                        } else {
-                            wasSoon = false;
-                            $('#moe-window > .moe-options p').remove(); //remove all moe options
-                            $(moe).each(function( key, value ){ //insert allowed windows into moe reel
-                                $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
-                            });
-                        }
-                    }
-                } else if(wasTomorrow) {
-                    wasTomorrow = false;
-                    $('#time-window > .time-options p').remove();
-                    $(times).each(function( key, value ) {
-                        $('#time-window > .time-options').append('<p>'+value+':00Z</p>');
-                    });
-                    if(wasSoon) {
-                        wasSoon = false;
-                        $('#moe-window > .moe-options p').remove(); //remove all moe options
-                        $(moe).each(function( key, value ){ //insert allowed windows into moe reel
-                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
-                        });
-                    }
+                    dayDown();
                 }
             }
-            if(e.target.id == "shadowerTwo") {
+            if(e.target.id == "time-window" || $(e.target).hasClass("time-options") || $(e.target).parent().hasClass("time-options")) {
                 if(timeChoice < timeLength - 1) {
                     moveTime -= 30;
                     timeChoice++;
-                }
-                if(isToday && wasSoon) {
-                    var gap = timeChoice - utcHR; //hours between user selected time and current time
-                    if(gap < moeLength + 2) { //if any of the moes should be disabled and haven't already been
-                        $('#moe-window > .moe-options p').remove(); //remove all moe options 
-                        wasSoon = true; //moes have been disabled
-                        for(var i=0; i<(gap - 2); i++) { //add back only enabled moe options
-                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
-                        }
-                        if(moeChoice > gap - 3) { //if user selected moe is disabled by user selecting today 
-                            moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
-                            moeChoice = gap - 3; //user select that option
-                        }
-                    } else {
-                        wasSoon = false;
-                        $('#moe-window > .moe-options p').remove(); //remove all moe options
-                        $(moe).each(function( key, value ){ //insert allowed windows into moe reel
-                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
-                        });
-                    }
-                } else if(isTomorrow && wasSoon) {
-                    var gap = timeChoice + (24 - utcHR); //difference between current time and user selected time
-                    if(gap < moeLength + 2) { //if gap is less than longest window
-                        $('#moe-window > .moe-options p').remove(); //remove all moe options
-                        wasSoon = true; //moe options have been removed
-                        for(var i=0; i<(gap - 2); i++) { //add back enabled moe options only
-                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
-                        }
-                        if(moeChoice > (gap - 3)) { //if user selected moe is disabled by user selecting today
-                            moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
-                            moeChoice = gap - 3; //user select that option
-                        }
-                    } else {
-                        wasSoon = false;
-                        $('#moe-window > .moe-options p').remove(); //remove all moe options
-                        $(moe).each(function( key, value ){ //insert allowed windows into moe reel
-                            $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+value+'hr'+((value == 1) ? '' : 's')+'</p>');
-                        });
-                    }
+                    timeDown();
                 }
             }
-            if(e.target.id == "shadowerThree") {
+            if(e.target.id == "moe-window" || $(e.target).hasClass("moe-options") || $(e.target).parent().hasClass("moe-options")) {
                 if(moeChoice < moeLength - 1 && ((!isToday && !isTomorrow) || (isToday && moeChoice < timeChoice - utcHR - 3) || (isTomorrow && moeChoice < timeChoice + (24 - utcHR) - 3))) {
                     moveMoe -= 30;
                     moeChoice++;
@@ -563,8 +512,8 @@ $('document').ready(function() {
         return false;
     }
 
-    $('#shadowerOne').mouseover(function(){
-        var dayWindow = document.getElementById("shadowerOne");
+    $('#day-window').mouseover(function(){
+        var dayWindow = document.getElementById("day-window");
         if (dayWindow.addEventListener) {
             // IE9, Chrome, Safari, Opera
             dayWindow.addEventListener("mousewheel", MouseWheelHandler, false);
@@ -572,8 +521,8 @@ $('document').ready(function() {
             dayWindow.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
         }
     });
-    $('#shadowerTwo').mouseover(function(){
-        var timeWindow = document.getElementById("shadowerTwo");
+    $('#time-window').mouseover(function(){
+        var timeWindow = document.getElementById("time-window");
         if (timeWindow.addEventListener) {
             // IE9, Chrome, Safari, Opera
             timeWindow.addEventListener("mousewheel", MouseWheelHandler, false);
@@ -581,8 +530,8 @@ $('document').ready(function() {
             timeWindow.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
         }
     });
-    $('#shadowerThree').mouseover(function(){
-        var moeWindow = document.getElementById("shadowerThree");
+    $('#moe-window').mouseover(function(){
+        var moeWindow = document.getElementById("moe-window");
         if (moeWindow.addEventListener) {
             // IE9, Chrome, Safari, Opera
             moeWindow.addEventListener("mousewheel", MouseWheelHandler, false);
@@ -590,12 +539,144 @@ $('document').ready(function() {
             moeWindow.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
         }
     });
+    $("#day-window").on('click', ".day-options p", function(e) {
+        reelNoColor();
+        var selected = $(this).index();
+        var turns = dayChoice - selected;
+        dayChoice = selected;
+        moveDay += turns * 30;
+        if(turns > 0) { 
+            dayUp();
+        } else if(turns < 0) {
+            dayDown();
+        }
+        $('.day-options').animate({top: moveDay}, 100);
+        reelColor();
+        isStart = new Date();
+        if(days[0] == today.getDay()) {
+            isStart.setUTCDate(today.getDate() + dayChoice);
+        } else {
+            isStart.setUTCDate(today.getDate() + dayChoice + 1);
+        }
+        isEnd = new Date(isStart);
+        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
+        isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
+        var msg = popupBuilder;
+        popup.setContent(msg);
+    });
+    $("#time-window").on('click', ".time-options p", function(e) {
+        if($(this).context.innerHTML != " "){
+            reelNoColor();
+            var selected = $(this).index();
+            var turns = timeChoice - selected;
+            timeChoice = selected;
+            moveTime += turns * 30;
+            if(turns > 0) { 
+                timeUp();
+            } else if(turns < 0) {
+                timeDown();
+            };
+            $('.time-options').animate({top: moveTime}, 100);
+        };
+        reelColor();
+        isStart = new Date();
+        if(days[0] == today.getDay()) {
+            isStart.setUTCDate(today.getDate() + dayChoice);
+        } else {
+            isStart.setUTCDate(today.getDate() + dayChoice + 1);
+        };
+        isEnd = new Date(isStart);
+        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
+        isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
+        var msg = popupBuilder;
+        popup.setContent(msg);
+    });
+    $("#moe-window").on('click', ".moe-options p", function(e) {
+        reelNoColor();
+        var selected = $(this).index();
+        var turns = moeChoice - selected;
+        moeChoice = selected;
+        moveMoe += turns * 30;
+        $('.moe-options').animate({top: moveMoe}, 100);
+        reelColor();
+        isStart = new Date();
+        if(days[0] == today.getDay()) {
+            isStart.setUTCDate(today.getDate() + dayChoice);
+        } else {
+            isStart.setUTCDate(today.getDate() + dayChoice + 1);
+        };
+        isEnd = new Date(isStart);
+        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
+        isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
+        var msg = popupBuilder;
+        popup.setContent(msg);
+    });
+    $("#up.timeShift").click(function(e) {
+        if(timeChoice > 18) {
+            var selected = 18;
+        } else if(timeChoice > 12) {
+            var selected = 12;
+        } else if(timeChoice > 6) {
+            var selected = 6;
+        } else {
+            var selected = 0;
+        }
+        if($(this).context.innerHTML != " "){
+            reelNoColor();
+            var turns = timeChoice - selected;
+            timeChoice = selected;
+            moveTime += turns * 30;
+            timeUp();
+            $('.time-options').animate({top: moveTime}, 100);
+        };
+        reelColor();
+        isStart = new Date();
+        if(days[0] == today.getDay()) {
+            isStart.setUTCDate(today.getDate() + dayChoice);
+        } else {
+            isStart.setUTCDate(today.getDate() + dayChoice + 1);
+        };
+        isEnd = new Date(isStart);
+        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
+        isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
+        var msg = popupBuilder;
+        popup.setContent(msg);
+    });
+    $("#down.timeShift").click(function(e) {
+        if(timeChoice < 6) {
+            var selected = 6;
+        } else if(timeChoice < 12) {
+            var selected = 12;
+        } else if(timeChoice < 18) {
+            var selected = 18;
+        } else {
+            var selected = 23;
+        }
+        reelNoColor();
+        var turns = timeChoice - selected;
+        timeChoice = selected;
+        moveTime += turns * 30;
+        timeDown();
+        $('.time-options').animate({top: moveTime}, 100);
+        reelColor();
+        isStart = new Date();
+        if(days[0] == today.getDay()) {
+            isStart.setUTCDate(today.getDate() + dayChoice);
+        } else {
+            isStart.setUTCDate(today.getDate() + dayChoice + 1);
+        };
+        isEnd = new Date(isStart);
+        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
+        isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
+        var msg = popupBuilder;
+        popup.setContent(msg);
+    });
     $(document.body).on('click', '.changeTZ', function(e) {
         if(offsetChoice == 4) {
             offsetChoice = 0;
         } else {
             offsetChoice++;
-        }
+        };
         var msg = popupBuilder;
         popup.setContent(msg);
     });

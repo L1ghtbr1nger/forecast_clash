@@ -9040,12 +9040,11 @@ label[for="7"] {
 #window [id*="window"] {
     position: relative;
     float: left;
-    width: 100px;
     background: #3b3b3b; /* For browsers that do not support gradients */
     background: -webkit-linear-gradient(#212121, #212121 20%, #3c3c3c 49.5%, black 50%, #3c3c3c 50.5%, #212121 80%, #212121); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(#212121, #212121 20%, #3c3c3c 49.5%, black 50%, #3c3c3c 50.5%, #212121 80%, #212121); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(#212121, #212121 20%, #3c3c3c 49.5%, black 50%, #3c3c3c 50.5%, #212121 80%, #212121); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#212121, #212121 20%, #3c3c3c 49.5%, black 50%, #3c3c3c 50.5%, #212121 80%, #212121); /* Standard syntax */
+    background: linear-gradient(#b1a56d, #b1a56d, #212121 3%, #212121 20%, #3c3c3c 49%, black, #3c3c3c 51%, #212121 80%, #212121 97%, #b1a56d 98%); /* Standard syntax */
     border-width: 3px;
     border-style: solid;
     -webkit-border-image: 
@@ -9062,31 +9061,67 @@ label[for="7"] {
     height: 150px;
     width: 55px;
     top: 125px;
-    background: linear-gradient(#b1a56d, #b1a56d, #212121 3%, #212121 20%, #3c3c3c 49%, black, #3c3c3c 51%, #212121 80%, #212121 97%, #b1a56d 98%);
+    
 }
 #window #time-window {
     height: 400px;
-    width: 70px;
+    width: 65px;
     border: none;
-    border-bottom: 3px solid #b1a56d;
-    border-top: 3px solid #b1a56d;
+    background: linear-gradient(#b1a56d, #b1a56d, #212121 3%, #212121 20%, #3c3c3c 49.5%, black, #3c3c3c 50.5%, #212121 80%, #212121 97%, #b1a56d 98%);
 }
 #window #moe-window {
     height: 150px;
-    width: 70px;
+    width: 65px;
     top: 125px;
-    background: linear-gradient(#b1a56d, #b1a56d, #212121 3%, #212121 20%, #3c3c3c 49%, black, #3c3c3c 51%, #212121 80%, #212121 97%, #b1a56d 98%);
 }
-.shadower {
+[id$="-window"]:before {
+    content: '';
     position: absolute;
+    pointer-events: none;
     z-index: 3;
-    width: 100%;
-    height: 100%;
     background: rgba(0, 0, 0, 0.33); /* For browsers that do not support gradients */
     background: -webkit-linear-gradient(black, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0) 65%, black); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(black, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0) 65%, black); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(black, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0) 65%, black); /* For Firefox 3.6 to 15 */
     background: linear-gradient(black, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 80%, black); /* Standard syntax */
+}
+#day-window:before {
+    height: 144px;
+    width: 49px; 
+}
+#time-window:before {
+    height: 394px;
+    width: 65px;
+    margin-top: 3px;
+}
+#moe-window:before {
+    height: 144px;
+    width: 59px;
+}
+.timeShift {
+    position: absolute;
+    z-index: 4;
+    pointer-events: auto;
+    width: 100%;
+    height: 25px;
+    background-color: rgba(155, 155, 155, 0.46);
+    color: black;
+    text-align: center;
+}
+.timeShift:hover {
+    cursor: pointer;
+}
+#up {
+    top: 3px;
+}
+#up i {
+    transform: rotate(-90deg);
+}
+#down {
+    top: 372px;
+}
+#down i {
+    transform: rotate(90deg);
 }
 [class$="options"] {
     position: absolute;
@@ -9097,14 +9132,22 @@ label[for="7"] {
     font-size: 14px;
     text-align: center;
 }
+[class$="options"]:hover {
+    cursor: grab;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+}
 .day-options {
     top: 31px;
 }
 .time-options {
-    top: -173px;
+    top: -170px;
 }
 .moe-options {
     top: 1px;
+}
+[class$="options"] p:hover {
+    cursor: pointer;
 }
 
 .forecastPopup, .forecastPopup * {
