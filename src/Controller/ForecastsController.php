@@ -57,8 +57,9 @@ class ForecastsController extends AppController
             }
             $table = $this->Forecasts;
             //Look if user and weather event combo already exists in Forecasts
-            if ($query = $table->find('all')->where(['user_id' => $userID, 'weather_event_id' => $weatherEventID])->toArray()) {
-                $result = $query;            
+            $query = $table->find('all')->where(['user_id' => $userID, 'weather_event_id' => $weatherEventID]);
+            if (count($query->toArray()) >= 3) {
+                $result = $query->first();           
             } else { //If doesn't exist, create new   
                 $result = $table->newEntity();
                 $result->user_id = $userID;
