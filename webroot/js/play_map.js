@@ -168,15 +168,20 @@ $('document').ready(function() {
     }
     moeReset();
     
-    var isStart = new Date();
-    if(days[0] == today.getDay()) {
-        isStart.setUTCDate(today.getDate() + dayChoice);
-    } else {
-        isStart.setUTCDate(today.getDate() + dayChoice + 1);
+    var isStart;var isEnd;
+    function dateBuilder() {
+        isStart = new Date();
+        if(days[0] == today.getDay()) {
+            isStart.setUTCDate(today.getDate() + dayChoice);
+        } else {
+            isStart.setUTCDate(today.getDate() + dayChoice + 1);
+        }
+        isEnd = new Date(isStart);
+        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
+        isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
+        $("#event_date").val(isStart.toUTCString());
+        $("#event_date").val(isEnd.toUTCString());
     }
-    var isEnd = new Date(isStart);
-    isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
-    isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
     
     function getDMS(val) {
         var valDeg, valMin, valSec, result;
@@ -224,6 +229,13 @@ $('document').ready(function() {
         $('.moe-options p').eq(moeChoice).css('color', isColor);
     }
     
+    function datePrep() {
+        reelColor();
+        dateBuilder();
+        var msg = popupBuilder;
+        popup.setContent(msg);
+    }
+        
     var eventCircle;
     function eventMarker() {
         $('#latlng').val(lat + ', ' + lng); // sets latlng input to value of lat + lng
@@ -399,6 +411,8 @@ $('document').ready(function() {
                     wasSoon = false;
                     moeReset();
                 }
+            } else {
+                moeReset();
             }
         } else if(wasTomorrow) {
             wasTomorrow = false;
@@ -497,18 +511,7 @@ $('document').ready(function() {
         $('.time-options').animate({top: moveTime}, 100);
         $('.moe-options').animate({top: moveMoe}, 100);
         console.log(dayNames[dayChoice]+" "+timeChoice+":00 UTC +/- "+moe[moeChoice]+" hour"+((moe[moeChoice] == 1) ? "" : "s")+".");
-        reelColor();
-        isStart = new Date();
-        if(days[0] == today.getDay()) {
-            isStart.setUTCDate(today.getDate() + dayChoice);
-        } else {
-            isStart.setUTCDate(today.getDate() + dayChoice + 1);
-        }
-        isEnd = new Date(isStart);
-        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
-        isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
-        var msg = popupBuilder;
-        popup.setContent(msg);
+        datePrep();
         return false;
     }
 
@@ -551,19 +554,7 @@ $('document').ready(function() {
             dayDown();
         }
         $('.day-options').animate({top: moveDay}, 100);
-        reelColor();
-        isStart = new Date();
-        if(days[0] == today.getDay()) {
-            isStart.setUTCDate(today.getDate() + dayChoice);
-        } else {
-            isStart.setUTCDate(today.getDate() + dayChoice + 1);
-        }
-        isEnd = new Date(isStart);
-        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
-        isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
-        $("#event_date").val(isStart.toUTCString());
-        var msg = popupBuilder;
-        popup.setContent(msg);
+        datePrep();
     });
     $("#time-window").on('click', ".time-options p", function(e) {
         if($(this).context.innerHTML != " "){
@@ -579,18 +570,7 @@ $('document').ready(function() {
             };
             $('.time-options').animate({top: moveTime}, 100);
         };
-        reelColor();
-        isStart = new Date();
-        if(days[0] == today.getDay()) {
-            isStart.setUTCDate(today.getDate() + dayChoice);
-        } else {
-            isStart.setUTCDate(today.getDate() + dayChoice + 1);
-        };
-        isEnd = new Date(isStart);
-        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
-        isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
-        var msg = popupBuilder;
-        popup.setContent(msg);
+        datePrep();
     });
     $("#moe-window").on('click', ".moe-options p", function(e) {
         reelNoColor();
@@ -599,18 +579,7 @@ $('document').ready(function() {
         moeChoice = selected;
         moveMoe += turns * 30;
         $('.moe-options').animate({top: moveMoe}, 100);
-        reelColor();
-        isStart = new Date();
-        if(days[0] == today.getDay()) {
-            isStart.setUTCDate(today.getDate() + dayChoice);
-        } else {
-            isStart.setUTCDate(today.getDate() + dayChoice + 1);
-        };
-        isEnd = new Date(isStart);
-        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
-        isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
-        var msg = popupBuilder;
-        popup.setContent(msg);
+        datePrep();
     });
     $("#up.timeShift").click(function(e) {
         if(timeChoice > 18) {
@@ -630,18 +599,7 @@ $('document').ready(function() {
             timeUp();
             $('.time-options').animate({top: moveTime}, 100);
         };
-        reelColor();
-        isStart = new Date();
-        if(days[0] == today.getDay()) {
-            isStart.setUTCDate(today.getDate() + dayChoice);
-        } else {
-            isStart.setUTCDate(today.getDate() + dayChoice + 1);
-        };
-        isEnd = new Date(isStart);
-        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
-        isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
-        var msg = popupBuilder;
-        popup.setContent(msg);
+        datePrep();
     });
     $("#down.timeShift").click(function(e) {
         if(timeChoice < 6) {
@@ -659,18 +617,7 @@ $('document').ready(function() {
         moveTime += turns * 30;
         timeDown();
         $('.time-options').animate({top: moveTime}, 100);
-        reelColor();
-        isStart = new Date();
-        if(days[0] == today.getDay()) {
-            isStart.setUTCDate(today.getDate() + dayChoice);
-        } else {
-            isStart.setUTCDate(today.getDate() + dayChoice + 1);
-        };
-        isEnd = new Date(isStart);
-        isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
-        isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
-        var msg = popupBuilder;
-        popup.setContent(msg);
+        datePrep();
     });
     $(document.body).on('click', '.changeTZ', function(e) {
         if(offsetChoice == 4) {

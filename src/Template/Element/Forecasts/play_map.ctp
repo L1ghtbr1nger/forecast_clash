@@ -29,6 +29,7 @@ h4 i{
             </fieldset>
             <!-- hidden form fields -->
             <input type="text" name="forecast_date" class="datepicker hidden" id="event_date">
+            <input type="text" name="forecast_end" class="datepicker hidden" id="event_end">
             <input type="range" name="radius" id="radius" class=hidden value="50" min="5" max="100" step="5">
             <input id="latlng" name="location" type="text" class="hidden" value="">
             <input type="radio" class="hidden" name="weather_event_id" id="tornado-event" value="1">
