@@ -180,7 +180,7 @@ $('document').ready(function() {
         isStart.setUTCHours(timeChoice - (moeChoice + 1),0,0,0);
         isEnd.setUTCHours(timeChoice + (moeChoice + 1),0,0,0);
         $("#event_date").val(isStart.toUTCString());
-        $("#event_date").val(isEnd.toUTCString());
+        $("#event_end").val(isEnd.toUTCString());
     }
     dateBuilder();
     

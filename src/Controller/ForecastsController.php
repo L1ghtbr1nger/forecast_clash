@@ -50,14 +50,14 @@ class ForecastsController extends AppController
             }
             if (!empty($data['forecast_date'])) {
                 $dateStart = strtotime($data['forecast_date']); //conver Month, #Day #Year format to unix time
-                $dateEnd = $dateStart + 43199; //add 12 hours in seconds to unix representation of forecast start
+                $dateEnd = strtotime($data['forecast_date']); //add 12 hours in seconds to unix representation of forecast start
                 $data['forecast_date_start'] = Time::parse($dateStart)->i18nFormat('yyyy-MM-dd HH:mm:ss');
                 $data['forecast_date_end'] = Time::parse($dateEnd)->i18nFormat('yyyy-MM-dd HH:mm:ss');
                 $data['submit_date'] = Time::now();
             }
             $table = $this->Forecasts;
             //Look if user and weather event combo already exists in Forecasts
-            if ($query = $table->find('all')->where(['user_id' => $userID, 'weather_event_id' => $weatherEventID])->first()) {
+            if ($query = $table->find('all')->where(['user_id' => $userID, 'weather_event_id' => $weatherEventID])->toArray()) {
                 $result = $query;            
             } else { //If doesn't exist, create new   
                 $result = $table->newEntity();
