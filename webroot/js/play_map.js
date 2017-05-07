@@ -182,6 +182,7 @@ $('document').ready(function() {
         $("#event_date").val(isStart.toUTCString());
         $("#event_date").val(isEnd.toUTCString());
     }
+    dateBuilder();
     
     function getDMS(val) {
         var valDeg, valMin, valSec, result;
