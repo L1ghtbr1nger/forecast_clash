@@ -19,10 +19,10 @@ h4 i{
 </style>
 
 <article class="play-container">
-    <div id="play-sidebar">
+    <div id="">
         <form action="#" class="search-filter forecast-tornado" id="forecastForm">
             <fieldset class="radius">
-                <label for="radiusMask" class="pull-right radius-label" style="color:#fff">
+                <label for="radiusMask" class="" style="color:#fff">
                     <strong>Radius</strong><br><span id="output">(50 miles)</span>
                 </label>
                 <input type="range" name="radius" id="radiusMask" value="50" min="5" max="100" step="5">
@@ -43,7 +43,7 @@ h4 i{
                 echo '<a href="/forecast_clash/users/login"><input class="btn forecast-btn forecast-link" type="submit" value="Please Login!"></a>';
             } ?>
             <br><a id="modalTrigger" style="display: none" href="#modalTrigger">Instructions</a>
-            <span id="modalTrigger" data-toggle="modal" data-target="#instructions-modal">
+            <span id="modalTrigger" class="leaflet-right leaflet-top" data-toggle="modal" data-target="#instructions-modal">
                 Instructions
             </span>
         </div>

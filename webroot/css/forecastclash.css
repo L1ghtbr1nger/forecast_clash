@@ -3332,7 +3332,7 @@ pre {
 
 .header {
     background-color: #d7dde4;
-    height: 45px;
+    height: 57px;
     position: absolute;
     left: 230px;
     right: 0;
@@ -4115,7 +4115,7 @@ pre {
     width: 30px;
     height: 30px;
     line-height: 30px;
-    border-radius: 4px;
+    border-radius: 2px;
     background-color: #8b9cb1;
     color: #ffffff;
     text-align: center;
@@ -4256,6 +4256,10 @@ div.body-col p {
 
 
 /* Map */
+
+.leaflet-right .leaflet-control {
+    border-radius: 2px;
+}
 
 .leaflet-container .leaflet-control-attribution,
 .leaflet-container .leaflet-control-scale {
@@ -7886,6 +7890,11 @@ rect {
     padding: 45px 0 0 0;
 }
 
+.play-container .sidebar-footer,
+#forecastForm {
+    height: 0;
+}
+
 #play-sidebar .climacon {
     background: #333;
 }
@@ -7900,21 +7909,6 @@ rect {
 .time {
     position: relative;
     left: 12px;
-}
-
-.radius {
-    clear: both;
-    width: 100%;
-    max-width: 150px;
-    position: relative;
-    top: 37px;
-    transform: rotate(-90deg);
-    left: 61px;
-}
-
-.radius-output {
-    display: inline-block;
-    margin-top: 40px;
 }
 
 
@@ -7944,6 +7938,10 @@ ul {
     color: #fff;
     text-decoration: underline;
     cursor: pointer;
+    pointer-events: initial;
+    top: 125px;
+    right: 12px;
+    z-index: 100;
 }
 
 .radius-label {
@@ -7984,12 +7982,16 @@ ul {
 }
 
 .play-container .leaflet-control-zoom {
-    left: 150px;
+    right: 102px;
+}
+
+.leaflet-control-layers-expanded {
+    top: -63px;
 }
 
 .easy-button-container {
-    top: -62px;
-    left: 87px;
+    top: 126px;
+    left: 186px;
 }
 
 @media (max-width: 720px) {
@@ -8069,8 +8071,8 @@ ul {
 
 .easy-button-button {
     background-color: #333 !important;
-    width: 55px !important;
-    height: 55px !important;
+    width: 43px !important;
+    height: 43px !important;
 }
 
 .easy-button-button span {
@@ -8079,7 +8081,7 @@ ul {
 
 .tornado-instructions,
 .tornado-control-active {
-    border: 2px solid rgb(255, 51, 51);
+    border: 1px solid rgb(255, 51, 51);
     padding: 0;
 }
 
@@ -8097,7 +8099,7 @@ span.tornado-control-active {
 
 .hail-instructions,
 .hail-control-active {
-    border: 2px solid rgb(61, 182, 239);
+    border: 1px solid rgb(61, 182, 239);
     padding: 0;
 }
 
@@ -8119,7 +8121,7 @@ span.hail-control-active {
 
 .wind-instructions,
 .wind-control-active {
-    border: 2px solid rgb(255, 165, 0);
+    border: 1px solid rgb(255, 165, 0);
     padding: 0;
 }
 
@@ -8303,11 +8305,6 @@ label[for="remember"] span {
 .button-state .fa-compass {
     color: #333;
 }
-
-
-/*.leaflet-popup-tip-container {
-    display: none;
-}*/
 
 .leaflet-popup-content-wrapper {
     border-radius: 0;
@@ -8784,14 +8781,25 @@ input[type=range]:focus::-ms-fill-upper {
 
 /* Date Range Slider */
 
-#radiusMask {
-    cursor: ns-resize;
-    padding: 24px 0;
-    background: transparent;
+.radius {
+    width: 100%;
+    max-width: 150px;
     position: relative;
-    top: -42px;
-    right: -20px;
-    max-width: 100px;
+    top: 65px;
+    left: 132px;
+    z-index: 100;
+}
+
+.radius-output {
+    display: inline-block;
+    margin-top: 40px;
+}
+
+#radiusMask {
+    cursor: ew-resize;
+    padding: 18px 0 28px 0;
+    background: transparent;
+    max-width: 110px;
 }
 
 .radius label {
@@ -8972,6 +8980,10 @@ p.day {
 
 .sidebar-footer .forecast-btn {
     float: none;
+    position: relative;
+    z-index: 100;
+    top: 295px;
+    left: 132px;
 }
 
 
@@ -9020,109 +9032,130 @@ label[for="7"] {
 /* Header Clock */
 
 .clock {
-    display: inline;
-    background: #222;
+    display: inline-block;
+    background: #333;
     color: #eee;
     border-radius: 2px;
-    box-shadow: 0 0 7px #222;
-    text-shadow: 0 0 1px #fff;
     padding: 0 8px;
+    margin-bottom: 2px;
 }
-.windowContainter {
+
+#windowContainer {
     position: relative;
 }
+
 #window {
     position: absolute;
     z-index: 1;
-    top: 420px;
-    left: 25px;
+    top: 10px;
+    left: 5px;
 }
+
 #window [id*="window"] {
     position: relative;
     float: left;
-    background: #3b3b3b; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(#212121, #212121 20%, #3c3c3c 49.5%, black 50%, #3c3c3c 50.5%, #212121 80%, #212121); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#212121, #212121 20%, #3c3c3c 49.5%, black 50%, #3c3c3c 50.5%, #212121 80%, #212121); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#212121, #212121 20%, #3c3c3c 49.5%, black 50%, #3c3c3c 50.5%, #212121 80%, #212121); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#b1a56d, #b1a56d, #212121 3%, #212121 20%, #3c3c3c 49%, black, #3c3c3c 51%, #212121 80%, #212121 97%, #b1a56d 98%); /* Standard syntax */
-    border-width: 3px;
+    background: #3b3b3b;
+    /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#212121, #212121 20%, #3c3c3c 49.5%, black 50%, #3c3c3c 50.5%, #212121 80%, #212121);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#212121, #212121 20%, #3c3c3c 49.5%, black 50%, #3c3c3c 50.5%, #212121 80%, #212121);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#212121, #212121 20%, #3c3c3c 49.5%, black 50%, #3c3c3c 50.5%, #212121 80%, #212121);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(rgb(83, 83, 83), rgb(83, 83, 83), #212121 3%, #212121 20%, #3c3c3c 49%, black, #3c3c3c 51%, #212121 80%, #212121 97%, rgb(83, 83, 83) 98%);
+    /* Standard syntax */
+    border-width: 2px;
     border-style: solid;
-    -webkit-border-image: 
-      -webkit-linear-gradient(black, black, white, black, black) 1 100%;
-    -moz-border-image:
-      -moz-linear-gradient(black, black, white, black, black) 1 100%;
-    -o-border-image:
-      -o-linear-gradient(black, black, white, black, black) 1 100%;
-    border-image:
-      linear-gradient(to bottom, black, black, white, black, black) 1 100%;
+    -webkit-border-image: -webkit-linear-gradient(black, black, white, black, black) 1 100%;
+    -moz-border-image: -moz-linear-gradient(black, black, white, black, black) 1 100%;
+    -o-border-image: -o-linear-gradient(black, black, white, black, black) 1 100%;
+    border-image: linear-gradient(to bottom, black, black, white, black, black) 1 100%;
     overflow-y: hidden;
 }
+
 #window #day-window {
     height: 150px;
     width: 55px;
     top: 125px;
-    
 }
+
 #window #time-window {
     height: 400px;
     width: 65px;
     border: none;
-    background: linear-gradient(#b1a56d, #b1a56d, #212121 3%, #212121 20%, #3c3c3c 49.5%, black, #3c3c3c 50.5%, #212121 80%, #212121 97%, #b1a56d 98%);
+    background: linear-gradient(rgb(83, 83, 83), rgb(83, 83, 83), #212121 3%, #212121 20%, #3c3c3c 49.5%, black, #3c3c3c 50.5%, #212121 80%, #212121 97%, rgb(83, 83, 83) 98%);
 }
+
 #window #moe-window {
     height: 150px;
     width: 65px;
     top: 125px;
 }
+
 [id$="-window"]:before {
     content: '';
     position: absolute;
     pointer-events: none;
     z-index: 3;
-    background: rgba(0, 0, 0, 0.33); /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(black, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0) 65%, black); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(black, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0) 65%, black); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(black, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0) 65%, black); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(black, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 80%, black); /* Standard syntax */
+    background: rgba(0, 0, 0, 0.33);
+    /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(black, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0) 65%, black);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(black, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0) 65%, black);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(black, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0) 65%, black);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(black, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 80%, black);
+    /* Standard syntax */
 }
+
 #day-window:before {
     height: 144px;
-    width: 49px; 
+    width: 49px;
 }
+
 #time-window:before {
     height: 394px;
     width: 65px;
     margin-top: 3px;
 }
+
 #moe-window:before {
     height: 144px;
     width: 59px;
 }
+
 .timeShift {
     position: absolute;
     z-index: 4;
     pointer-events: auto;
     width: 100%;
     height: 25px;
-    background-color: rgba(155, 155, 155, 0.46);
-    color: black;
+    background-color: rgba(221, 221, 221, 0.5);
+    color: #333;
     text-align: center;
 }
+
 .timeShift:hover {
     cursor: pointer;
 }
+
 #up {
     top: 3px;
 }
+
 #up i {
     transform: rotate(-90deg);
 }
+
 #down {
     top: 372px;
 }
+
 #down i {
     transform: rotate(90deg);
 }
+
 [class$="options"] {
     position: absolute;
     z-index: 2;
@@ -9132,91 +9165,163 @@ label[for="7"] {
     font-size: 14px;
     text-align: center;
 }
+
 [class$="options"]:hover {
     cursor: grab;
     cursor: -webkit-grab;
     cursor: -moz-grab;
 }
+
 .day-options {
-    top: 31px;
+    top: 32px;
 }
+
 .time-options {
     top: -170px;
 }
+
 .moe-options {
-    top: 1px;
+    top: 2px;
 }
+
 [class$="options"] p:hover {
     cursor: pointer;
 }
 
-.forecastPopup, .forecastPopup * {
+.forecastPopup {
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.forecastPopup,
+.forecastPopup * {
     pointer-events: none;
     box-shadow: none;
 }
-.forecastPopup .leaflet-popup-content-wrapper, .forecastPopup .leaflet-popup-tip {
-    background-color: rgba(11, 11, 11, 0.9);
+
+.leaflet-popuup-content > div {
+    color: rgb(255, 255, 255) !important;
 }
+
+.forecastPopup .leaflet-popup-content-wrapper,
+.forecastPopup .leaflet-popup-tip,
+.leaflet-popup-tip,
+.leaflet-popup-content-wrapper {
+    background-color: rgba(51, 51, 51, 0.7);
+    color: #fff;
+}
+
+.forecastPopup .leaflet-popup-tip-container {
+    border: none;
+    border-top: 1px solid rgb(50, 50, 50);
+    width: 26px;
+    margin-left: -14px;
+}
+
 .forecastPopup .leaflet-popup-content-wrapper {
-    border-radius: 15px;    
+    border-radius: 2px;
 }
+
 .forecastPopup .leaflet-popup-tip {
-    height: 20px;   
+    height: 20px;
     width: 20px;
+    border: 1px solid rgb(255, 255, 255);
 }
+
 .forecastPopup .leaflet-popup-close-button {
     pointer-events: auto;
 }
+
+.forecastPopup h4 {
+    display: inline;
+    position: relative;
+    top: -6px;
+}
+
 .leaflet-popup-content {
     min-width: 350px;
 }
+
 .forecastDisplay {
     font-size: 22px;
     font-weight: 700;
 }
+
 .locDisplay {
-    font-family: 'Eagle Lake', cursive;
     color: white;
-    background: #1f1f1f; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(black, #525252, black); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(black, #525252, black); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(black, #525252, black); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(black, #525252, black); /* Standard syntax */
+    background: #1f1f1f;
+    /* For browsers that do not support gradients */
+    /*    background: -webkit-linear-gradient(black, #525252, black);
+*/
+    /* For Safari 5.1 to 6.0 */
+    /*    background: -o-linear-gradient(black, #525252, black);
+*/
+    /* For Opera 11.1 to 12.0 */
+    /*    background: -moz-linear-gradient(black, #525252, black);
+*/
+    /* For Firefox 3.6 to 15 */
+    /*    background: linear-gradient(black, #525252, black);
+*/
+    /* Standard syntax */
     padding: 0 5px 0 5px;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: normal;
 }
+
 .dateTime {
     display: inline-block;
-    background: #1f1f1f; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(black, #525252, black); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(black, #525252, black); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(black, #525252, black); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(black, #525252, black); /* Standard syntax */
+    background: #1f1f1f;
+    /* For browsers that do not support gradients */
+    /*    background: -webkit-linear-gradient(black, #525252, black);
+*/
+    /* For Safari 5.1 to 6.0 */
+    /*    background: -o-linear-gradient(black, #525252, black);
+*/
+    /* For Opera 11.1 to 12.0 */
+    /*    background: -moz-linear-gradient(black, #525252, black);
+*/
+    /* For Firefox 3.6 to 15 */
+    /*    background: linear-gradient(black, #525252, black);
+*/
+    /* Standard syntax */
     color: white;
-    border-radius: 3px;
+    border-radius: 2px;
     padding: 0 5px 0 5px;
-    transform : scale(1.1,1.3);
-    -webkit-transform:scale(1.1,1.3); /* Safari and Chrome */
-    -moz-transform:scale(1.1,1.3); /* Firefox */
-    -ms-transform:scale(1.1,1.3); /* IE 9+ */
-    -o-transform:scale(1.1,1.3); /* Opera */
+    transform: scale(1.1, 1.3);
+    -webkit-transform: scale(1.1, 1.3);
+    /* Safari and Chrome */
+    -moz-transform: scale(1.1, 1.3);
+    /* Firefox */
+    -ms-transform: scale(1.1, 1.3);
+    /* IE 9+ */
+    -o-transform: scale(1.1, 1.3);
+    /* Opera */
     font-size: 13px;
     margin-right: 0px;
     margin-left: 0px;
+    font-weight: normal;
 }
+
 .forecastPopup .row {
     margin-right: -6px;
+    height: 32px;
 }
+
 .forecastPopup .row .changeTZ {
     position: absolute;
     right: -7px;
     top: 13px;
     pointer-events: auto;
 }
-.forecastPopup .row .changeTZ:hover {
+
+.forecastPopup .row .changeTZ:hover,
+.forecastPopup .row .changeTZ:active,
+.forecastPopup .row .changeTZ:focus {
     cursor: pointer;
+    color: rgb(195, 195, 195);
 }
+
 .timeSpacer {
+    font-weight: normal;
     margin-left: .5px;
     margin-right: 1px;
 }
