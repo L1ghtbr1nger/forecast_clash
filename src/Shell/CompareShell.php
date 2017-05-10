@@ -39,13 +39,8 @@ class CompareShell extends Shell
                     $responseTornado = $http->get('https://api.aerisapi.com/stormreports/within?filter=tornado&'.$params);
                     $jsonResponse = $responseTornado->json;
                 } else if ($weather === 2) {
-                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&'.$params);
+                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&query=detail:1'.$params);
                     $jsonResponse = $responseHail->json;
-                    if ($jsonResponse['error']['code'] != 'warn_no_data') {
-                        if ($jsonResponse['response'][0]['report']['detail']['hailIN'] < 1) {
-                            $jsonResponse['error']['code'] = 'warn_no_data';     
-                        }
-                    }
                 } else {
                     $responseWind = $http->get('https://api.aerisapi.com/stormreports/within?filter=wind&query=detail:58&'.$params);
                     $jsonResponse = $responseWind->json;
