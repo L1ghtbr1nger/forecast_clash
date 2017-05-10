@@ -58,7 +58,7 @@ class HistoricalForecastsController extends AppController
                     $jsonResponse = $responseTornado->json;
                     debug($jsonResponse);
                 } else if ($weather === 2) {
-                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&query=detail:1'.$params);
+                    $responseHail = $http->get('https://api.aerisapi.com/stormreports/within?filter=hail&query=detail:1&'.$params);
                     $jsonResponse = $responseHail->json;
                     debug($jsonResponse);
                 } else {
