@@ -53,8 +53,9 @@ $('document').ready(function() {
         }
         pending.push(L.circle(v, (pendingRadius[i] * 1609.344), {
             color: stroke,
+            weight: 2,
             fillColor: 'rgb(255,255,255)'
-        }).setStyle({className: 'clickThru'}).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> starting</br>' + pendingDates[i] + ' UTC</br><a style="color:blue" class="deletePending" href="">Delete<input class="toDelete" name="toDelete" type="hidden" value="'+pendingIDs[i]+'"></a>').openPopup());
+        }).setStyle({className: 'clickThru'}).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> starting</br>' + pendingDates[i] + ' UTC</br><a style="text-decoration: underline;color:rgb(61, 182, 239)" id="deletePending" href="">Delete<input id="toDelete" name="toDelete" type="hidden" value="'+pendingIDs[i]+'"></a>').openPopup());
     });
 
     $.each(activeLocations, function(i, v) {
@@ -67,9 +68,9 @@ $('document').ready(function() {
         }
         active.push(L.circle(v, (activeRadius[i] * 1609.344), {
             color: stroke,
-            fillColor: 'rgb(255, 255, 255)',
-            className: 'clickThrough'
-        }).setStyle({className: 'clickThru'}).bindPopup('Active ' + activeEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong></br>Awaiting results...</br>').openPopup());
+            weight: 2,
+            fillColor: 'rgb(255, 255, 255)'
+        }).setStyle({className: 'clickThru'}).bindPopup('Active ' + activeEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong></br>Awaiting results...').openPopup());
     });
 
     var pending_layer = L.layerGroup(pending);
@@ -84,8 +85,11 @@ $('document').ready(function() {
         center: [40.2226, -95.4395],
         zoom: 5,
         doubleClickZoom: false,
-        layers: [active_layer, pending_layer]
+        layers: [active_layer, pending_layer],
+        zoomControl: true
     })
+
+    map.zoomControl.setPosition('topright'); // move zoom control to top right
 
     // .addControl(sidebar)
     L.control.layers(overlayMaps, null, { collapsed: false }).addTo(map);
@@ -216,7 +220,7 @@ $('document').ready(function() {
     }
     
     function popupBuilder() {
-        return '<div style="color: '+isColor+'"><div class="row"><div class="col-md-12"><h4><strong>'+isEvent+' Forecast</strong></h4></div></div><div class="row"><div class="col-md-6"><span>inside a perimeter of</span></div><div class="col-md-6"><strong><span class="dateTime pull-right">'+Math.round(Math.PI * radius * radius).toLocaleString()+' mi<sup>2</sup></span></strong></div></div><div class="row"><div class="col-md-4"><span>centered at</span></div><div class="col-md-8"><strong><span class="pull-right">'+isLocation+'</span></strong></div></div><div class="row"><div class="col-md-4"><span>between</span></div><div class="col-md-8"><strong><span class="pull-right">'+dateFormat(isStart)+'</span><i class="fa fa-refresh changeTZ" aria-hidden="true"></i></strong></div></div><div class="row"><div class="col-md-4">and</div><div class="col-md-8"><strong><span class="pull-right">'+dateFormat(isEnd)+'</span><i class="fa fa-refresh changeTZ" aria-hidden="true"></i></strong></div></div></div>';
+        return '<div style="color:rgb(255,255,255)"><div class="row"><div class="col-md-12"><h4><strong>'+isEvent+' Forecast</strong></h4></div></div><div class="row"><div class="col-md-6 pull-left"><span>inside a perimeter of</span></div><div class="col-md-6"><strong><span class="dateTime pull-right">'+Math.round(Math.PI * radius * radius).toLocaleString()+' mi<sup>2</sup></span></strong></div></div><div class="row"><div class="col-md-4 pull-left"><span>centered at</span></div><div class="col-md-8"><strong><span class="pull-right">'+isLocation+'</span></strong></div></div><div class="row"><div class="col-md-4 pull-left"><span>between</span></div><div class="col-md-8"><strong><span class="pull-right">'+dateFormat(isStart)+'</span><i class="fa fa-refresh changeTZ" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Change Timezone"></i></strong></div></div><div class="row"><div class="col-md-4 pull-left">and</div><div class="col-md-8"><strong><span class="pull-right">'+dateFormat(isEnd)+'</span></strong></div></div></div>';
     }
     
     function reelNoColor() {
@@ -231,6 +235,18 @@ $('document').ready(function() {
         $('.moe-options p').eq(moeChoice).css('color', isColor);
     }
     
+    function popupBorderColor(){
+        $(".forecastPopup").css({
+            "borderColor": isColor,
+            "borderWidth": '1px',
+            "borderStyle": 'solid'
+        });
+        $(".forecastPopup .leaflet-popup-tip").css({
+            "borderColor": isColor,
+            "borderWidth": '1px',
+            "borderStyle": 'solid'
+        });
+    }
     function datePrep() {
         reelColor();
         dateBuilder();
@@ -250,6 +266,7 @@ $('document').ready(function() {
         eventCircle = L.circle([lat, lng], radiusMeters, {
             color: isColor,
             stroke: isColor,
+            weight: 2,
             className: 'eventCircle'
         });
         eventCircle.addTo(map);
@@ -269,6 +286,7 @@ $('document').ready(function() {
                 isEvent = "Tornado";
                 isColor = "rgb(255, 51, 51)";
                 reelColor();
+                popupBorderColor();
                 if(eventCircle != undefined) {
                     eventMarker();
                 };
@@ -292,6 +310,7 @@ $('document').ready(function() {
                 isEvent = "Hail";
                 isColor = "rgb(61, 182, 239)";
                 reelColor();
+                popupBorderColor();
                 if(eventCircle != undefined) {
                     eventMarker();
                 }
@@ -315,6 +334,7 @@ $('document').ready(function() {
                 isEvent = "Wind";
                 isColor = "rgb(255, 165, 0)";
                 reelColor();
+                popupBorderColor();
                 if(eventCircle != undefined) {
                     eventMarker();
                 }
