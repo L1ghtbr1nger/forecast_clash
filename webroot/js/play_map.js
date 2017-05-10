@@ -54,7 +54,7 @@ $('document').ready(function() {
         pending.push(L.circle(v, (pendingRadius[i] * 1609.344), {
             color: stroke,
             fillColor: 'rgb(255,255,255)'
-        }).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> starting</br>' + pendingDates[i] + ' UTC</br><a style="color:blue" id="deletePending" href="">Delete<input id="toDelete" name="toDelete" type="hidden" value="'+pendingIDs[i]+'"></a>').openPopup());
+        }).setStyle({className: 'clickThru'}).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> starting</br>' + pendingDates[i] + ' UTC</br><a style="color:blue" class="deletePending" href="">Delete<input class="toDelete" name="toDelete" type="hidden" value="'+pendingIDs[i]+'"></a>').openPopup());
     });
 
     $.each(activeLocations, function(i, v) {
@@ -67,8 +67,9 @@ $('document').ready(function() {
         }
         active.push(L.circle(v, (activeRadius[i] * 1609.344), {
             color: stroke,
-            fillColor: 'rgb(255, 255, 255)'
-        }).bindPopup('Active ' + activeEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong></br>Awaiting results...').openPopup());
+            fillColor: 'rgb(255, 255, 255)',
+            className: 'clickThrough'
+        }).setStyle({className: 'clickThru'}).bindPopup('Active ' + activeEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong></br>Awaiting results...</br>').openPopup());
     });
 
     var pending_layer = L.layerGroup(pending);
@@ -632,9 +633,9 @@ $('document').ready(function() {
     
     var toDelete = 0;
     var storage = "";
-    $(document.body).on('click', '#deletePending', function(e) {
+    $(document.body).on('click', '.deletePending', function(e) {
         e.preventDefault();
-        toDelete = $(this).children('#toDelete').val();
+        toDelete = $(this).children('.toDelete').val();
         storage = $(this).parent().html();
         $(this).parent().html('Are you sure you want to delete this forecast?</br><button id="noDelete" class="btn btn-primary" style="float:left;margin-top:5px">No</button><button id="yesDelete" class="btn btn-primary" style="float:right;margin-top:5px">Yes</button><div style="width:100%;height:40px;visibility:hidden">Clear</div>');
     });
@@ -656,4 +657,18 @@ $('document').ready(function() {
             }
         });
     });
+    var latlng;
+    $(window.map).on('click', '.clickThru', function(e) {
+        console.log(e);
+        latlng = map.mouseEventToLatLng(e.originalEvent);
+        var newPopup = L.popup({className: 'newForecast'}).setContent('<button class="btn btn-primary clickedThru">New Forecast</button>').setLatLng(latlng);
+        map.addLayer(newPopup);
+    });  
+    $(document.body).on('click', '.clickedThru', function(e) {
+        e.preventDefault();
+        lat = latlng.lat;
+        lng = latlng.lng;
+        isLocation = dmsFormat(lat, lng);
+        eventMarker();
+    });   
 });

@@ -161,7 +161,7 @@ h4 i{
       <div class="modal-footer">
       <button class="btn btn-primary scoring-instructions-btn pull-right">How to Set a Target</button>
       <button class="btn btn-primary scoring-btn pull-right">Make Your Forecast</button>
-            <button class="btn btn-primary skip-instructions pull-left">Dismiss Forever</button>
+        <button class="btn btn-primary skip-instructions pull-left">Dismiss Forever</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
