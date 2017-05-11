@@ -87,6 +87,10 @@ $('document').ready(function() {
         doubleClickZoom: false,
         layers: [active_layer, pending_layer],
         zoomControl: true
+    }).on('popupopen', function(){
+        $('.forecast-btn').appendTo('.forecastPopup .leaflet-popup-content-wrapper').css('display', 'block');
+
+
     })
 
     map.zoomControl.setPosition('topright'); // move zoom control to top right
@@ -245,6 +249,10 @@ $('document').ready(function() {
             "borderColor": isColor,
             "borderWidth": '1px',
             "borderStyle": 'solid'
+        });
+
+        $('#forecast').css({
+            'background': isColor,
         });
     }
     function datePrep() {
