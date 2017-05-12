@@ -50,7 +50,7 @@ class ForecastsController extends AppController
             }
             if (!empty($data['forecast_date'])) {
                 $dateStart = strtotime($data['forecast_date']); //conver Month, #Day #Year format to unix time
-                $dateEnd = strtotime($data['forecast_date']); //add 12 hours in seconds to unix representation of forecast start
+                $dateEnd = strtotime($data['forecast_end']);
                 $data['forecast_date_start'] = Time::parse($dateStart)->i18nFormat('yyyy-MM-dd HH:mm:ss');
                 $data['forecast_date_end'] = Time::parse($dateEnd)->i18nFormat('yyyy-MM-dd HH:mm:ss');
                 $data['submit_date'] = Time::now();
