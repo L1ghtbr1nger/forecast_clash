@@ -685,11 +685,10 @@ $('document').ready(function() {
             }
         });
     });
-    var latlng;
+    var latlng;var newPopup;
     $(window.map).on('click', '.clickThru', function(e) {
-        console.log(e);
         latlng = map.mouseEventToLatLng(e.originalEvent);
-        var newPopup = L.popup({className: 'newForecast'}).setContent('<button class="btn btn-primary clickedThru">New Forecast</button>').setLatLng(latlng);
+        newPopup = L.popup({className: 'newForecast'}).setContent('<button class="btn btn-primary clickedThru">New Forecast</button>').setLatLng(latlng);
         map.addLayer(newPopup);
     });  
     $(document.body).on('click', '.clickedThru', function(e) {
@@ -697,6 +696,7 @@ $('document').ready(function() {
         lat = latlng.lat;
         lng = latlng.lng;
         isLocation = dmsFormat(lat, lng);
+        map.removeLayer(newPopup);
         eventMarker();
     });   
 });
