@@ -85,6 +85,10 @@ h4 i{
     'value' => json_encode($pendingDates),
     'id' => 'pendingDates'
 ]) ?>
+<?= $this->Form->hidden('pendingDatesEnd', [
+    'value' => json_encode($pendingDatesEnd),
+    'id' => 'pendingDatesEnd'
+]) ?>
 <?= $this->Form->hidden('activeLocations', [
     'value' => json_encode($activeLocations),
     'id' => 'activeLocations'
@@ -100,6 +104,10 @@ h4 i{
 <?= $this->Form->hidden('activeDates', [
     'value' => json_encode($activeDates),
     'id' => 'activeDates'
+]) ?>
+<?= $this->Form->hidden('activeDatesEnd', [
+    'value' => json_encode($activeDatesEnd),
+    'id' => 'activeDatesEnd'
 ]) ?>
 <div class="modal fade" tabindex="-1" role="dialog" id="instructions-modal">
   <div class="modal-dialog" role="document">

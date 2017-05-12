@@ -102,10 +102,12 @@ class ForecastsController extends AppController
             $pendingRadius = [];
             $pendingEvents = [];
             $pendingDates = [];
+            $pendingDatesEnd = [];
             $activeLocations = [];
             $activeRadius = [];
             $activeEvents = [];
             $activeDates = [];
+            $activeDatesEnd = [];
             if ($userID = $session->read('Auth.User.id')) {
                 if($forecasts = $this->Forecasts->find('all')->where(['user_id' => $userID])->contain('WeatherEvents')) {
                     foreach ($forecasts as $forecast) {
@@ -114,6 +116,7 @@ class ForecastsController extends AppController
                         $pendingRadius[] = $forecast['radius'];
                         $pendingEvents[] = $forecast['weather_event']['weather'];
                         $pendingDates[] = $forecast['forecast_date_start']->i18nFormat('MMMM d, H:mm');
+                        $pendingDatesEnd[] = $forecast['forecast_date_end']->i18nFormat('MMMM d, H:mm');
                     }
                 }
                 if($historical = TableRegistry::get('HistoricalForecasts')->find('all')->where(['user_id' => $userID, 'correct IS NULL'])->contain('WeatherEvents')) {
@@ -122,6 +125,7 @@ class ForecastsController extends AppController
                         $activeRadius[] = $history['radius'];
                         $activeEvents[] = $history['weather_event']['weather'];
                         $activeDates[] = $history['forecast_date_start']->i18nFormat('MMMM d, H:mm');
+                        $activeDatesEnd[] = $history['forecast_date_end']->i18nFormat('MMMM d, H:mm');
                     }
                 }
             }
@@ -130,10 +134,12 @@ class ForecastsController extends AppController
             $this->set('pendingRadius', $pendingRadius);
             $this->set('pendingEvents', $pendingEvents);
             $this->set('pendingDates', $pendingDates);
+            $this->set('pendingDatesEnd', $pendingDatesEnd);
             $this->set('activeLocations', $activeLocations);
             $this->set('activeRadius', $activeRadius);
             $this->set('activeEvents', $activeEvents);
             $this->set('activeDates', $activeDates);
+            $this->set('activeDatesEnd', $activeDatesEnd);
         }
     }
     
