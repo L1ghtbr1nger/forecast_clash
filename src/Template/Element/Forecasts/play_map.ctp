@@ -81,6 +81,10 @@ h4 i{
     'value' => json_encode($pendingEvents),
     'id' => 'pendingEvents'
 ]) ?>
+<?= $this->Form->hidden('pendingEventTotals', [
+    'value' => json_encode($pendingEventTotals),
+    'id' => 'pendingEventTotals'
+]) ?>
 <?= $this->Form->hidden('pendingDates', [
     'value' => json_encode($pendingDates),
     'id' => 'pendingDates'

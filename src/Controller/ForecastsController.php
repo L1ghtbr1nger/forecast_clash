@@ -103,6 +103,7 @@ class ForecastsController extends AppController
             $pendingEvents = [];
             $pendingDates = [];
             $pendingDatesEnd = [];
+            $pendingEventTotals = [0,0,0];
             $activeLocations = [];
             $activeRadius = [];
             $activeEvents = [];
@@ -114,7 +115,15 @@ class ForecastsController extends AppController
                         $pendingIDs[] = $forecast['id'];
                         $pendingLocations[] = [$forecast['latitude'], $forecast['longitude']];
                         $pendingRadius[] = $forecast['radius'];
-                        $pendingEvents[] = $forecast['weather_event']['weather'];
+                        $event = $forecast['weather_event']['weather'];
+                        $pendingEvents[] = $event;
+                        if ($event == 'Tornado') {
+                            $pendingEventTotals[0]++;
+                        } else if ($event == 'Hail') {
+                            $pendingEventTotals[1]++;
+                        } else {
+                            $pendingEventTotals[2]++;
+                        }
                         $pendingDates[] = $forecast['forecast_date_start']->i18nFormat('MMMM d, H:mm');
                         $pendingDatesEnd[] = $forecast['forecast_date_end']->i18nFormat('MMMM d, H:mm');
                     }
@@ -133,6 +142,7 @@ class ForecastsController extends AppController
             $this->set('pendingLocations', $pendingLocations);
             $this->set('pendingRadius', $pendingRadius);
             $this->set('pendingEvents', $pendingEvents);
+            $this->set('pendingEventTotals', $pendingEventTotals);
             $this->set('pendingDates', $pendingDates);
             $this->set('pendingDatesEnd', $pendingDatesEnd);
             $this->set('activeLocations', $activeLocations);
