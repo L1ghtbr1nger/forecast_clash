@@ -711,8 +711,16 @@ $('document').ready(function() {
     var hamburger = L.control({ position: 'topright' });
     hamburger.onAdd = function(map) {
         var div = L.DomUtil.create('div', 'info legend2 map-menu');
-        div.innerHTML = '<nav><ul><li class="sub-menu-parent"><a href="#"><i class="fa fa-bars hamburger" aria-hidden="true"></i><span class="menu-text">Menu</span></a><ul class="sub-menu"></ul></nav>';
+        div.innerHTML = '<nav><ul><li class="sub-menu-parent"><a href="#"></a><ul class="sub-menu"></ul></nav>';
         return div;
     };
     hamburger.addTo(map);
+
+    var hamburger2 = L.control({ position: 'topright' });
+    hamburger2.onAdd = function(map) {
+        var div = L.DomUtil.create('div', 'info legend2 map-menu2');
+        div.innerHTML = '<nav><ul><li class="sub-menu-parent"><a href="#"></a><ul class="sub-menu"></ul></nav>';
+        return div;
+    };
+    hamburger2.addTo(map);
 });
