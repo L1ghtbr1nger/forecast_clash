@@ -1,5 +1,5 @@
 $('document').ready(function() {
-    
+
     // svg tornado marker
     var tornadoSVG = "<svg version='1.1' id='tornado' class='climacon climacon_tornado leaflet-marker-icon leaflet-zoom-animated leaflet-interactive leaflet-marker-draggable' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-tornado'><g class='climacon_componentWrap climacon_componentWrap-tornado'><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine'd='M68.997,36.459H31.002c-1.104,0-2-0.896-2-1.999c0-1.104,0.896-2,2-2h37.995c1.104,0,2,0.896,2,2C70.997,35.563,70.102,36.459,68.997,36.459z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M35.002,40.459h29.996c1.104,0,2,0.896,2,2s-0.896,1.999-2,1.999H35.002c-1.104,0-2-0.896-2-1.999C33.002,41.354,33.898,40.459,35.002,40.459z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M39.001,48.458h21.998c1.104,0,1.999,0.896,1.999,1.999c0,1.104-0.896,2-1.999,2H39.001c-1.104,0-1.999-0.896-1.999-2C37.002,49.354,37.897,48.458,39.001,48.458z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine' d='M47,64.456h5.999c1.104,0,2,0.896,2,1.999s-0.896,2-2,2H47c-1.104,0-2-0.896-2-2S45.896,64.456,47,64.456z'></path><path class='climacon_component climacon_component-stroke climacon_component-stroke_tornadoLine'd='M40.869,58.456c0-1.104,0.896-1.999,2-1.999h13.998c1.104,0,2,0.896,2,1.999c0,1.104-0.896,2-2,2H42.869C41.765,60.456,40.869,59.561,40.869,58.456z'></path></g></g></svg>";
 
@@ -34,10 +34,12 @@ $('document').ready(function() {
     var pendingLocations = JSON.parse($('#pendingLocations').val());
     var pendingEvents = JSON.parse($('#pendingEvents').val());
     var pendingDates = JSON.parse($('#pendingDates').val());
+    var pendingDatesEnd = JSON.parse($('#pendingDatesEnd').val());
     var pendingRadius = JSON.parse($('#pendingRadius').val());
     var activeLocations = JSON.parse($('#activeLocations').val());
     var activeEvents = JSON.parse($('#activeEvents').val());
     var activeDates = JSON.parse($('#activeDates').val());
+    var activeDatesEnd = JSON.parse($('#activeDatesEnd').val());
     var activeRadius = JSON.parse($('#activeRadius').val());
     var pending = [];
     var active = [];
@@ -45,7 +47,8 @@ $('document').ready(function() {
     $.each(pendingLocations, function(i, v) {
         var stroke;
         if (pendingEvents[i] === 'Tornado') {
-            stroke = 'rgb(255, 51, 51)'
+            stroke = 'rgb(255, 51, 51)';
+            $('.leaflet-popup-content-wrapper').css('background','rgb(255,51,51)')
         } else if (pendingEvents[i] === 'Hail') {
             stroke = 'rgb(61, 182, 239)'
         } else if (pendingEvents[i] === 'Wind') {
@@ -54,8 +57,9 @@ $('document').ready(function() {
         pending.push(L.circle(v, (pendingRadius[i] * 1609.344), {
             color: stroke,
             weight: 2,
+            className: 'pendingPopup',
             fillColor: 'rgb(255,255,255)'
-        }).setStyle({className: 'clickThru'}).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> starting</br>' + pendingDates[i] + ' UTC</br><a style="text-decoration: underline;color:rgb(61, 182, 239)" id="deletePending" href="">Delete<input id="toDelete" name="toDelete" type="hidden" value="'+pendingIDs[i]+'"></a>').openPopup());
+        }).setStyle({className: 'clickThru'}).bindPopup('<div class="row"><div class="col-md-12"><h4><strong>Pending ' + pendingEvents[i] + ' Forecast</strong></h4></div></div><div class="row"><div class="col-md-6">inside a perimter of</div><div class="col-md-6"><span class="dateTime">'+Math.round(Math.PI * pendingRadius[i] * pendingRadius[i]).toLocaleString()+'mi<sup>2</sup></span></div></div><div class="row"><div class="col-md-6">centered at</div><div class="col-md-6"><span class="dateTime locDisplay">' + v[0] + "</span><span class='dateSpacer'>&nbsp;,</span> <span class='dateTime locDisplay'>" + v[1] + '</span></div></div><div class="row"><div class="col-md-6">between</div><div class="col-md-6"><span class="dateTime">'+pendingDates[i]+'</span></div></div><div class="row"><div class="col-md-6">and</div><div class="col-md-6"><span class="dateTime">'+pendingDatesEnd[i]+'</span></div></div><div class="row"><div class="col-md-12"><a style="text-decoration: underline;color:rgb(61, 182, 239)" class="deletePending" href="">Delete<input class="toDelete" name="toDelete" type="hidden" value="'+pendingIDs[i]+'"></a></div></div>').openPopup());
     });
 
     $.each(activeLocations, function(i, v) {
@@ -89,8 +93,6 @@ $('document').ready(function() {
         zoomControl: true
     }).on('popupopen', function(){
         $('.forecast-btn').appendTo('.forecastPopup .leaflet-popup-content-wrapper').css('display', 'block');
-
-
     })
 
     map.zoomControl.setPosition('topright'); // move zoom control to top right
@@ -666,10 +668,15 @@ $('document').ready(function() {
         toDelete = $(this).children('.toDelete').val();
         storage = $(this).parent().html();
         $(this).parent().html('Are you sure you want to delete this forecast?</br><button id="noDelete" class="btn btn-primary" style="float:left;margin-top:5px">No</button><button id="yesDelete" class="btn btn-primary" style="float:right;margin-top:5px">Yes</button><div style="width:100%;height:40px;visibility:hidden">Clear</div>');
+        $('.leaflet-popup-content-wrapper').css('height', '212px');
+        $('.newForecast .leaflet-popup-content-wrapper').css('height', '54px');
+
     });
     $(document.body).on('click', '#noDelete', function(e) {
         e.preventDefault();
         $(this).parent().html(storage);
+        $('.leaflet-popup-content-wrapper').css('height', '178px');
+        $('.newForecast .leaflet-popup-content-wrapper').css('height', '54px');
     });
     $(document.body).on('click', '#yesDelete', function(e) {
         e.preventDefault();
@@ -685,10 +692,11 @@ $('document').ready(function() {
             }
         });
     });
-    var latlng;var newPopup;
+    var latlng;
     $(window.map).on('click', '.clickThru', function(e) {
+        console.log(e);
         latlng = map.mouseEventToLatLng(e.originalEvent);
-        newPopup = L.popup({className: 'newForecast'}).setContent('<button class="btn btn-primary clickedThru">New Forecast</button>').setLatLng(latlng);
+        var newPopup = L.popup({className: 'newForecast'}).setContent('<button class="btn btn-primary clickedThru">New Forecast</button>').setLatLng(latlng);
         map.addLayer(newPopup);
     });  
     $(document.body).on('click', '.clickedThru', function(e) {
@@ -696,7 +704,15 @@ $('document').ready(function() {
         lat = latlng.lat;
         lng = latlng.lng;
         isLocation = dmsFormat(lat, lng);
-        map.removeLayer(newPopup);
         eventMarker();
     });   
+        // hamburger menu
+
+    var hamburger = L.control({ position: 'topright' });
+    hamburger.onAdd = function(map) {
+        var div = L.DomUtil.create('div', 'info legend2 map-menu');
+        div.innerHTML = '<nav><ul><li class="sub-menu-parent"><a href="#"><i class="fa fa-bars hamburger" aria-hidden="true"></i><span class="menu-text">Menu</span></a><ul class="sub-menu"></ul></nav>';
+        return div;
+    };
+    hamburger.addTo(map);
 });

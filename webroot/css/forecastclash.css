@@ -7983,7 +7983,7 @@ ul {
 }
 
 .play-container .leaflet-control-zoom {
-    right: 102px;
+    right: 98px;
 }
 
 .leaflet-control-layers-expanded {
@@ -8796,7 +8796,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 #radiusMask {
-    cursor: ew-resize;
+    cursor: ns-resize;
     padding: 18px 0 28px 0;
     background: transparent;
     max-width: 110px;
@@ -9093,7 +9093,7 @@ label[for="7"] {
 }
 
 #window #time-window {
-    height: 400px;
+    height: 394px;
     width: 65px;
     border: none;
     background: linear-gradient(rgb(83, 83, 83), rgb(83, 83, 83), #212121 3%, #212121 20%, #3c3c3c 49.5%, black, #3c3c3c 50.5%, #212121 80%, #212121 97%, rgb(83, 83, 83) 98%);
@@ -9130,7 +9130,6 @@ label[for="7"] {
 #time-window:before {
     height: 394px;
     width: 65px;
-    margin-top: 3px;
 }
 
 #moe-window:before {
@@ -9149,12 +9148,21 @@ label[for="7"] {
     text-align: center;
 }
 
+.time-options p {
+    position: relative;
+    top: -2px;
+    padding: 0 0 10px;
+    margin: 0;
+}
+
 .timeShift:hover {
     cursor: pointer;
 }
 
-#up {
-    top: 3px;
+.moe-options p,
+.day-options p {
+    margin: 0;
+    padding: 0 0 10px;
 }
 
 #up i {
@@ -9215,10 +9223,9 @@ label[for="7"] {
     color: rgb(255, 255, 255) !important;
 }
 
-.forecastPopup .leaflet-popup-content-wrapper,
-.forecastPopup .leaflet-popup-tip,
 .leaflet-popup-tip,
-.leaflet-popup-content-wrapper {
+.leaflet-popup-content-wrapper,
+.leaflet-popup {
     background-color: rgba(51, 51, 51, 0.7);
     color: #fff;
 }
@@ -9244,7 +9251,7 @@ label[for="7"] {
     pointer-events: auto;
 }
 
-.forecastPopup h4 {
+.leaflet-popup-content h4 {
     display: inline;
     position: relative;
     top: -6px;
@@ -9314,7 +9321,7 @@ label[for="7"] {
     font-weight: normal;
 }
 
-.forecastPopup .row {
+.leaflet-popup-content .row {
     margin-right: -6px;
     height: 32px;
 }
@@ -9348,7 +9355,6 @@ label[for="7"] {
     left: -80px;
     top: 20px;
     padding: 10px;
-    background-color: black;
 }
 
 .newForecast .leaflet-popup-content {
@@ -9360,4 +9366,87 @@ label[for="7"] {
     margin: 0;
     background-color: ghostwhite;
     color: red;
+}
+
+#noDelete {
+    background-color: transparent;
+    border: 1px solid #fff;
+}
+
+
+/* Hamburger Menu */
+
+.hamburger {
+    color: #fff;
+    font-size: 20px !important;
+}
+
+.sub-menu-parent {
+    position: relative;
+}
+
+.sub-menu {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    left: -51px;
+    width: 143px;
+    height: 136px;
+    transform: translateY(-2em);
+    z-index: -1;
+    transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+}
+
+.sub-menu-parent:hover .sub-menu {
+    visibility: visible;
+    opacity: 1;
+    z-index: 1;
+    transform: translateY(0%);
+    transition-delay: 0s, 0s, 0.3s;
+}
+
+nav a {
+    color: #fff;
+    display: block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: ##fff;
+}
+
+nav ul,
+nav ul li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav > ul {
+    background: #333;
+    text-align: center;
+}
+
+nav > ul > li {
+    display: inline-block;
+    border-left: solid 1px #aaa;
+}
+
+nav > ul > li:first-child {
+    border-left: none;
+}
+
+.sub-menu {
+    background: rgba(51, 51, 51, .9);
+}
+
+.map-menu {
+    top: -42px;
+    position: relative;
+}
+.menu-text{
+    color: #fff;
+    padding-left:4px;
 }
