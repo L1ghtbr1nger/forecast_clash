@@ -228,7 +228,8 @@ $('document').ready(function() {
             color: stroke,
             weight: 2,
             className: 'pendingPopup',
-            fillColor: 'rgb(255,255,255)'
+            fillColor: 'rgb(255,255,255)',
+            fillOpacity: 0.45
         }).setStyle({className: 'clickThru'}).bindPopup(popupTwo).openPopup());
     });
     $('#pendingList').html(inserted);
@@ -255,7 +256,8 @@ $('document').ready(function() {
         active.push(L.circle(v, (activeRadius[i] * 1609.344), {
             color: stroke,
             weight: 2,
-            fillColor: 'rgb(255, 255, 255)'
+            fillColor: '#262626',
+            fillOpacity: 0.8
         }).setStyle({className: 'clickThru'}).bindPopup('Active ' + activeEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong></br>Awaiting results...').openPopup());
     });
     $('#activeList').html(inserted);
@@ -365,7 +367,7 @@ $('document').ready(function() {
             } else {
                 var msg = 'Wind';
             }
-            $('.pendingMenu').show();
+            $('.pendingMenu').show(pendShow());
             $('.forecast-btn').prop('disabled', true);
             $('#error-message').html("You have reached your max of 3 pending "+msg+" forecasts! Please delete a pending "+msg+" forecast or choose a different event type.");
             $('.error-notification').css({'width': '500px', 'left': '50%', 'top': '65px'});
@@ -639,7 +641,6 @@ $('document').ready(function() {
         $('.day-options').animate({top: moveDay}, 100);
         $('.time-options').animate({top: moveTime}, 100);
         $('.moe-options').animate({top: moveMoe}, 100);
-        console.log(dayNames[dayChoice]+" "+timeChoice+":00 UTC +/- "+moe[moeChoice]+" hour"+((moe[moeChoice] == 1) ? "" : "s")+".");
         datePrep();
         return false;
     }
