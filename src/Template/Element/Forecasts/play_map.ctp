@@ -42,6 +42,42 @@ h4 i{
              } else {
                 echo '<a href="/forecast_clash/users/login" class="btn forecast-btn forecast-link">Please Login</a>';
             } ?>
+            
+            <form class="hamPending">
+                <button class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></button>
+                <div class="hamMenu pendingMenu" style="display: none">
+                    <table class="table table-bordered">
+                        <thead class="flip-header">
+                            <tr>
+                                <th>Event</th>
+                                <th>Center</th>
+                                <th>Radius</th>
+                                <th>Starts</th>
+                                <th>Lasts</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pendingList"></tbody>
+                    </table>
+                </div>
+            </form>
+            <div class="hamActive">
+                <button class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></button>
+                <div class="hamMenu activeMenu" style="display: none">
+                    <table class="table table-bordered">
+                        <thead class="flip-header">
+                            <tr>
+                                <th>Event</th>
+                                <th>Center</th>
+                                <th>Radius</th>
+                                <th>Starts</th>
+                                <th>Lasts</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activeList"></tbody>
+                    </table>
+                </div>
+            </div>
             <br><a id="modalTrigger" style="display: none" href="#modalTrigger">Instructions</a>
             <span id="modalTrigger" class="leaflet-right leaflet-top" data-toggle="modal" data-target="#instructions-modal">
                 Instructions
