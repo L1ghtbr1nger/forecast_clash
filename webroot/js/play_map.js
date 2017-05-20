@@ -467,10 +467,12 @@ $('document').ready(function() {
     
     map.on('click', function(e) { //when user clicks the map
         if (typeof(e) != 'undefined') {
-            lat = e.latlng.lat;
-            lng = e.latlng.lng;
+            var clickPan = e.latlng;
+            lat = clickPan.lat;
+            lng = clickPan.lng;
             isLocation = dmsFormat(lat, lng);
             eventMarker();
+            map.panTo(clickPan);
         };
     });
     
@@ -805,6 +807,7 @@ $('document').ready(function() {
         newPopup = L.popup({className: 'newForecast', closeButton: false}).setContent('<button class="btn btn-primary clickedThru">New Forecast</button>').setLatLng(latlng);
         map.addLayer(newPopup);
         popupBorderColor();
+        map.panTo(latlng);
     });  
     $(document.body).on('click', '.clickedThru', function(e) {
         e.preventDefault();
