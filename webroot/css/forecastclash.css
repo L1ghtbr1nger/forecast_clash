@@ -7966,7 +7966,7 @@ ul {
     right: 0px;
     z-index: 100;
     padding: 0;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.83);
 }
 
 .icon-container {
@@ -9001,7 +9001,11 @@ p.day {
     border: 1px solid white;
 }
 .forecastPopup2 .deletePending {
-    top: 5px;
+    top: 7px;
+}
+
+.forecastPopup2.actPop .leaflet-popup-content {
+    margin-bottom: 5px;
 }
 
 .sidebar-footer .forecast-btn {
@@ -9418,7 +9422,7 @@ label[for="7"] {
     width: 1px;
     white-space: nowrap;
 }
-.hamMenu.table tbody tr:hover {
+.hamMenu .table tbody tr:hover {
     font-size: 14px;
 }
 

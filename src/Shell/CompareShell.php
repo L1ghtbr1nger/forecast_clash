@@ -17,7 +17,7 @@ class CompareShell extends Shell
     
     public function main() {
         $date = new Date(); //date for today
-        $time = new Time(); //time for now
+        $time = new Time('-6 hours'); //time for now
         $datePrev = new Date('-1 day'); //date for yesterday
         $query = $this->HistoricalForecasts->find()->where(['correct IS' => NULL, 'forecast_date_end <' => $time])->contain('WeatherEvents'); //find records where the forecast ended yesterday
         if ($query->toArray()) { //if record(s) found
@@ -33,6 +33,7 @@ class CompareShell extends Shell
                 $niceDate = new Date($row['forecast_date_start']);
                 $niceDate->nice();
                 $end = strtotime($row['forecast_date_end']);
+                $duration = $begin->diffInHours($end);
                 $http = new Client();
                 $params = 'client_id='.$appID.'&client_secret='.$appKey.'&fields=place.state,report.timestamp,loc.lat,loc.long,report.detail,report.detail.text&p='.$lat.','.$lon.'&radius='.$radius.'mi&limit=1&from='.$begin.'&to='.$end; //params common to each event comparison
                 if ($weather === 1) {
@@ -91,16 +92,17 @@ class CompareShell extends Shell
                         $statResult->forecast_length = $row['forecast_length'];
                     }
                     $radiusMult = 3 - ($radius / 5 / 10); //calculate multiplier 1.0 to 2.0 from radius
+                    $durationMult = 2.2 - ($duration / 10);
                     $adminMult = 1;//AdminEvent multiplier needed
                     $length = $row['forecast_length'];
                     $days = round($length / 24); //round hours into days
                     $timeMult = 1 + ($days / 10); //calculate time multiplier 1.0 to 1.8 from days out
                     if ($result = $score->first()) { //if found
-                        $newScore = $result['total_score'] + (10 * $radiusMult * $timeMult * $adminMult); //calculate score and add to existing
+                        $newScore = $result['total_score'] + (10 * $radiusMult * $timeMult * $durationMult * $adminMult); //calculate score and add to existing
                     } else { //if not
                         $result = $scoreboard->newEntity(); //create new record
                         $result->user_id = $user; //for selected user
-                        $newScore = 10 * $radiusMult * $timeMult * $adminMult; //calculate score
+                        $newScore = 10 * $radiusMult * $timeMult * $durationMult * $adminMult; //calculate score
                     }
                     $result->total_score = $newScore;
                     $scoreboard->save($result);

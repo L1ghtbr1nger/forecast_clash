@@ -71,7 +71,7 @@ h4 i{
                                 <th>Event</th>
                                 <th>Center</th>
                                 <th>Radius</th>
-                                <th>Starts</th>
+                                <th>Started</th>
                                 <th>Lasts</th>
                             </tr>
                         </thead>
