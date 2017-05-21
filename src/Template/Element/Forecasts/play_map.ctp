@@ -23,8 +23,9 @@ h4 i{
         <form action="#" class="search-filter forecast-tornado" id="forecastForm">
             <fieldset class="radius">
                 <label for="radiusMask" class="" style="color:#fff">
-                    <strong>Radius</strong><br><span id="output">(50 miles)</span>
+                    Radius<br><span id="output">50mi</span>
                 </label>
+                <i class="fa fa-play" aria-hidden="true"></i>
                 <input type="range" name="radius" id="radiusMask" value="50" min="5" max="100" step="5">
             </fieldset>
             <!-- hidden form fields -->

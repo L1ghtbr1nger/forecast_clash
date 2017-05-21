@@ -7966,14 +7966,6 @@ ul {
     z-index: 100;
 }
 
-.radius-label {
-    top: 6px;
-    left: 27px;
-    position: relative;
-    transform: rotate(90deg);
-    font-size: 13px;
-}
-
 .icon-container {
     float: left;
     margin-right: 24px;
@@ -8107,10 +8099,6 @@ ul {
     padding: 0;
 }
 
-span.tornado-control-active {
-    padding: 5px;
-}
-
 .tornado-control-active svg {
     position: relative;
     display: inline-block;
@@ -8123,10 +8111,6 @@ span.tornado-control-active {
 .hail-control-active {
     border: 1px solid rgb(61, 182, 239);
     padding: 0;
-}
-
-span.hail-control-active {
-    padding: 5px;
 }
 
 .hail-control-active svg {
@@ -8145,10 +8129,6 @@ span.hail-control-active {
 .wind-control-active {
     border: 1px solid rgb(255, 165, 0);
     padding: 0;
-}
-
-span.wind-control-active {
-    padding: 5px;
 }
 
 .wind-control-active svg {
@@ -8644,7 +8624,7 @@ input[type=range]::-webkit-slider-thumb {
     width: 20px;
     border-radius: 50%;
     background: rgb(61, 182, 239);
-    margin-top: -4px;
+    margin-top: -7px;
 }
 
 input[type=range]:focus {
@@ -8802,34 +8782,49 @@ input[type=range]:focus::-ms-fill-upper {
 
 
 /* Date Range Slider */
+.leaflet-left .leaflet-control {
+    margin-left: 2px;
+    margin-top: 5px;
+}
 
 .radius {
     width: 100%;
-    max-width: 150px;
+    max-width: 85px;
     position: relative;
-    top: 10px;
-    left: 125px;
+    top: 5px;
+    left: 63px;
     z-index: 100;
-}
-
-.radius-output {
-    display: inline-block;
-    margin-top: 40px;
+    overflow-x: visible;
 }
 
 #radiusMask {
-    cursor: ns-resize;
+    cursor: ew-resize;
     padding: 18px 0 28px 0;
     background: transparent;
-    max-width: 110px;
-    transform: rotate(270deg);
+    width: 110px;
     position: relative;
-    top: 40px;
-    left: -18px;
+    top: -21px;
 }
 
 .radius label {
-    line-height: 1em;
+    line-height: 1.2em;
+    font-size: 12px;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 49px;
+    text-align: center;
+    margin-left: 29px;
+    border: 1px solid gray;
+    border-radius: 7px;
+    padding-bottom: 2px;
+}
+
+.radius i {
+    position: relative;
+    font-size: 12px;
+    margin: 0 0 0 48px;
+    padding: 0;
+    transform: rotate(90deg);
+    top: -9px;
 }
 
 .toggle_radio {
@@ -8846,37 +8841,6 @@ input[type=range]:focus::-ms-fill-upper {
     top: -160px;
     left: -125px;
 }
-
-
-/* Webkit Hack */
-
-
-/*
-.toggle_radio:not(*:root) {
-    top: -187px;
-}
-
-.easy-button-container:not(*:root) {
-    top: -73px;
-}
-
-.radius:not(*:root) {
-    top: 23px;
-}
-
-.radius-label:not(*:root) {
-    top: 10px;
-    left: 30px;
-}
-
-.range-slider-container .sidebar-footer:not(*:root) {
-    top: -60px;
-}
-
-#radiusMask:not(*:root) {
-    top: -34px;
-    right: -34px;
-}*/
 
 .toggle_radio .description span,
 .time-to,
@@ -9093,7 +9057,8 @@ label[for="7"] {
 #window {
     position: absolute;
     z-index: 1;
-    top: 10px;
+    top: 8px;
+    left: -5px;
     height: 0;
     transform: scale(.8);
 }
@@ -9128,9 +9093,10 @@ label[for="7"] {
 
 #window #time-window {
     height: 394px;
-    width: 65px;
-    border: none;
+    width: 69px;
+    border-image: linear-gradient(to bottom, #212121, #212121, #212121, #212121, #212121, white, #212121, #212121, #212121, #212121, #212121) 1 100%;
     background: linear-gradient(rgb(83, 83, 83), rgb(83, 83, 83), #212121 3%, #212121 20%, #3c3c3c 49.5%, black, #3c3c3c 50.5%, #212121 80%, #212121 97%, rgb(83, 83, 83) 98%);
+    top: 78px;
 }
 
 #window #moe-window {
@@ -9183,9 +9149,7 @@ label[for="7"] {
 }
 
 .time-options p {
-    position: relative;
-    top: -2px;
-    padding: 0 0 10px;
+    padding: 0 0 7px 0;
     margin: 0;
 }
 
@@ -9196,7 +9160,7 @@ label[for="7"] {
 .moe-options p,
 .day-options p {
     margin: 0;
-    padding: 0 0 10px;
+    padding: 0 0 5px;
 }
 
 #up i {
@@ -9204,10 +9168,11 @@ label[for="7"] {
 }
 
 #down {
-    top: 372px;
+    top: 365px;
 }
 
 #down i {
+    margin-top: 7px;
     transform: rotate(90deg);
 }
 
@@ -9216,8 +9181,9 @@ label[for="7"] {
     z-index: 2;
     width: 100%;
     color: white;
-    font-weight: bold;
-    font-size: 14px;
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 16.5px;
     text-align: center;
 }
 
@@ -9232,11 +9198,11 @@ label[for="7"] {
 }
 
 .time-options {
-    top: -170px;
+    top: -175px;
 }
 
 .moe-options {
-    top: 2px;
+    top: 4px;
 }
 
 [class$="options"] p:hover {

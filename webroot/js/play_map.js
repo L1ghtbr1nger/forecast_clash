@@ -77,9 +77,9 @@ $('document').ready(function() {
     var times = ["00","01","02","03","04","05","06","07","08","09",10,11,12,13,14,15,16,17,18,19,20,21,22,23]; //array of 24, 2-character hours
     var moe = [1,2,3,4,5,6]; //array of time windows
     var dayNames = []; //initialize array to take day names
-    var moveDay = 31; //initial position of day reel
-    var moveTime = -170; //initial position of time reel
-    var moveMoe = 1; //initial position of moe reel
+    var moveDay = 32; //initial position of day reel
+    var moveTime = -175; //initial position of time reel
+    var moveMoe = 4; //initial position of moe reel
     var dayChoice = 1; //initial user day value
     var timeChoice = 12; //initial user time value
     var moeChoice = 2; //initial user moe value
@@ -336,11 +336,18 @@ $('document').ready(function() {
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {}).addTo(map);
     
     // radius functionality
-    $("#radiusMask").change(function() {
-        $("#output").text('(' + $("#radiusMask").val() + ' miles)');
-        $("#radius").val($("#radiusMask").val());
-    });
     var radiusInput = document.getElementById('radiusMask');
+    var oldRadius = radiusInput.value;
+    var leftMargin = 29;
+    $("#radiusMask").change(function() {
+        radius = radiusInput.value;
+        leftMargin += radius - oldRadius;
+        oldRadius = radius;
+        $("#output").text(radius+'mi');
+        $("#radius").val(radius);
+        $('.radius label').animate({'marginLeft': leftMargin}, 0);
+        $('.radius i').animate({'marginLeft': (leftMargin + 19)}, 0);
+    });
     var radius = radiusInput.value;
         
     var eventCircle;
@@ -484,7 +491,7 @@ $('document').ready(function() {
                 $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
             }
             if(moeChoice > gap - 3) { //if user selected moe is disabled by user selecting today
-                moveMoe += 30 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
+                moveMoe += 28 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
                 moeChoice = gap - 3; //user select that option
             }
         }
@@ -605,7 +612,7 @@ $('document').ready(function() {
         if(!delta){ //if up
             if(e.target.id == "day-window" || $(e.target).hasClass("day-options") || $(e.target).parent().hasClass("day-options")) { //if scrolled down over day reel
                 if(dayChoice > 0) { //if top choice not selected
-                    moveDay += 30; //set scroll for reel to one turn
+                    moveDay += 28; //set scroll for reel to one turn
                     dayChoice--; //user selected day
                     dayUp();
                 }
@@ -619,14 +626,14 @@ $('document').ready(function() {
             }
             if(e.target.id == "moe-window" || $(e.target).hasClass("moe-options") || $(e.target).parent().hasClass("moe-options")) { //if user scrolls down over moe reel
                 if(moeChoice > 0) {
-                    moveMoe += 30;
+                    moveMoe += 28;
                     moeChoice--;
                 }
             }
         } else {
             if(e.target.id == "day-window" || $(e.target).hasClass("day-options") || $(e.target).parent().hasClass("day-options")) { //if user scrolls up over moe reel
                 if(dayChoice < (dayLength - 1)) {
-                    moveDay -= 30;
+                    moveDay -= 28;
                     dayChoice++;
                     dayDown();
                 }
@@ -640,7 +647,7 @@ $('document').ready(function() {
             }
             if(e.target.id == "moe-window" || $(e.target).hasClass("moe-options") || $(e.target).parent().hasClass("moe-options")) {
                 if(moeChoice < moeLength - 1 && ((!isToday && !isTomorrow) || (isToday && moeChoice < timeChoice - utcHR - 3) || (isTomorrow && moeChoice < timeChoice + (24 - utcHR) - 3))) {
-                    moveMoe -= 30;
+                    moveMoe -= 28;
                     moeChoice++;
                 }
             }
@@ -684,7 +691,7 @@ $('document').ready(function() {
         var selected = $(this).index();
         var turns = dayChoice - selected;
         dayChoice = selected;
-        moveDay += turns * 30;
+        moveDay += turns * 28;
         if(turns > 0) { 
             dayUp();
         } else if(turns < 0) {
@@ -714,7 +721,7 @@ $('document').ready(function() {
         var selected = $(this).index();
         var turns = moeChoice - selected;
         moeChoice = selected;
-        moveMoe += turns * 30;
+        moveMoe += turns * 28;
         $('.moe-options').animate({top: moveMoe}, 100);
         datePrep();
     });
