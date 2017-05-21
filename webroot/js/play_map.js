@@ -408,6 +408,9 @@ $('document').ready(function() {
                     eventMarker();
                 };
                 popupBorderColor();
+                $('#radiusMask').addClass('slideT');
+                $('#radiusMask').removeClass('slideH');
+                $('#radiusMask').removeClass('slideW');
                 maxEvent(0);
             },
 
@@ -433,6 +436,9 @@ $('document').ready(function() {
                     eventMarker();
                 };
                 popupBorderColor();
+                $('#radiusMask').addClass('slideH');
+                $('#radiusMask').removeClass('slideT');
+                $('#radiusMask').removeClass('slideW');
                 maxEvent(1);
             },
 
@@ -458,6 +464,9 @@ $('document').ready(function() {
                     eventMarker();
                 };
                 popupBorderColor();
+                $('#radiusMask').addClass('slideW');
+                $('#radiusMask').removeClass('slideH');
+                $('#radiusMask').removeClass('slideT');
                 maxEvent(2);
             },
 
@@ -847,4 +856,5 @@ $('document').ready(function() {
     $('.pendingMenu').click(function(e) {
         e.preventDefault();
     });
+    console.log($('#radiusMask'));
 });
