@@ -79,10 +79,7 @@ h4 i{
                     </table>
                 </div>
             </div>
-            <br><a id="modalTrigger" style="display: none" href="#modalTrigger">Instructions</a>
-            <span id="modalTrigger" class="leaflet-right leaflet-top" data-toggle="modal" data-target="#instructions-modal">
-                Instructions
-            </span>
+            <br><a id="modalTrigger" href="#modalTrigger">Instructions</a>
         </div>
     </div>
     <div id="windowContainer">

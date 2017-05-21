@@ -334,6 +334,7 @@ $('document').ready(function() {
     
     // Set tile layer
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {}).addTo(map);
+    $('#modalTrigger').appendTo('.leaflet-top.leaflet-right .leaflet-control-layers');
     
     // radius functionality
     var radiusInput = document.getElementById('radiusMask');

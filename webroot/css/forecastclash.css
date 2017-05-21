@@ -4323,7 +4323,7 @@ div.body-col p {
 }
 
 #map {
-    height: 92.66vh;
+    height: calc(100vh - 57px);
     z-index: 0;
 }
 
@@ -7956,14 +7956,17 @@ ul {
 }
 
 #modalTrigger {
+    position: absolute;
     font-weight: 600;
     color: #fff;
     text-decoration: underline;
     cursor: pointer;
-    pointer-events: initial;
-    top: 138px;
-    right: 12px;
+    pointer-events: auto;
+    top: 72px;
+    right: 0px;
     z-index: 100;
+    padding: 0;
+    background-color: black;
 }
 
 .icon-container {
@@ -9407,41 +9410,21 @@ label[for="7"] {
 .hamMenu svg {
     width: 27px;
 }
-.table {
+.hamMenu .table {
     font-size: 12px;
     margin: 0;
 }
-.table td {
+.hamMenu .table td {
     width: 1px;
     white-space: nowrap;
 }
-.table tbody tr:hover {
+.hamMenu.table tbody tr:hover {
     font-size: 14px;
 }
 
-.sub-menu-parent {
-    position: relative;
-}
-
-.sub-menu {
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    top: 27px;
-    left: -111px;
-    width: 143px;
-    height: 136px;
-    transform: translateY(-2em);
-    z-index: -1;
-    transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
-}
-
-.sub-menu-parent:hover .sub-menu {
-    visibility: visible;
-    opacity: 1;
-    z-index: 1;
-    transform: translateY(0%);
-    transition-delay: 0s, 0s, 0.3s;
+.leaflet-top.leaflet-right {
+    top: -8px;
+    right: -7px;
 }
 
 nav a {
@@ -9452,7 +9435,7 @@ nav a {
 }
 
 nav a:hover {
-    color: ##fff;
+    color: #fff;
 }
 
 nav ul,
@@ -9469,10 +9452,6 @@ nav > ul {
 
 nav > ul > li {
     display: inline-block;
-    border-left: solid 1px #aaa;
-}
-
-nav > ul > li:first-child {
     border-left: none;
 }
 
