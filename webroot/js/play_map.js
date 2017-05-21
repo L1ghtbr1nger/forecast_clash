@@ -856,5 +856,5 @@ $('document').ready(function() {
     $('.pendingMenu').click(function(e) {
         e.preventDefault();
     });
-    console.log($('#radiusMask'));
+    map.invalidateSize();
 });
