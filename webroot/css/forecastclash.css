@@ -9392,6 +9392,12 @@ label[for="7"] {
     color: white;
     display: none;
 }
+.hamMenu table tbody tr td:first-of-type {
+    padding: 2px 0 0 10px;
+}
+.hamMenu svg {
+    width: 27px;
+}
 .table {
     font-size: 12px;
     margin: 0;
