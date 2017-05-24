@@ -480,8 +480,8 @@ $('document').ready(function() {
         radius = radiusInput.value;
         if(eventCircle != undefined) {
             eventMarker();
-        }
-    }
+        };
+    };
     
     map.on('click', function(e) { //when user clicks the map
         if (typeof(e) != 'undefined') {
@@ -500,27 +500,27 @@ $('document').ready(function() {
             wasSoon = true; //moe options have been removed
             for(var i=0; i<(gap - 2); i++) { //add back enabled moe options only
                 $('#moe-window > .moe-options').append('<p><sup>+</sup>&frasl;<sub>-</sub> '+moe[i]+'hr'+((moe[i] == 1) ? '' : 's')+'</p>');
-            }
+            };
             if(moeChoice > gap - 3) { //if user selected moe is disabled by user selecting today
                 moveMoe += 28 * (moeChoice - (gap - 3)); //scroll reel to the next enabled option
                 moeChoice = gap - 3; //user select that option
-            }
-        }
-    }
+            };
+        };
+    };
     
     function timeSet(cutoff) {
         $('#time-window > .time-options p').remove(); //remove all options from time reel
         for(var i=0; i<(cutoff); i++) { //put in nbsp place holders for disabled options
             $('#time-window > .time-options').append('<p>&nbsp;</p>');
-        }
+        };
         for(var i=(cutoff); i<24; i++) { //start from the first enabled option and finish displaying options
             $('#time-window > .time-options').append('<p>'+times[i]+':00Z</p>');
-        }
+        };
         if(timeChoice < cutoff) { //if the current selected time is disabled by selecting today
             moveTime -= 30 * (cutoff - timeChoice); //scroll reel to next enabled option
             timeChoice = cutoff; //user select that option
-        }
-    }
+        };
+    };
     
     function todaySet() {
         wasToday = true;
@@ -529,30 +529,30 @@ $('document').ready(function() {
         var gap = timeChoice - utcHR; //hours between user selected time and current time
         if(!wasSoon) { //if any of the moes should be disabled and haven't already been
             moeSet(gap);
-        }
-    }
+        };
+    };
     
     function tomorrowSet() {
         wasTomorrow = true;
         if(utcHR > 21) {
             var cutoff = utcHR - 21;
             timeSet(cutoff);
-        }
+        };
         var gap = timeChoice + (24 - utcHR); //hours between user selected time and current time
         if(!wasSoon) { //if any of the moes should be disabled and haven't already been
             moeSet(gap);
-        }
-    }
+        };
+    };
     
     function dayUp() {
-        isToday = days[dayChoice] == today.getDay() ? true : false; //boolean indicating if selected day is today
-        isTomorrow = days[dayChoice] == tomorrow.getDay() ? true : false; //boolean indicating if selected day is tomorrow
+        isToday = days[dayChoice] == today.getDay(); //boolean indicating if selected day is today
+        isTomorrow = days[dayChoice] == tomorrow.getDay(); //boolean indicating if selected day is tomorrow
         if(isToday && !wasToday) { //if today is selected and wasn't already selected
             todaySet();
         } else if(isTomorrow && utcHR > 16) { //if user selects tomorrow and it is later than 21Z tonight
             tomorrowSet();
-        }
-    }
+        };
+    };
     
     function dayDown() {
         isToday = false;
@@ -566,19 +566,19 @@ $('document').ready(function() {
                 } else {
                     wasSoon = false;
                     moeReset();
-                }
+                };
             } else {
                 moeReset();
-            }
+            };
         } else if(wasTomorrow) {
             wasTomorrow = false;
             timeReset();
             if(wasSoon) {
                 wasSoon = false;
                 moeReset();
-            }
-        }
-    }
+            };
+        };
+    };
     
     function timeUp() {
         if(isToday) { //if today is user selected
@@ -587,8 +587,8 @@ $('document').ready(function() {
         } else if(isTomorrow && timeChoice < moeLength + 2 && utcHR > 16) {
             var gap = timeChoice + (24 - utcHR); //difference between current time and user selected time
             moeSet(gap);
-        }
-    }
+        };
+    };
     
     function timeDown() {
         if(isToday && wasSoon) {
@@ -598,7 +598,7 @@ $('document').ready(function() {
             } else {
                 wasSoon = false;
                 moeReset();
-            }
+            };
         } else if(isTomorrow && wasSoon) {
             var gap = timeChoice + (24 - utcHR); //difference between current time and user selected time
             if(gap < moeLength + 2) { //if gap is less than longest window
@@ -606,9 +606,61 @@ $('document').ready(function() {
             } else {
                 wasSoon = false;
                 moeReset();
-            }
-        }
-    }
+            };
+        };
+    };
+    
+    function reelAnimate(x) {
+        $('.day-options').animate({top: moveDay}, x);
+        $('.time-options').animate({top: moveTime}, x);
+        $('.moe-options').animate({top: moveMoe}, x);
+    };
+    
+    function reelUp(e) {
+        if(e.target.id == "day-window" || $(e.target).hasClass("day-options") || $(e.target).parent().hasClass("day-options")) { //if scrolled down over day reel
+            if(dayChoice > 0) { //if top choice not selected
+                moveDay += 28; //set scroll for reel to one turn
+                dayChoice--; //user selected day
+                dayUp();
+            };
+        };
+        if(e.target.id == "time-window" || $(e.target).hasClass("time-options") || $(e.target).parent().hasClass("time-options")) { //if scrolled down over time reel
+            if((!isToday && !isTomorrow && timeChoice > 0) || (isToday && timeChoice > utcHR + 3) || (isTomorrow && ((utcHR < 22 && timeChoice > 0) || (utcHR > 21 && timeChoice > utcHR - 21)))) { //if today not selected and top option not selected or today selected and top enabled option not selected
+                moveTime += 30; //scroll reel one turn
+                timeChoice--; //user select time option
+                timeUp();
+            };
+        };
+        if(e.target.id == "moe-window" || $(e.target).hasClass("moe-options") || $(e.target).parent().hasClass("moe-options")) { //if user scrolls down over moe reel
+            if(moeChoice > 0) {
+                moveMoe += 28;
+                moeChoice--;
+            };
+        };
+    };
+    
+    function reelDown(e) {
+        if(e.target.id == "day-window" || $(e.target).hasClass("day-options") || $(e.target).parent().hasClass("day-options")) { //if user scrolls up over moe reel
+            if(dayChoice < (dayLength - 1)) {
+                moveDay -= 28;
+                dayChoice++;
+                dayDown();
+            };
+        };
+        if(e.target.id == "time-window" || $(e.target).hasClass("time-options") || $(e.target).parent().hasClass("time-options")) {
+            if(timeChoice < timeLength - 1) {
+                moveTime -= 30;
+                timeChoice++;
+                timeDown();
+            };
+        };
+        if(e.target.id == "moe-window" || $(e.target).hasClass("moe-options") || $(e.target).parent().hasClass("moe-options")) {
+            if(moeChoice < moeLength - 1 && ((!isToday && !isTomorrow) || (isToday && moeChoice < timeChoice - utcHR - 3) || (isTomorrow && moeChoice < timeChoice + (24 - utcHR) - 3))) {
+                moveMoe -= 28;
+                moeChoice++;
+            };
+        };
+    };
     
     var lastExecution = 0; //initiate time object of last time function was run
     function MouseWheelHandler(e) { //handles mouse wheel scroll
@@ -616,87 +668,185 @@ $('document').ready(function() {
         var now = Date.now(); //time now
         if (now - lastExecution < 23) return; // ~60Hz refresh rate on function
         lastExecution = now; //set last time function was run to right now
-        isToday = days[dayChoice] == today.getDay() ? true : false; //boolean indicating if selected day is today    
-        isTomorrow = days[dayChoice] == tomorrow.getDay() ? true : false; //boolean indicating if selected day is tomorrow
+        isToday = days[dayChoice] == today.getDay(); //boolean indicating if selected day is today    
+        isTomorrow = days[dayChoice] == tomorrow.getDay(); //boolean indicating if selected day is tomorrow
         reelNoColor();
         var delta = Math.max(false, Math.min(true, (e.wheelDelta || -e.detail))); //which direction was mouse wheel rotated
         if(!delta){ //if up
-            if(e.target.id == "day-window" || $(e.target).hasClass("day-options") || $(e.target).parent().hasClass("day-options")) { //if scrolled down over day reel
-                if(dayChoice > 0) { //if top choice not selected
-                    moveDay += 28; //set scroll for reel to one turn
-                    dayChoice--; //user selected day
-                    dayUp();
-                }
-            }
-            if(e.target.id == "time-window" || $(e.target).hasClass("time-options") || $(e.target).parent().hasClass("time-options")) { //if scrolled down over time reel
-                if((!isToday && !isTomorrow && timeChoice > 0) || (isToday && timeChoice > utcHR + 3) || (isTomorrow && ((utcHR < 22 && timeChoice > 0) || (utcHR > 21 && timeChoice > utcHR - 21)))) { //if today not selected and top option not selected or today selected and top enabled option not selected
-                    moveTime += 30; //scroll reel one turn
-                    timeChoice--; //user select time option
-                    timeUp();
-                }
-            }
-            if(e.target.id == "moe-window" || $(e.target).hasClass("moe-options") || $(e.target).parent().hasClass("moe-options")) { //if user scrolls down over moe reel
-                if(moeChoice > 0) {
-                    moveMoe += 28;
-                    moeChoice--;
-                }
-            }
+            reelUp(e);
         } else {
-            if(e.target.id == "day-window" || $(e.target).hasClass("day-options") || $(e.target).parent().hasClass("day-options")) { //if user scrolls up over moe reel
-                if(dayChoice < (dayLength - 1)) {
-                    moveDay -= 28;
-                    dayChoice++;
-                    dayDown();
-                }
-            }
-            if(e.target.id == "time-window" || $(e.target).hasClass("time-options") || $(e.target).parent().hasClass("time-options")) {
-                if(timeChoice < timeLength - 1) {
-                    moveTime -= 30;
-                    timeChoice++;
-                    timeDown();
-                }
-            }
-            if(e.target.id == "moe-window" || $(e.target).hasClass("moe-options") || $(e.target).parent().hasClass("moe-options")) {
-                if(moeChoice < moeLength - 1 && ((!isToday && !isTomorrow) || (isToday && moeChoice < timeChoice - utcHR - 3) || (isTomorrow && moeChoice < timeChoice + (24 - utcHR) - 3))) {
-                    moveMoe -= 28;
-                    moeChoice++;
-                }
-            }
+            reelDown(e);
         }
-        $('.day-options').animate({top: moveDay}, 100);
-        $('.time-options').animate({top: moveTime}, 100);
-        $('.moe-options').animate({top: moveMoe}, 100);
+        reelAnimate(100);
         datePrep();
         return false;
-    }
+    };
+    
+    var initialTouchPos = null;
+    var lastTouchPos;
+    var rafPending = false;
+    var dayWindow = document.getElementById("day-window");
+    var timeWindow = document.getElementById("time-window");
+    var moeWindow = document.getElementById("moe-window");
+    var toScroll;var topStart;var posChange;var topChange;
+    
+    function getGesturePointFromEvent(e) {
+        var point = {};
+        if(e.targetTouches) {
+        // Prefer Touch Events
+            point.x = e.targetTouches[0].clientX;
+            point.y = e.targetTouches[0].clientY;
+        } else {
+            // Either Mouse event or Pointer Event
+            point.x = e.clientX;
+            point.y = e.clientY;
+        };
+        return point;
+    };
+    
+    function onAnimFrame(e) {
+        if(!rafPending) {
+            return;
+        };
+        posChange = (topStart + lastTouchPos.y - initialTouchPos.y);
+        toScroll.style.top = posChange+"px";
+        rafPending = false;
+    };
+    
+    // Handle end gestures
+    this.handleGestureEnd = function(e) {
+        e.preventDefault();
+        if(e.touches && e.touches.length > 0) {
+            return;
+        }
+        rafPending = false;
+        isToday = days[dayChoice] == today.getDay(); //boolean indicating if selected day is today    
+        isTomorrow = days[dayChoice] == tomorrow.getDay(); //boolean indicating if selected day is tomorrow
+        reelNoColor();
+        var changed = posChange - topStart;
+        var newChoice = Math.round(changed / topChange);
+        toScroll.style.top = topStart+"px";
+        if(changed > 0) {
+            for(var i = 0; i < newChoice; i++) {
+                reelUp(e);
+            };
+        } else if(changed < 0) {
+            for(var i = 0; i > newChoice; i--) {
+                reelDown(e);
+            };
+        };
+        reelAnimate(0);
+        datePrep();
+        // Remove Event Listeners
+        if (window.PointerEvent) {
+            e.target.releasePointerCapture(e.pointerId);
+        } else {
+            // Remove Mouse Listeners
+            document.removeEventListener('mousemove', this.handleGestureMove, true);
+            document.removeEventListener('mouseup', this.handleGestureEnd, true);
+        }
+        initialTouchPos = null;
+    }.bind(this);
+    
+    this.handleGestureMove = function (e) {
+        e.preventDefault();
+        if(!initialTouchPos) {
+            return;
+        };
+        lastTouchPos = getGesturePointFromEvent(e);
+        if(rafPending) {
+            return;
+        };
+        rafPending = true;
+        onAnimFrame(e);
+    }.bind(this);
+    
+    // Handle the start of gestures
+    this.handleGestureStart = function(e) {
+        e.preventDefault();
+        if(e.touches && e.touches.length > 1) {
+            return;
+        };
+        // Add the move and end listeners
+        if (window.PointerEvent) {
+            e.target.setPointerCapture(e.pointerId);
+        } else {
+            // Add Mouse Listeners
+            document.addEventListener('mousemove', this.handleGestureMove, true);
+            document.addEventListener('mouseup', this.handleGestureEnd, true);
+        };
+        initialTouchPos = getGesturePointFromEvent(e);
+        if(e.currentTarget.id == 'day-window') {
+            toScroll = document.getElementsByClassName('day-options')[0];
+            topStart = moveDay;
+            topChange = 28;
+        } else if (e.currentTarget.id == 'time-window') {
+            toScroll = document.getElementsByClassName('time-options')[0];
+            topStart = moveTime;
+            topChange = 30;
+        } else if (e.currentTarget.id == 'moe-window') {
+            toScroll = document.getElementsByClassName('moe-options')[0];
+            topStart = moveMoe;
+            topChange = 28;
+        }
+    }.bind(this);
 
-    $('#day-window').mouseover(function(){
-        var dayWindow = document.getElementById("day-window");
-        if (dayWindow.addEventListener) {
-            // IE9, Chrome, Safari, Opera
-            dayWindow.addEventListener("mousewheel", MouseWheelHandler, false);
-            // Firefox
-            dayWindow.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
-        }
-    });
-    $('#time-window').mouseover(function(){
-        var timeWindow = document.getElementById("time-window");
-        if (timeWindow.addEventListener) {
-            // IE9, Chrome, Safari, Opera
-            timeWindow.addEventListener("mousewheel", MouseWheelHandler, false);
-            // Firefox
-            timeWindow.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
-        }
-    });
-    $('#moe-window').mouseover(function(){
-        var moeWindow = document.getElementById("moe-window");
-        if (moeWindow.addEventListener) {
-            // IE9, Chrome, Safari, Opera
-            moeWindow.addEventListener("mousewheel", MouseWheelHandler, false);
-            // Firefox
-            moeWindow.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
-        }
-    });
+
+    // IE9, Chrome, Safari, Opera
+    dayWindow.addEventListener("mousewheel", MouseWheelHandler, false);
+    // Firefox
+    dayWindow.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
+    // Check if pointer events are supported.
+    if (window.PointerEvent) {
+        // Add Pointer Event Listener
+        dayWindow.addEventListener('pointerdown', this.handleGestureStart, true);
+        dayWindow.addEventListener('pointermove', this.handleGestureMove, true);
+        dayWindow.addEventListener('pointerup', this.handleGestureEnd, true);
+        dayWindow.addEventListener('pointercancel', this.handleGestureEnd, true);
+    } else {
+        // Add Touch Listener
+        dayWindow.addEventListener('touchstart', this.handleGestureStart, true);
+        dayWindow.addEventListener('touchmove', this.handleGestureMove, true);
+        dayWindow.addEventListener('touchend', this.handleGestureEnd, true);
+        dayWindow.addEventListener('touchcancel', this.handleGestureEnd, true);
+        // Add Mouse Listener
+        dayWindow.addEventListener('mousedown', this.handleGestureStart, true);
+    }
+    timeWindow.addEventListener("mousewheel", MouseWheelHandler, false);
+    timeWindow.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
+    if (window.PointerEvent) {
+        // Add Pointer Event Listener
+        timeWindow.addEventListener('pointerdown', this.handleGestureStart, true);
+        timeWindow.addEventListener('pointermove', this.handleGestureMove, true);
+        timeWindow.addEventListener('pointerup', this.handleGestureEnd, true);
+        timeWindow.addEventListener('pointercancel', this.handleGestureEnd, true);
+    } else {
+        // Add Touch Listener
+        timeWindow.addEventListener('touchstart', this.handleGestureStart, true);
+        timeWindow.addEventListener('touchmove', this.handleGestureMove, true);
+        timeWindow.addEventListener('touchend', this.handleGestureEnd, true);
+        timeWindow.addEventListener('touchcancel', this.handleGestureEnd, true);
+        // Add Mouse Listener
+        timeWindow.addEventListener('mousedown', this.handleGestureStart, true);
+    }
+    moeWindow.addEventListener("mousewheel", MouseWheelHandler, false);
+    moeWindow.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
+    if (window.PointerEvent) {
+        // Add Pointer Event Listener
+        moeWindow.addEventListener('pointerdown', this.handleGestureStart, true);
+        moeWindow.addEventListener('pointermove', this.handleGestureMove, true);
+        moeWindow.addEventListener('pointerup', this.handleGestureEnd, true);
+        moeWindow.addEventListener('pointercancel', this.handleGestureEnd, true);
+    } else {
+        // Add Touch Listener
+        moeWindow.addEventListener('touchstart', this.handleGestureStart, true);
+        moeWindow.addEventListener('touchmove', this.handleGestureMove, true);
+        moeWindow.addEventListener('touchend', this.handleGestureEnd, true);
+        moeWindow.addEventListener('touchcancel', this.handleGestureEnd, true);
+        // Add Mouse Listener
+        moeWindow.addEventListener('mousedown', this.handleGestureStart, true);
+    }
+    
     $("#day-window").on('click', ".day-options p", function(e) {
         reelNoColor();
         var selected = $(this).index();
@@ -708,11 +858,11 @@ $('document').ready(function() {
         } else if(turns < 0) {
             dayDown();
         }
-        $('.day-options').animate({top: moveDay}, 100);
+        reelAnimate();
         datePrep();
     });
     $("#time-window").on('click', ".time-options p", function(e) {
-        if($(this).context.innerHTML != " "){
+        if($(this).context.innerHTML != "&nbsp;"){
             reelNoColor();
             var selected = $(this).index();
             var turns = timeChoice - selected;
@@ -723,7 +873,7 @@ $('document').ready(function() {
             } else if(turns < 0) {
                 timeDown();
             };
-            $('.time-options').animate({top: moveTime}, 100);
+            reelAnimate();
         };
         datePrep();
     });
@@ -733,7 +883,7 @@ $('document').ready(function() {
         var turns = moeChoice - selected;
         moeChoice = selected;
         moveMoe += turns * 28;
-        $('.moe-options').animate({top: moveMoe}, 100);
+        reelAnimate();
         datePrep();
     });
     $("#up.timeShift").click(function(e) {
@@ -752,7 +902,7 @@ $('document').ready(function() {
             timeChoice = selected;
             moveTime += turns * 30;
             timeUp();
-            $('.time-options').animate({top: moveTime}, 100);
+            reelAnimate();
         };
         datePrep();
     });
@@ -771,7 +921,7 @@ $('document').ready(function() {
         timeChoice = selected;
         moveTime += turns * 30;
         timeDown();
-        $('.time-options').animate({top: moveTime}, 100);
+        reelAnimate();
         datePrep();
     });
     $(document.body).on('click', '.changeTZ', function(e) {
