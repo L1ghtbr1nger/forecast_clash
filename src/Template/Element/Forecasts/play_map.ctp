@@ -79,7 +79,7 @@ h4 i{
                     </table>
                 </div>
             </div>
-            <br><a id="modalTrigger" href="#modalTrigger">Instructions</a>
+           <div id="modalTrigger" data-toggle="modal" data-target="#modalTrigger">Instructions</div>
         </div>
     </div>
     <div id="windowContainer">
