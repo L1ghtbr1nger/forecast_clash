@@ -234,6 +234,7 @@ $(document).ready(function() {
     } else {
         // hide instructions
         $('#instructions-modal').modal('hide');
+        $('.modal-backdrop').remove();
     }
 
     $('.skip-instructions').click(function() {
@@ -245,10 +246,12 @@ $(document).ready(function() {
         $('.scoring-instructions-btn').show();
         $('.scoring-btn').hide();
         $('.targeting').hide();
+        $('.modal-backdrop').remove();
     });
 
     $('.scoring-btn').click(function() {
         $('#instructions-modal').modal('hide');
+        $('.modal-backdrop').remove();
     });
 
     $('#modalTrigger').click(function() {
@@ -257,6 +260,7 @@ $(document).ready(function() {
         $('.scoring-instructions-btn').show();
         $('.targeting').hide();
     });
+    
 });
 
 </script>

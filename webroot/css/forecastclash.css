@@ -9497,16 +9497,22 @@ nav > ul > li {
     }
     .play-container {
         padding-top: 45px;
-        height: calc(100vh - 88px);
+        height: calc(100vh - 43px);
     }
     #modalTrigger {
-        top: -79px;
+        position: fixed;
+        top: auto;
+        bottom: 46px;
         right: 5px;
     }
-    #window {
-        top: -132px;
+    #windowContainer {
+        position: fixed;
+        top: -95px;
         left: 35px;
-        width: 189px;
+    }
+    #window {
+        position: relative;
+        width: 238px;
     }
     #window #time-window {
         height: 203px;
@@ -9522,8 +9528,11 @@ nav > ul > li {
         top: 175px;
     }
     .play-container .leaflet-control-zoom {
-        top: -50px;
+        position: fixed;
+        top: auto;
+        bottom: 37px;
         left: 2px;
+        right: auto;
     }
     .leaflet-top.leaflet-right {
         z-index: 1005;
@@ -9532,10 +9541,13 @@ nav > ul > li {
         pointer-events: auto;
     }
     .leaflet-top.leaflet-right .leaflet-control-layers {
-        top: 2px;
+        position: fixed;
+        top: 39px;
+        right: -8px;
     }
     .radius {
-        top: -70px;
+        position: fixed;
+        top: 117px;
         left: 224px;
     }
     .leaflet-popup-content {
@@ -9559,5 +9571,18 @@ nav > ul > li {
     }
     #pendingList tr td:nth-of-type(5) {
         display: none;
+    }
+    .easy-button-container {
+        position: fixed;
+    }
+    .easy-button-container:first-of-type {
+        top: 46px;
+        left: 0px;
+    }
+    .easy-button-container:nth-of-type(2) {
+        top: 96px;
+    }
+    .easy-button-container:nth-of-type(3) {
+        top: 146px;
     }
 }
