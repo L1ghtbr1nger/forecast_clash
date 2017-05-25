@@ -124,8 +124,8 @@ class ForecastsController extends AppController
                         } else {
                             $pendingEventTotals[2]++;
                         }
-                        $pendingDates[] = $forecast['forecast_date_start']->i18nFormat('MMMM d, H:mm');
-                        $pendingDatesEnd[] = $forecast['forecast_date_end']->i18nFormat('MMMM d, H:mm');
+                        $pendingDates[] = $forecast['forecast_date_start'];
+                        $pendingDatesEnd[] = $forecast['forecast_date_end'];
                     }
                 }
                 if($historical = TableRegistry::get('HistoricalForecasts')->find('all')->where(['user_id' => $userID, 'correct IS NULL'])->contain('WeatherEvents')->order('weather_event_id')) {
@@ -133,8 +133,8 @@ class ForecastsController extends AppController
                         $activeLocations[] = [$history['latitude'], $history['longitude']];
                         $activeRadius[] = $history['radius'];
                         $activeEvents[] = $history['weather_event']['weather'];
-                        $activeDates[] = $history['forecast_date_start']->i18nFormat('MMMM d, H:mm');
-                        $activeDatesEnd[] = $history['forecast_date_end']->i18nFormat('MMMM d, H:mm');
+                        $activeDates[] = $history['forecast_date_start'];
+                        $activeDatesEnd[] = $history['forecast_date_end'];
                     }
                 }
             }

@@ -41,7 +41,7 @@ h4 i{
             <?php if ($loggedIn) {
                 echo '<input class="btn btn-primary forecast-btn login" type="submit" value="Set Your Forecast" id="forecast">';
              } else {
-                echo '<a href="/forecast_clash/users/login" class="btn forecast-btn forecast-link">Please Login</a>';
+                echo '<a href="/forecast_clash/users/login" class="btn btn-primary forecast-btn forecast-link">Please Login</a>';
             } ?>
             
             <form class="hamPending">

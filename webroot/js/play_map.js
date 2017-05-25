@@ -77,9 +77,9 @@ $('document').ready(function() {
     var times = ["00","01","02","03","04","05","06","07","08","09",10,11,12,13,14,15,16,17,18,19,20,21,22,23]; //array of 24, 2-character hours
     var moe = [1,2,3,4,5,6]; //array of time windows
     var dayNames = []; //initialize array to take day names
-    var moveDay = 32; //initial position of day reel
-    var moveTime = -175; //initial position of time reel
-    var moveMoe = 4; //initial position of moe reel
+    var moveDay = parseInt($('.day-options').css('top')) //32; //initial position of day reel
+    var moveTime = parseInt($('.time-options').css('top')) //-175; //initial position of time reel
+    var moveMoe = parseInt($('.moe-options').css('top')) //4; //initial position of moe reel
     var dayChoice = 1; //initial user day value
     var timeChoice = 12; //initial user time value
     var moeChoice = 2; //initial user moe value
@@ -286,8 +286,6 @@ $('document').ready(function() {
         $('.forecast-btn').appendTo('.forecastPopup .leaflet-popup-content-wrapper').css('display', 'block');
     })
 
-    map.zoomControl.setPosition('topright'); // move zoom control to top right
-
     // .addControl(sidebar)
     L.control.layers(overlayMaps, null, { collapsed: false }).addTo(map);
     $('.leaflet-control-layers-selector').attr('type', 'checkbox').prop('checked', true);   
@@ -335,7 +333,11 @@ $('document').ready(function() {
     
     // Set tile layer
     L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {}).addTo(map);
-    $('#modalTrigger').appendTo('.leaflet-top.leaflet-right .leaflet-control-layers');
+    if (window.matchMedia('(max-width: 767px)').matches) {
+        $('#modalTrigger').appendTo('.leaflet-bottom.leaflet-right');
+    } else {
+        $('#modalTrigger').appendTo('.leaflet-top.leaflet-right .leaflet-control-layers');
+    };
     
     // radius functionality
     var radiusInput = document.getElementById('radiusMask');
@@ -476,12 +478,22 @@ $('document').ready(function() {
     });
     windControl.addTo(map);
 
+    if (window.matchMedia('(max-width: 767px)').matches) {
+        map.zoomControl.setPosition('bottomleft'); // move zoom control to bottom left
+        $('#windowContainer').appendTo('.leaflet-top.leaflet-left');
+        $('.radius').appendTo('.leaflet-top.leaflet-left');
+    } else {
+        map.zoomControl.setPosition('topright'); // move zoom control to top right
+    };
+
     radiusInput.onchange = function() { //when user slides radius slider
         radius = radiusInput.value;
         if(eventCircle != undefined) {
             eventMarker();
         };
     };
+    document.getElementById('radiusMask').onpointerdown = L.DomEvent.stopPropagation;
+    document.getElementById('radiusMask').ontouchstart = L.DomEvent.stopPropagation;
     
     map.on('click', function(e) { //when user clicks the map
         if (typeof(e) != 'undefined') {
@@ -490,7 +502,13 @@ $('document').ready(function() {
             lng = clickPan.lng;
             isLocation = dmsFormat(lat, lng);
             eventMarker();
-            map.panTo(clickPan);
+            if (window.matchMedia('(max-width: 767px)').matches) {
+                var temp = map.project(clickPan);
+                temp.y = temp.y - 155;
+                map.panTo(map.unproject(temp));
+            } else {
+                map.panTo(clickPan);
+            };
         };
     });
     
@@ -847,6 +865,20 @@ $('document').ready(function() {
         moeWindow.addEventListener('mousedown', this.handleGestureStart, true);
     }
     
+    dayWindow.onmousewheel = L.DomEvent.stopPropagation;
+    timeWindow.onmousewheel = L.DomEvent.stopPropagation;
+    moeWindow.onmousewheel = L.DomEvent.stopPropagation;
+    dayWindow.onclick = L.DomEvent.stopPropagation;
+    timeWindow.onclick = L.DomEvent.stopPropagation;
+    moeWindow.onclick = L.DomEvent.stopPropagation;
+    dayWindow.onpointerdown = L.DomEvent.stopPropagation;
+    timeWindow.onpointerdown = L.DomEvent.stopPropagation;
+    moeWindow.onpointerdown = L.DomEvent.stopPropagation;
+    dayWindow.ontouchstart = L.DomEvent.stopPropagation;
+    timeWindow.ontouchstart = L.DomEvent.stopPropagation;
+    moeWindow.ontouchstart = L.DomEvent.stopPropagation;
+    
+    
     $("#day-window").on('click', ".day-options p", function(e) {
         reelNoColor();
         var selected = $(this).index();
@@ -975,7 +1007,13 @@ $('document').ready(function() {
         newPopup = L.popup({className: 'newForecast', closeButton: false}).setContent('<button class="btn btn-primary clickedThru">New Forecast</button>').setLatLng(latlng);
         map.addLayer(newPopup);
         popupBorderColor();
-        map.panTo(latlng);
+        if (window.matchMedia('(max-width: 767px)').matches) {
+            var temp = map.project(latlng);
+            temp.y = temp.y - 155;
+            map.panTo(map.unproject(temp));
+        } else {
+            map.panTo(latlng);
+        };
     });  
     $(document.body).on('click', '.clickedThru', function(e) {
         e.preventDefault();
@@ -1001,7 +1039,13 @@ $('document').ready(function() {
             $('.forecastPopup2 .leaflet-popup-tip-container .leaflet-popup-tip').css({'border': '1px solid '+clickColor});
             $('.pendingMenu').hide(pendHide());
             $('.deletePending').trigger('click');
-            map.panTo(pendLayer._latlng);
+            if (window.matchMedia('(max-width: 767px)').matches) {
+                var temp = map.project(pendLayer._latlng);
+                temp.y = temp.y - 155;
+                map.panTo(map.unproject(temp));
+            } else {
+                map.panTo(pendLayer._latlng);
+            };
             $('.error-notification').hide();
         },1);
     });

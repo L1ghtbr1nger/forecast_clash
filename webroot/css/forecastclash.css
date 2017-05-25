@@ -181,21 +181,6 @@ body {
     color: #4f5f6f;
 }
 
-@media (max-width: 767px) {
-    .auth-container {
-        width: 100%;
-        position: relative;
-        left: 0;
-        top: 0;
-        -webkit-transform: inherit;
-        transform: inherit;
-        margin-bottom: 10px;
-    }
-    .auth-container .auth-content {
-        padding: 30px 25px;
-    }
-}
-
 .error-card {
     width: 410px;
     min-height: 330px;
@@ -3621,7 +3606,7 @@ pre {
 
 @media (max-width: 767px) {
     .header .header-block-collapse {
-        width: 214px;
+        width: 219px;
     }
 }
 
@@ -8000,7 +7985,7 @@ ul {
 
 .play-container .leaflet-control-zoom {
     right: 130px;
-    top: 5px;
+    top: -77px;
 }
 
 .leaflet-control-layers-expanded {
@@ -8008,7 +7993,7 @@ ul {
 }
 
 .leaflet-control-layers-expanded:not(*:root) {
-    top: -73px;
+    top: 0px;
 }
 
 @media (max-width: 720px) {
@@ -9288,7 +9273,7 @@ label[for="7"] {
 }
 
 .forecastDisplay {
-    font-size: 22px;
+    font-size: 15px;
     font-weight: 700;
 }
 
@@ -9329,7 +9314,7 @@ label[for="7"] {
 .forecastPopup .row .changeTZ {
     position: absolute;
     right: -7px;
-    top: 13px;
+    top: 4px;
     pointer-events: auto;
 }
 
@@ -9488,3 +9473,89 @@ nav > ul > li {
     touch-action: none;
 }
 
+@media (max-width: 767px) {
+    #map {
+        height: calc(100vh - 86px);
+    }
+    .header .clock-container, .header .clock-container .header-block {
+        padding-bottom: 0;
+        padding-top: 0;
+        height: 45px;
+    }
+    .auth-container {
+        width: 100%;
+        position: relative;
+        left: 0;
+        top: 0;
+        -webkit-transform: inherit;
+        transform: inherit;
+        margin-bottom: 10px;
+    }
+    .auth-container .auth-content {
+        padding: 30px 25px;
+    }
+    .play-container {
+        height: calc(100vh - 45px);
+    }
+    #modalTrigger {
+        top: -79px;
+        right: 5px;
+    }
+    #window {
+        top: -132px;
+        left: 35px;
+        width: 189px;
+    }
+    #window #time-window {
+        height: 203px;
+        top: 173px;
+    }
+    #window #time-window:before {
+        height: 203px;
+    }
+    #window #time-window .time-options {
+        top: -272px;
+    }
+    #window #time-window #down {
+        top: 175px;
+    }
+    .play-container .leaflet-control-zoom {
+        top: -50px;
+        left: 2px;
+    }
+    .leaflet-top.leaflet-right {
+        z-index: 1005;
+    }
+    .leaflet-top.leaflet-left #window, .leaflet-top.leaflet-left .radius {
+        pointer-events: auto;
+    }
+    .leaflet-top.leaflet-right .leaflet-control-layers {
+        top: 2px;
+    }
+    .radius {
+        top: -70px;
+        left: 224px;
+    }
+    .leaflet-popup-content {
+        max-width: 280px;
+        min-width: 280px;
+        margin: 10px 15px 10px 10px;
+    }
+    .leaflet-popup-content h4 {
+        top: 0;
+        margin-top: 0;
+    }
+    .leaflet-popup-content .row {
+        height: 28px;
+    }
+    .leaflet-popup-content [class^="col-md"] {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    .pendingMenu tr th:nth-of-type(5) {
+        display: none;
+    }
+    #pendingList tr td:nth-of-type(5) {
+        display: none;
+    }
+}
