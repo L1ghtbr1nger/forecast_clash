@@ -4310,6 +4310,7 @@ div.body-col p {
 #map {
     height: calc(100vh - 57px);
     z-index: 0;
+    top: -12px;
 }
 
 .heatmap #map {
@@ -7890,11 +7891,10 @@ rect {
     margin: 0;
 }
 
-
 /* Play Map */
-
 .play-container {
-    padding: 45px 0 0 0;
+    padding: 57px 0 0 0;
+    height: calc(100vh - 57px);
 }
 
 .play-container .sidebar-footer,
@@ -9475,7 +9475,8 @@ nav > ul > li {
 
 @media (max-width: 767px) {
     #map {
-        height: calc(100vh - 86px);
+        height: calc(100vh - 88px);
+        top: 0px;
     }
     .header .clock-container, .header .clock-container .header-block {
         padding-bottom: 0;
@@ -9495,7 +9496,8 @@ nav > ul > li {
         padding: 30px 25px;
     }
     .play-container {
-        height: calc(100vh - 45px);
+        padding-top: 45px;
+        height: calc(100vh - 88px);
     }
     #modalTrigger {
         top: -79px;
