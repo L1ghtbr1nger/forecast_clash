@@ -2083,9 +2083,11 @@ label,
 }
 
 .modal-body {
-    padding: 18px;
+    padding: 12px;
 }
-
+.modal-header{
+    padding: 12px;
+}
 .modal-body.modal-tab-container {
     padding: 0;
 }
@@ -9350,9 +9352,10 @@ label[for="7"] {
 
 .forecastPopup .row .changeTZ {
     position: absolute;
-    right: -7px;
-    top: 4px;
+    right: -18px;
+    top: -8px;
     pointer-events: auto;
+    padding: 12px;
 }
 
 .forecastPopup .row .changeTZ:hover,
