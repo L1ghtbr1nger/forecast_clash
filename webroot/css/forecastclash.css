@@ -72,7 +72,7 @@ body {
         padding: 40px 20px 70px 20px;
     }
     #instructions-modal .modal-content {
-        transform: scale(.8) !important;
+        transform: scale(.9) !important;
     }
 }
 
@@ -3469,6 +3469,7 @@ pre {
 }
 
 .sidebar-navigation .nav > li > a {
+    text-align: left;
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 20px;
