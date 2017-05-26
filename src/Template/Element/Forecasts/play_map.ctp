@@ -79,7 +79,7 @@ h4 i{
                     </table>
                 </div>
             </div>
-           <div id="modalTrigger" data-toggle="modal" data-target="#modalTrigger">Instructions</div>
+           <a id="modalTrigger" href="#modalTrigger">Instructions</a>
         </div>
     </div>
     <div id="windowContainer">
@@ -157,25 +157,15 @@ h4 i{
       <div class="modal-body">
         <div class="instructions">
             <div class="scoring-instructions">
-                 <p>The goal is to set a target for severe weather, including wind, hail, and tornadoes for any point in the future, out to 2-days. </p>
+                 <p>The goal is to set a target for severe weather, including wind, hail, and tornadoes for the next 2-days. </p>
                 <h5><strong>How to Score Points</strong></h5>
                 <p>Points are scored based on accuracy and timing. There are three primary ways to score:</p>
                 <ul>
                     <li>Number of days a target is placed in advance of an event
-                         <ul>
-                             <li>Longer range forecasts = more points</li>
-                         </ul> 
                      </li>
-                    <li>Target radius
-                        <ul>
-                            <li>Smaller radius = more points</li>
-                        </ul>
+                    <li>Target radius 
                     </li>
-                    <li>Targets can be updated as often as you choose
-                        <ul>
-                            <li>Changes to a target as event day nears = point deduction</li>
-                        </ul>
-                    </li>
+                    <li>Multiplier for +/- time window</li>
                 </ul>
             </div>
             <div class="targeting">
@@ -195,11 +185,11 @@ h4 i{
                             <h5>Wind <br>(> 58mph)</h5>
                         </div>
                     </li>
-                    <li><div class="clearB"></div>Choose the day to be targeted. Forecasts are made in UTC.</li>
+                    <li><div class="clearB"></div>Choose the day, time, and time window to be targeted.</li>
                     <li>Set target radius</li>
                     <li>Click the map and set your target </li>
                 </ul>
-                <p>Forecasts are pending until your event forecast time. They are then active forecasts and cannot be updated. Results notifications occur each day at noon, so be sure to come back and see how you did. <strong>Good Luck!</strong></p>
+                <p>Forecasts are pending until your event forecast time. They are then active forecasts and cannot be updated. Results notifications occur every six hours, so be sure to come back and see how you did. <strong>Good Luck!</strong></p>
 
             </div>
         </div>
