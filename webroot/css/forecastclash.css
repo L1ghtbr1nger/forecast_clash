@@ -71,6 +71,9 @@ body {
     .app .content {
         padding: 40px 20px 70px 20px;
     }
+    #instructions-modal .modal-content {
+        transform: scale(.8) !important;
+    }
 }
 
 .main-wrapper {
@@ -9678,8 +9681,5 @@ nav > ul > li {
     }
     .easy-button-container:nth-of-type(3) {
         top: 146px;
-    }
-    .modal-content {
-        transform: scale(.8) !important;
     }
 }
