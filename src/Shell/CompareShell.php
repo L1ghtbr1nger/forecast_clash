@@ -95,7 +95,7 @@ class CompareShell extends Shell
                     $durationMult = 2.2 - ($duration / 10);
                     $adminMult = 1;//AdminEvent multiplier needed
                     $length = $row['forecast_length'];
-                    $days = round($length / 24); //round hours into days
+                    $days = round($length / 12); //round hours into days
                     $timeMult = 1 + ($days / 10); //calculate time multiplier 1.0 to 1.8 from days out
                     if ($result = $score->first()) { //if found
                         $newScore = $result['total_score'] + (10 * $radiusMult * $timeMult * $durationMult * $adminMult); //calculate score and add to existing
