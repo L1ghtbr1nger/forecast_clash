@@ -160,13 +160,13 @@ h4 i{
             <div class="scoring-instructions">
                  <p>The goal is to set a target for severe weather, including wind, hail, and tornadoes for the next 2-days. </p>
                 <h5><strong>How to Score Points</strong></h5>
-                <p>Points are scored based on accuracy and timing. There are three primary ways to score:</p>
+                <p>Points are scored based on accuracy and timing. Base score for a correct forecast is 10, plus these multipliers:</p>
                 <ul>
-                    <li>Number of days a target is placed in advance of an event
+                    <li>Number of hours a target is placed in advance of its start time
                      </li>
-                    <li>Target radius 
+                    <li>Target radius size
                     </li>
-                    <li>Multiplier for +/- time window</li>
+                    <li>Length of +/- time window</li>
                 </ul>
             </div>
             <div class="targeting">
@@ -179,18 +179,18 @@ h4 i{
                         </div>
                         <div class="icon-container">
                             <svg version='1.1' class='instructions-icon hail-instructions' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-cloudHailAlt'><g class='climacon_wrapperComponent climacon_wrapperComponent-hailAlt'><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-left'><circle cx='42' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-middle'><circle cx='49.999' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-right'><circle cx='57.998' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-left'><circle cx='42' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-middle'><circle cx='49.999' cy='65.498' r='2'></circle></g><g class='climacon_component climacon_component-stroke climacon_component-stroke_hailAlt climacon_component-stroke_hailAlt-right'><circle cx='57.998' cy='65.498' r='2'></circle></g></g><g class='climacon_wrapperComponent climacon_wrapperComponent-cloud'><path class='climacon_component climacon_component-stroke climacon_component-stroke_cloud' d='M63.999,64.941v-4.381c2.39-1.384,3.999-3.961,3.999-6.92c0-4.417-3.581-8-7.998-8c-1.602,0-3.084,0.48-4.334,1.291c-1.23-5.317-5.974-9.29-11.665-9.29c-6.626,0-11.998,5.372-11.998,11.998c0,3.549,1.55,6.728,3.999,8.924v4.916c-4.776-2.768-7.998-7.922-7.998-13.84c0-8.835,7.162-15.997,15.997-15.997c6.004,0,11.229,3.311,13.966,8.203c0.663-0.113,1.336-0.205,2.033-0.205c6.626,0,11.998,5.372,11.998,12C71.998,58.863,68.656,63.293,63.999,64.941z'></path></g></g></svg>
-                            <h5>Hail <br>(> 1")</h5>
+                            <h5>Hail <br>(>= 1")</h5>
                         </div>
                         <div class="icon-container">
                             <svg version='1.1' class='instructions-icon wind-instructions' viewBox='15 15 70 70'><g class='climacon_iconWrap climacon_iconWrap-wind'><g class='climacon_wrapperComponent climacon_componentWrap-wind'><path class='climacon_component climacon_component-stroke climacon_component-wind climacon_component-wind_curl' d='M65.999,52L65.999,52h-3c-1.104,0-2-0.895-2-1.999c0-1.104,0.896-2,2-2h3c1.104,0,2-0.896,2-1.999c0-1.105-0.896-2-2-2s-2-0.896-2-2s0.896-2,2-2c0.138,0,0.271,0.014,0.401,0.041c3.121,0.211,5.597,2.783,5.597,5.959C71.997,49.314,69.312,52,65.999,52z'></path><path class='climacon_component climacon_component-stroke climacon_component-wind' d='M55.999,48.001h-2h-6.998H34.002c-1.104,0-1.999,0.896-1.999,2c0,1.104,0.895,1.999,1.999,1.999h2h3.999h3h4h3h3.998h2c3.313,0,6,2.688,6,6c0,3.176-2.476,5.748-5.597,5.959C56.271,63.986,56.139,64,55.999,64c-1.104,0-2-0.896-2-2c0-1.105,0.896-2,2-2s2-0.896,2-2s-0.896-2-2-2h-2h-3.998h-3h-4h-3h-3.999h-2c-3.313,0-5.999-2.686-5.999-5.999c0-3.175,2.475-5.747,5.596-5.959c0.131-0.026,0.266-0.04,0.403-0.04l0,0h12.999h6.998h2c1.104,0,2-0.896,2-2s-0.896-2-2-2s-2-0.895-2-2c0-1.104,0.896-2,2-2c0.14,0,0.272,0.015,0.403,0.041c3.121,0.211,5.597,2.783,5.597,5.959C61.999,45.314,59.312,48.001,55.999,48.001z'></path></g></g></svg>
-                            <h5>Wind <br>(> 58mph)</h5>
+                            <h5>Wind <br>(>= 58mph)</h5>
                         </div>
                     </li>
                     <li><div class="clearB"></div>Choose the day, time, and time window to be targeted.</li>
                     <li>Set target radius</li>
                     <li>Click the map and set your target </li>
                 </ul>
-                <p>Forecasts are pending until your event forecast time. They are then active forecasts and cannot be updated. Results notifications occur every six hours, so be sure to come back and see how you did. <strong>Good Luck!</strong></p>
+                <p>Forecasts are pending until an hour before your event forecast time. They are then active forecasts and cannot be updated. Notifications of results go out six hours after the forecast ends, so be sure to come back and see how you did. <strong>Good Luck!</strong></p>
 
             </div>
         </div>
