@@ -72,7 +72,7 @@ body {
         padding: 40px 20px 70px 20px;
     }
     #instructions-modal .modal-content {
-        transform: scale(.8) !important;
+        transform: scale(.9) !important;
     }
 }
 
@@ -9349,9 +9349,10 @@ label[for="7"] {
 
 .forecastPopup .row .changeTZ {
     position: absolute;
-    right: -7px;
-    top: 4px;
+    right: -18px;
+    top: -8px;
     pointer-events: auto;
+    padding: 12px;
 }
 
 .forecastPopup .row .changeTZ:hover,
