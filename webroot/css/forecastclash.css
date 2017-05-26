@@ -2083,9 +2083,11 @@ label,
 }
 
 .modal-body {
-    padding: 18px;
+    padding: 12px;
 }
-
+.modal-header{
+    padding: 12px;
+}
 .modal-body.modal-tab-container {
     padding: 0;
 }
