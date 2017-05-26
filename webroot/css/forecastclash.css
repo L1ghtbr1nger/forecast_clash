@@ -7944,14 +7944,14 @@ ul {
 }
 
 #modalTrigger {
-    position: absolute;
+    position: fixed;
     font-weight: 600;
     color: #fff;
     text-decoration: underline;
     cursor: pointer;
     pointer-events: auto;
-    top: 72px;
-    right: 0px;
+    top: 136px;
+    right: 6px;
     z-index: 100;
     padding: 0;
     background-color: rgba(51, 51, 51, 0.80);
@@ -9563,7 +9563,7 @@ nav > ul > li {
     }
     #modalTrigger {
         top: auto;
-        bottom: 5px;
+        bottom: 45px;
         right: 5px;
     }
     #windowContainer {
