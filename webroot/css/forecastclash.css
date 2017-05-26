@@ -7894,7 +7894,9 @@ rect {
     margin: 0;
 }
 
+
 /* Play Map */
+
 .play-container {
     padding: 57px 0 0 0;
     height: calc(100vh - 57px);
@@ -8677,12 +8679,15 @@ input[type=range]:focus::-ms-fill-upper {
 #radiusMask.slideT::-webkit-slider-thumb {
     background: rgb(255, 51, 51);
 }
+
 #radiusMask.slideH::-webkit-slider-thumb {
     background: rgb(61, 182, 239);
 }
+
 #radiusMask.slideW::-webkit-slider-thumb {
     background: rgb(255, 165, 0);
 }
+
 #radiusMask.slideT::-moz-range-thumb {
     background: rgb(255, 51, 51);
 }
@@ -8698,12 +8703,15 @@ input[type=range]:focus::-ms-fill-upper {
 #radiusMask.slideT::-ms-thumb {
     background: rgb(255, 51, 51);
 }
+
 #radiusMask.slideH::-ms-thumb {
     background: rgb(61, 182, 239);
 }
+
 #radiusMask.slideW::-ms-thumb {
     background: rgb(255, 165, 0);
 }
+
 
 /* Dugout */
 
@@ -8790,6 +8798,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 
 /* Date Range Slider */
+
 .leaflet-left .leaflet-control {
     margin-left: 2px;
     margin-top: 5px;
@@ -8979,7 +8988,8 @@ p.day {
     left: -1px;
 }
 
-.forecastPopup .forecast-btn, .forecastPopup2 .deletePending {
+.forecastPopup .forecast-btn,
+.forecastPopup2 .deletePending {
     pointer-events: auto;
     margin: 0 auto;
     width: 215px;
@@ -8993,10 +9003,13 @@ p.day {
     text-shadow: 1px 1px black;
     padding: 3px 12px;
 }
-.forecastPopup .forecast-btn:hover, .newForecast .clickedThru:hover {
+
+.forecastPopup .forecast-btn:hover,
+.newForecast .clickedThru:hover {
     background-color: #333;
     border: 1px solid white;
 }
+
 .forecastPopup2 .deletePending {
     top: 7px;
 }
@@ -9224,7 +9237,8 @@ label[for="7"] {
     cursor: pointer;
 }
 
-.forecastPopup, .newForecast {
+.forecastPopup,
+.newForecast {
     border: 1px solid rgb(255, 255, 255);
 }
 
@@ -9254,24 +9268,30 @@ label[for="7"] {
     color: #fff;
 }
 
-.forecastPopup .leaflet-popup-tip-container, .forecastPopup2 .leaflet-popup-tip-container, .newForecast .leaflet-popup-tip-container {
+.forecastPopup .leaflet-popup-tip-container,
+.forecastPopup2 .leaflet-popup-tip-container,
+.newForecast .leaflet-popup-tip-container {
     border: none;
     border-top: 1px solid rgb(50, 50, 50);
     width: 26px;
     margin-left: -14px;
 }
 
-.forecastPopup .leaflet-popup-content-wrapper, .forecastPopup2 .leaflet-popup-content-wrapper {
+.forecastPopup .leaflet-popup-content-wrapper,
+.forecastPopup2 .leaflet-popup-content-wrapper {
     border-radius: 2px;
 }
 
-.forecastPopup .leaflet-popup-tip, .forecastPopup2 .leaflet-popup-tip, .newForecast .leaflet-popup-tip {
+.forecastPopup .leaflet-popup-tip,
+.forecastPopup2 .leaflet-popup-tip,
+.newForecast .leaflet-popup-tip {
     height: 20px;
     width: 20px;
     border: 1px solid rgb(255, 255, 255);
 }
 
-.forecastPopup .leaflet-popup-close-button, .forecastPopup2 .leaflet-popup-close-button {
+.forecastPopup .leaflet-popup-close-button,
+.forecastPopup2 .leaflet-popup-close-button {
     pointer-events: auto;
 }
 
@@ -9373,16 +9393,20 @@ label[for="7"] {
 .forecastPopup2 .btn {
     pointer-events: auto;
 }
+
 #noDelete {
     background-color: #1f1f1f;
     border: 1px solid #333;
 }
+
 #noDelete:hover {
     background-color: #333;
     border: 1px solid white;
 }
 
+
 /* Hamburger Menu */
+
 .hamburger {
     color: #333;
     background-color: #ffffff;
@@ -9391,13 +9415,17 @@ label[for="7"] {
     line-height: 10px;
     border-radius: 7px;
 }
+
 .hamburger i {
     width: 100%;
     height: 100%;
 }
-.hamPending, .hamActive {
+
+.hamPending,
+.hamActive {
     float: right;
 }
+
 .hamMenu {
     position: absolute;
     right: 0px;
@@ -9407,20 +9435,25 @@ label[for="7"] {
     color: white;
     display: none;
 }
+
 .hamMenu table tbody tr td:first-of-type {
     padding: 2px 0 0 10px;
 }
+
 .hamMenu svg {
     width: 27px;
 }
+
 .hamMenu .table {
     font-size: 12px;
     margin: 0;
 }
+
 .hamMenu .table td {
     width: 1px;
     white-space: nowrap;
 }
+
 .hamMenu .table tbody tr:hover {
     font-size: 14px;
 }
@@ -9482,7 +9515,8 @@ nav > ul > li {
     padding-left: 4px;
 }
 
-#window, #window * {
+#window,
+#window * {
     touch-action: none;
 }
 
@@ -9491,9 +9525,11 @@ nav > ul > li {
     top: 57px;
     left: 231px;
 }
+
 .leaflet-top.leaflet-left .easy-button-container:nth-of-type(2) {
     top: 107px;
 }
+
 .leaflet-top.leaflet-left .easy-button-container:nth-of-type(3) {
     top: 157px;
 }
@@ -9540,7 +9576,8 @@ nav > ul > li {
     #map {
         height: calc(100vh - 88px);
     }
-    .header .clock-container, .header .clock-container .header-block {
+    .header .clock-container,
+    .header .clock-container .header-block {
         padding-bottom: 0;
         padding-top: 0;
         height: 45px;
@@ -9595,7 +9632,8 @@ nav > ul > li {
     .leaflet-top.leaflet-right {
         z-index: 1005;
     }
-    .leaflet-top.leaflet-left #window, .leaflet-top.leaflet-left .radius {
+    .leaflet-top.leaflet-left #window,
+    .leaflet-top.leaflet-left .radius {
         pointer-events: auto;
     }
     .leaflet-top.leaflet-right .leaflet-control-layers {
@@ -9640,5 +9678,8 @@ nav > ul > li {
     }
     .easy-button-container:nth-of-type(3) {
         top: 146px;
+    }
+    .modal-content {
+        transform: scale(.8) !important;
     }
 }

@@ -147,6 +147,7 @@ h4 i{
     'value' => json_encode($activeDatesEnd),
     'id' => 'activeDatesEnd'
 ]) ?>
+
 <div class="modal fade" tabindex="-1" role="dialog" id="instructions-modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
