@@ -9686,4 +9686,11 @@ nav > ul > li {
         top: 3px;
         right: -7px;
     }
+    .error-notification {
+        position: fixed;
+        max-width: 265px;
+        bottom: 48px;
+        top: auto !important;
+        left: 152px !important;
+    }
 }
