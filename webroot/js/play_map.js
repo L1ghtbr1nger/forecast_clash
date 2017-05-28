@@ -216,13 +216,15 @@ $('document').ready(function() {
             stroke = 'rgb(255, 165, 0)'
         }
         var rad = pendingRadius[i];
-        var start = new Date(pendingDates[i]);
-        var finish = new Date(pendingDatesEnd[i]);
+        var tempStart = new Date(pendingDates[i]);
+        var start = new Date(Date.UTC(tempStart.getFullYear(), tempStart.getMonth(), tempStart.getDate(), tempStart.getHours(), 0, 0, 0));
+        var tempFinish = new Date(pendingDatesEnd[i]);
+        var finish = new Date(Date.UTC(tempFinish.getFullYear(), tempFinish.getMonth(), tempFinish.getDate(), tempFinish.getHours(), 0, 0, 0));
         inserted += '<tr>'+
                 '<td>'+eventSVG+'</td>'+
                 '<td>'+v[0].toFixed(2)+','+v[1].toFixed(2)+'</td>'+
                 '<td>'+rad+'mi</td>'+
-                '<td>'+(start.getMonth()+1)+'/'+start.getDate()+' '+start.getHours()+':00Z</td>'+
+                '<td>'+(tempStart.getMonth()+1)+'/'+tempStart.getDate()+' '+tempStart.getHours()+':00Z</td>'+
                 '<td>'+Math.round((Math.abs(finish - start) / 36e5))+'hrs</td>'+
                 '<td><button class="pendDelete" style="background-color: '+stroke+'">Delete</button></td></tr><hidden></hidden>';
         popupTwo = L.popup({className: 'forecastPopup2'}).setContent('<div style="color:rgb(255,255,255)"><div class="row"><div class="col-md-12"><h4><strong>Pending '+pendEvent+' Forecast</strong></h4></div></div><div class="row"><div class="col-md-6 pull-left"><span>inside a perimeter of</span></div><div class="col-md-6"><strong><span class="dateTime pull-right">'+Math.round(Math.PI * rad * rad).toLocaleString()+' mi<sup>2</sup></span></strong></div></div><div class="row"><div class="col-md-4 pull-left"><span>centered at</span></div><div class="col-md-8"><strong><span class="pull-right">'+dmsFormat(v[0],v[1])+'</span></strong></div></div><div class="row"><div class="col-md-4 pull-left"><span>between</span></div><div class="col-md-8"><strong><span class="pull-right">'+dateFormat(start)+'</span></strong></div></div><div class="row"><div class="col-md-4 pull-left">and</div><div class="col-md-8"><strong><span class="pull-right">'+dateFormat(finish)+'</span></strong></div></div></div><div class="row"><div class="col-md-12"><input class="toDelete" name="toDelete" type="hidden" value="'+pendingIDs[i]+'"/><input class="btn btn-primary deletePending" type="submit" value="Delete" style="background-color: '+stroke+'"/></div></div>');
@@ -250,13 +252,15 @@ $('document').ready(function() {
             stroke = 'rgb(255, 165, 0)'
         }
         var rad = activeRadius[i];
-        var start = new Date(activeDates[i]);
-        var finish = new Date(activeDatesEnd[i]);
+        var tempStart = new Date(activeDates[i]);
+        var start = new Date(Date.UTC(tempStart.getFullYear(), tempStart.getMonth(), tempStart.getDate(), tempStart.getHours(), 0, 0, 0));
+        var tempFinish = new Date(activeDatesEnd[i]);
+        var finish = new Date(Date.UTC(tempFinish.getFullYear(), tempFinish.getMonth(), tempFinish.getDate(), tempFinish.getHours(), 0, 0, 0));
         inserted += '<tr>'+
                 '<td>'+eventSVG+'</td>'+
                 '<td>'+v[0].toFixed(2)+','+v[1].toFixed(2)+'</td>'+
                 '<td>'+rad+'mi</td>'+
-                '<td>'+(start.getMonth()+1)+'/'+start.getDate()+' '+start.getHours()+':00Z</td>'+
+                '<td>'+(tempStart.getMonth()+1)+'/'+tempStart.getDate()+' '+tempStart.getHours()+':00Z</td>'+
                 '<td>'+Math.round((Math.abs(finish - start) / 36e5))+'hrs</td></tr>';
         popupTwo = L.popup({className: 'forecastPopup2 actPop'}).setContent('<div style="color:rgb(255,255,255)"><div class="row"><div class="col-md-12"><h4><strong>Active '+actEvent+' Forecast</strong></h4></div></div><div class="row"><div class="col-md-6 pull-left"><span>inside a perimeter of</span></div><div class="col-md-6"><strong><span class="dateTime pull-right">'+Math.round(Math.PI * rad * rad).toLocaleString()+' mi<sup>2</sup></span></strong></div></div><div class="row"><div class="col-md-4 pull-left"><span>centered at</span></div><div class="col-md-8"><strong><span class="pull-right">'+dmsFormat(v[0],v[1])+'</span></strong></div></div><div class="row"><div class="col-md-4 pull-left"><span>between</span></div><div class="col-md-8"><strong><span class="pull-right">'+dateFormat(start)+'</span></strong></div></div><div class="row"><div class="col-md-4 pull-left">and</div><div class="col-md-8"><strong><span class="pull-right">'+dateFormat(finish)+'</span></strong></div></div></div><div class="row"><div class="col-md-12" style="text-align: center; padding: 7px 0 0 0">Awaiting results...</div></div>');
         active.push(L.circle(v, (rad * 1609.344), {

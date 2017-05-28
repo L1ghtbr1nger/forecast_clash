@@ -9223,15 +9223,15 @@ label[for="7"] {
 }
 
 .day-options {
-    top: 32px;
+    top: 33px;
 }
 
 .time-options {
-    top: -175px;
+    top: -177px;
 }
 
 .moe-options {
-    top: 4px;
+    top: 5px;
 }
 
 [class$="options"] p:hover {
@@ -9680,5 +9680,10 @@ nav > ul > li {
     }
     .easy-button-container:nth-of-type(3) {
         top: 146px;
+    }
+    .forecastPopup .row .changeTZ {
+        padding: 0px;
+        top: 3px;
+        right: -7px;
     }
 }
