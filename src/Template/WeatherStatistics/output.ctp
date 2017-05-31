@@ -1,6 +1,15 @@
 <link rel="stylesheet" href="/forecast_clash/webroot/css/default.css">
 <link rel="stylesheet" href="/forecast_clash/webroot/css/default.date.css">
 <style>
+form.search-filter-heatmap{
+    position: fixed;
+    bottom:0;
+    z-index:1;
+    background: rgba(255,255,255,.7);
+    width: 100%;
+    margin-bottom:0;
+    padding: 12px;
+}
 .hide-me {
 display: none;
 }
@@ -12,7 +21,7 @@ padding-right: 0;
 }
 
 .heatmap #map {
-height: 100vh;
+height: 99.9vh;
 }
 
 .card-block {
@@ -38,10 +47,6 @@ padding: 4px;
 
 .exp-filters strong {
 display: none;
-}
-
-.search-filter-heatmap {
-margin-left: 12px;
 }
 
 .leaflet-left {
@@ -87,8 +92,9 @@ max-width: 350px !important;
         clear: both;
     }
 }
+
 </style>
-<div class="row">
+<div class="row hidden-lg hidden-md hidden-sm hidden-xs">
     <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12 stats-col heatmap-element">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs pull-right hide-me" role="tablist">
@@ -97,90 +103,94 @@ max-width: 350px !important;
             </li>
         </ul>
     </div>
-    <div class="card-block">
+</div>
+<div class="row">
+    <div class="col-lg-12">
         <form action="" class="search-filter-heatmap">
-            <div class="row">
-                <div class="col-md-3 col-sm-4 col-xs-4">
-                    <div class="exp-filters">
-                        <strong>Experience</strong>
-                        <div class="cbox">
-                            <input id="amateur_hm" class="exp_hm" type="checkbox" checked>
-                            <label for="amateur_hm">
-                                <div class="can-toggle__label-text">Enthusiasts</div>
-                                <div class="can-toggle__switch enthusiasts-switch" data-checked="On" data-unchecked="Off"></div>
-                            </label>
-                        </div>
-                        <div class="cbox">
-                            <input id="mets_hm" class="exp_hm" type="checkbox" checked>
-                            <label for="mets_hm">
-                                <div class="can-toggle__label-text">Meteorologists</div>
-                                <div class="can-toggle__switch mets-switch" data-checked="On" data-unchecked="Off"></div>
-                            </label>
-                        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-4">
+                <div class="exp-filters">
+                    <strong>Experience</strong>
+                    <div class="cbox">
+                        <input id="amateur_hm" class="exp_hm" type="checkbox" checked>
+                        <label for="amateur_hm">
+                            <div class="can-toggle__label-text">Enthusiasts</div>
+                            <div class="can-toggle__switch enthusiasts-switch" data-checked="On" data-unchecked="Off"></div>
+                        </label>
                     </div>
-                </div>
-                <div class="col-md-3 col-sm-4 col-xs-4">
-                    <div class="exp-filters">
-                        <strong>Forecast</strong>
-                        <div class="cbox">
-                            <input id="correct_hm" class="forecast_hm" type="checkbox" checked>
-                            <label for="correct_hm">
-                                <div class="can-toggle__label-text">Correct</div>
-                                <div class="can-toggle__switch correct-switch" data-checked="On" data-unchecked="Off"></div>
-                            </label>
-                        </div>
-                        <div class="cbox">
-                            <input id="incorrect_hm" class="forecast_hm" type="checkbox" checked>
-                            <label for="incorrect_hm">
-                                <div class="can-toggle__label-text">Incorrect</div>
-                                <div class="can-toggle__switch incorrect-switch" data-checked="On" data-unchecked="Off"></div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-4 col-xs-4">
-                    <div class="exp-filters">
-                        <strong>Event</strong>
-                        <div class="cbox">
-                            <input id="tornado_hm" class="event_hm" type="checkbox" checked>
-                            <label for="tornado_hm">
-                                <div class="can-toggle__label-text">Tornado</div>
-                                <div class="can-toggle__switch tornado-switch" data-checked="On" data-unchecked="Off"></div>
-                            </label>
-                        </div>
-                        <div class="cbox">
-                            <input id="hail_hm" class="event_hm" type="checkbox">
-                            <label for="hail_hm">
-                                <div class="can-toggle__label-text">Hail</div>
-                                <div class="can-toggle__switch hail-switch" data-checked="On" data-unchecked="Off"></div>
-                            </label>
-                        </div>
-                        <div class="cbox">
-                            <input id="wind_hm" class="event_hm" type="checkbox">
-                            <label for="wind_hm">
-                                <div class="can-toggle__label-text">Wind</div>
-                                <div class="can-toggle__switch wind-switch" data-checked="On" data-unchecked="Off"></div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-date">
-                    <div class="exp-filters">
-                        <strong>Date</strong>
-                        <label for="from_input_heatmap">From</label>
-                        <input type="text" id="input_from_heatmap">
-                        <label for="to_input_heatmap">To</label>
-                        <input type="text" id="input_to_heatmap">
+                    <div class="cbox">
+                        <input id="mets_hm" class="exp_hm" type="checkbox" checked>
+                        <label for="mets_hm">
+                            <div class="can-toggle__label-text">Meteorologists</div>
+                            <div class="can-toggle__switch mets-switch" data-checked="On" data-unchecked="Off"></div>
+                        </label>
                     </div>
                 </div>
             </div>
-        </form>
-        <article class="heatmap">
-            <div id="map"></div>
-        </article>
-        <a class="return-link" href="/forecast_clash"><i class="fa fa-arrow-left" aria-hidden="true"></i> <span>Return to Game</span></a>
+            <div class="col-md-3 col-sm-4 col-xs-4">
+                <div class="exp-filters">
+                    <strong>Forecast</strong>
+                    <div class="cbox">
+                        <input id="correct_hm" class="forecast_hm" type="checkbox" checked>
+                        <label for="correct_hm">
+                            <div class="can-toggle__label-text">Correct</div>
+                            <div class="can-toggle__switch correct-switch" data-checked="On" data-unchecked="Off"></div>
+                        </label>
+                    </div>
+                    <div class="cbox">
+                        <input id="incorrect_hm" class="forecast_hm" type="checkbox" checked>
+                        <label for="incorrect_hm">
+                            <div class="can-toggle__label-text">Incorrect</div>
+                            <div class="can-toggle__switch incorrect-switch" data-checked="On" data-unchecked="Off"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-4">
+                <div class="exp-filters">
+                    <strong>Event</strong>
+                    <div class="cbox">
+                        <input id="tornado_hm" class="event_hm" type="checkbox" checked>
+                        <label for="tornado_hm">
+                            <div class="can-toggle__label-text">Tornado</div>
+                            <div class="can-toggle__switch tornado-switch" data-checked="On" data-unchecked="Off"></div>
+                        </label>
+                    </div>
+                    <div class="cbox">
+                        <input id="hail_hm" class="event_hm" type="checkbox">
+                        <label for="hail_hm">
+                            <div class="can-toggle__label-text">Hail</div>
+                            <div class="can-toggle__switch hail-switch" data-checked="On" data-unchecked="Off"></div>
+                        </label>
+                    </div>
+                    <div class="cbox">
+                        <input id="wind_hm" class="event_hm" type="checkbox">
+                        <label for="wind_hm">
+                            <div class="can-toggle__label-text">Wind</div>
+                            <div class="can-toggle__switch wind-switch" data-checked="On" data-unchecked="Off"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-date">
+                <div class="exp-filters">
+                    <strong>Date</strong>
+                    <label for="from_input_heatmap">From</label>
+                    <input type="text" id="input_from_heatmap">
+                    <label for="to_input_heatmap">To</label>
+                    <input type="text" id="input_to_heatmap">
+                </div>
+            </div>
+        </div>
+    </form>
+    <a class="return-link" href="/forecast_clash"><i class="fa fa-arrow-left" aria-hidden="true"></i> <span>Return to Game</span></a>
     </div>
 </div>
+
+
+<article class="heatmap">
+    <div id="map"></div>
+</article>
 <?= $this->Html->script('leaderboard'); ?>
 <?= $this->Html->script('heat'); ?>
 <?= $this->Html->script('picker'); ?>
@@ -188,7 +198,7 @@ max-width: 350px !important;
 <script>
 $(document).ready(function() {
     $('.stats-link').addClass('active');
-    $('form.search-filter-heatmap').appendTo('.output-form');
+    // $('form.search-filter-heatmap').appendTo('.output-form');
     $('.return-link').prependTo('form.search-filter-heatmap');
 });
 
