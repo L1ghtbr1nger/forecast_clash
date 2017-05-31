@@ -6,6 +6,11 @@ max-width: 200px;
 .col-date {
 max-width: 350px !important;
 }
+@media (max-width: 768px){
+    .col-date{
+        clear: both;
+    }
+}
 </style>
 
 <form action="" class="search-filter-heatmap">
