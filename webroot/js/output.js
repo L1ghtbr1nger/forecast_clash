@@ -1,51 +1,51 @@
 // Pending Forecast Layers
 
-    var pendingLocations = JSON.parse($('#pendingLocations').val());
-    var pendingEvents = JSON.parse($('#pendingEvents').val());
-    var pendingDates = JSON.parse($('#pendingDates').val());
-    var pendingRadius = JSON.parse($('#pendingRadius').val());
-    var activeLocations = JSON.parse($('#activeLocations').val());
-    var activeEvents = JSON.parse($('#activeEvents').val());
-    var activeDates = JSON.parse($('#activeDates').val());
-    var activeRadius = JSON.parse($('#activeRadius').val());
-    var pending = [];
-    var active = [];
+var pendingLocations = JSON.parse($('#pendingLocations').val());
+var pendingEvents = JSON.parse($('#pendingEvents').val());
+var pendingDates = JSON.parse($('#pendingDates').val());
+var pendingRadius = JSON.parse($('#pendingRadius').val());
+var activeLocations = JSON.parse($('#activeLocations').val());
+var activeEvents = JSON.parse($('#activeEvents').val());
+var activeDates = JSON.parse($('#activeDates').val());
+var activeRadius = JSON.parse($('#activeRadius').val());
+var pending = [];
+var active = [];
 
-    $.each(pendingLocations, function(i, v) {
+$.each(pendingLocations, function(i, v) {
 
-        var stroke;
-        if (pendingEvents[i] === 'Tornado') {
-            stroke = 'rgb(255, 51, 51)'
-        } else if (pendingEvents[i] === 'Hail') {
-            stroke = 'rgb(61, 182, 239)'
-        } else if (pendingEvents[i] === 'Wind') {
-            stroke = 'rgb(255, 165, 0)'
-        }
+    var stroke;
+    if (pendingEvents[i] === 'Tornado') {
+        stroke = 'rgb(255, 51, 51)'
+    } else if (pendingEvents[i] === 'Hail') {
+        stroke = 'rgb(61, 182, 239)'
+    } else if (pendingEvents[i] === 'Wind') {
+        stroke = 'rgb(255, 165, 0)'
+    }
 
-        pending.push(L.circle(v, (pendingRadius[i] * 1609.344), {
-            color: stroke,
-            fillColor: 'rgb(255,255,255)'
-        }).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> starting</br>' + pendingDates[i] + ' UTC').openPopup());
-    });
+    pending.push(L.circle(v, (pendingRadius[i] * 1609.344), {
+        color: stroke,
+        fillColor: 'rgb(255,255,255)'
+    }).bindPopup('Pending ' + pendingEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong> starting</br>' + pendingDates[i] + ' UTC').openPopup());
+});
 
-    $.each(activeLocations, function(i, v) {
+$.each(activeLocations, function(i, v) {
 
-        if (activeEvents[i] === 'Tornado') {
-            stroke = 'rgb(255, 51, 51)'
-        } else if (activeEvents[i] === 'Hail') {
-            stroke = 'rgb(61, 182, 239)'
-        } else if (activeEvents[i] === 'Wind') {
-            stroke = 'rgb(255, 165, 0)'
-        }
+    if (activeEvents[i] === 'Tornado') {
+        stroke = 'rgb(255, 51, 51)'
+    } else if (activeEvents[i] === 'Hail') {
+        stroke = 'rgb(61, 182, 239)'
+    } else if (activeEvents[i] === 'Wind') {
+        stroke = 'rgb(255, 165, 0)'
+    }
 
-        active.push(L.circle(v, (activeRadius[i] * 1609.344), {
-            color: stroke,
-            fillColor: 'rgb(255, 255, 255)'
-        }).bindPopup('Active ' + activeEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong></br>Awaiting results...').openPopup());
-    });
+    active.push(L.circle(v, (activeRadius[i] * 1609.344), {
+        color: stroke,
+        fillColor: 'rgb(255, 255, 255)'
+    }).bindPopup('Active ' + activeEvents[i] + ' Forecast at <br><strong> ' + v[0] + ',' + v[1] + '</strong></br>Awaiting results...').openPopup());
+});
 
-    var pending_layer = L.layerGroup(pending);
-    var active_layer = L.layerGroup(active);
+var pending_layer = L.layerGroup(pending);
+var active_layer = L.layerGroup(active);
 // initialize leaflet map 
 var map = L.map('map', {
     doubleClickZoom: true,
@@ -60,7 +60,7 @@ map.on('click', function() {
 });
 
 map.setView([35.2226, -97.4395], 5);
-    L.control.layers(overlayMaps, null, { collapsed: false }).addTo(map);
+L.control.layers(overlayMaps, null, { collapsed: false }).addTo(map);
 L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
     maxZoom: 18,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
